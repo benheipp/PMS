@@ -1,0 +1,16 @@
+{
+  "errors": [
+    "Entry module not found: Error: Cannot resolve 'file' or 'directory' C:\\DEV\\OdnDev\\Odn.PMS.UI.React\\src/index.jsx in C:\\DEV\\OdnDev\\Odn.PMS.UI.React\nresolve file\n  C:\\DEV\\OdnDev\\Odn.PMS.UI.React\\src\\index.jsx doesn't exist\n  C:\\DEV\\OdnDev\\Odn.PMS.UI.React\\src\\index.jsx.webpack.js doesn't exist\n  C:\\DEV\\OdnDev\\Odn.PMS.UI.React\\src\\index.jsx.web.js doesn't exist\n  C:\\DEV\\OdnDev\\Odn.PMS.UI.React\\src\\index.jsx.js doesn't exist\n  C:\\DEV\\OdnDev\\Odn.PMS.UI.React\\src\\index.jsx.json doesn't exist\nresolve directory\n  C:\\DEV\\OdnDev\\Odn.PMS.UI.React\\src\\index.jsx doesn't exist (directory default file)\n  C:\\DEV\\OdnDev\\Odn.PMS.UI.React\\src\\index.jsx\\package.json doesn't exist (directory description file)"
+  ],
+  "warnings": [],
+  "version": "1.12.13",
+  "hash": "396f0bfb9d565b6f60f0",
+  "time": 14,
+  "publicPath": "",
+  "assetsByChunkName": {},
+  "assets": [],
+  "chunks": [],
+  "modules": [],
+  "filteredModules": 0,
+  "children": []
+}

@@ -1,0 +1,18 @@
+{
+  "plugins": [
+    "react"
+  ],
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+        }
+  },
+  "globals": {
+    "window": true,
+    "fetch": true,
+    "Request": true,
+    "document": true
+  }
+}
