@@ -11,11 +11,13 @@ var StoreLookupRow = React.createClass({
             display: 'inline'
         }
 
+        var keyUnique = this.props.docKey + this.props.storeLookup.id;
         return (
-            <div className="col-sm-2">
+            <div className="col-sm-4">
                 {this.props.storeLookup.store_name}
-                <div style={chkStyle}>
-                    <input className="form-control" style={chkStyle2} type="checkbox" defaultChecked={chk} onChange={this.onChange} />
+                <div className={this.props.storeLookup.store_name}>    
+                    <input type="checkbox" defaultChecked={chk} defaultChecked={chk} onChange={this.onChange} id={keyUnique} name="check" />
+                    <label htmlFor={keyUnique}></label>
                 </div>
             </div>
         );
