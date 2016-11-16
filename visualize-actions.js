@@ -45,6 +45,12 @@ function saveProduct(productData, newName, newDescription, docId, callback) {
       .fail(function (data) { callback(data); });
 }
 
+function rollBackProduct(oldName, oldDescription, newName, newDescription, docId, docKey, callback) {
+    return $.getJSON('http://localhost:65515/api/Pms/SaveProduct', { oldName: oldName, oldDescription: oldDescription, newName: newName, newDescription: newDescription, docId: docId, docKey: docKey, rollback: true, username: localStorage.username, token: localStorage.token })
+      .done(function (data) { callback(data); })
+      .fail(function (data) { callback(data); });
+}
+
 function SaveBreadCrumbText(docKey, breadCrumbText, callback) {
     return $.getJSON('http://localhost:65515/api/Pms/SaveBreadCrumbText', { docKey: docKey, breadCrumbText: breadCrumbText, token: localStorage.token })
       .done(function (data) { callback(data); })

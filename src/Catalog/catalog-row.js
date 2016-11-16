@@ -8,7 +8,8 @@ var CatalogTreeRow = React.createClass({
             isEditMode: false,
             nodeValue: this.props.node.name,
             nodeKey: this.props.node.name_key,
-            showHistoryModal: false
+            showHistoryModal: false,
+            nodeHistoryData: []
         };
     },
     render: function () {
@@ -34,7 +35,7 @@ var CatalogTreeRow = React.createClass({
             <td><a href="#" onClick={this.handleClick.bind(this, this.props.node.doc_key, this.props.node.name, this.props.nodeLevel) }>{this.props.node.name}</a></td>
             <td><button disabled={!this.props.node.web_sent} onClick={this.handleEditClick.bind(this,this.props.node)} className="btn btn-default"><i className="glyphicon glyphicon-pencil"></i></button></td>
             <td><button onClick={this.showHistoryModal} className="btn btn-default"><i className="glyphicon glyphicon-book"></i></button>
-                {this.state.showHistoryModal ? <NodeHistoryModal docKey={this.props.node.doc_key} catalogId={this.props.node.id} handleHideModal={this.handleHideModal} rollbackComplete={this.rollbackComplete} /> : null}
+                {this.state.showHistoryModal ? <NodeHistoryModal docKey={this.props.node.doc_key} catalogId={this.props.node.id} handleHideModal={this.handleHideModal} rollbackComplete={this.rollbackComplete} data={this.state.nodeHistoryData} webSent={this.props.node.web_sent} /> : null}
                 </td>
             <td>
                 <StoreLookup storeLookup={this.props.storeLookup} docKey={this.props.node.doc_key} storeValues={this.props.node.store} storeUpdate={this.storeUpdate} type={'node'} docId={0} />
@@ -44,7 +45,10 @@ var CatalogTreeRow = React.createClass({
 }
     },
 showHistoryModal: function() {
-    this.setState({ showHistoryModal: true });
+    GetNodeHistory(this.props.node.id, this.getNodeHistoryCallback);
+},
+getNodeHistoryCallback: function(data) {
+    this.setState({ nodeHistoryData: data,showHistoryModal:true });
 },
 storeUpdate: function(data) {
     this.props.storeUpdate(data);

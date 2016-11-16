@@ -1,24 +1,13 @@
 ﻿import React from 'react';
 import NodeHistoryRow from './catalog-node-history-row'
 var NodeHistoryModal = React.createClass({
-    getInitialState: function () {
-        return {
-            data: []
-        };
-    },
     componentDidMount() {
         $('#NodeHistoryModal').modal('show');
         $('#NodeHistoryModal').on('hidden.bs.modal', this.props.handleHideModal);
     },
-    componentWillReceiveProps: function () {
-        GetNodeHistory(this.props.catalogId, this.getNodeHistoryCallback);
-    },
-    getNodeHistoryCallback: function(data) {
-        this.setState({ data: data });
-    },
     render: function () {
-        var rows = this.state.data.map(function (history) {
-            return <NodeHistoryRow history={history} rollbackComplete={this.rollbackComplete} key={history.key} docKey={this.props.docKey} catalogId={this.props.catalogId} />;
+        var rows = this.props.data.map(function (history) {
+            return <NodeHistoryRow history={history} rollbackComplete={this.rollbackComplete} key={history.key} docKey={this.props.docKey} catalogId={this.props.catalogId} webSent={this.props.webSent} />;
         }, this);
         return (
             <div id="NodeHistoryModal" className="modal fade">

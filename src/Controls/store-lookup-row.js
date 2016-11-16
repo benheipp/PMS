@@ -12,9 +12,10 @@ var StoreLookupRow = React.createClass({
         }
 
         var keyUnique = this.props.docKey + this.props.storeLookup.id;
+        var url = this.props.storeLookup.store_base_url + this.props.docKey;
         return (
             <div className="col-sm-4">
-                {this.props.storeLookup.store_name}
+                <strong><a href={url} target="_window">{this.props.storeLookup.store_name}</a></strong>
                 <div className={this.props.storeLookup.store_name}>    
                     <input type="checkbox" defaultChecked={chk} defaultChecked={chk} onChange={this.onChange} id={keyUnique} name="check" />
                     <label htmlFor={keyUnique}></label>

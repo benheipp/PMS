@@ -44,7 +44,7 @@ var ComponentRow = React.createClass({
 <td>{this.props.component.Sku}</td>
 <td><button onClick={this.handleEditClick} className="btn btn-default"><i className="glyphicon glyphicon-pencil"></i></button></td>
 <td><button onClick={this.showHistoryModal} className="btn btn-default"><i className="glyphicon glyphicon-book"></i></button>
-    {this.state.showHistoryModal ? <ComponentHistoryModal docKey={this.props.docKey} docId={this.props.component.id} handleHideComponentHistoryModal={this.handleHideComponentHistoryModal} rollbackComplete={this.rollbackComplete } /> : null}
+    {this.state.showHistoryModal ? <ComponentHistoryModal docKey={this.props.docKey} component={this.props.component} handleHideComponentHistoryModal={this.handleHideComponentHistoryModal} rollbackComplete={this.rollbackComplete } /> : null}
         </td>
 </tr> 
         );

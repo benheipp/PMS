@@ -9,7 +9,7 @@ var ComponentHistoryModal = React.createClass({
     componentDidMount() {
         $('#ComponentHistoryModal').modal('show');
         $('#ComponentHistoryModal').on('hidden.bs.modal', this.props.handleHideComponentHistoryModal);
-        GetComponentHistory(this.props.docId, this.getComponentHistoryCallback);
+        GetComponentHistory(this.props.component.id, this.getComponentHistoryCallback);
     },
     componentWillReceiveProps: function () {
     },
@@ -19,7 +19,7 @@ var ComponentHistoryModal = React.createClass({
     },
     render: function () {
         var rows = this.state.data.map(function (history) {
-            return <ComponentHistoryRow history={history} rollbackComplete={this.rollbackComplete} key={history.key} docKey={this.props.docKey} docId={this.props.docId} />;
+            return <ComponentHistoryRow history={history} rollbackComplete={this.rollbackComplete} key={history.key} docKey={this.props.docKey} docId={this.props.component.id} />;
         }, this);
         return (
             <div id="ComponentHistoryModal" className="modal fade">
@@ -33,10 +33,13 @@ var ComponentHistoryModal = React.createClass({
                       <div className="row">
                           <div className="col-sm-12">
                               <div className="alert alert-info">
-                                     History for: <strong></strong> 
+                                     History for: <strong>{this.props.component.ProductName}</strong> 
                               </div>
         </div>
    </div>
+                   <div className="row">
+                    <div className="col-sm-4"><h4><strong>Previous Values</strong></h4></div>
+                </div>
         {rows}
       </div>
       <div className="modal-footer">

@@ -1,6 +1,8 @@
 ﻿import React from 'react';
 import FeedBack from '../Controls/feedback';
 import StoreLookup from '../Controls/store-lookup'
+import ProductHistoryComponent from './product-history'
+
 var ProductModal = React.createClass({
     componentDidMount() {
         $('#ProductDetailModal').modal('show');
@@ -13,13 +15,15 @@ var ProductModal = React.createClass({
             sku: this.props.productData.sku,
             feedbackResult: 0,
             feedbackMessage: "",
-            showFeedback: false
+            showFeedback: false,
+            prodHistory: false,
+            prodHistoryData:[]
     };
     },
     render: function() {
         return (
             <div id="ProductDetailModal" className="modal fade">
-                <div className="modal-dialog">
+                <div className="modal-dialog modal-lg">
                   <div className="modal-content">
                     <div className="modal-header">
                       <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -33,10 +37,12 @@ var ProductModal = React.createClass({
                         </div>
                       <div className="row">
                           <div className="col-sm-12">
-                              Editing {this.props.productData.name} with a sku of {this.props.productData.sku} 
+                              <div className="alert alert-info">
+                                     Editing: <strong>{this.props.productData.name}</strong> with a sku of <strong>{this.props.productData.sku} </strong>
+                              </div>
                           </div>
-                     </div>
-                     <div className="row">
+                      </div>
+                     <div className="row" style={{ marginTop: '5px' }}>
                           <div className="col-sm-2">
                               Name:
                           </div>
@@ -44,7 +50,7 @@ var ProductModal = React.createClass({
                               <input type="text" maxlength="255" className="form-control" value={this.state.name} onChange={this.handleChange.bind(this, 'name')} />
                           </div>
                      </div>
-                      <div className="row">
+                      <div className="row" style={{ marginTop: '5px' }}>
                           <div className="col-sm-2">
                               Description:
                           </div>
@@ -57,6 +63,16 @@ var ProductModal = React.createClass({
                               <StoreLookup storeLookup={this.props.storeLookup} docKey={this.props.productData.docKey} storeValues={this.props.storeValues} storeUpdate={this.storeUpdate} type={'component'} docId={this.props.productData.id} />
                           </div>
                       </div>
+                     <div className="row" style={{ marginTop: '5px' }}>
+                      <div className="col-sm-10">
+                        <button onClick={this.showProdHistory} className="btn btn-default"><i className="glyphicon glyphicon-book"></i></button> <strong>Show History</strong>
+                      </div>
+                    </div>
+                    <div className="row" style={{ marginTop: '5px' }}>
+                      <div className="col-sm-11">
+                        { this.state.prodHistory ? <ProductHistoryComponent docId={this.props.productData.id} docKey={this.props.productData.docKey} data={this.state.prodHistoryData} rollbackComplete={this.rollbackComplete}/> : null }
+                      </div>
+                    </div>
                     </div>
                     <div className="modal-footer">
                       <button type="button" className="btn btn-default" data-dismiss="modal" onClick={this.handleCancelClick}>Cancel</button>
@@ -72,6 +88,10 @@ var ProductModal = React.createClass({
         change[name] = e.target.value;
         this.setState(change);
     },
+    showProdHistory: function() {
+      console.log(this.props.productData.id);
+       GetComponentProductHistory(this.props.productData.id, this.historyCallBack);
+    },
     handleSaveProductClick: function (productData, newName, newDescription) {
         this.props.handleSaveProductClick(productData, newName, newDescription);
     },
@@ -81,8 +101,14 @@ var ProductModal = React.createClass({
     storeUpdate: function(data) {
         this.setState({ showFeedback: true, feedbackMessage: data.Message, feedbackResult: data.Result });
     },
+    historyCallBack: function(data){
+      this.setState({prodHistoryData: data, prodHistory:true});
+    },
 resetFeedbackState: function() {
     this.setState({ showFeedback: false });
+},
+rollbackComplete: function(oldName,oldDescription) {
+  this.setState({ name: oldName, description: oldDescription});
 }
 });
 
