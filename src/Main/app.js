@@ -2,8 +2,9 @@
 import { render } from 'react-dom';
 import { browserHistory, Router, Route, Link, withRouter, IndexRoute } from 'react-router';
 import CatalogMain from './visualize';
-import LoginControl from '../Login/login'
-import auth from '../Login/auth'
+import ImportMain from '../Import/importmain';
+import LoginControl from '../Login/login';
+import auth from '../Login/auth';
 
 const App = React.createClass({
     getInitialState() {
@@ -78,7 +79,7 @@ render(
     <Route path="/" component={App}>
     <IndexRoute component={CatalogMain}/>
     <Route path="/catalog" component={CatalogMain} onEnter={requireAuth} />
-    <Route path="/import" component={App} onEnter={requireAuth} />
+    <Route path="/import" component={ImportMain} onEnter={requireAuth} />
     <Route path="/login" component={LoginControl} />
     <Route path="/logout" component={Logout} />
     </Route>
