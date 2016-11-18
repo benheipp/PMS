@@ -104,3 +104,25 @@ function Login(username, password, cb, callback) {
   .done(function (data) { callback(data,cb); })
   .fail(function (data) { callback(data,cb); });
 }
+
+function GetCurrentImportStatus(callback){
+      return $.getJSON('http://localhost:65515/api/Pms/GetCurrentImportStatus', {token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+   function UpdateSendToWebFlag(send_flag,status_message,callback){
+      return $.getJSON('http://localhost:65515/api/Pms/UpdateSendToWebFlag', {send_flag: send_flag, status_message: status_message, token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
