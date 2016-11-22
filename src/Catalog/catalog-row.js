@@ -14,6 +14,13 @@ var CatalogTreeRow = React.createClass({
     },
     render: function () {
 
+        var disableVar;
+        if (this.props.node.web_sent == false && this.props.node.web_sent_datetime != '1900-01-01T00:00:00')
+        {
+            disableVar = true;
+        }else{
+            disableVar = false;
+        }
 
         if (this.state.isEditMode) {
             return (
@@ -33,7 +40,7 @@ var CatalogTreeRow = React.createClass({
 
             <tr>
             <td><a href="#" onClick={this.handleClick.bind(this, this.props.node.doc_key, this.props.node.name, this.props.nodeLevel) }>{this.props.node.name}</a></td>
-            <td><button disabled={!this.props.node.web_sent} onClick={this.handleEditClick.bind(this,this.props.node)} className="btn btn-default"><i className="glyphicon glyphicon-pencil"></i></button></td>
+            <td><button disabled={disableVar} onClick={this.handleEditClick.bind(this,this.props.node)} className="btn btn-default"><i className="glyphicon glyphicon-pencil"></i></button></td>
             <td><button onClick={this.showHistoryModal} className="btn btn-default"><i className="glyphicon glyphicon-book"></i></button>
                 {this.state.showHistoryModal ? <NodeHistoryModal docKey={this.props.node.doc_key} catalogId={this.props.node.id} handleHideModal={this.handleHideModal} rollbackComplete={this.rollbackComplete} data={this.state.nodeHistoryData} webSent={this.props.node.web_sent} /> : null}
                 </td>

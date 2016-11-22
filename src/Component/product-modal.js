@@ -1,7 +1,6 @@
 ﻿import React from 'react';
 import FeedBack from '../Controls/feedback';
-import StoreLookup from '../Controls/store-lookup'
-import ProductHistoryComponent from './product-history'
+import ProductHistoryComponent from './product-history';
 
 var ProductModal = React.createClass({
     componentDidMount() {
@@ -58,11 +57,6 @@ var ProductModal = React.createClass({
                               <input type="text" maxlength="255" className="form-control" value={this.state.description} onChange={this.handleChange.bind(this, 'description')} />
                           </div>
                       </div>
-                      <div className="row">
-                          <div className="col-sm-12">
-                              <StoreLookup storeLookup={this.props.storeLookup} docKey={this.props.productData.docKey} storeValues={this.props.storeValues} storeUpdate={this.storeUpdate} type={'component'} docId={this.props.productData.id} />
-                          </div>
-                      </div>
                      <div className="row" style={{ marginTop: '5px' }}>
                       <div className="col-sm-10">
                         <button onClick={this.showProdHistory} className="btn btn-default"><i className="glyphicon glyphicon-book"></i></button> <strong>Show History</strong>
@@ -97,9 +91,6 @@ var ProductModal = React.createClass({
     },
     handleCancelClick: function() {
         this.props.handleCancelClick();
-    },
-    storeUpdate: function(data) {
-        this.setState({ showFeedback: true, feedbackMessage: data.Message, feedbackResult: data.Result });
     },
     historyCallBack: function(data){
       this.setState({prodHistoryData: data, prodHistory:true});

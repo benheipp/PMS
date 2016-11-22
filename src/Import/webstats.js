@@ -69,26 +69,16 @@ var WebSendComponent = React.createClass({
   	getCurrentImportStatusCallback: function(data) {
   		var statusData = this.state.StatusData;
   		statusData.status_message = data.status_message;
-  		if (data.send_flag == true)
-  		{
-  			statusData.percent_complete = this.calcPercentLeft();
-  		} else {
-  			statusData.percent_complete = 0;
-  		}
   		statusData.catalog_records_remaining = data.catalog_records_remaining;
   		statusData.product_records_remaining = data.product_records_remaining;
   		statusData.last_checked = data.last_checked;
   		statusData.status_flag = data.status_flag;
   		statusData.send_flag = data.send_flag;
+  		statusData.percent_complete = data.percent_complete;
   		this.setState({StatusData : statusData});
-  	},
-  	calcPercentLeft: function() {
-  		return (100 - (((this.state.StatusData.catalog_records_remaining + this.state.StatusData.product_records_remaining) / this.state.totalRecordsSendClick) * 100))
   	},
     render: function () {
 
-    	var status = "Sending to Web...";
-    	var percentComplete = "20";
     	var styleMargin25 = {
             marginTop: 50,
             borderRadius: '4px',
@@ -115,10 +105,10 @@ var WebSendComponent = React.createClass({
                         </table>
                         <div className="row">
                         	<div className="col-sm-3">
-                        		<button className="btn btn-success" onClick={this.handleSendToWebClick}><span className="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Send to Web</button>
+                        		<button disabled={this.state.StatusData.send_flag || (this.state.StatusData.catalog_records_remaining + this.state.StatusData.product_records_remaining == 0)} className="btn btn-success" onClick={this.handleSendToWebClick}><span className="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Send to Web</button>
                         	</div>
                         	<div className="col-sm-3">
-                        		<button type="button" className="btn btn-danger" onClick={this.handleCancelClick}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
+                        		<button disabled={!this.state.StatusData.send_flag} type="button" className="btn btn-danger" onClick={this.handleCancelClick}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
                         	</div>
 
                         </div>
