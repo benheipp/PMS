@@ -20,15 +20,44 @@ var FeedBack = React.createClass({
             classN = "alert alert-danger";
         }
 
+        var styleDisplayInline = {
+            display: 'inline'
+        }
+
+        var mainLoadingComponent = {
+            display: 'none',
+        }
+
         var fadeOut = {
+            display:'inline',
             visibility: 'hidden',
             opacity: '0',
             transition: 'visibility 0s 2s, opacity 2s linear'
         };
 
-        return (
-            this.state.visible ? <div className={classN}>{this.props.Message}</div> : <div className={classN} style={fadeOut}>{this.props.Message}</div> 
-        );
+        var imgStyle = {
+            display: 'inline',
+            width: '50px',
+            height: '50px'
+        }
+
+        var main = {
+            display: 'block',
+            height: '50px'
+        }
+
+        if (this.state.visible == true)
+        {
+            return (<div className={classN}>{this.props.Message}</div>);
+        } else {
+            return (
+            <div>
+            <div className={classN} style={fadeOut}>{this.props.Message}</div>
+<div id="ThisIsTesting" style={mainLoadingComponent}><img style={imgStyle} src="../src/Images/loading_spinner.gif" /><h4 style={styleDisplayInline}>Working...</h4></div>
+            </div>
+            );
+        }
+
     },
     setTimer: function() {
         this._timer != null ? clearTimeout(this._timer) : null;

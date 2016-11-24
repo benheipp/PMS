@@ -16,6 +16,7 @@ function getComponentProducts(docKey, componentName, callback) {
 }
 
 function saveNode(node, nodeLevel, newNode, newNodeKey, catalogId, callback) {
+    document.getElementById("ThisIsTesting").style.display = "block"
     return $.getJSON('http://localhost:65515/api/Pms/SaveNode', { docKey: node.doc_key, oldNode: node.name, newNode: newNode, newNodeKey: newNodeKey, catalogId: catalogId, username: localStorage.username, token: localStorage.token })
       .done(function (data) { callback(data, node, nodeLevel); })
       .fail(function (data) { callback(data, node, nodeLevel); });
@@ -70,6 +71,7 @@ function GetStoreLookups(callback) {
 }
 
 function SaveStore(docKey, storeId, chk, callback) {
+  document.getElementById("ThisIsTesting").style.display = "block";
     return $.getJSON('http://localhost:65515/api/Pms/SaveStore', { docKey: docKey, storeId: storeId, chk: chk, token: localStorage.token })
         .done(function(data) { callback(data); })
         .fail(function(data) { callback(data); });

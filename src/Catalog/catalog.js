@@ -4,6 +4,7 @@ import FeedBack from '../Controls/feedback';
 import BreadCrumb from '../BreadCrumb/breadcrumb';
 import BreadCrumbModal from '../BreadCrumb/breadcrumb-modal';
 import ComponentLevel from '../Component/component';
+import LoadingControl from '../Controls/loading';
 
 
 var CatalogTree = React.createClass({
@@ -21,7 +22,8 @@ var CatalogTree = React.createClass({
             feedbackResult: 0,
             feedbackMessage: "",
             showBreadCrumbModal: false,
-            breadCrumbText: ""
+            breadCrumbText: "",
+            loading: false
         };
     },
     componentDidMount: function() {
@@ -82,7 +84,7 @@ HandleComponentData: function (data, componentName) {
     this.setState({ componentData: data, componentName: componentName, componentImage: '//cdn.firedog.com/diagram/' + data[0].ImageUrl + '.png', showComponent: true });
 },
 showFeedBack: function(data) {
-    this.setState({ showFeedback: true, feedbackResult: data.Result, feedbackMessage: data.Message });
+    this.setState({ showFeedback: true, feedbackResult: data.Result, feedbackMessage: data.Message});
 },
 handleEditBreadCrumbText: function () {
     this.setState({ showBreadCrumbModal: true });
@@ -105,6 +107,7 @@ resetFeedbackState: function() {
     this.setState({ showFeedback: false });
 },
 storeUpdate: function(data) {
+    console.log(this.refs.loadingIndicator);
     this.showFeedBack(data);
 }
 });
