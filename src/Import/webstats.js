@@ -1,6 +1,7 @@
 import React from 'react';
 import ProgressBar from './progressbar';
 import TimerMixin from 'react-timer-mixin';
+import PendingItemsModal from './pending-modal'
 var WebSendComponent = React.createClass({
 	mixins: [TimerMixin],
 	getInitialState: function() {
@@ -9,6 +10,7 @@ var WebSendComponent = React.createClass({
 			webSendInProgress: false,
 			intervalId: 0,
 			totalRecordsSendClick: 0,
+      showPendingItems: false,
 			StatusData: {
                 status_message: "",
                 percent_complete: 0,
@@ -77,6 +79,12 @@ var WebSendComponent = React.createClass({
   		statusData.percent_complete = data.percent_complete;
   		this.setState({StatusData : statusData});
   	},
+    handleViewPendingClick: function(){
+        this.setState({showPendingItems:true});
+    },
+    handleHidePendingModal: function(){
+        this.setState({showPendingItems:false});
+    },
     render: function () {
 
     	var styleMargin25 = {
@@ -95,12 +103,12 @@ var WebSendComponent = React.createClass({
                        		<tr>
                             	<td><strong>Pending Catalog Items</strong></td>
                                 <td><strong>Pending Products</strong></td>
-                                <td></td>
+                                <td>                       { this.state.showPendingItems ? <PendingItemsModal  handleHidePendingModal={this.handleHidePendingModal}/> : null } </td>
                             </tr>
                             <tr>
                                 <td>{this.state.StatusData.catalog_records_remaining}</td>
                                 <td>{this.state.StatusData.product_records_remaining}</td>
-                                <td><button className="btn btn-info">View Pending Items</button></td>
+                                <td><button className="btn btn-info" onClick={this.handleViewPendingClick}>View Pending Items</button></td>
                             </tr>
                         </table>
                         <div className="row">

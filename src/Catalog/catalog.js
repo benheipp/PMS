@@ -107,7 +107,6 @@ resetFeedbackState: function() {
     this.setState({ showFeedback: false });
 },
 storeUpdate: function(data) {
-    console.log(this.refs.loadingIndicator);
     this.showFeedBack(data);
 }
 });

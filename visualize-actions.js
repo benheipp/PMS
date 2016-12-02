@@ -9,6 +9,18 @@
       });
 }
 
+function GetPendingCatalog(callback){
+  $.getJSON('http://localhost:65515/api/Pms/GetPendingCatalog', {token: localStorage.token})
+      .done(function (data) { callback(data); })
+      .fail(function (data) {
+        console.log(data.status);
+          if (data.status == '401') {
+              //localStorage.clear();
+            //  window.location.href = "/login";
+          }
+      });
+}
+
 function getComponentProducts(docKey, componentName, callback) {
     return $.getJSON('http://localhost:65515/api/Pms/GetComponent', { docKey: docKey, token: localStorage.token })
       .done(function (data) { callback(data, componentName); })
@@ -118,8 +130,30 @@ function GetCurrentImportStatus(callback){
       });
  }
 
-   function UpdateSendToWebFlag(send_flag,status_message,callback){
+function UpdateSendToWebFlag(send_flag,status_message,callback){
       return $.getJSON('http://localhost:65515/api/Pms/UpdateSendToWebFlag', {send_flag: send_flag, status_message: status_message, token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+ function AutoCompleteQuery(searchValue,callback){
+      return $.getJSON('http://localhost:65515/api/Pms/AutoCompleteQuery', {value: searchValue, token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+  function GetVendorList(callback){
+      return $.getJSON('http://localhost:65515/api/Pms/GetVendorList', { token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {

@@ -17,7 +17,7 @@ var StoreLookupRow = React.createClass({
             <div className="col-sm-4">
                 <strong><a href={url} target="_window">{this.props.storeLookup.store_name}</a></strong>
                 <div className={this.props.storeLookup.store_name}>    
-                    <input type="checkbox" defaultChecked={chk} defaultChecked={chk} onChange={this.onChange} id={keyUnique} name="check" />
+                    <input disabled={this.props.storeLookup.store_lock} type="checkbox" defaultChecked={chk} defaultChecked={chk} onChange={this.onChange} id={keyUnique} name="check" />
                     <label htmlFor={keyUnique}></label>
                 </div>
             </div>
