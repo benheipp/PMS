@@ -141,8 +141,9 @@ function UpdateSendToWebFlag(send_flag,status_message,callback){
       });
  }
 
- function AutoCompleteQuery(searchValue,callback){
-      return $.getJSON('http://localhost:65515/api/Pms/AutoCompleteQuery', {value: searchValue, token: localStorage.token })
+ function AutoCompleteQuery(searchValue, searchVendors, callback){
+  console.log(searchVendors);
+      return $.getJSON('http://localhost:65515/api/Pms/AutoCompleteQuery', {value: searchValue, searchVendors: searchVendors, token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
@@ -154,6 +155,50 @@ function UpdateSendToWebFlag(send_flag,status_message,callback){
 
   function GetVendorList(callback){
       return $.getJSON('http://localhost:65515/api/Pms/GetVendorList', { token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401' || data.status == '0') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+ function SaveProductMaster(newName,oldName,id,docKey,callback){
+      return $.getJSON('http://localhost:65515/api/Pms/SaveProductMaster', {newProductName:newName,oldProductName:oldName,id:id,docKey:docKey,username:localStorage.username,token: localStorage.token })
+  .done(function (data) { callback(data,newName); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+  function RollbackProductMaster(newName,oldName,id,docKey,callback){
+      return $.getJSON('http://localhost:65515/api/Pms/SaveProductMaster', {newProductName:newName,oldProductName:oldName,id:id,docKey:docKey,username:localStorage.username, rollback: true,token: localStorage.token })
+  .done(function (data) { callback(data,newName); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+ function GetProductMasterHistory(id,callback){
+      return $.getJSON('http://localhost:65515/api/Pms/GetProductMasterHistory', {id:id,token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+  function GetUserStats(username,callback){
+      return $.getJSON('http://localhost:65515/api/Pms/GetUserStats', {username: username,token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {

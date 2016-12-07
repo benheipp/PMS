@@ -5,7 +5,8 @@ import CatalogMain from './visualize';
 import ImportMain from '../Import/importmain';
 import LoginControl from '../Login/login';
 import auth from '../Login/auth';
-import ProductMain from '../Product/product'
+import ProductMain from '../Product/product';
+import UserAdminMain from '../UserAdmin/useradminmain';
 
 const App = React.createClass({
     getInitialState() {
@@ -36,7 +37,7 @@ const App = React.createClass({
                   {auth.loggedIn() ? <li><Link to="product">Products</Link></li> : null}
             </ul>
              <ul className="nav navbar-nav navbar-right">
-                {auth.loggedIn() ? <li><a href="#"><span className="glyphicon glyphicon-user"></span> {localStorage.username}</a></li> : null}
+                {auth.loggedIn() ? <li><Link to="user"><span className="glyphicon glyphicon-user"></span> {localStorage.username}</Link></li> : null}
                 {auth.loggedIn() ? <li><Link to="logout"><span className="glyphicon glyphicon-log-in"></span> Logout</Link></li> : null}
                 {!auth.loggedIn() ? <li><Link to="login"><span className="glyphicon glyphicon-log-in"></span> Login</Link></li> : null}
             </ul>
@@ -85,6 +86,7 @@ render(
     <Route path="/login" component={LoginControl} />
     <Route path="/logout" component={Logout} />
     <Route path="/product" component={ProductMain} />
+    <Route path="/user" component={UserAdminMain} />
     </Route>
   </Router>
 , document.getElementById('root'));

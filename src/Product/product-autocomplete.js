@@ -23,21 +23,33 @@ var ProductAutoComplete = React.createClass({
     		transition: 'border-color ease-in-out .15s,box-shadow ease-in-out .15s'
     	}
 
+    	var menuStyle = {
+    		position: 'absolute',
+    		float: 'right',
+    		zIndex: '100',
+    		background: '#fff',
+    		border: '1px solid #ccc',
+    		boxShadow: 'inset 0 1px 1px rgba(0,0,0,.075)'
+    	}
+
 
     	return (
-    		<div className="marginTop100">
+    		<div>
   		 <Autocomplete
-          inputProps={{name: "US state", id: "states-autocomplete", style: {padding : '6px 12px',
+          inputProps={{name: "Product", id: "product-autocomplete", style: {padding : '6px 12px',
       		fontSize: '14px',
       		lineHeight: '1.42857143',
       		color: '#555',
+      		position: 'relative',
       		backgroundColor: '#fff',
       		backgroundImage: 'none',
       		border: '1px solid #ccc',
       		borderRadius: '4px',	
+      		width:'400px',
       		boxShadow: 'inset 0 1px 1px rgba(0,0,0,.075)',
       		transition: 'border-color ease-in-out .15s,box-shadow ease-in-out .15s'		}}}
           ref="autocomplete"
+          menuStyle={menuStyle}
           value={this.state.value}
           items={this.state.products}
           getItemValue={(item) => item.name}
@@ -55,7 +67,7 @@ var ProductAutoComplete = React.createClass({
           		return;
           	} else {
 	            this.setState({ value, loading: true });
-	            AutoCompleteQuery(value,this.autoCompleteCallback)
+	            AutoCompleteQuery(value,this.props.searchVendors,this.autoCompleteCallback)
           	}
            // fakeRequest(value, (items) => {
            //   this.setState({ unitedStates: items, loading: false })
@@ -66,7 +78,7 @@ var ProductAutoComplete = React.createClass({
               style={isHighlighted ? styles.highlightedItem : styles.item}
               key={item.abbr}
               id={item.abbr}
-            >{item.name}</div>
+            >{item.name} - {item.sku}</div>
           )}
         />
 
@@ -79,6 +91,7 @@ var ProductAutoComplete = React.createClass({
     		</div>);
     },
     autoCompleteCallback: function(data){
+    	console.log(data);
     	this.setState({products:data });
     },
     displayRecord: function(item){
@@ -100,7 +113,8 @@ export let styles = {
   },
 
   menu: {
-    border: 'solid 1px #ccc'
+    border: 'solid 1px #ccc',
+    zIndex: '100'
   }
 }
 
