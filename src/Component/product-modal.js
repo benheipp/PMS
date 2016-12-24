@@ -20,6 +20,10 @@ var ProductModal = React.createClass({
     };
     },
     render: function() {
+
+        var saveDisable;
+        if (localStorage.CatalogEditing == 'true'){saveDisable = false;} else {saveDisable = true;}
+
         return (
             <div id="ProductDetailModal" className="modal fade">
                 <div className="modal-dialog modal-lg">
@@ -70,7 +74,7 @@ var ProductModal = React.createClass({
                     </div>
                     <div className="modal-footer">
                       <button type="button" className="btn btn-default" data-dismiss="modal" onClick={this.handleCancelClick}>Cancel</button>
-                      <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={this.handleSaveProductClick.bind(this, this.props.productData, this.state.name, this.state.description)}>Save changes</button>
+                      <button disabled={saveDisable} type="button" className="btn btn-primary" data-dismiss="modal" onClick={this.handleSaveProductClick.bind(this, this.props.productData, this.state.name, this.state.description)}>Save changes</button>
                    </div>
                   </div>
                 </div>

@@ -11,7 +11,8 @@ var ProductDisplay = React.createClass({
 	},
     render: function () {
         var disableVar;
-        if (this.props.data.webSent == false && this.props.data.webSentDatetime != '1900-01-01T00:00:00')
+        var disableVar;
+        if ((this.props.data.web_sent == false && this.props.data.web_sent_datetime != '1900-01-01T00:00:00') || localStorage.ProductEditing == 'false')
         {
             disableVar = true;
         }else{

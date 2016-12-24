@@ -13,12 +13,22 @@ var StoreLookupRow = React.createClass({
 
         var keyUnique = this.props.docKey + this.props.storeLookup.id;
         var url = this.props.storeLookup.store_base_url + this.props.docKey;
+
+        var storeDisable;
+        if (localStorage.StoreEditing == 'true'){storeDisable = false;} else {storeDisable = true;}
+
         return (
-            <div className="col-sm-4">
-                <strong><a href={url} target="_window">{this.props.storeLookup.store_name}</a></strong>
-                <div className={this.props.storeLookup.store_name}>    
-                    <input disabled={this.props.storeLookup.store_lock} type="checkbox" defaultChecked={chk} defaultChecked={chk} onChange={this.onChange} id={keyUnique} name="check" />
-                    <label htmlFor={keyUnique}></label>
+            <div className="col-sm-4" style={{fontSize:'12px'}}>
+                <div className="row">
+                    <div className="col-sm-3">
+                    <strong><a href={url} target="_window">{this.props.storeLookup.store_name}</a></strong>
+                    </div>
+                    <div className="col-sm-4">
+                    <div className={this.props.storeLookup.store_name}>    
+                        <input disabled={storeDisable} type="checkbox" defaultChecked={chk} onChange={this.onChange} id={keyUnique} name="check" />
+                        <label htmlFor={keyUnique}></label>
+                    </div>
+                    </div>
                 </div>
             </div>
         );

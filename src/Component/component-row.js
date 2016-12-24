@@ -22,6 +22,9 @@ var ComponentRow = React.createClass({
     },
     render: function () {
 
+        var editDisable;
+        if (localStorage.CatalogEditing == 'true'){editDisable = false;} else {editDisable = true;}
+
         if (this.state.isEditMode) {
             return (
             <tr>
@@ -30,8 +33,8 @@ var ComponentRow = React.createClass({
                          <td><a href="#" onClick={this.handleShowModal.bind(this, this.props.docKey, this.props.component.Sku, this.props.component.ProductName, this.props.component.Description) }>{this.props.component.ProductName}</a></td>
                          <td><input type="number" style={{ "width": "70px" }} className="form-control" id="txtEditQty" value={this.state.qty} onChange={this.handleChange.bind(this, 'qty')} /></td>
                          <td><input type="text" style={{"width" : "120px"}} className="form-control" id="txtEditSku" value={this.state.sku} onChange={this.handleChange.bind(this, 'sku')} /></td>
-                         <td><button onClick={this.handleSaveClick.bind(this, this.props.docKey, this.props.component, this.state.refId, this.state.qty, this.props.nodeName, this.props.nodeLevel, this.state.sku)} className="btn btn-default"><i className="glyphicon glyphicon-floppy-disk"></i></button></td>
-                         <td><button onClick={this.handleCancelClick} className="btn btn-default"><i className="glyphicon glyphicon-remove"></i></button></td>
+                         <td><button onClick={this.handleSaveClick.bind(this, this.props.docKey, this.props.component, this.state.refId, this.state.qty, this.props.nodeName, this.props.nodeLevel, this.state.sku)} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-floppy-disk"></i></button></td>
+                         <td><button onClick={this.handleCancelClick} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-remove"></i></button></td>
             </tr>
         );
 } else {
@@ -42,8 +45,8 @@ var ComponentRow = React.createClass({
 <td><a href="#" onClick={this.handleShowModal.bind(this, this.props.docKey, this.props.component.Sku, this.props.component.ProductName, this.props.component.Description, this.props.component.id) }>{this.props.component.ProductName}</a></td>
 <td>{this.props.component.RefQty}</td>
 <td>{this.props.component.Sku}</td>
-<td><button onClick={this.handleEditClick} className="btn btn-default"><i className="glyphicon glyphicon-pencil"></i></button></td>
-<td><button onClick={this.showHistoryModal} className="btn btn-default"><i className="glyphicon glyphicon-book"></i></button>
+<td><button disabled={editDisable} onClick={this.handleEditClick} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-pencil"></i></button></td>
+<td><button onClick={this.showHistoryModal} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-book"></i></button>
     {this.state.showHistoryModal ? <ComponentHistoryModal docKey={this.props.docKey} component={this.props.component} handleHideComponentHistoryModal={this.handleHideComponentHistoryModal} rollbackComplete={this.rollbackComplete } /> : null}
         </td>
 </tr> 

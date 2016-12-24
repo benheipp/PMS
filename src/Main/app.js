@@ -24,6 +24,10 @@ const App = React.createClass({
         auth.login();
     },
         render: function() {
+          var renderImport, renderCatalog, renderProduct;
+          if (auth.loggedIn() == true && localStorage.ImportVisibility == 'true'){renderImport = true;} else {renderImport = false;}
+          if (auth.loggedIn() == true && localStorage.CatalogVisibility == 'true'){renderCatalog = true;} else {renderCatalog = false;}
+          if (auth.loggedIn() == true && localStorage.ProductVisibility == 'true'){renderProduct = true;} else {renderProduct = false;}
             return (<div>
                 <div className="navbar navbar-inverse navbar-fixed-top">
         <div className="container">
@@ -32,9 +36,9 @@ const App = React.createClass({
             </div>
             <div className="navbar-collapse collapse">
                 <ul className="nav navbar-nav">
-                  {auth.loggedIn() ? <li><Link to="import">Import</Link></li> : null}
-                  {auth.loggedIn() ? <li><Link to="catalog">Catalog</Link></li> : null}
-                  {auth.loggedIn() ? <li><Link to="product">Products</Link></li> : null}
+                  {renderImport ? <li><Link to="import">Import</Link></li> : null}
+                  {renderCatalog ? <li><Link to="catalog">Catalog</Link></li> : null}
+                  {renderProduct ? <li><Link to="product">Products</Link></li> : null}
             </ul>
              <ul className="nav navbar-nav navbar-right">
                 {auth.loggedIn() ? <li><Link to="user"><span className="glyphicon glyphicon-user"></span> {localStorage.username}</Link></li> : null}

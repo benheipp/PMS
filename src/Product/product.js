@@ -4,6 +4,13 @@ import ProductDisplay from './product-display'
 import VendorList from './product-vendorlist'
 import FeedBack from '../Controls/feedback';
 var ProductMain = React.createClass({
+	componentWillMount: function() {
+        if(localStorage.ProductVisibility != 'true')
+        {
+            localStorage.clear();
+            window.location.href = "/login";
+        }
+    },
     componentDidMount: function() {
         GetVendorList(this.vendorListCallback);
     },

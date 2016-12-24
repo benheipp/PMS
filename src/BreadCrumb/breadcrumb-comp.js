@@ -11,13 +11,13 @@ var BreadCrumbComp = React.createClass({
 	    	 	strDocKeyBuild = strDocKeyBuild + this.props.docKeySplit[i] + '/'
 	    	 	if ((this.props.docKeySplit.length - 1) == i)
 	    	 	{
-	    	 		htmlStr.push(<li id="licomponent">{this.props.docKeySplit[i]}</li>);
+	    	 		htmlStr.push(<li key={i} id="licomponent">{this.props.docKeySplit[i]}</li>);
 	    	 	}else{
-	    	 		htmlStr.push(<li id="lin1"><a href="#" onClick={this.handleBreadCrumbClick.bind(this, (i+1), strDocKeyBuild) }>{this.props.docKeySplit[i]}</a></li>);
+	    	 		htmlStr.push(<li key={i} id="lin1"><a href="#" onClick={this.handleBreadCrumbClick.bind(this, (i+1), strDocKeyBuild) }>{this.props.docKeySplit[i]}</a></li>);
 	    	 	}
     		}
     	} else{
-    			htmlStr.push(<li id="licomponent">{this.props.docKeySplit[0]}</li>);
+    			htmlStr.push(<li key={i} id="licomponent">{this.props.docKeySplit[0]}</li>);
     	}
 
     	return (<ol className="breadcrumb">

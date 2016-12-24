@@ -51,7 +51,6 @@ var BreadCrumbModal = React.createClass({
     },
     handleSaveBreadCrumbClick: function (docKey, breadcrumbText) {
         this.props.handleSaveBreadCrumbClick(docKey, breadcrumbText);
-        console.log('description:' + breadcrumbText);
     }
 
 });

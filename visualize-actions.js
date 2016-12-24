@@ -207,3 +207,36 @@ function UpdateSendToWebFlag(send_flag,status_message,callback){
           }
       });
  }
+
+   function SaveUserInfo(username,userId,firstname,lastname,email,callback){
+      return $.getJSON('http://localhost:65515/api/Pms/SaveUserInfo', {username: username,userId:userId,firstname:firstname,lastname:lastname,email:email,token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+  function GetAllUsers(callback){
+      return $.getJSON('http://localhost:65515/api/Pms/GetAllUsers', {token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+ function SaveUserPermission(username,userId,permissionId,chkValue,callback){
+      return $.getJSON('http://localhost:65515/api/Pms/SaveUserPermission', {username:username,userId:userId,permissionId:permissionId,chkValue:chkValue,token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }

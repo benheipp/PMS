@@ -26,6 +26,13 @@ var CatalogTree = React.createClass({
             loading: false
         };
     },
+    componentWillMount: function() {
+        if(localStorage.CatalogVisibility != 'true')
+        {
+            localStorage.clear();
+            window.location.href = "/login";
+        }
+    },
     componentDidMount: function() {
         getNodes(1, null, [], this.handleNewData);
     },
