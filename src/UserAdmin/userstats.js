@@ -10,6 +10,8 @@ var UserStats = React.createClass({
     },	
 	    render: function () {
 
+	    	var mailtoStr = "mailto:" + this.props.user.email;
+
 	    	if (this.state.isEditMode)
 	    	{
 	    		return(
@@ -85,7 +87,7 @@ var UserStats = React.createClass({
                       </tr>
                       <tr>
                         <td>Email:</td>
-                        <td><a href="mailto:{this.props.user.email}">{this.props.user.email}</a></td>
+                        <td><a href={mailtoStr}>{this.props.user.email}</a></td>
                       </tr>
                       <tr>
                         <td># Node Changes</td>

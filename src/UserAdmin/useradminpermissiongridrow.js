@@ -6,8 +6,6 @@ var UserAdminPermissionGridRow = React.createClass({
  render: function () {
 
  	var chk;
-
-console.log(this.props.permission.username);
  	if (this.props.permission.username != '' ){
  		chk = true;
  	} else { chk = false;}

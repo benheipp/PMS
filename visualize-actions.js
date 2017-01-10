@@ -240,3 +240,36 @@ function UpdateSendToWebFlag(send_flag,status_message,callback){
           }
       });
  }
+
+  function SaveEnabled(username,userId,chkValue,callback){
+      return $.getJSON('http://localhost:65515/api/Pms/SaveEnabled', {username:username,userId:userId,chkValue:chkValue,token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+   function IsUniqueUsername(username,callback){
+      return $.getJSON('http://localhost:65515/api/Pms/IsUniqueUsername', {username:username,token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+    function AddUser(username,password,firstname,lastname,email,callback){
+      return $.getJSON('http://localhost:65515/api/Pms/AddUser', {username:username,password:password,firstname:firstname,lastname:lastname,email:email,token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
