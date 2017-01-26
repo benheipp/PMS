@@ -29,7 +29,7 @@ const App = React.createClass({
           if (auth.loggedIn() == true && localStorage.CatalogVisibility == 'true'){renderCatalog = true;} else {renderCatalog = false;}
           if (auth.loggedIn() == true && localStorage.ProductVisibility == 'true'){renderProduct = true;} else {renderProduct = false;}
             return (<div>
-                <div className="navbar navbar-inverse navbar-fixed-top">
+                <div className="navbar navbar-default navbar-static-top">
         <div className="container">
             <div className="navbar-header">
                 <img src="src/Images/odn-horizontal.jpg" height="50px"/>
