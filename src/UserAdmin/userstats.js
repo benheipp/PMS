@@ -7,7 +7,7 @@ var UserStats = React.createClass({
             email: this.props.user.email,
             isEditMode:false
         };
-    },	
+    },
 	    render: function () {
 
 	    	var mailtoStr = "mailto:" + this.props.user.email;
@@ -115,7 +115,7 @@ var UserStats = React.createClass({
 				 </div>);
 	    	}
 
-	    	
+
 },
 handleEditClick: function(){
 	this.setState({isEditMode:true,firstname:this.props.user.firstname,lastname:this.props.user.lastname,email:this.props.user.email});

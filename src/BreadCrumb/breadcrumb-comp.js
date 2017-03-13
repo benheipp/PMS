@@ -7,7 +7,7 @@ var BreadCrumbComp = React.createClass({
     	var i;
     	if (this.props.docKeySplit.length > 1)
     	{
- 			for (i = 0; i < this.props.docKeySplit.length; i++) { 
+ 			for (i = 0; i < this.props.docKeySplit.length; i++) {
 	    	 	strDocKeyBuild = strDocKeyBuild + this.props.docKeySplit[i] + '/'
 	    	 	if ((this.props.docKeySplit.length - 1) == i)
 	    	 	{
@@ -21,6 +21,7 @@ var BreadCrumbComp = React.createClass({
     	}
 
     	return (<ol className="breadcrumb">
+        <a onClick={this.handleClearSelectedStore} style={{cursor:'pointer'}}>{this.props.selectedStore.name}</a> - &nbsp;
     			{htmlStr}
     			</ol>
     	);
@@ -28,6 +29,9 @@ var BreadCrumbComp = React.createClass({
     handleBreadCrumbClick: function (nodeLevel, docKey) {
     	docKey = docKey.substring(0, docKey.length - 1);
         this.props.callbackBreadCrumbClick(nodeLevel, docKey);
+    },
+    handleClearSelectedStore: function(){
+        this.props.handleClearSelectedStore();
     }
 });
 

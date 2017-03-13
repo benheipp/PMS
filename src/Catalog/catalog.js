@@ -34,7 +34,7 @@ var CatalogTree = React.createClass({
         }
     },
     componentDidMount: function() {
-        getNodes(1, null, [], this.handleNewData);
+        getNodes(1, null, [], this.props.selectedStore.value, this.handleNewData);
     },
     render: function () {
         var stylemargin = {
@@ -45,7 +45,7 @@ var CatalogTree = React.createClass({
         }, this);
         return (
             <div style={stylemargin}>
-              <BreadCrumb docKey={this.state.docKey} callbackBreadCrumbClick={this.BreadCrumbClick} handleEditBreadCrumbText={this.handleEditBreadCrumbText} />
+              <BreadCrumb docKey={this.state.docKey} callbackBreadCrumbClick={this.BreadCrumbClick} handleEditBreadCrumbText={this.handleEditBreadCrumbText} selectedStore={this.props.selectedStore} handleClearSelectedStore={this.props.handleClearSelectedStore} />
 {this.state.showBreadCrumbModal ? <BreadCrumbModal docKey={this.state.docKey} breadCrumbText={this.state.breadCrumbText} handleHideModal={this.handleHideModal} handleSaveBreadCrumbClick={this.handleSaveBreadCrumbClick}  /> : null}
               <FeedBack Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
               { this.state.showComponent ? <ComponentLevel component={this.state.componentData} componentName={this.state.componentName} diagramUrl={this.state.componentImage} docKey={this.state.docKey} showFeedBack={this.showFeedBack} nodeName={this.state.nodeName} nodeLevel={this.state.nodeLevel} reloadDataFromComponent={this.reloadDataFromComponent} storeLookup={this.props.storeLookup}/> : null }
@@ -53,29 +53,30 @@ var CatalogTree = React.createClass({
                 <tbody>
                   {rows}
                 </tbody>
-              </table>     
+              </table>
             </div>
         );
 },
 reloadData: function (docKey, nodeName, nodeLevel) {
     var nDocKey = docKey.substring(0, docKey.lastIndexOf("/"));
-    getNodes(nodeLevel, nDocKey, nodeName, this.handleNewData);
+    getNodes(nodeLevel, nDocKey, nodeName, this.props.selectedStore.value, this.handleNewData);
     GetBreadCrumbText(docKey, this.editBreadCrumbCallback);
     this.setState({ docKey: nDocKey, nodeName: nodeName });
 },
 reloadDataFromComponent: function (docKey, nodeName, nodeLevel) {
-    getNodes(nodeLevel, docKey, nodeName, this.handleNewData);
+    getNodes(nodeLevel, docKey, nodeName, this.props.selectedStore.value, this.handleNewData);
     GetBreadCrumbText(docKey, this.editBreadCrumbCallback);
     this.setState({ docKey: docKey, nodeName: nodeName });
 },
 onNodeClick: function (docKey, nodeName, nodeLevel) {
-    getNodes(nodeLevel + 1, docKey, nodeName, this.handleNewData);
+    getNodes(nodeLevel + 1, docKey, nodeName, this.props.selectedStore.value, this.handleNewData);
     GetBreadCrumbText(docKey, this.editBreadCrumbCallback);
     this.setState({ docKey: docKey, nodeLevel: nodeLevel + 1, showFeedback: false });
 },
 handleNewData: function (data, docKey, nodeName) {
     this.setState({ node: data, nodeName: nodeName });
-    if (data.length == 0) {
+    if (data.length == 0 && docKey != null) {
+        console.log(docKey);
         getComponentProducts(docKey, nodeName, this.HandleComponentData);
     } else {
         this.setState({ componentData: [] });
@@ -83,7 +84,7 @@ handleNewData: function (data, docKey, nodeName) {
     }
 },
 BreadCrumbClick: function (nodeLevel, docKey) {
-    getNodes(nodeLevel, docKey, [], this.handleNewData);
+    getNodes(nodeLevel, docKey, [], this.props.selectedStore.value, this.handleNewData);
     GetBreadCrumbText(docKey, this.editBreadCrumbCallback);
     this.setState({ docKey: docKey, nodeLevel: nodeLevel, showFeedback: false });
 },
@@ -115,6 +116,9 @@ resetFeedbackState: function() {
 },
 storeUpdate: function(data) {
     this.showFeedBack(data);
+},
+handleClearSelectedStore: function(){
+    this.props.handleClearSelectedStore();
 }
 });
 

@@ -29,7 +29,7 @@ var ComponentRow = React.createClass({
             return (
             <tr>
                             <td></td>
-                         <td><input type="number" style={{"width" : "70px"}} className="form-control" id="txtEditRefId" value={this.state.refId} onChange={this.handleChange.bind(this, 'refId')} /></td>
+                         <td><input type="text" style={{"width" : "70px"}} className="form-control" id="txtEditRefId" value={this.state.refId} onChange={this.handleChange.bind(this, 'refId')} /></td>
                          <td><a href="#" onClick={this.handleShowModal.bind(this, this.props.docKey, this.props.component.Sku, this.props.component.ProductName, this.props.component.Description) }>{this.props.component.ProductName}</a></td>
                          <td><input type="number" style={{ "width": "70px" }} className="form-control" id="txtEditQty" value={this.state.qty} onChange={this.handleChange.bind(this, 'qty')} /></td>
                          <td><input type="text" style={{"width" : "120px"}} className="form-control" id="txtEditSku" value={this.state.sku} onChange={this.handleChange.bind(this, 'sku')} /></td>
@@ -49,7 +49,7 @@ var ComponentRow = React.createClass({
 <td><button onClick={this.showHistoryModal} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-book"></i></button>
     {this.state.showHistoryModal ? <ComponentHistoryModal docKey={this.props.docKey} component={this.props.component} handleHideComponentHistoryModal={this.handleHideComponentHistoryModal} rollbackComplete={this.rollbackComplete } /> : null}
         </td>
-</tr> 
+</tr>
         );
 }
 },

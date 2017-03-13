@@ -1,5 +1,5 @@
-﻿function getNodes(nodeLevel, docKey, nodeName, callback) {
-    $.getJSON('http://localhost:65515/api/Pms/Get', { nodeLevel: nodeLevel, docKey: docKey, token: localStorage.token })
+﻿function getNodes(nodeLevel, docKey, nodeName, storeId, callback) {
+    $.getJSON('http://localhost:65515/api/Pms/Get', { nodeLevel: nodeLevel, storeId: storeId, docKey: docKey, token: localStorage.token })
       .done(function (data) { callback(data, docKey, nodeName); })
       .fail(function (data) {
           if (data.status == '401') {
@@ -24,7 +24,7 @@ function GetPendingCatalog(callback){
 function getComponentProducts(docKey, componentName, callback) {
     return $.getJSON('http://localhost:65515/api/Pms/GetComponent', { docKey: docKey, token: localStorage.token })
       .done(function (data) { callback(data, componentName); })
-      .fail(function (data) { console.log('getNodes error: ' + data) });
+      .fail(function (data) { console.log('GetComponent error: ' + data) });
 }
 
 function saveNode(node, nodeLevel, newNode, newNodeKey, catalogId, callback) {
@@ -79,7 +79,12 @@ function GetBreadCrumbText(docKey, callback) {
 function GetStoreLookups(callback) {
     return $.getJSON('http://localhost:65515/api/Pms/GetStoreLookups', { token: localStorage.token })
       .done(function (data) { callback(data); })
-      .fail(function (data) { console.log('GetStoreLookups error: ' + data) });
+       .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
 }
 
 function SaveStore(docKey, storeId, chk, callback) {

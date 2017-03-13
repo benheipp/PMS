@@ -75,6 +75,7 @@ var ComponentLevel = React.createClass({
                           <th>ref-qty</th>
                           <th>sku</th>
                           <th></th>
+                          <th></th>
                         </tr>
                         </thead>
                         <tbody>{rows}</tbody>

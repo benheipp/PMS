@@ -8,7 +8,10 @@ var BreadCrumb = React.createClass({
             return (
                 <div className="row">
                     <div className="col-sm-11">
-                      <BreadCrumbComp docKeySplit={splitStr} callbackBreadCrumbClick={this.handleBreadCrumbClick} />
+                      <BreadCrumbComp docKeySplit={splitStr}
+                      callbackBreadCrumbClick={this.handleBreadCrumbClick}
+                      selectedStore={this.props.selectedStore}
+                      handleClearSelectedStore={this.props.handleClearSelectedStore}/>
                     </div>
                         <div className="col-sm-1">{ editButton }</div>
                 </div>);
@@ -18,6 +21,9 @@ var BreadCrumb = React.createClass({
     },
     handleEditClick: function() {
         this.props.handleEditBreadCrumbText();
+    },
+    handleClearSelectedStore: function(){
+        this.props.handleClearSelectedStore();
     }
 });
 

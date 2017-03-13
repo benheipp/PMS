@@ -42,6 +42,9 @@ var ProductDisplay = React.createClass({
     					<div className="col-xs-2">Web Sent DT: </div>
     					<div className="col-xs-10">{this.props.data.webSentDatetime}</div>
     				</div>
+                    <div style={{marginTop:'20px'}}>
+                        <ProductEntity entities={this.props.data.Entities} />
+                    </div>
 				  </div>
 				  <div className="panel-footer">
 					<button className="btn btn-default" onClick={this.handleCancelClick}><i className="glyphicon glyphicon-remove"></i> Cancel</button><button style={{marginLeft:'20px'}} className="btn btn-default" onClick={this.handleSaveClick}><i className="glyphicon glyphicon-floppy-disk"></i> Save</button>
