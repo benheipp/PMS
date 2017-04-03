@@ -9,10 +9,10 @@ var StoreControl = React.createClass({
         return (
             <div className="row">
                 {rows}
-              <div className="col-sm-12" style={{fontSize:'12px'}}>
+              <div className="col-sm-12" style={{fontSize:'50px'}}>
                 <div className="row">
-                    <div className="col-sm-3">
-                    <strong><a style={{cursor:'pointer'}} onClick={this.selectStore.bind(this,'999','Not Assigned')}>Not Assigned</a></strong>
+                    <div className="col-sm-6">
+                    <strong><a style={{cursor:'pointer', color:'black'}} onClick={this.selectStore.bind(this,'999','Not Assigned')}>Not Assigned</a></strong>
                     </div>
                 </div>
               </div>

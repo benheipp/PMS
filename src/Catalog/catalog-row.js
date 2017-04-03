@@ -40,8 +40,8 @@ var CatalogTreeRow = React.createClass({
 
             <tr>
             <td><a href="#" onClick={this.handleClick.bind(this, this.props.node.doc_key, this.props.node.name, this.props.nodeLevel) }>{this.props.node.name}</a></td>
-            <td><button disabled={disableVar} onClick={this.handleEditClick.bind(this,this.props.node)} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-pencil"></i></button></td>
-            <td><button onClick={this.showHistoryModal} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-book"></i></button>
+            <td><button disabled={disableVar} onClick={this.handleEditClick.bind(this,this.props.node)} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-pencil"></i> Edit</button></td>
+            <td><button onClick={this.showHistoryModal} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-book"></i> History</button>
                 {this.state.showHistoryModal ? <NodeHistoryModal docKey={this.props.node.doc_key} catalogId={this.props.node.id} handleHideModal={this.handleHideModal} rollbackComplete={this.rollbackComplete} data={this.state.nodeHistoryData} webSent={this.props.node.web_sent} /> : null}
                 </td>
             <td>

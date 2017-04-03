@@ -18,12 +18,13 @@ var CatalogTree = React.createClass({
             componentData: [],
             componentName: "",
             componentImage: "",
-            showFeedback: false,
+            showFeedback: true,
             feedbackResult: 0,
-            feedbackMessage: "",
+            feedbackMessage: "Loading...",
             showBreadCrumbModal: false,
             breadCrumbText: "",
-            loading: false
+            loading: false,
+            noResultsMessage: false
         };
     },
     componentWillMount: function() {
@@ -52,6 +53,7 @@ var CatalogTree = React.createClass({
               <table className="table table-striped">
                 <tbody>
                   {rows}
+                  {this.state.noResultsMessage ? <p style={{fontSize:'50px'}}>No Results</p> : null }
                 </tbody>
               </table>
             </div>
@@ -75,12 +77,15 @@ onNodeClick: function (docKey, nodeName, nodeLevel) {
 },
 handleNewData: function (data, docKey, nodeName) {
     this.setState({ node: data, nodeName: nodeName });
+    if (data.length == 0 && this.state.nodeLevel == 1)
+    {
+        this.setState({noResultsMessage:true});
+    }
     if (data.length == 0 && docKey != null) {
-        console.log(docKey);
         getComponentProducts(docKey, nodeName, this.HandleComponentData);
     } else {
         this.setState({ componentData: [] });
-        this.setState({ showComponent: false });
+        this.setState({ showComponent: false, showFeedback:false });
     }
 },
 BreadCrumbClick: function (nodeLevel, docKey) {
