@@ -24,7 +24,7 @@ var WebSendComponent = React.createClass({
 	},
 	componentDidMount: function() {
 			GetCurrentImportStatus(this.getCurrentImportStatusCallback);
-		    var intId = this.setInterval( () => { 
+		    var intId = this.setInterval( () => {
 		      if (this.state.counter >=15)
 				{
 					GetCurrentImportStatus(this.getCurrentImportStatusCallback);
@@ -32,7 +32,7 @@ var WebSendComponent = React.createClass({
 			        counter: 0
 					});
 				}
-				else{ 
+				else{
 				      this.setState({
 				        counter: this.state.counter+1
 				      });
@@ -97,13 +97,13 @@ var WebSendComponent = React.createClass({
 
     	return (
     				<div className="webSend-container">
-    				<div className="modal-header" style={{ backgroundColor: 'rgb(51, 122, 183)', color: 'white' }}><h4 className="modal-title">Web Stats</h4></div>
+    				<div className="modal-header" style={{ backgroundColor: 'rgb(51, 122, 183)', color: 'white' }}><h4 className="modal-title">Data Export</h4></div>
     					<table className="table table-striped">
     						<tr><td><br></br></td></tr>
                        		<tr>
                             	<td><strong>Pending Catalog Items</strong></td>
                                 <td><strong>Pending Products</strong></td>
-                                <td>                       { this.state.showPendingItems ? <PendingItemsModal  handleHidePendingModal={this.handleHidePendingModal}/> : null } </td>
+                                <td>{ this.state.showPendingItems ? <PendingItemsModal  handleHidePendingModal={this.handleHidePendingModal}/> : null } </td>
                             </tr>
                             <tr>
                                 <td>{this.state.StatusData.catalog_records_remaining}</td>

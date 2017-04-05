@@ -278,3 +278,47 @@ function UpdateSendToWebFlag(send_flag,status_message,callback){
           }
       });
  }
+
+ function GetDataAnalysisStats(callback){
+      return $.getJSON('http://localhost:65515/api/Pms/DataAnalysisStats', {token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+  function GetDataAnalysisDetails(type, callback){
+      return $.getJSON('http://localhost:65515/api/Pms/GetDataAnalysisDetails', {type: type, token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+ function SaveCatEntity(type, id, name, callback){
+      return $.getJSON('http://localhost:65515/api/Pms/SaveCatEntity', {type: type, id: id, name: name, token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+ function SaveProdEnt(originalDocKey, newDocKey, sku, name, callback){
+      return $.getJSON('http://localhost:65515/api/Pms/SaveCatEntity', {originalDocKey: originalDocKey, newDocKey: newDocKey, sku: sku, name: name, token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }

@@ -1,5 +1,6 @@
 import React from 'react';
 import WebSendComponent from './webstats';
+import DataAnalysis from './dataanalysis';
 var ImportMain = React.createClass({
     componentWillMount: function() {
         if(localStorage.ImportVisibility != 'true')
@@ -11,6 +12,7 @@ var ImportMain = React.createClass({
     render: function () {
     	return (<div className="container">
     			<WebSendComponent />
+                <DataAnalysis />
     			</div>
     			);
     }
