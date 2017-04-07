@@ -53,9 +53,8 @@ handleInputChange: function (event) {
     this.setState({ docKey: (this.props.detail.doc_key.substr(0, this.props.detail.doc_key.lastIndexOf('/') + 1) + formatNameKey(event.target.value)) });
 },
 saveCallBack: function (data) {
-    console.log(data);
-   // this.props.showFeedBack(data);
-   // this.props.reloadData(node.doc_key, node.name, nodeLevel);
+    this.props.showFeedBack(data);
+    this.props.reloadData();
 },
 handleChange: function (name, e) {
     var change = {};

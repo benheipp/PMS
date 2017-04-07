@@ -41,8 +41,8 @@ handleCancelClick: function () {
     this.setState({ isEditMode: false });
 },
 saveCallBack: function (data, node, nodeLevel) {
-   // this.props.showFeedBack(data);
-   // this.props.reloadData(node.doc_key, node.name, nodeLevel);
+    this.props.showFeedBack(data);
+    this.props.reloadData();
 },
 handleChange: function (name, e) {
     var change = {};

@@ -313,7 +313,7 @@ function UpdateSendToWebFlag(send_flag,status_message,callback){
  }
 
  function SaveProdEnt(originalDocKey, newDocKey, sku, name, callback){
-      return $.getJSON('http://localhost:65515/api/Pms/SaveCatEntity', {originalDocKey: originalDocKey, newDocKey: newDocKey, sku: sku, name: name, token: localStorage.token })
+      return $.getJSON('http://localhost:65515/api/Pms/SaveProdEnt', {originalDocKey: originalDocKey, newDocKey: newDocKey, sku: sku, name: name, token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
