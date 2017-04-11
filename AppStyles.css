@@ -1,9 +1,5 @@
 ﻿@import url(http://fonts.googleapis.com/css?family=Roboto);
 
-input[type=checkbox] {
-  visibility: hidden;
-}
-
 tr.tableRowSpace > td
 {
   padding-bottom: 5px;
@@ -93,7 +89,7 @@ tr.tableRowSpace > td
   /* border: 1px solid #3079ed; */
   border: 0px;
   color: #fff;
-  text-shadow: 0 1px rgba(0,0,0,0.1); 
+  text-shadow: 0 1px rgba(0,0,0,0.1);
   background-color: #4d90fe;
   padding: 17px 0px;
   font-family: roboto;
@@ -117,7 +113,7 @@ tr.tableRowSpace > td
   display: inline-block;
   opacity: 0.6;
   transition: opacity ease 0.5s;
-} 
+}
 
 .login-help{
   font-size: 12px;
@@ -350,11 +346,11 @@ tr.tableRowSpace > td
 
 
 .stylish-input-group .input-group-addon{
-    background: white !important; 
+    background: white !important;
 }
 .stylish-input-group .form-control{
-  border-right:0; 
-  box-shadow:0 0 0; 
+  border-right:0;
+  box-shadow:0 0 0;
   border-color:#ccc;
 }
 .stylish-input-group button{

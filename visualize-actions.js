@@ -1,5 +1,16 @@
-﻿function getNodes(nodeLevel, docKey, nodeName, storeId, callback) {
-    $.getJSON('http://localhost:65515/api/Pms/Get', { nodeLevel: nodeLevel, storeId: storeId, docKey: docKey, token: localStorage.token })
+﻿function getNodes(nodeLevel, docKey, nodeName, storeId, disabled, showDisabled, callback) {
+    $.getJSON('http://localhost:65515/api/Pms/Get', { nodeLevel: nodeLevel, storeId: storeId, disabled: disabled, showDisabled:showDisabled, docKey: docKey, token: localStorage.token })
+      .done(function (data) { callback(data, docKey, nodeName); })
+      .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+}
+
+function getNodeList(nodeLevel, docKey, nodeName, storeId, disabled, callback) {
+    $.getJSON('http://localhost:65515/api/Pms/GetList', { storeId: storeId, disabled: disabled, token: localStorage.token })
       .done(function (data) { callback(data, docKey, nodeName); })
       .fail(function (data) {
           if (data.status == '401') {
@@ -315,6 +326,17 @@ function UpdateSendToWebFlag(send_flag,status_message,callback){
  function SaveProdEnt(originalDocKey, newDocKey, sku, name, callback){
       return $.getJSON('http://localhost:65515/api/Pms/SaveProdEnt', {originalDocKey: originalDocKey, newDocKey: newDocKey, sku: sku, name: name, token: localStorage.token })
   .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+ function SaveDisabled(docKey, disabledVal, node, nodeLevel, callback){
+      return $.getJSON('http://localhost:65515/api/Pms/SaveDisabled', {docKey:docKey, disabledVal: disabledVal, token: localStorage.token })
+  .done(function (data) { callback(data, node, nodeLevel); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();

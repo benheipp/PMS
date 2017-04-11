@@ -24,7 +24,8 @@ var CatalogTree = React.createClass({
             showBreadCrumbModal: false,
             breadCrumbText: "",
             loading: false,
-            noResultsMessage: false
+            noResultsMessage: false,
+            showDisabled: false
         };
     },
     componentWillMount: function() {
@@ -35,23 +36,35 @@ var CatalogTree = React.createClass({
         }
     },
     componentDidMount: function() {
-        getNodes(1, null, [], this.props.selectedStore.value, this.handleNewData);
+        getNodes(1, null, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
     },
     render: function () {
         var stylemargin = {
             marginTop: "60px"
         };
         var rows = this.state.node.map(function(node) {
-            return <CatalogTreeRow storeLookup={this.props.storeLookup} node={node} key={node.key} nodeLevel={this.state.nodeLevel} onNodeClick={this.onNodeClick} showFeedBack={this.showFeedBack} reloadData={this.reloadData} storeUpdate={this.storeUpdate } />;
+            return <CatalogTreeRow storeLookup={this.props.storeLookup} node={node} key={node.key} nodeLevel={this.state.nodeLevel} onNodeClick={this.onNodeClick} showFeedBack={this.showFeedBack} reloadData={this.reloadData} storeUpdate={this.storeUpdate } updateAllCatalogs={this.updateAllCatalogs} />;
         }, this);
         return (
             <div style={stylemargin}>
+             {this.props.disabled == "1" ? <h1>Disabled Items</h1> : null }
               <BreadCrumb docKey={this.state.docKey} callbackBreadCrumbClick={this.BreadCrumbClick} handleEditBreadCrumbText={this.handleEditBreadCrumbText} selectedStore={this.props.selectedStore} handleClearSelectedStore={this.props.handleClearSelectedStore} />
 {this.state.showBreadCrumbModal ? <BreadCrumbModal docKey={this.state.docKey} breadCrumbText={this.state.breadCrumbText} handleHideModal={this.handleHideModal} handleSaveBreadCrumbClick={this.handleSaveBreadCrumbClick}  /> : null}
               <FeedBack Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
               { this.state.showComponent ? <ComponentLevel component={this.state.componentData} componentName={this.state.componentName} diagramUrl={this.state.componentImage} docKey={this.state.docKey} showFeedBack={this.showFeedBack} nodeName={this.state.nodeName} nodeLevel={this.state.nodeLevel} reloadDataFromComponent={this.reloadDataFromComponent} storeLookup={this.props.storeLookup}/> : null }
+               <b>Show Disabled</b><input
+            name="disabled"
+            type="checkbox"
+            defaultChecked={this.state.showDisabled}
+            onChange={this.handleShowDisabledChange} />
               <table className="table table-striped">
                 <tbody>
+                  <tr>
+                    <td><b>Node</b></td>
+                    <td></td>
+                    <td></td>
+                    <td><b>Disabled</b></td>
+                  </tr>
                   {rows}
                   {this.state.noResultsMessage ? <p style={{fontSize:'50px'}}>No Results</p> : null }
                 </tbody>
@@ -59,19 +72,23 @@ var CatalogTree = React.createClass({
             </div>
         );
 },
+handleShowDisabledChange: function(event){
+    this.setState({showDisabled: event.target.checked});
+    getNodes(this.state.nodeLevel, this.state.docKey, this.state.nodeName, this.props.selectedStore.value, this.props.disabled, event.target.checked, this.handleNewData);
+},
 reloadData: function (docKey, nodeName, nodeLevel) {
     var nDocKey = docKey.substring(0, docKey.lastIndexOf("/"));
-    getNodes(nodeLevel, nDocKey, nodeName, this.props.selectedStore.value, this.handleNewData);
+    getNodes(nodeLevel, nDocKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
     GetBreadCrumbText(docKey, this.editBreadCrumbCallback);
     this.setState({ docKey: nDocKey, nodeName: nodeName });
 },
 reloadDataFromComponent: function (docKey, nodeName, nodeLevel) {
-    getNodes(nodeLevel, docKey, nodeName, this.props.selectedStore.value, this.handleNewData);
+    getNodes(nodeLevel, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
     GetBreadCrumbText(docKey, this.editBreadCrumbCallback);
     this.setState({ docKey: docKey, nodeName: nodeName });
 },
 onNodeClick: function (docKey, nodeName, nodeLevel) {
-    getNodes(nodeLevel + 1, docKey, nodeName, this.props.selectedStore.value, this.handleNewData);
+    getNodes(nodeLevel + 1, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
     GetBreadCrumbText(docKey, this.editBreadCrumbCallback);
     this.setState({ docKey: docKey, nodeLevel: nodeLevel + 1, showFeedback: false });
 },
@@ -89,7 +106,7 @@ handleNewData: function (data, docKey, nodeName) {
     }
 },
 BreadCrumbClick: function (nodeLevel, docKey) {
-    getNodes(nodeLevel, docKey, [], this.props.selectedStore.value, this.handleNewData);
+    getNodes(nodeLevel, docKey, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
     GetBreadCrumbText(docKey, this.editBreadCrumbCallback);
     this.setState({ docKey: docKey, nodeLevel: nodeLevel, showFeedback: false });
 },
@@ -124,6 +141,9 @@ storeUpdate: function(data) {
 },
 handleClearSelectedStore: function(){
     this.props.handleClearSelectedStore();
+},
+updateAllCatalogs: function(){
+    this.props.updateAllCatalogs();
 }
 });
 

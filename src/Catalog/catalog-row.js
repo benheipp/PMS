@@ -31,8 +31,17 @@ var CatalogTreeRow = React.createClass({
                 <td>
                     <input type="text" className="form-control" id="txtNodeKey" value={this.state.nodeKey} onChange={this.handleNodeKeyChange} />
                 </td>
-                <td><button onClick={this.handleSaveClick.bind(this, this.props.node, this.props.nodeLevel, this.state.nodeValue, this.state.nodeKey, this.props.node.id)} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-floppy-disk"></i></button></td>
-                <td><button onClick={this.handleCancelClick.bind(this, this.props.node, this.props.nodeLevel)} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-remove"></i></button></td>
+                <td>
+                  <button onClick={this.handleSaveClick.bind(this, this.props.node, this.props.nodeLevel, this.state.nodeValue, this.state.nodeKey, this.props.node.id)} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-floppy-disk"></i></button>
+                  <button style={{marginLeft:'20px'}} onClick={this.handleCancelClick.bind(this, this.props.node, this.props.nodeLevel)} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-remove"></i></button>
+                </td>
+                <td>
+                <input
+                    name="disabled"
+                    type="checkbox"
+                    defaultChecked={this.props.node.disabled}
+                    disabled />
+                </td>
             </tr>
            );
     } else {
@@ -45,6 +54,11 @@ var CatalogTreeRow = React.createClass({
                 {this.state.showHistoryModal ? <NodeHistoryModal docKey={this.props.node.doc_key} catalogId={this.props.node.id} handleHideModal={this.handleHideModal} rollbackComplete={this.rollbackComplete} data={this.state.nodeHistoryData} webSent={this.props.node.web_sent} /> : null}
                 </td>
             <td>
+            <input
+            name="disabled"
+            type="checkbox"
+            defaultChecked={this.props.node.disabled}
+            onChange={this.handleDisabledChange} />
                {/* <StoreLookup storeLookup={this.props.storeLookup} docKey={this.props.node.doc_key} storeValues={this.props.node.store} storeUpdate={this.storeUpdate} type={'node'} docId={0} /> */}
             </td>
            </tr>
@@ -53,6 +67,14 @@ var CatalogTreeRow = React.createClass({
     },
 showHistoryModal: function() {
     GetNodeHistory(this.props.node.id, this.getNodeHistoryCallback);
+},
+handleDisabledChange: function(event) {
+    SaveDisabled(this.props.node.doc_key, event.target.checked, this.props.node, this.props.nodeLevel,  this.saveDisabledCallback);
+},
+saveDisabledCallback: function(data, node, nodeLevel) {
+    this.props.showFeedBack(data);
+   // this.props.reloadData(node.doc_key, node.name, nodeLevel);
+   this.props.updateAllCatalogs();
 },
 getNodeHistoryCallback: function(data) {
     this.setState({ nodeHistoryData: data,showHistoryModal:true });

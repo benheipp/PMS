@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import CatalogTree from '../Catalog/catalog';
 import StoreControl from '../Controls/store-control';
+import CatalogDisabledTree from '../Catalog/catalog-disabled';
 
 var CatalogMain = React.createClass({
     componentWillMount: function() {
@@ -14,7 +15,8 @@ var CatalogMain = React.createClass({
                 name: '',
                 value:''
             },
-            storeLookup: []
+            storeLookup: [],
+            updateControl:''
         };
     },
     render: function() {
@@ -31,11 +33,15 @@ var CatalogMain = React.createClass({
 
         return (<div className="container">
                 { !showCatalogTree ? <StoreControl storeLookup={this.state.storeLookup} selectStore={this.selectStore} /> : null }
-                { showCatalogTree ? <CatalogTree storeLookup={this.state.storeLookup} selectedStore={this.state.selectedStore} handleClearSelectedStore={this.handleClearSelectedStore} /> : null }
+                { showCatalogTree ? <CatalogTree storeLookup={this.state.storeLookup} selectedStore={this.state.selectedStore} handleClearSelectedStore={this.handleClearSelectedStore} disabled="0" updateControl={this.state.updateControl} updateAllCatalogs={this.updateAllCatalogs} /> : null }
+                { showCatalogTree ? <CatalogDisabledTree storeLookup={this.state.storeLookup} selectedStore={this.state.selectedStore} updateControl={this.state.updateControl} updateAllCatalogs={this.updateAllCatalogs} /> : null }
               </div>);
     },
     callbackStoreLookups: function (data) {
         this.setState({ storeLookup: data });
+    },
+    updateAllCatalogs: function() {
+        this.setState({updateControl:'Update'});
     },
     selectStore: function(storeId, name){
         var selectedStore = this.state.selectedStore;
