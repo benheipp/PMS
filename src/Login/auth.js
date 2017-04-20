@@ -33,6 +33,12 @@
                 if (typeof res.permissions.find(this.findUserAdmin) !== 'undefined')
                 {localStorage.UserAdmin = "true"; } else{ localStorage.UserAdmin = "false"; }
 
+                if (typeof res.permissions.find(this.findDisable) !== 'undefined')
+                {localStorage.Disable = "true"; } else{ localStorage.Disable = "false"; }
+
+                if (typeof res.permissions.find(this.findLock) !== 'undefined')
+                {localStorage.Lock = "true"; } else{ localStorage.Lock = "false"; }
+
                 if (cb) cb(true);
                 this.onChange(true);
             } else {
@@ -62,6 +68,12 @@
     findUserAdmin(obj){
         if (obj.permission_id === 7){return true;}else{return false;}
     },
+    findDisable(obj){
+        if (obj.permission_id === 8){return true;}else{return false;}
+    },
+    findLock(obj){
+        if (obj.permission_id === 9){return true;}else{return false;}
+    },
 
     getToken() {
         return localStorage.token;
@@ -78,6 +90,8 @@
         delete localStorage.CatalogEditing;
         delete localStorage.ProductEditing;
         delete localStorage.UserAdmin;
+        delete localStorage.Disable;
+        delete localStorage.Lock;
         if (cb) cb();
         this.onChange(false);
     },

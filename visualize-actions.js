@@ -10,7 +10,7 @@
 }
 
 function getNodeList(nodeLevel, docKey, nodeName, storeId, disabled, callback) {
-    $.getJSON('http://localhost:65515/api/Pms/GetList', { storeId: storeId, disabled: disabled, token: localStorage.token })
+    $.getJSON('http://localhost:65515/api/Pms/GetList', { storeId: storeId, disabled: disabled, docKey:docKey, token: localStorage.token })
       .done(function (data) { callback(data, docKey, nodeName); })
       .fail(function (data) {
           if (data.status == '401') {
@@ -32,15 +32,15 @@ function GetPendingCatalog(callback){
       });
 }
 
-function getComponentProducts(docKey, componentName, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/GetComponent', { docKey: docKey, token: localStorage.token })
+function getComponentProducts(docKey, componentName, storeId, callback) {
+    return $.getJSON('http://localhost:65515/api/Pms/GetComponent', { docKey: docKey, storeId: storeId, token: localStorage.token })
       .done(function (data) { callback(data, componentName); })
       .fail(function (data) { console.log('GetComponent error: ' + data) });
 }
 
-function saveNode(node, nodeLevel, newNode, newNodeKey, catalogId, callback) {
-    document.getElementById("ThisIsTesting").style.display = "block"
-    return $.getJSON('http://localhost:65515/api/Pms/SaveNode', { docKey: node.doc_key, oldNode: node.name, newNode: newNode, newNodeKey: newNodeKey, catalogId: catalogId, username: localStorage.username, token: localStorage.token })
+function saveNode(node, nodeLevel, newNode, newNodeKey, storeId, callback) {
+    //document.getElementById("ThisIsTesting").style.display = "block"
+    return $.getJSON('http://localhost:65515/api/Pms/SaveNode', { docKey: node.doc_key, oldNode: node.name, newNode: newNode, oldNodeKey: node.name_key, newNodeKey: newNodeKey, username: localStorage.username, storeId:storeId, token: localStorage.token })
       .done(function (data) { callback(data, node, nodeLevel); })
       .fail(function (data) { callback(data, node, nodeLevel); });
 }
@@ -51,8 +51,8 @@ function rollback(docKey, oldNode, newNode, newNodeKey, catalogId, callback) {
       .fail(function (data) { callback(data); });
 }
 
-function SaveComponentData(docKey, component, refId, refQty, nodeName, nodeLevel, sku, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/SaveComponentData', { docKey: docKey, docId: component.id, oldRefId: component.RefId, refId: refId, oldRefQty: component.RefQty, refQty: refQty, oldSku: component.Sku, sku: sku, username: localStorage.username, token: localStorage.token })
+function SaveComponentData(docKey, component, refId, refQty, nodeName, nodeLevel, sku, storeId, callback) {
+    return $.getJSON('http://localhost:65515/api/Pms/SaveComponentData', { docKey: docKey, docId: component.id, oldRefId: component.RefId, refId: refId, oldRefQty: component.RefQty, refQty: refQty, oldSku: component.Sku, sku: sku, username: localStorage.username, storeId:storeId, token: localStorage.token })
   .done(function (data) { callback(data, docKey, nodeName, nodeLevel); })
   .fail(function (data) { callback(data, docKey, nodeName, nodeLevel); });
 }
@@ -63,8 +63,8 @@ function rollbackComponentData(docKey, docId, oldRefId, refId, oldRefQty, refQty
   .fail(function (data) { callback(data); });
 }
 
-function saveProduct(productData, newName, newDescription, docId, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/SaveProduct', { oldName: productData.name, oldDescription: productData.description, newName: newName, newDescription: newDescription, docId: docId, docKey: productData.docKey, username: localStorage.username, token: localStorage.token })
+function saveProduct(productData, newName, newDescription, docId, storeId, sku, callback) {
+    return $.getJSON('http://localhost:65515/api/Pms/SaveProduct', { oldName: productData.name, oldDescription: productData.description, newName: newName, newDescription: newDescription, docId: docId, docKey: productData.docKey, username: localStorage.username, storeId:storeId, sku:sku, token: localStorage.token })
       .done(function (data) { callback(data); })
       .fail(function (data) { callback(data); });
 }
@@ -75,14 +75,14 @@ function rollBackProduct(oldName, oldDescription, newName, newDescription, docId
       .fail(function (data) { callback(data); });
 }
 
-function SaveBreadCrumbText(docKey, breadCrumbText, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/SaveBreadCrumbText', { docKey: docKey, breadCrumbText: breadCrumbText, token: localStorage.token })
+function SaveBreadCrumbText(docKey, breadCrumbText, storeId, callback) {
+    return $.getJSON('http://localhost:65515/api/Pms/SaveBreadCrumbText', { docKey: docKey, breadCrumbText: breadCrumbText, storeId:storeId, token: localStorage.token })
       .done(function (data) { callback(data); })
       .fail(function (data) { callback(data); });
 }
 
-function GetBreadCrumbText(docKey, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/GetBreadCrumbText', { docKey: docKey, token: localStorage.token })
+function GetBreadCrumbText(docKey, storeId, callback) {
+    return $.getJSON('http://localhost:65515/api/Pms/GetBreadCrumbText', { docKey: docKey, storeId: storeId, token: localStorage.token })
       .done(function (data) { callback(data); })
       .fail(function (data) { console.log('GetBreadCrumbText error: ' + data) });
 }
@@ -158,8 +158,18 @@ function UpdateSendToWebFlag(send_flag,status_message,callback){
  }
 
  function AutoCompleteQuery(searchValue, searchVendors, callback){
-  console.log(searchVendors);
       return $.getJSON('http://localhost:65515/api/Pms/AutoCompleteQuery', {value: searchValue, searchVendors: searchVendors, token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+  function GetProductAndEntities(doc_key, storeId, callback){
+      return $.getJSON('http://localhost:65515/api/Pms/GetProductAndEntities', {doc_key: doc_key, storeId:storeId, token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
@@ -334,8 +344,8 @@ function UpdateSendToWebFlag(send_flag,status_message,callback){
       });
  }
 
- function SaveDisabled(docKey, disabledVal, node, nodeLevel, callback){
-      return $.getJSON('http://localhost:65515/api/Pms/SaveDisabled', {docKey:docKey, disabledVal: disabledVal, token: localStorage.token })
+ function SaveDisabled(docKey, disabledVal, node, nodeLevel, storeId, callback){
+      return $.getJSON('http://localhost:65515/api/Pms/SaveDisabled', {docKey:docKey, disabledVal: disabledVal, username: localStorage.username, storeId:storeId, token: localStorage.token })
   .done(function (data) { callback(data, node, nodeLevel); })
    .fail(function (data) {
           if (data.status == '401') {
@@ -344,3 +354,16 @@ function UpdateSendToWebFlag(send_flag,status_message,callback){
           }
       });
  }
+
+ function SaveLocked(docKey, lockedVal, node, nodeLevel, storeId, callback){
+      return $.getJSON('http://localhost:65515/api/Pms/SaveLocked', {docKey:docKey, lockedVal: lockedVal, username: localStorage.username, storeId:storeId, token: localStorage.token })
+  .done(function (data) { callback(data, node, nodeLevel); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+

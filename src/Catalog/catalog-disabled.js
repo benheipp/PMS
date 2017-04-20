@@ -15,6 +15,12 @@ var CatalogDisabled = React.createClass({
     componentWillMount: function() {
         getNodeList(1, null, [], this.props.selectedStore.value, 1, this.handleNewData);
     },
+    componentWillReceiveProps: function(nextProps) {
+        if (nextProps.docKey != this.props.docKey)
+        {
+            getNodeList(1, nextProps.docKey, [], this.props.selectedStore.value, 1, this.handleNewData);
+        }
+    },
     render: function () {
 
         const pageButtons = [];
@@ -55,7 +61,7 @@ var CatalogDisabled = React.createClass({
                     <td><b>Node</b></td>
                   </tr>
                   {rows}
-                  {this.state.noResultsMessage ? <p style={{fontSize:'50px'}}>No Results</p> : null }
+                  {this.state.noResultsMessage ? <p style={{fontSize:'20px'}}>No Results</p> : null }
                 </tbody>
               </table>
               <div>

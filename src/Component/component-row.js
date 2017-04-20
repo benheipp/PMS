@@ -1,6 +1,7 @@
 ﻿import React from 'react';
-import ProductModal from './product-modal'
-import ComponentHistoryModal from './component-history'
+import ProductModal from './product-modal';
+import ComponentHistoryModal from './component-history';
+import {Link} from 'react-router';
 
 var ComponentRow = React.createClass({
     getInitialState: function () {
@@ -11,6 +12,7 @@ var ComponentRow = React.createClass({
             sku: this.props.component.Sku,
             showHistoryModal: false,
             showModal: false,
+            showProductDetail: false,
             ProductData: {
                 docKey: "",
                 sku: "",
@@ -32,7 +34,7 @@ var ComponentRow = React.createClass({
                          <td><input type="text" style={{"width" : "70px"}} className="form-control" id="txtEditRefId" value={this.state.refId} onChange={this.handleChange.bind(this, 'refId')} /></td>
                          <td><a href="#" onClick={this.handleShowModal.bind(this, this.props.docKey, this.props.component.Sku, this.props.component.ProductName, this.props.component.Description) }>{this.props.component.ProductName}</a></td>
                          <td><input type="number" style={{ "width": "70px" }} className="form-control" id="txtEditQty" value={this.state.qty} onChange={this.handleChange.bind(this, 'qty')} /></td>
-                         <td><input type="text" style={{"width" : "120px"}} className="form-control" id="txtEditSku" value={this.state.sku} onChange={this.handleChange.bind(this, 'sku')} /></td>
+                         <td>{this.props.component.Sku}</td>
                          <td><button onClick={this.handleSaveClick.bind(this, this.props.docKey, this.props.component, this.state.refId, this.state.qty, this.props.nodeName, this.props.nodeLevel, this.state.sku)} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-floppy-disk"></i></button></td>
                          <td><button onClick={this.handleCancelClick} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-remove"></i></button></td>
             </tr>
@@ -44,7 +46,7 @@ var ComponentRow = React.createClass({
 <td>{this.props.component.RefId}</td>
 <td><a href="#" onClick={this.handleShowModal.bind(this, this.props.docKey, this.props.component.Sku, this.props.component.ProductName, this.props.component.Description, this.props.component.id) }>{this.props.component.ProductName}</a></td>
 <td>{this.props.component.RefQty}</td>
-<td>{this.props.component.Sku}</td>
+<td><Link to={`/product-detail?id=${this.props.component.docId}&store_id=${this.props.store}`} target="_blank">{this.props.component.Sku}</Link></td>
 <td><button disabled={editDisable} onClick={this.handleEditClick} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-pencil"></i></button></td>
 <td><button onClick={this.showHistoryModal} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-book"></i></button>
     {this.state.showHistoryModal ? <ComponentHistoryModal docKey={this.props.docKey} component={this.props.component} handleHideComponentHistoryModal={this.handleHideComponentHistoryModal} rollbackComplete={this.rollbackComplete } /> : null}
@@ -71,7 +73,7 @@ handleEditClick: function () {
     this.setState({ isEditMode: true });
 },
 handleSaveClick: function (docKey, component, refId, refQty, nodeName, nodeLevel, sku) {
-    SaveComponentData(docKey, component, refId, refQty, nodeName, nodeLevel, sku, this.saveComponentCallback);
+    SaveComponentData(docKey, component, refId, refQty, nodeName, nodeLevel, sku, this.props.store, this.saveComponentCallback);
     this.setState({ isEditMode: false });
 },
 saveComponentCallback: function (data, docKey, nodeName, nodeLevel) {
@@ -90,8 +92,14 @@ handleShowModal: function (docKey, sku, productName, description, id) {
     prodData.id = id;
     this.setState({ showModal: true });
 },
+handleHideProductDetailModal: function () {
+    this.setState({ showProductDetail: false });
+},
+handleHideModal: function() {
+    this.setState({ showModal: false });
+},
 handleSaveProductClick: function (productData, newName, newDescription) {
-    saveProduct(productData, newName, newDescription, this.props.component.id, this.saveProductCallback);
+    saveProduct(productData, newName, newDescription, this.props.component.id, this.props.store, this.props.component.Sku, this.saveProductCallback);
 },
 saveProductCallback: function (data) {
     this.props.showFeedBack(data);

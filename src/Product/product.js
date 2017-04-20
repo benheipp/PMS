@@ -12,6 +12,7 @@ var ProductMain = React.createClass({
         }
     },
     componentDidMount: function() {
+        console.log(this.props.location.query);
         GetVendorList(this.vendorListCallback);
     },
 	getInitialState: function() {

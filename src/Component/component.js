@@ -19,7 +19,7 @@ var ComponentLevel = React.createClass({
     },
     render: function () {
         var rows = this.props.component.map(function (component) {
-            return <ComponentRow component={component} key={component.key} docKey={this.props.docKey} componentName={this.props.componentName} nodeName={this.props.nodeName} nodeLevel={this.props.nodeLevel} showFeedBack={this.showFeedBack} reloadData={this.reloadData} handleShowModal={this.handleShowModal} handleHideModal={this.handleHideModal} storeLookup={this.props.storeLookup} />;
+            return <ComponentRow component={component} key={component.key} store={this.props.store} docKey={this.props.docKey} componentName={this.props.componentName} nodeName={this.props.nodeName} nodeLevel={this.props.nodeLevel} showFeedBack={this.showFeedBack} reloadData={this.reloadData} handleShowModal={this.handleShowModal} handleHideModal={this.handleHideModal} storeLookup={this.props.storeLookup} />;
         }, this);
 
         var divPanZoomStyle = {
@@ -46,7 +46,7 @@ var ComponentLevel = React.createClass({
             <div>
               <table className="table" id="componentTable">
                 <tr>
-                  <td colspan="2">
+                  <td colSpan="2">
                     <h2 id="h2TopTag">
                         {this.props.componentName}
                     </h2>

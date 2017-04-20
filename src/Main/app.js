@@ -7,6 +7,7 @@ import LoginControl from '../Login/login';
 import auth from '../Login/auth';
 import ProductMain from '../Product/product';
 import UserAdminMain from '../UserAdmin/useradminmain';
+import ProductStandAlone from '../Product/product-stand-alone';
 
 const App = React.createClass({
     getInitialState() {
@@ -89,8 +90,9 @@ render(
     <Route path="/import" component={ImportMain} onEnter={requireAuth} />
     <Route path="/login" component={LoginControl} />
     <Route path="/logout" component={Logout} />
-    <Route path="/product" component={ProductMain} />
-    <Route path="/user" component={UserAdminMain} />
+    <Route path="/product" component={ProductMain} onEnter={requireAuth} />
+    <Route path="/user" component={UserAdminMain} onEnter={requireAuth} />
+    <Route path="/product-detail" component={ProductStandAlone} onEnter={requireAuth} />
     </Route>
   </Router>
 , document.getElementById('root'));

@@ -50,7 +50,7 @@ var ProductModal = React.createClass({
                               Name:
                           </div>
                           <div className="col-sm-10">
-                              <input type="text" maxlength="255" className="form-control" value={this.state.name} onChange={this.handleChange.bind(this, 'name')} />
+                              <input type="text" maxLength="255" className="form-control" value={this.state.name} onChange={this.handleChange.bind(this, 'name')} />
                           </div>
                      </div>
                       <div className="row" style={{ marginTop: '5px' }}>
@@ -58,7 +58,7 @@ var ProductModal = React.createClass({
                               Description:
                           </div>
                           <div className="col-sm-10">
-                              <input type="text" maxlength="255" className="form-control" value={this.state.description} onChange={this.handleChange.bind(this, 'description')} />
+                              <input type="text" maxLength="255" className="form-control" value={this.state.description} onChange={this.handleChange.bind(this, 'description')} />
                           </div>
                       </div>
                      <div className="row" style={{ marginTop: '5px' }}>

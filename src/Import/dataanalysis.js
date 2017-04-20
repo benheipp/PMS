@@ -26,28 +26,6 @@ var DataAnalysis = React.createClass({
         this.setState({showDetails:false});
   },
   render: function () {
-
-        const pageButtons = [];
-        var visiblePages = Math.ceil(this.state.page / this.state.pagesVisible);
-        var styleDisplay = '';
-          for (let i = 1; i <= this.state.pageCount; i += 1) {
-            if (Math.ceil(i / this.state.pagesVisible) === visiblePages)
-            {
-              styleDisplay = 'block';
-            } else {
-              styleDisplay = 'none';
-            }
-
-            pageButtons.push(<li key={i} className={i === this.state.page ? 'active' : ''} style={{display:styleDisplay}}>
-              <a
-                href="#unpaidBalancesTable"
-                onClick={() => this.setPageNumber(i)}
-              >{i}
-              </a>
-            </li>);
-          }
-
-
         return (
           <div className="webSend-container">
           { this.state.showDetails ? <DataAnalysisDetailsModal ModalTitle={this.state.modalTitle} detailType={this.state.detailType} handleHideDetailsModal={this.handleHideDetailsModal}/> : null }
