@@ -24,8 +24,14 @@ var ComponentRow = React.createClass({
     },
     render: function () {
 
-        var editDisable;
-        if (localStorage.CatalogEditing == 'true'){editDisable = false;} else {editDisable = true;}
+        var editDisable = true;
+        if (!this.props.component.edit_mode || this.props.component.username == localStorage.username)
+        {
+            editDisable = false;
+            if (localStorage.CatalogEditing != 'true'){editDisable = true;}
+        } else {
+            editDisable = true;
+        }
 
         if (this.state.isEditMode) {
             return (
@@ -51,6 +57,7 @@ var ComponentRow = React.createClass({
 <td><button onClick={this.showHistoryModal} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-book"></i></button>
     {this.state.showHistoryModal ? <ComponentHistoryModal docKey={this.props.docKey} component={this.props.component} handleHideComponentHistoryModal={this.handleHideComponentHistoryModal} rollbackComplete={this.rollbackComplete } /> : null}
         </td>
+    }
 </tr>
         );
 }
@@ -67,9 +74,11 @@ showHistoryModal: function() {
     this.setState({ showHistoryModal: true });
 },
 handleCancelClick: function () {
+    UpdateEditingFlag('catalog',false,this.props.docKey);
     this.setState({ isEditMode : false});
 },
 handleEditClick: function () {
+    UpdateEditingFlag('catalog',true,this.props.docKey);
     this.setState({ isEditMode: true });
 },
 handleSaveClick: function (docKey, component, refId, refQty, nodeName, nodeLevel, sku) {

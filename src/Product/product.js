@@ -12,7 +12,6 @@ var ProductMain = React.createClass({
         }
     },
     componentDidMount: function() {
-        console.log(this.props.location.query);
         GetVendorList(this.vendorListCallback);
     },
 	getInitialState: function() {
@@ -62,7 +61,7 @@ var ProductMain = React.createClass({
     },
     handleSaveProdClick: function(newProdName,prodData)
     {
-    	SaveProductMaster(newProdName,prodData.name,prodData.id,prodData.doc_key,this.saveProdCallback)
+    	SaveProductMaster(newProdName,prodData.name,prodData.id,prodData.doc_key,prodData.store_id,this.saveProdCallback)
     },
     saveProdCallback: function(data,newName)
     {

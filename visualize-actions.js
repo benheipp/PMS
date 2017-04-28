@@ -76,7 +76,7 @@ function rollBackProduct(oldName, oldDescription, newName, newDescription, docId
 }
 
 function SaveBreadCrumbText(docKey, breadCrumbText, storeId, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/SaveBreadCrumbText', { docKey: docKey, breadCrumbText: breadCrumbText, storeId:storeId, token: localStorage.token })
+    return $.getJSON('http://localhost:65515/api/Pms/SaveBreadCrumbText', { docKey: docKey, breadCrumbText: breadCrumbText, storeId:storeId, username: localStorage.username, token: localStorage.token })
       .done(function (data) { callback(data); })
       .fail(function (data) { callback(data); });
 }
@@ -146,6 +146,17 @@ function GetCurrentImportStatus(callback){
       });
  }
 
+ function GetCurrentVendorImportStatus(callback){
+      return $.getJSON('http://localhost:65515/api/Pms/GetCurrentVendorImportStatus', {token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
 function UpdateSendToWebFlag(send_flag,status_message,callback){
       return $.getJSON('http://localhost:65515/api/Pms/UpdateSendToWebFlag', {send_flag: send_flag, status_message: status_message, token: localStorage.token })
   .done(function (data) { callback(data); })
@@ -157,8 +168,42 @@ function UpdateSendToWebFlag(send_flag,status_message,callback){
       });
  }
 
+ function UpdateImportFlag(vendor,import_flag,status_message,callback){
+  console.log(vendor);
+      return $.getJSON('http://localhost:65515/api/Pms/UpdateImportFlag', {vendor: vendor, import_flag: import_flag, status_message: status_message, username: localStorage.username, token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
  function AutoCompleteQuery(searchValue, searchVendors, callback){
       return $.getJSON('http://localhost:65515/api/Pms/AutoCompleteQuery', {value: searchValue, searchVendors: searchVendors, token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+  function CopyAutoCompleteQuery(value, store_id, callback){
+      return $.getJSON('http://localhost:65515/api/Pms/CopyAutoComplete', {value: value, store_id: store_id, token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+ function Copy(nodeValue, originDocKey, destinationDocKey, callback){
+      return $.getJSON('http://localhost:65515/api/Pms/Copy', {nodeValue: nodeValue, originDocKey: originDocKey, destinationDocKey:destinationDocKey, username:localStorage.username, token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
@@ -190,8 +235,8 @@ function UpdateSendToWebFlag(send_flag,status_message,callback){
       });
  }
 
- function SaveProductMaster(newName,oldName,id,docKey,callback){
-      return $.getJSON('http://localhost:65515/api/Pms/SaveProductMaster', {newProductName:newName,oldProductName:oldName,id:id,docKey:docKey,username:localStorage.username,token: localStorage.token })
+ function SaveProductMaster(newName,oldName,id,docKey,storeId,callback){
+      return $.getJSON('http://localhost:65515/api/Pms/SaveProductMaster', {newProductName:newName,oldProductName:oldName,id:id,docKey:docKey,username:localStorage.username, storeId:storeId, token: localStorage.token })
   .done(function (data) { callback(data,newName); })
    .fail(function (data) {
           if (data.status == '401') {
@@ -358,6 +403,16 @@ function UpdateSendToWebFlag(send_flag,status_message,callback){
  function SaveLocked(docKey, lockedVal, node, nodeLevel, storeId, callback){
       return $.getJSON('http://localhost:65515/api/Pms/SaveLocked', {docKey:docKey, lockedVal: lockedVal, username: localStorage.username, storeId:storeId, token: localStorage.token })
   .done(function (data) { callback(data, node, nodeLevel); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/login";
+          }
+      });
+ }
+
+ function UpdateEditingFlag(type,flag,doc_key){
+      return $.getJSON('http://localhost:65515/api/Pms/UpdateEditingFlag', {type:type, flag: flag, username: localStorage.username, doc_key:doc_key, token: localStorage.token })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();

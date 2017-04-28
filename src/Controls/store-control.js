@@ -12,7 +12,7 @@ var StoreControl = React.createClass({
               <div className="col-sm-12" style={{fontSize:'50px'}}>
                 <div className="row">
                     <div className="col-sm-6">
-                    <strong><a style={{cursor:'pointer', color:'black'}} onClick={this.selectStore.bind(this,'999','Not Assigned')}>Not Assigned</a></strong>
+                    <strong><a style={{cursor:'pointer', color:'black'}} onClick={this.selectStore.bind(this,'0','Not Assigned')}>Not Assigned</a></strong>
                     </div>
                 </div>
               </div>

@@ -140,7 +140,19 @@ BreadCrumbClick: function (nodeLevel, docKey) {
     this.updateAllCatalogs(docKey);
 },
 HandleComponentData: function (data, componentName) {
-    this.setState({ componentData: data, componentName: componentName, componentImage: '//cdn.firedog.com/diagram/' + data[0].ImageUrl + '.png', showComponent: true });
+    var imgPrefix;
+    switch (this.props.selectedStore.value) {
+    case 12:
+        imgPrefix = '//cdn.firedog.com/diagram/';
+        break;
+    case 11:
+        imgPrefix = '//cdn.partzilla.com/diagram/';
+        break;
+    case 10:
+        imgPrefix = '//cdn.boats.net/diagram/';
+        break;
+    }
+    this.setState({ componentData: data, componentName: componentName, componentImage: imgPrefix + data[0].ImageUrl + '.png', showComponent: true });
 },
 showFeedBack: function(data) {
     this.setState({ showFeedback: true, feedbackResult: data.Result, feedbackMessage: data.Message});

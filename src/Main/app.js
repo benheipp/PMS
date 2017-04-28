@@ -37,7 +37,7 @@ const App = React.createClass({
             </div>
             <div className="navbar-collapse collapse">
                 <ul className="nav navbar-nav">
-                  {renderImport ? <li><Link to="import">Import</Link></li> : null}
+                  {renderImport ? <li><Link to="import">Data Tools</Link></li> : null}
                   {renderCatalog ? <li><Link to="catalog">Catalog</Link></li> : null}
                   {renderProduct ? <li><Link to="product">Products</Link></li> : null}
             </ul>

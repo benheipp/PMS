@@ -34,7 +34,7 @@ var ProductStandAlone = React.createClass({
     },
     handleSaveProdClick: function(newProdName,prodData)
     {
-      SaveProductMaster(newProdName,prodData.name,prodData.id,prodData.doc_key,this.saveProdCallback)
+      SaveProductMaster(newProdName,prodData.name,prodData.id,prodData.doc_key, this.props.location.query.store_id, this.saveProdCallback)
     },
     saveProdCallback: function(data,newName)
     {

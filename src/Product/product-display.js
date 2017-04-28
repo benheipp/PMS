@@ -11,12 +11,12 @@ var ProductDisplay = React.createClass({
 	},
     render: function () {
         var disableVar;
-        var disableVar;
-        if ((this.props.data.web_sent == false && this.props.data.web_sent_datetime != '1900-01-01T00:00:00') || localStorage.ProductEditing == 'false')
+        if (!this.props.data.edit_mode || this.props.data.username == localStorage.username)
         {
-            disableVar = true;
-        }else{
             disableVar = false;
+            if (localStorage.ProductEditing != 'true'){disableVar = true;}
+        } else {
+            disableVar = true;
         }
 
         if (this.state.isEditMode) {
@@ -93,9 +93,11 @@ handleChange: function (name, e) {
     this.setState(change);
 },
 handleEditClick: function () {
+    UpdateEditingFlag('product',true,this.props.data.doc_key);
 	this.setState({isEditMode:true,prodName:this.props.data.name});
 },
 handleCancelClick: function () {
+    UpdateEditingFlag('product',false,this.props.data.doc_key);
 	this.setState({isEditMode:false});
 },
 handleSaveClick: function (){

@@ -1,6 +1,7 @@
 ﻿import React from 'react';
-import StoreLookup from '../Controls/store-lookup'
-import NodeHistoryModal from './catalog-node-history'
+import StoreLookup from '../Controls/store-lookup';
+import NodeHistoryModal from './catalog-node-history';
+import CopyModal from './copy-modal';
 
 var CatalogTreeRow = React.createClass({
     getInitialState: function() {
@@ -9,18 +10,22 @@ var CatalogTreeRow = React.createClass({
             nodeValue: this.props.node.name,
             nodeKey: this.props.node.name_key,
             showHistoryModal: false,
+            showCopyModal:false,
             nodeHistoryData: []
         };
     },
     render: function () {
 
         var disableVar;
-        if ((this.props.node.web_sent == false && this.props.node.web_sent_datetime != '1900-01-01T00:00:00') || localStorage.CatalogEditing == 'false')
+
+        if (!this.props.node.edit_mode || this.props.node.username == localStorage.username)
         {
-            disableVar = true;
-        }else{
             disableVar = false;
+            if (localStorage.CatalogEditing != 'true'){disableVar = true;}
+        } else {
+            disableVar = true;
         }
+
 
         var disableVis = false;
         if (localStorage.Disable == 'true')
@@ -65,12 +70,13 @@ var CatalogTreeRow = React.createClass({
            );
     } else {
             return(
-//disabled={disableVar}
             <tr>
             <td><a href="#" onClick={this.handleClick.bind(this, this.props.node.doc_key, this.props.node.name, this.props.nodeLevel) }>{this.props.node.name}</a></td>
-            <td><button onClick={this.handleEditClick.bind(this,this.props.node)} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-pencil"></i> Edit</button></td>
+            <td><button disabled={disableVar} onClick={this.handleEditClick.bind(this,this.props.node)} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-pencil"></i> Edit</button></td>
+            <td><button onClick={this.showCopyModal} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-copy"></i> Copy</button></td>
             <td><button disabled onClick={this.showHistoryModal} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-book"></i> History</button>
                 {this.state.showHistoryModal ? <NodeHistoryModal docKey={this.props.node.doc_key} catalogId={this.props.node.id} handleHideModal={this.handleHideModal} rollbackComplete={this.rollbackComplete} data={this.state.nodeHistoryData} webSent={this.props.node.web_sent} /> : null}
+                {this.state.showCopyModal ? <CopyModal handleHideModal={this.handleHideCopyModal} store={this.props.store} DocKey={this.props.node.doc_key} /> : null }
                 </td>
            {disableVis ? <td>
             <input
@@ -91,6 +97,12 @@ var CatalogTreeRow = React.createClass({
             );
 }
     },
+handleHideCopyModal: function () {
+    this.setState({ showCopyModal: false });
+},
+showCopyModal: function () {
+    this.setState({ showCopyModal: true });
+},
 showHistoryModal: function() {
     GetNodeHistory(this.props.node.id, this.getNodeHistoryCallback);
 },
@@ -118,6 +130,7 @@ handleClick: function(docKey,nodeName,nodeLevel) {
     this.props.onNodeClick(docKey, nodeName, nodeLevel);
 },
 handleEditClick: function () {
+    UpdateEditingFlag('catalog',true,this.props.node.doc_key);
     this.setState({ isEditMode: true });
 },
 handleHideModal: function() {
@@ -129,6 +142,7 @@ handleSaveClick: function (node, nodeLevel, newNode, newNodeKey) {
     this.setState({ isEditMode: false });
 },
 handleCancelClick: function (node, nodeLevel) {
+    UpdateEditingFlag('catalog',false,this.props.node.doc_key);
     this.setState({ isEditMode: false });
 },
 saveCallBack: function (data, node, nodeLevel) {
