@@ -15,6 +15,7 @@ var CopyAutoComplete = React.createClass({
         fontSize: '14px',
         lineHeight: '1.42857143',
         color: '#555',
+        width: '800px',
         backgroundColor: '#fff',
         backgroundImage: 'none',
         border: '1px solid #ccc',
@@ -25,7 +26,7 @@ var CopyAutoComplete = React.createClass({
 
       var menuStyle = {
         position: 'absolute',
-        float: 'right',
+        float: 'left',
         zIndex: '100',
         background: '#fff',
         border: '1px solid #ccc',
@@ -45,7 +46,7 @@ var CopyAutoComplete = React.createClass({
           backgroundImage: 'none',
           border: '1px solid #ccc',
           borderRadius: '4px',
-          width:'400px',
+          width:'800px',
           boxShadow: 'inset 0 1px 1px rgba(0,0,0,.075)',
           transition: 'border-color ease-in-out .15s,box-shadow ease-in-out .15s'   }}}
           ref="autocomplete-copy"
@@ -55,7 +56,7 @@ var CopyAutoComplete = React.createClass({
           getItemValue={(item) => item.name}
           onSelect={(value, item) => {
             // set the menu to only the selected item
-            this.setState({ value, products: [ item ] })
+            this.setState({ value: item.doc_key, products: [ item ] })
             this.selectRecord(item);
             // or you could reset it to a default list again
             // this.setState({ unitedStates: getStates() })
@@ -66,6 +67,8 @@ var CopyAutoComplete = React.createClass({
               this.setState({ value });
               return;
             } else {
+              var item = {doc_key:value};
+              this.props.selectRecord(item);
               this.setState({ value, loading: true });
               CopyAutoCompleteQuery(value,this.props.store,this.autoCompleteCallback)
             }
@@ -78,7 +81,7 @@ var CopyAutoComplete = React.createClass({
               style={isHighlighted ? styles.highlightedItem : styles.item}
               key={item.abbr}
               id={item.abbr}
-            >{item.doc_key}</div>
+            >{item.doc_key} - {item.store_id}</div>
           )}
         />
 
@@ -91,7 +94,6 @@ var CopyAutoComplete = React.createClass({
         </div>);
     },
     autoCompleteCallback: function(data){
-      console.log(data);
       this.setState({products:data });
     },
     selectRecord: function(item){

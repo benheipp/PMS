@@ -7,8 +7,10 @@ var CopyModal = React.createClass({
         showFeedback: false,
         feedbackResult:0,
         feedbackMessage: "",
-        selectedDocKey: "",
-        showCopyButton:false
+        selectedItem:[],
+        showCopyButton:false,
+        disableButtons:false,
+        selectedOption:'Copy'
       }
   },
     componentDidMount() {
@@ -16,30 +18,51 @@ var CopyModal = React.createClass({
         $('#CopyModal').on('hidden.bs.modal', this.props.handleHideModal);
     },
     render: function () {
+
         return (
-            <div id="CopyModal" className="modal fade">
+            <div id="CopyModal" className="modal fade" data-keyboard="false" data-backdrop="static">
                 <div className="modal-dialog modal-lg">
                   <div className="modal-content">
                     <div className="modal-header">
-                      <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 className="modal-title">Copy</h4>
+                      <h4 className="modal-title">Copy/Move</h4>
                     </div>
                     <div className="modal-body">
-                      <div className="alert alert-info" role="alert">Copy <b>{this.props.DocKey}</b> to <b>{this.state.selectedDocKey}</b></div>
-                       <FeedBack Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
+                      <div className="alert alert-info" role="alert">Copy <b>{this.props.DocKey}</b> to <b>{this.state.selectedItem.doc_key}</b></div>
+                       <FeedBack noTimer="true" Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
+                      <div>
+                       <div className="row">
+                          <div className="col-sm-1">
+                            <table>
+                              <tr>
+                                <td> <input type="radio" value="Copy"
+                            checked={this.state.selectedOption === 'Copy'}
+                            onChange={this.handleOptionChange} /></td>
+                                <td>Copy</td>
+                              </tr>
+                            </table>
+                          </div>
+                          <div className="col-sm-1">
+                            <table>
+                              <tr>
+                                <td> <input type="radio" value="Move"
+                            checked={this.state.selectedOption === 'Move'}
+                            onChange={this.handleOptionChange} /></td>
+                                <td>Move</td>
+                              </tr>
+                            </table>
+                        </div>
+                      </div>
+                    </div>
                        <CopyAutoComplete selectRecord={this.selectRecord} store={this.props.store} />
-                      {this.state.showCopyButton ? <button onClick={this.handleCopy} type="button" style={{marginTop:'10px'}} className="btn btn-default"><i className="glyphicon glyphicon-copy"></i> Copy</button> : null }
+                      {this.state.showCopyButton ? <button disabled={this.state.disableButtons} onClick={this.handleCopy} type="button" style={{marginTop:'10px'}} className="btn btn-default"><i className="glyphicon glyphicon-copy"></i> {this.state.selectedOption}</button> : null }
                     </div>
       <div className="modal-footer">
-        <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button disabled={this.state.disableButtons} type="button" className="btn btn-default" data-dismiss="modal">Close</button>
      </div>
     </div>
     </div>
     </div>
         );
-},
-handleHideModal: function() {
-    this.props.handleHideModal();
 },
   resetFeedbackState: function() {
       this.setState({ showFeedback: false });
@@ -49,16 +72,39 @@ handleHideModal: function() {
 },
   selectRecord: function(item) {
     if(item.doc_key != ''){
-       this.setState({selectedDocKey: item.doc_key, showCopyButton: true});
+       this.setState({selectedItem: item, showCopyButton: true});
     }
 },
   handleCopy: function(){
-    var pieces = this.props.DocKey.split("/");
-    console.log(pieces[pieces.length-1])
-    Copy(pieces[pieces.length-1],this.props.DocKey,this.state.selectedDocKey,this.handleCopyCallback)
+    if (this.state.selectedOption == 'Copy')
+    {
+      this.setState({ disableButtons:true, showFeedback: true, feedbackResult: 2, feedbackMessage: "Copying Data..."});
+      var pieces = this.props.DocKey.split("/");
+      if (this.props.store == '0')
+      {
+          CopyStore0(pieces[pieces.length-1],this.props.DocKey,this.state.selectedItem.doc_key, this.props.store, this.state.selectedItem.store_id, this.handleCopyCallback);
+      } else {
+          Copy(pieces[pieces.length-1],this.props.DocKey,this.state.selectedItem.doc_key, this.props.store, this.handleCopyCallback);
+      }
+    } else if (this.state.selectedOption == 'Move') {
+      this.setState({ disableButtons:true, showFeedback: true, feedbackResult: 2, feedbackMessage: "Moving Data..."});
+      var pieces = this.props.DocKey.split("/");
+      if (this.props.store == '0')
+      {
+        MoveStore0(pieces[pieces.length-1],this.props.DocKey,this.state.selectedItem.doc_key, this.props.store, this.state.selectedItem.store_id, this.handleCopyCallback);
+      } else {
+        Move(pieces[pieces.length-1],this.props.DocKey,this.state.selectedItem.doc_key, this.props.store, this.handleCopyCallback);
+      }
+    }
 },
   handleCopyCallback: function(data){
+    this.setState({ disableButtons:false });
   this.showFeedBack(data);
+},
+handleOptionChange: function (changeEvent) {
+  this.setState({
+    selectedOption: changeEvent.target.value
+  });
 }
 });
 

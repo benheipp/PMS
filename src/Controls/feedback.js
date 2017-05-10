@@ -6,10 +6,20 @@ var FeedBack = React.createClass({
     };
     },
     componentDidMount: function() {
-        this.setTimer();
+        if (this.props.noTimer != undefined && this.props.noTimer == "true")
+        {
+            this.setTimer();
+        } else {
+            this.setTimer();
+        }
     },
     componentWillReceiveProps: function(nextProps) {
-        this.setTimer();
+        if (this.props.noTimer != undefined && this.props.noTimer == "true")
+        {
+            this.setTimer();
+        } else {
+            this.setTimer();
+        }
         this.setState({ visible: this.props.visible });
     },
     render: function () {
@@ -18,6 +28,8 @@ var FeedBack = React.createClass({
             classN = "alert alert-success";
         } else if (this.props.Result == 1)  {
             classN = "alert alert-danger";
+        } else if (this.props.Result == 2)  {
+            classN = "alert alert-info";
         }
 
         var styleDisplayInline = {

@@ -33,7 +33,6 @@ GetUserStatsCallback: function(data){
 	this.setState({userData:data});
 },
 reloadUserStats: function(data){
-	console.log("hit");
 	GetUserStats(localStorage.username,this.GetUserStatsCallback)
 },
 userAdminGridCallback: function(data)

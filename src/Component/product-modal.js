@@ -87,7 +87,6 @@ var ProductModal = React.createClass({
         this.setState(change);
     },
     showProdHistory: function() {
-      console.log(this.props.productData.id);
        GetComponentProductHistory(this.props.productData.id, this.historyCallBack);
     },
     handleSaveProductClick: function (productData, newName, newDescription) {

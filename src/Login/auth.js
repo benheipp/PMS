@@ -11,7 +11,6 @@
             if (res.authenticated) {
                 localStorage.token = res.token;
                 localStorage.username = res.username;
-                console.log(typeof res.permissions.find(this.findImportVisibility));
                 if (typeof res.permissions.find(this.findImportVisibility) !== 'undefined')
                 {localStorage.ImportVisibility = "true"; } else{ localStorage.ImportVisibility = "false"; }
 

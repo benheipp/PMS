@@ -52,12 +52,11 @@ var ComponentRow = React.createClass({
 <td>{this.props.component.RefId}</td>
 <td><a href="#" onClick={this.handleShowModal.bind(this, this.props.docKey, this.props.component.Sku, this.props.component.ProductName, this.props.component.Description, this.props.component.id) }>{this.props.component.ProductName}</a></td>
 <td>{this.props.component.RefQty}</td>
-<td><Link to={`/product-detail?id=${this.props.component.docId}&store_id=${this.props.store}`} target="_blank">{this.props.component.Sku}</Link></td>
+<td><Link to={`/product-detail?id=${this.props.component.docId}&store_id=${this.props.store}`}>{this.props.component.Sku}</Link></td>
 <td><button disabled={editDisable} onClick={this.handleEditClick} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-pencil"></i></button></td>
 <td><button onClick={this.showHistoryModal} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-book"></i></button>
     {this.state.showHistoryModal ? <ComponentHistoryModal docKey={this.props.docKey} component={this.props.component} handleHideComponentHistoryModal={this.handleHideComponentHistoryModal} rollbackComplete={this.rollbackComplete } /> : null}
         </td>
-    }
 </tr>
         );
 }

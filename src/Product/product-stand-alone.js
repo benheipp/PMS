@@ -5,7 +5,6 @@ import VendorList from './product-vendorlist'
 import FeedBack from '../Controls/feedback';
 var ProductStandAlone = React.createClass({
     componentDidMount: function() {
-        console.log(this.props.location.query);
         GetProductAndEntities(this.props.location.query.id, this.props.location.query.store_id, this.getProductCallBack);
     },
   getInitialState: function() {

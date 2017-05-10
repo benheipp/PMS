@@ -5,6 +5,7 @@ import BreadCrumb from '../BreadCrumb/breadcrumb';
 import BreadCrumbModal from '../BreadCrumb/breadcrumb-modal';
 import ComponentLevel from '../Component/component';
 import LoadingControl from '../Controls/loading';
+import ProductList from './product-list';
 
 
 var CatalogTree = React.createClass({
@@ -15,7 +16,9 @@ var CatalogTree = React.createClass({
             nodeName: "",
             docKey: 'catalog',
             showComponent: false,
+            showProductList: false,
             componentData: [],
+            productData:[],
             componentName: "",
             componentImage: "",
             showFeedback: true,
@@ -71,6 +74,7 @@ var CatalogTree = React.createClass({
 {this.state.showBreadCrumbModal ? <BreadCrumbModal docKey={this.state.docKey} breadCrumbText={this.state.breadCrumbText} handleHideModal={this.handleHideModal} handleSaveBreadCrumbClick={this.handleSaveBreadCrumbClick}  /> : null}
               <FeedBack Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
               { this.state.showComponent ? <ComponentLevel component={this.state.componentData} componentName={this.state.componentName} diagramUrl={this.state.componentImage} docKey={this.state.docKey} showFeedBack={this.showFeedBack} nodeName={this.state.nodeName} nodeLevel={this.state.nodeLevel} reloadDataFromComponent={this.reloadDataFromComponent} storeLookup={this.props.storeLookup} store={this.props.selectedStore.value}/> : null }
+              { this.state.showProductList ? <ProductList products={this.state.productData} /> : null}
         {disableVis ?
             <div><b>Show Disabled </b> <input
             name="disabled"
@@ -84,11 +88,12 @@ var CatalogTree = React.createClass({
                     <td><b>Node</b></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                    {disableVis ? <td><b>Disabled</b></td> : null }
                    {disableVis ? <td><b>Locked</b></td> : null }
                   </tr>
                   {rows}
-                  {this.state.noResultsMessage ? <p style={{fontSize:'50px'}}>No Results</p> : null }
+                  {this.state.noResultsMessage ? <h4>No Results</h4> : null }
                 </tbody>
               </table>
             </div>
@@ -113,7 +118,6 @@ reloadDataFromComponent: function (docKey, nodeName, nodeLevel) {
     this.updateAllCatalogs(docKey);
 },
 onNodeClick: function (docKey, nodeName, nodeLevel) {
-        console.log(docKey);
     getNodes(nodeLevel + 1, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
     GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback);
     this.setState({ docKey: docKey, nodeLevel: nodeLevel + 1, showFeedback: false });
@@ -126,18 +130,25 @@ handleNewData: function (data, docKey, nodeName) {
         this.setState({noResultsMessage:true});
     }
     if (data.length == 0 && docKey != null) {
-        getComponentProducts(docKey, nodeName, this.props.selectedStore.value, this.HandleComponentData);
+        if(docKey.includes("catalog/aftermarket"))
+        {
+          GetProductList(docKey, this.props.selectedStore.value, this.HandleProductListData);
+        } else {
+          getComponentProducts(docKey, nodeName, this.props.selectedStore.value, this.HandleComponentData);
+        }
     } else {
         this.setState({ componentData: [] });
-        this.setState({ showComponent: false, showFeedback:false });
+        this.setState({ showComponent: false, showProductList:false, showFeedback:false });
     }
 },
 BreadCrumbClick: function (nodeLevel, docKey) {
-    console.log(docKey);
     getNodes(nodeLevel, docKey, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
     GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback);
     this.setState({ docKey: docKey, nodeLevel: nodeLevel, showFeedback: false });
     this.updateAllCatalogs(docKey);
+},
+HandleProductListData: function(data) {
+    this.setState({ productData: data, showProductList:true });
 },
 HandleComponentData: function (data, componentName) {
     var imgPrefix;

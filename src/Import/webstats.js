@@ -11,6 +11,7 @@ var WebSendComponent = React.createClass({
 			intervalId: 0,
 			totalRecordsSendClick: 0,
       showPendingItems: false,
+      selectedStore: '0',
 			StatusData: {
                 status_message: "",
                 percent_complete: 0,
@@ -18,7 +19,8 @@ var WebSendComponent = React.createClass({
                 product_records_remaining: 0,
                 last_checked: "",
                 status_flag: true,
-                send_flag: false
+                send_flag: false,
+                storeId:0
             }
 		}
 	},
@@ -43,15 +45,15 @@ var WebSendComponent = React.createClass({
   	handleSendToWebClick: function() {
   		var statusData = this.state.StatusData;
   		var totalRecords = this.state.StatusData.catalog_records_remaining + this.state.StatusData.product_records_remaining;
-  		if(totalRecords < 1){
-  			statusData.status_message = "Nothing to send!";
+  		if(this.state.selectedStore == '0'){
+  			statusData.status_message = "Select a store.";
   			this.setState({StatusData: statusData });
   			return;
   		}
   		statusData.status_message = "Queueing data...";
   		statusData.send_flag = true;
   		this.setState({totalRecordsSendClick: totalRecords,StatusData: statusData });
-  		UpdateSendToWebFlag(true,"Preparing to send...",this.updateSendToWebFlagCallback)
+      UpdateWebSent(0,this.state.selectedStore,this.updateWebSentFlagCallback);
   	},
   	handleCancelClick: function() {
   		var statusData = this.state.StatusData;
@@ -63,11 +65,17 @@ var WebSendComponent = React.createClass({
   		statusData.status_message = "Cancelling send...";
   		statusData.send_flag = false;
   		this.setState({totalRecordsSendClick: 0,StatusData: statusData });
-  		UpdateSendToWebFlag(false,"Send Cancelled",this.updateSendToWebFlagCallback)
+      UpdateWebSent(1,this.state.selectedStore,this.updateWebSentFlagCallback);
   	},
   	updateSendToWebFlagCallback: function(data) {
-  		console.log("updateSendToWebFlagCallback callback");
+  		if (data.Result.Result == 'Error')
+      {
+         UpdateWebSent(1,this.state.selectedStore,this.updateWebSentFlagCallback);
+      }
   	},
+    updateWebSentFlagCallback: function(data, webSentFlag) {
+      UpdateSendToWebFlag(webSentFlag,"Preparing to send...",this.state.selectedStore,this.updateSendToWebFlagCallback);
+    },
   	getCurrentImportStatusCallback: function(data) {
   		var statusData = this.state.StatusData;
   		statusData.status_message = data.status_message;
@@ -77,7 +85,8 @@ var WebSendComponent = React.createClass({
   		statusData.status_flag = data.status_flag;
   		statusData.send_flag = data.send_flag;
   		statusData.percent_complete = data.percent_complete;
-  		this.setState({StatusData : statusData});
+      statusData.storeId = data.storeId;
+  		this.setState({StatusData : statusData,selectedStore: data.storeId});
   	},
     handleViewPendingClick: function(){
         this.setState({showPendingItems:true});
@@ -85,6 +94,17 @@ var WebSendComponent = React.createClass({
     handleHidePendingModal: function(){
         this.setState({showPendingItems:false});
     },
+    handleStoreSelectChange: function(event){
+      this.setState({selectedStore: event.target.value});
+    },
+    createStoreItems: function(){
+      let items = [];
+      items.push(<option value='0'></option>);
+     for (let i = 0; i < this.props.storeLookup.length; i++) {
+          items.push(<option key={i} value={this.props.storeLookup[i].id}>{this.props.storeLookup[i].store_name}</option>);
+        }
+        return items;
+     },
     render: function () {
 
     	var styleMargin25 = {
@@ -111,9 +131,20 @@ var WebSendComponent = React.createClass({
                                 <td><button className="btn btn-info" onClick={this.handleViewPendingClick}>View Pending Items</button></td>
                             </tr>
                         </table>
+                         <div className="row">
+                          <div className="col-sm-3">
+                          <strong>Select a Store</strong>
+                            <select className="form-control" value={this.state.selectedStore} style={{width:'300px'}} onChange={this.handleStoreSelectChange}>
+                                {this.createStoreItems()}
+                            </select>
+                          </div>
+                        </div>
+                        <div className="row">
+                        &nbsp;
+                        </div>
                         <div className="row">
                         	<div className="col-sm-3">
-                        		<button disabled={this.state.StatusData.send_flag || (this.state.StatusData.catalog_records_remaining + this.state.StatusData.product_records_remaining == 0)} className="btn btn-success" onClick={this.handleSendToWebClick}><span className="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Send to Web</button>
+                        		<button disabled={this.state.StatusData.send_flag || this.state.selectedStore == ''} className="btn btn-success" onClick={this.handleSendToWebClick}><span className="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Send to Titan</button>
                         	</div>
                         	<div className="col-sm-3">
                         		<button disabled={!this.state.StatusData.send_flag} type="button" className="btn btn-danger" onClick={this.handleCancelClick}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>

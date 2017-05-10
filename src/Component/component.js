@@ -2,6 +2,11 @@
 import ComponentRow from './component-row'
 
 var ComponentLevel = React.createClass({
+  getInitialState: function () {
+        return {
+            imageNotFound: false
+          };
+    },
     componentDidMount: function() {
             var $section = $('section').first();
         $section.find('.panzoom').panzoom({
@@ -61,7 +66,8 @@ var ComponentLevel = React.createClass({
                         <button className="reset btn-primary btn-sm" title="Reset"><span className="glyphicon glyphicon-repeat" aria-hidden="true"></span></button>
                       </div>
                       <div className="panzoom" style={divPanZoom}>
-                            <img src={this.props.diagramUrl} style={divPanZoom} id="compdiagimg" alt={this.props.componentName} />
+                           {!this.state.imageNotFound ? <img src={this.props.diagramUrl} onError={this.handleImageErrored.bind(this)} style={divPanZoom} id="compdiagimg" alt={this.props.componentName} /> : null }
+                           {this.state.imageNotFound ? <h2>Image Not Found</h2> : null}
                       </div>
                      </section>
 </td>
@@ -91,6 +97,10 @@ var ComponentLevel = React.createClass({
     },
     reloadData: function (docKey, nodeName, nodeLevel) {
         this.props.reloadDataFromComponent(docKey, nodeName, nodeLevel);
+    },
+    handleImageErrored: function ()
+    {
+      this.setState({imageNotFound:true});
     }
 });
 

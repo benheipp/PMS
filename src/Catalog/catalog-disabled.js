@@ -54,14 +54,14 @@ var CatalogDisabled = React.createClass({
         }
         return (
         <div>
-            <h1>Disabled Items</h1>
+            <h3 className="text-danger">Disabled Items</h3>
             <table className="table table-striped" id="Disabled">
                 <tbody>
                   <tr>
                     <td><b>Node</b></td>
                   </tr>
                   {rows}
-                  {this.state.noResultsMessage ? <p style={{fontSize:'20px'}}>No Results</p> : null }
+                  {this.state.noResultsMessage ? <h4>No Results</h4> : null }
                 </tbody>
               </table>
               <div>

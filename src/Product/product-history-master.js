@@ -32,7 +32,7 @@ var ProductHistoryMaster = React.createClass({
                       <div className="row">
                           <div className="col-sm-12">
                               <div className="alert alert-info">
-                                     History for: <strong>{this.props.prod.name}</strong> 
+                                     History for: <strong>{this.props.prod.name}</strong>
                               </div>
         </div>
    </div>
@@ -56,7 +56,6 @@ handleHideModal: function() {
     this.props.handleHideModal();
 },
 handleRollbackClick: function(history){
-  console.log(history);
     RollbackProductMaster(history.previous_name,history.new_name,history.product_id,history.doc_key,this.rollbackComplete);
 }
 });

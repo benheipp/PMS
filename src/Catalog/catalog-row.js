@@ -52,6 +52,7 @@ var CatalogTreeRow = React.createClass({
                   <button onClick={this.handleSaveClick.bind(this, this.props.node, this.props.nodeLevel, this.state.nodeValue, this.state.nodeKey)} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-floppy-disk"></i></button>
                   <button style={{marginLeft:'20px'}} onClick={this.handleCancelClick.bind(this, this.props.node, this.props.nodeLevel)} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-remove"></i></button>
                 </td>
+                <td></td>
               {disableVis ? <td>
                 <input
                     name="disabled"
@@ -73,7 +74,7 @@ var CatalogTreeRow = React.createClass({
             <tr>
             <td><a href="#" onClick={this.handleClick.bind(this, this.props.node.doc_key, this.props.node.name, this.props.nodeLevel) }>{this.props.node.name}</a></td>
             <td><button disabled={disableVar} onClick={this.handleEditClick.bind(this,this.props.node)} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-pencil"></i> Edit</button></td>
-            <td><button onClick={this.showCopyModal} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-copy"></i> Copy</button></td>
+            <td><button onClick={this.showCopyModal} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-copy"></i> Copy/Move</button></td>
             <td><button disabled onClick={this.showHistoryModal} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-book"></i> History</button>
                 {this.state.showHistoryModal ? <NodeHistoryModal docKey={this.props.node.doc_key} catalogId={this.props.node.id} handleHideModal={this.handleHideModal} rollbackComplete={this.rollbackComplete} data={this.state.nodeHistoryData} webSent={this.props.node.web_sent} /> : null}
                 {this.state.showCopyModal ? <CopyModal handleHideModal={this.handleHideCopyModal} store={this.props.store} DocKey={this.props.node.doc_key} /> : null }
@@ -99,9 +100,13 @@ var CatalogTreeRow = React.createClass({
     },
 handleHideCopyModal: function () {
     this.setState({ showCopyModal: false });
+    this.props.reloadData(this.props.node.doc_key, this.props.node.name, this.props.nodeLevel);
 },
 showCopyModal: function () {
     this.setState({ showCopyModal: true });
+},
+closeCopy: function () {
+    this.props.reloadData(node.doc_key, node.name, nodeLevel);
 },
 showHistoryModal: function() {
     GetNodeHistory(this.props.node.id, this.getNodeHistoryCallback);

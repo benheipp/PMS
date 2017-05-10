@@ -44,7 +44,7 @@ var ProductAutoComplete = React.createClass({
       		backgroundColor: '#fff',
       		backgroundImage: 'none',
       		border: '1px solid #ccc',
-      		borderRadius: '4px',	
+      		borderRadius: '4px',
       		width:'400px',
       		boxShadow: 'inset 0 1px 1px rgba(0,0,0,.075)',
       		transition: 'border-color ease-in-out .15s,box-shadow ease-in-out .15s'		}}}
@@ -91,7 +91,6 @@ var ProductAutoComplete = React.createClass({
     		</div>);
     },
     autoCompleteCallback: function(data){
-    	console.log(data);
     	this.setState({products:data });
     },
     displayRecord: function(item){

@@ -22,8 +22,7 @@ var ProductHistoryRow = React.createClass({
       desc = this.props.data.old_description;
       if( !this.props.data.old_description ) {
         desc = "";
-      } 
-      console.log(this.props.data.old_description);
+      }
       this.props.rollbackComplete(this.props.data.old_name,desc);
     }
 });

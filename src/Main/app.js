@@ -21,6 +21,7 @@ const App = React.createClass({
         });
     },
     componentWillMount() {
+        console.disableYellowBox = true;
         auth.onChange = this.updateAuth;
         auth.login();
     },
@@ -63,7 +64,7 @@ const App = React.createClass({
   const Logout = React.createClass({
       componentDidMount() {
           auth.logout();
-          window.location.href = "/login";
+          this.context.router.push('/login');
       },
 
       render() {
@@ -85,7 +86,7 @@ const App = React.createClass({
 render(
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-    <IndexRoute component={CatalogMain}/>
+    <IndexRoute component={CatalogMain} onEnter={requireAuth}/>
     <Route path="/catalog" component={CatalogMain} onEnter={requireAuth} />
     <Route path="/import" component={ImportMain} onEnter={requireAuth} />
     <Route path="/login" component={LoginControl} />

@@ -3,6 +3,14 @@ import WebSendComponent from './webstats';
 import DataAnalysis from './dataanalysis';
 import VendorImport from './vendor-import';
 var ImportMain = React.createClass({
+    getInitialState: function() {
+        return {
+            storeLookup: []
+        };
+    },
+    componentDidMount: function() {
+        GetStoreLookups(this.callbackStoreLookups);
+    },
     componentWillMount: function() {
         if(localStorage.ImportVisibility != 'true')
         {
@@ -12,12 +20,15 @@ var ImportMain = React.createClass({
     },
     render: function () {
     	return (<div className="container">
-    			<WebSendComponent />
+    			<WebSendComponent storeLookup={this.state.storeLookup} />
                 <VendorImport />
                 <DataAnalysis />
     			</div>
     			);
-    }
+    },
+    callbackStoreLookups: function (data) {
+        this.setState({ storeLookup: data });
+    },
 });
 
 export default ImportMain;

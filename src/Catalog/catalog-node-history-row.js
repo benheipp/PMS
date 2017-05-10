@@ -6,7 +6,7 @@ var NodeHistoryRow = React.createClass({
         if (localStorage.CatalogEditing == 'true' || this.props.web_sent == 1)
             {
                 rollBackDisable = false;
-            } 
+            }
         else {
             rollBackDisable = true;
         }
@@ -23,7 +23,6 @@ var NodeHistoryRow = React.createClass({
         rollback(this.props.docKey, this.props.history.new_node, this.props.history.previous_node, formatNameKey(this.props.history.previous_node), this.props.catalogId, this.rollbackCallback);
     },
     rollbackCallback: function (data) {
-        console.log(data);
         this.props.rollbackComplete(data);
     }
 });

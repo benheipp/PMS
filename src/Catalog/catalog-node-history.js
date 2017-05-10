@@ -21,7 +21,7 @@ var NodeHistoryModal = React.createClass({
                       <div className="row">
                           <div className="col-sm-12">
                               <div className="alert alert-info">
-                                     History for: <strong>{this.props.docKey}</strong> 
+                                     History for: <strong>{this.props.docKey}</strong>
                               </div>
         </div>
    </div>

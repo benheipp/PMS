@@ -14,7 +14,6 @@ var ComponentHistoryModal = React.createClass({
     componentWillReceiveProps: function () {
     },
     getComponentHistoryCallback: function (data) {
-        console.log(data);
         this.setState({ data: data });
     },
     render: function () {
@@ -33,7 +32,7 @@ var ComponentHistoryModal = React.createClass({
                       <div className="row">
                           <div className="col-sm-12">
                               <div className="alert alert-info">
-                                     History for: <strong>{this.props.component.ProductName}</strong> 
+                                     History for: <strong>{this.props.component.ProductName}</strong>
                               </div>
         </div>
    </div>

@@ -1,422 +1,495 @@
-﻿function getNodes(nodeLevel, docKey, nodeName, storeId, disabled, showDisabled, callback) {
-    $.getJSON('http://localhost:65515/api/Pms/Get', { nodeLevel: nodeLevel, storeId: storeId, disabled: disabled, showDisabled:showDisabled, docKey: docKey, token: localStorage.token })
+﻿//Testing
+var url = 'http://localhost:65515'
+
+//Production
+//var url = 'http://192.168.2.16:84'
+
+
+function getNodes(nodeLevel, docKey, nodeName, storeId, disabled, showDisabled, callback) {
+    $.getJSON(url + '/api/Pms/Get', { nodeLevel: nodeLevel, storeId: storeId, disabled: disabled, showDisabled:showDisabled, docKey: docKey, token: localStorage.token })
       .done(function (data) { callback(data, docKey, nodeName); })
       .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
 }
 
 function getNodeList(nodeLevel, docKey, nodeName, storeId, disabled, callback) {
-    $.getJSON('http://localhost:65515/api/Pms/GetList', { storeId: storeId, disabled: disabled, docKey:docKey, token: localStorage.token })
+    $.getJSON(url + '/api/Pms/GetList', { storeId: storeId, disabled: disabled, docKey:docKey, token: localStorage.token })
       .done(function (data) { callback(data, docKey, nodeName); })
       .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
 }
 
 function GetPendingCatalog(callback){
-  $.getJSON('http://localhost:65515/api/Pms/GetPendingCatalog', {token: localStorage.token})
+  $.getJSON(url + '/api/Pms/GetPendingCatalog', {token: localStorage.token})
       .done(function (data) { callback(data); })
       .fail(function (data) {
         console.log(data.status);
           if (data.status == '401') {
               //localStorage.clear();
-            //  window.location.href = "/login";
+            //  window.location.href = "/";
           }
       });
 }
 
 function getComponentProducts(docKey, componentName, storeId, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/GetComponent', { docKey: docKey, storeId: storeId, token: localStorage.token })
+    return $.getJSON(url + '/api/Pms/GetComponent', { docKey: docKey, storeId: storeId, token: localStorage.token })
       .done(function (data) { callback(data, componentName); })
       .fail(function (data) { console.log('GetComponent error: ' + data) });
 }
 
 function saveNode(node, nodeLevel, newNode, newNodeKey, storeId, callback) {
     //document.getElementById("ThisIsTesting").style.display = "block"
-    return $.getJSON('http://localhost:65515/api/Pms/SaveNode', { docKey: node.doc_key, oldNode: node.name, newNode: newNode, oldNodeKey: node.name_key, newNodeKey: newNodeKey, username: localStorage.username, storeId:storeId, token: localStorage.token })
+    return $.getJSON(url + '/api/Pms/SaveNode', { docKey: node.doc_key, oldNode: node.name, newNode: newNode, oldNodeKey: node.name_key, newNodeKey: newNodeKey, username: localStorage.username, storeId:storeId, token: localStorage.token })
       .done(function (data) { callback(data, node, nodeLevel); })
       .fail(function (data) { callback(data, node, nodeLevel); });
 }
 
 function rollback(docKey, oldNode, newNode, newNodeKey, catalogId, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/SaveNode', { docKey: docKey, oldNode: oldNode, newNode: newNode, newNodeKey: newNodeKey, catalogId: catalogId, username: localStorage.username, rollback: true, token: localStorage.token })
+    return $.getJSON(url + '/api/Pms/SaveNode', { docKey: docKey, oldNode: oldNode, newNode: newNode, newNodeKey: newNodeKey, catalogId: catalogId, username: localStorage.username, rollback: true, token: localStorage.token })
       .done(function (data) { callback(data); })
       .fail(function (data) { callback(data); });
 }
 
 function SaveComponentData(docKey, component, refId, refQty, nodeName, nodeLevel, sku, storeId, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/SaveComponentData', { docKey: docKey, docId: component.id, oldRefId: component.RefId, refId: refId, oldRefQty: component.RefQty, refQty: refQty, oldSku: component.Sku, sku: sku, username: localStorage.username, storeId:storeId, token: localStorage.token })
+    return $.getJSON(url + '/api/Pms/SaveComponentData', { docKey: docKey, docId: component.id, oldRefId: component.RefId, refId: refId, oldRefQty: component.RefQty, refQty: refQty, oldSku: component.Sku, sku: sku, username: localStorage.username, storeId:storeId, token: localStorage.token })
   .done(function (data) { callback(data, docKey, nodeName, nodeLevel); })
   .fail(function (data) { callback(data, docKey, nodeName, nodeLevel); });
 }
 
 function rollbackComponentData(docKey, docId, oldRefId, refId, oldRefQty, refQty, oldSku, sku, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/SaveComponentData', { docKey: docKey, docId: docId, oldRefId: oldRefId, refId: refId, oldRefQty: oldRefQty, refQty: refQty, oldSku: oldSku, sku: sku, username: localStorage.username, rollback: true, token: localStorage.token })
+    return $.getJSON(url + '/api/Pms/SaveComponentData', { docKey: docKey, docId: docId, oldRefId: oldRefId, refId: refId, oldRefQty: oldRefQty, refQty: refQty, oldSku: oldSku, sku: sku, username: localStorage.username, rollback: true, token: localStorage.token })
   .done(function (data) { callback(data); })
   .fail(function (data) { callback(data); });
 }
 
 function saveProduct(productData, newName, newDescription, docId, storeId, sku, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/SaveProduct', { oldName: productData.name, oldDescription: productData.description, newName: newName, newDescription: newDescription, docId: docId, docKey: productData.docKey, username: localStorage.username, storeId:storeId, sku:sku, token: localStorage.token })
+    return $.getJSON(url + '/api/Pms/SaveProduct', { oldName: productData.name, oldDescription: productData.description, newName: newName, newDescription: newDescription, docId: docId, docKey: productData.docKey, username: localStorage.username, storeId:storeId, sku:sku, token: localStorage.token })
       .done(function (data) { callback(data); })
       .fail(function (data) { callback(data); });
 }
 
 function rollBackProduct(oldName, oldDescription, newName, newDescription, docId, docKey, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/SaveProduct', { oldName: oldName, oldDescription: oldDescription, newName: newName, newDescription: newDescription, docId: docId, docKey: docKey, rollback: true, username: localStorage.username, token: localStorage.token })
+    return $.getJSON(url + '/api/Pms/SaveProduct', { oldName: oldName, oldDescription: oldDescription, newName: newName, newDescription: newDescription, docId: docId, docKey: docKey, rollback: true, username: localStorage.username, token: localStorage.token })
       .done(function (data) { callback(data); })
       .fail(function (data) { callback(data); });
 }
 
 function SaveBreadCrumbText(docKey, breadCrumbText, storeId, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/SaveBreadCrumbText', { docKey: docKey, breadCrumbText: breadCrumbText, storeId:storeId, username: localStorage.username, token: localStorage.token })
+    return $.getJSON(url + '/api/Pms/SaveBreadCrumbText', { docKey: docKey, breadCrumbText: breadCrumbText, storeId:storeId, username: localStorage.username, token: localStorage.token })
       .done(function (data) { callback(data); })
       .fail(function (data) { callback(data); });
 }
 
 function GetBreadCrumbText(docKey, storeId, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/GetBreadCrumbText', { docKey: docKey, storeId: storeId, token: localStorage.token })
+    return $.getJSON(url + '/api/Pms/GetBreadCrumbText', { docKey: docKey, storeId: storeId, token: localStorage.token })
       .done(function (data) { callback(data); })
       .fail(function (data) { console.log('GetBreadCrumbText error: ' + data) });
 }
 
 function GetStoreLookups(callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/GetStoreLookups', { token: localStorage.token })
+    return $.getJSON(url + '/api/Pms/GetStoreLookups', { token: localStorage.token })
       .done(function (data) { callback(data); })
        .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
 }
 
 function SaveStore(docKey, storeId, chk, callback) {
   document.getElementById("ThisIsTesting").style.display = "block";
-    return $.getJSON('http://localhost:65515/api/Pms/SaveStore', { docKey: docKey, storeId: storeId, chk: chk, token: localStorage.token })
+    return $.getJSON(url + '/api/Pms/SaveStore', { docKey: docKey, storeId: storeId, chk: chk, token: localStorage.token })
         .done(function(data) { callback(data); })
         .fail(function(data) { callback(data); });
 }
 
 function SaveStoreComponent(docId, storeId, chk, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/SaveStoreComponent', { docId: docId, storeId: storeId, chk: chk, token: localStorage.token })
+    return $.getJSON(url + '/api/Pms/SaveStoreComponent', { docId: docId, storeId: storeId, chk: chk, token: localStorage.token })
         .done(function (data) { callback(data); })
         .fail(function (data) { callback(data); });
 }
 
 function GetNodeHistory(catalogId, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/GetNodeHistory', { catalogId: catalogId, token: localStorage.token })
+    return $.getJSON(url + '/api/Pms/GetNodeHistory', { catalogId: catalogId, token: localStorage.token })
   .done(function (data) { callback(data); })
   .fail(function (data) { console.log('GetNodeHistory error: ' + data) });
 }
 
 function GetComponentHistory(docId, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/GetComponentHistory', { docId: docId, token: localStorage.token })
+    return $.getJSON(url + '/api/Pms/GetComponentHistory', { docId: docId, token: localStorage.token })
   .done(function (data) { callback(data); })
   .fail(function (data) { console.log('GetComponentHistory error: ' + data) });
 }
 
 function GetComponentProductHistory(docId, callback) {
-    return $.getJSON('http://localhost:65515/api/Pms/GetComponentProductHistory', { docId: docId, token: localStorage.token })
+    return $.getJSON(url + '/api/Pms/GetComponentProductHistory', { docId: docId, token: localStorage.token })
   .done(function (data) { callback(data); })
   .fail(function (data) { console.log('GetComponentProductHistory error: ' + data) });
 }
 
 function Login(username, password, cb, callback) {
-    return $.getJSON('http://localhost:65515/api/Account/Login', { username: username, password: password, token: localStorage.token })
+    return $.getJSON(url + '/api/Account/Login', { username: username, password: password, token: localStorage.token })
   .done(function (data) { callback(data,cb); })
   .fail(function (data) { callback(data,cb); });
 }
 
 function GetCurrentImportStatus(callback){
-      return $.getJSON('http://localhost:65515/api/Pms/GetCurrentImportStatus', {token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/GetCurrentImportStatus', {token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
  function GetCurrentVendorImportStatus(callback){
-      return $.getJSON('http://localhost:65515/api/Pms/GetCurrentVendorImportStatus', {token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/GetCurrentVendorImportStatus', {token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
-function UpdateSendToWebFlag(send_flag,status_message,callback){
-      return $.getJSON('http://localhost:65515/api/Pms/UpdateSendToWebFlag', {send_flag: send_flag, status_message: status_message, token: localStorage.token })
+function UpdateSendToWebFlag(send_flag,status_message, selectedStore,callback){
+      return $.getJSON(url + '/api/Pms/UpdateSendToWebFlag', {send_flag: send_flag, status_message: status_message, selectedStore:selectedStore, token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
+          }
+      });
+ }
+
+ function UpdateWebSent(webSentFlag,storeId,callback){
+      return $.getJSON(url + '/api/Pms/UpdateWebSent', {webSentFlag: webSentFlag, storeId: storeId, token: localStorage.token })
+  .done(function (data) { callback(data,webSentFlag); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
           }
       });
  }
 
  function UpdateImportFlag(vendor,import_flag,status_message,callback){
   console.log(vendor);
-      return $.getJSON('http://localhost:65515/api/Pms/UpdateImportFlag', {vendor: vendor, import_flag: import_flag, status_message: status_message, username: localStorage.username, token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/UpdateImportFlag', {vendor: vendor, import_flag: import_flag, status_message: status_message, username: localStorage.username, token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
  function AutoCompleteQuery(searchValue, searchVendors, callback){
-      return $.getJSON('http://localhost:65515/api/Pms/AutoCompleteQuery', {value: searchValue, searchVendors: searchVendors, token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/AutoCompleteQuery', {value: searchValue, searchVendors: searchVendors, token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
   function CopyAutoCompleteQuery(value, store_id, callback){
-      return $.getJSON('http://localhost:65515/api/Pms/CopyAutoComplete', {value: value, store_id: store_id, token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/CopyAutoComplete', {value: value, store_id: store_id, token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
- function Copy(nodeValue, originDocKey, destinationDocKey, callback){
-      return $.getJSON('http://localhost:65515/api/Pms/Copy', {nodeValue: nodeValue, originDocKey: originDocKey, destinationDocKey:destinationDocKey, username:localStorage.username, token: localStorage.token })
+ function Copy(nodeValue, originDocKey, destinationDocKey, store_id, callback){
+      return $.getJSON(url + '/api/Pms/Copy', {nodeValue: nodeValue, originDocKey: originDocKey, destinationDocKey:destinationDocKey, username:localStorage.username, store_id:store_id, token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
+          }
+      });
+ }
+
+  function CopyStore0(nodeValue, originDocKey, destinationDocKey, store_id, destination_store_id, callback){
+      return $.getJSON(url + '/api/Pms/Copy', {nodeValue: nodeValue, originDocKey: originDocKey, destinationDocKey:destinationDocKey, username:localStorage.username, store_id:store_id, destination_store_id:destination_store_id, token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
+ }
+
+ function Move(nodeValue, originDocKey, destinationDocKey, store_id, callback){
+      return $.getJSON(url + '/api/Pms/Move', {nodeValue: nodeValue, originDocKey: originDocKey, destinationDocKey:destinationDocKey, username:localStorage.username, store_id:store_id, token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
+ }
+
+ function MoveStore0(nodeValue, originDocKey, destinationDocKey, store_id, destination_store_id, callback){
+      return $.getJSON(url + '/api/Pms/Move', {nodeValue: nodeValue, originDocKey: originDocKey, destinationDocKey:destinationDocKey, username:localStorage.username, store_id:store_id, destination_store_id:destination_store_id, token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
           }
       });
  }
 
   function GetProductAndEntities(doc_key, storeId, callback){
-      return $.getJSON('http://localhost:65515/api/Pms/GetProductAndEntities', {doc_key: doc_key, storeId:storeId, token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/GetProductAndEntities', {doc_key: doc_key, storeId:storeId, token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
   function GetVendorList(callback){
-      return $.getJSON('http://localhost:65515/api/Pms/GetVendorList', { token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/GetVendorList', { token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401' || data.status == '0') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
  function SaveProductMaster(newName,oldName,id,docKey,storeId,callback){
-      return $.getJSON('http://localhost:65515/api/Pms/SaveProductMaster', {newProductName:newName,oldProductName:oldName,id:id,docKey:docKey,username:localStorage.username, storeId:storeId, token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/SaveProductMaster', {newProductName:newName,oldProductName:oldName,id:id,docKey:docKey,username:localStorage.username, storeId:storeId, token: localStorage.token })
   .done(function (data) { callback(data,newName); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
   function RollbackProductMaster(newName,oldName,id,docKey,callback){
-      return $.getJSON('http://localhost:65515/api/Pms/SaveProductMaster', {newProductName:newName,oldProductName:oldName,id:id,docKey:docKey,username:localStorage.username, rollback: true,token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/SaveProductMaster', {newProductName:newName,oldProductName:oldName,id:id,docKey:docKey,username:localStorage.username, rollback: true,token: localStorage.token })
   .done(function (data) { callback(data,newName); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
  function GetProductMasterHistory(id,callback){
-      return $.getJSON('http://localhost:65515/api/Pms/GetProductMasterHistory', {id:id,token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/GetProductMasterHistory', {id:id,token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
   function GetUserStats(username,callback){
-      return $.getJSON('http://localhost:65515/api/Pms/GetUserStats', {username: username,token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/GetUserStats', {username: username,token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
    function SaveUserInfo(username,userId,firstname,lastname,email,callback){
-      return $.getJSON('http://localhost:65515/api/Pms/SaveUserInfo', {username: username,userId:userId,firstname:firstname,lastname:lastname,email:email,token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/SaveUserInfo', {username: username,userId:userId,firstname:firstname,lastname:lastname,email:email,token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
   function GetAllUsers(callback){
-      return $.getJSON('http://localhost:65515/api/Pms/GetAllUsers', {token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/GetAllUsers', {token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
  function SaveUserPermission(username,userId,permissionId,chkValue,callback){
-      return $.getJSON('http://localhost:65515/api/Pms/SaveUserPermission', {username:username,userId:userId,permissionId:permissionId,chkValue:chkValue,token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/SaveUserPermission', {username:username,userId:userId,permissionId:permissionId,chkValue:chkValue,token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
   function SaveEnabled(username,userId,chkValue,callback){
-      return $.getJSON('http://localhost:65515/api/Pms/SaveEnabled', {username:username,userId:userId,chkValue:chkValue,token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/SaveEnabled', {username:username,userId:userId,chkValue:chkValue,token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
    function IsUniqueUsername(username,callback){
-      return $.getJSON('http://localhost:65515/api/Pms/IsUniqueUsername', {username:username,token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/IsUniqueUsername', {username:username,token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
     function AddUser(username,password,firstname,lastname,email,callback){
-      return $.getJSON('http://localhost:65515/api/Pms/AddUser', {username:username,password:password,firstname:firstname,lastname:lastname,email:email,token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/AddUser', {username:username,password:password,firstname:firstname,lastname:lastname,email:email,token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
  function GetDataAnalysisStats(callback){
-      return $.getJSON('http://localhost:65515/api/Pms/DataAnalysisStats', {token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/DataAnalysisStats', {token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
   function GetDataAnalysisDetails(type, callback){
-      return $.getJSON('http://localhost:65515/api/Pms/GetDataAnalysisDetails', {type: type, token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/GetDataAnalysisDetails', {type: type, token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
  function SaveCatEntity(type, id, name, callback){
-      return $.getJSON('http://localhost:65515/api/Pms/SaveCatEntity', {type: type, id: id, name: name, token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/SaveCatEntity', {type: type, id: id, name: name, token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
  function SaveProdEnt(originalDocKey, newDocKey, sku, name, callback){
-      return $.getJSON('http://localhost:65515/api/Pms/SaveProdEnt', {originalDocKey: originalDocKey, newDocKey: newDocKey, sku: sku, name: name, token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/SaveProdEnt', {originalDocKey: originalDocKey, newDocKey: newDocKey, sku: sku, name: name, token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
  function SaveDisabled(docKey, disabledVal, node, nodeLevel, storeId, callback){
-      return $.getJSON('http://localhost:65515/api/Pms/SaveDisabled', {docKey:docKey, disabledVal: disabledVal, username: localStorage.username, storeId:storeId, token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/SaveDisabled', {docKey:docKey, disabledVal: disabledVal, username: localStorage.username, storeId:storeId, token: localStorage.token })
   .done(function (data) { callback(data, node, nodeLevel); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
  function SaveLocked(docKey, lockedVal, node, nodeLevel, storeId, callback){
-      return $.getJSON('http://localhost:65515/api/Pms/SaveLocked', {docKey:docKey, lockedVal: lockedVal, username: localStorage.username, storeId:storeId, token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/SaveLocked', {docKey:docKey, lockedVal: lockedVal, username: localStorage.username, storeId:storeId, token: localStorage.token })
   .done(function (data) { callback(data, node, nodeLevel); })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
           }
       });
  }
 
  function UpdateEditingFlag(type,flag,doc_key){
-      return $.getJSON('http://localhost:65515/api/Pms/UpdateEditingFlag', {type:type, flag: flag, username: localStorage.username, doc_key:doc_key, token: localStorage.token })
+      return $.getJSON(url + '/api/Pms/UpdateEditingFlag', {type:type, flag: flag, username: localStorage.username, doc_key:doc_key, token: localStorage.token })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
-              window.location.href = "/login";
+              window.location.href = "/";
+          }
+      });
+ }
+
+ function GetProductList(doc_key,storeId,callback){
+      return $.getJSON(url + '/api/Pms/GetProductList', {doc_key:doc_key, storeId: storeId, token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
+ }
+
+ function SaveProductEntityData(docKey,sku,edited_field,old_value,new_value,store_id,prodEntityId,callback){
+      return $.getJSON(url + '/api/Pms/SaveProductEntityData', {docKey:docKey, sku: sku, edited_field:edited_field, old_value:old_value, new_value:new_value, store_id:store_id, username:localStorage.username,prodEntityId:prodEntityId, token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
           }
       });
  }

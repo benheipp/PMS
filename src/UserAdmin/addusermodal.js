@@ -60,7 +60,7 @@ var AddUserModal = React.createClass({
                             </table>
         				        </div>
    					  </div>
-        
+
   					</div>
   				<div className="modal-footer">
             <button type="button" className="btn btn-primary" onClick={this.AddUser}>Add User</button>
@@ -82,7 +82,7 @@ var AddUserModal = React.createClass({
        if (this.state.password != this.state.passwordconfirm)
         {
           this.setState({error:true,errorMessage: "Passwords Must Match"});
-        } 
+        }
     },
     validateUsername: function(){
       this.validate();
@@ -100,7 +100,6 @@ var AddUserModal = React.createClass({
     AddUser: function(){
       if (this.state.error == false && this.state.invalidUsername == false)
       {
-        console.log("hit");
         AddUser(this.state.username,this.state.password,this.state.first,this.state.last,this.state.email,this.AddUserCallback)
       }
     },

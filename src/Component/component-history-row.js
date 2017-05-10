@@ -14,8 +14,8 @@ var ComponentHistoryRow = React.createClass({
                     <div className="col-sm-4"><strong>Changed On: {this.props.history.change_date}</strong></div>
                     <div className="col-sm-2"> <button disabled={rollbackDisable} data-dismiss="modal" onClick={this.handleRollbackClick} type="button" className="btn btn-primary">Rollback</button></div>
                </div>
-      
-                
+
+
                 </div>
 
         );
@@ -24,7 +24,6 @@ var ComponentHistoryRow = React.createClass({
         rollbackComponentData(this.props.docKey, this.props.docId, this.props.history.new_ref_id, this.props.history.old_ref_id, this.props.history.new_ref_qty, this.props.history.old_ref_qty, this.props.history.new_sku, this.props.history.old_sku, this.rollbackCallback);
     },
     rollbackCallback: function (data) {
-        console.log(data);
         this.props.rollbackComplete(data);
     }
 });

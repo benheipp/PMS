@@ -43,7 +43,7 @@ var ProductDisplay = React.createClass({
     					<div className="col-xs-10">{this.props.data.webSentDatetime}</div>
     				</div>
                     <div style={{marginTop:'20px'}}>
-                        <ProductEntity entities={this.props.data.Entities} />
+                        <ProductEntity entities={this.props.data.Entities} SaveEnityData={this.SaveEnityData} />
                     </div>
 				  </div>
 				  <div className="panel-footer">
@@ -75,7 +75,7 @@ var ProductDisplay = React.createClass({
     					<div className="col-xs-10">{this.props.data.webSentDatetime}</div>
     				</div>
     				<div style={{marginTop:'20px'}}>
-    					<ProductEntity entities={this.props.data.Entities} />
+    					<ProductEntity entities={this.props.data.Entities} SaveEnityData={this.SaveEnityData} />
     				</div>
 				  </div>
 				  <div className="panel-footer">
@@ -91,6 +91,13 @@ handleChange: function (name, e) {
     var change = {};
     change[name] = e.target.value;
     this.setState(change);
+},
+SaveEnityData: function(edited_field, old_value, new_value, entityId){
+    SaveProductEntityData(this.props.data.doc_key,this.props.data.sku,edited_field,old_value,new_value,this.props.data.store_id,entityId,this.handleEntityDataCallback);
+},
+handleEntityDataCallback: function(data)
+{
+    this.props.showFeedBack(data);
 },
 handleEditClick: function () {
     UpdateEditingFlag('product',true,this.props.data.doc_key);
