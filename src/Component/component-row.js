@@ -73,11 +73,11 @@ showHistoryModal: function() {
     this.setState({ showHistoryModal: true });
 },
 handleCancelClick: function () {
-    UpdateEditingFlag('catalog',false,this.props.docKey);
+    UpdateEditingFlag('catalog',false,this.props.docKey, this.props.store);
     this.setState({ isEditMode : false});
 },
 handleEditClick: function () {
-    UpdateEditingFlag('catalog',true,this.props.docKey);
+    UpdateEditingFlag('catalog',true,this.props.docKey, this.props.store);
     this.setState({ isEditMode: true });
 },
 handleSaveClick: function (docKey, component, refId, refQty, nodeName, nodeLevel, sku) {

@@ -52,6 +52,7 @@ var ProductDetail = React.createClass({
                 <th>Doc Key</th>
                 <th>Sku</th>
                 <th>Name</th>
+                <th>Store</th>
               </tr>
               {rows}
             </table>

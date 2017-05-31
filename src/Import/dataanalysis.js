@@ -11,8 +11,7 @@ var DataAnalysis = React.createClass({
         catalog_invalidChars: 0,
         product_invalidChars: 0,
         product_shortSkus: 0,
-        product_invalidSkus: 0,
-        product_invalidSkusWStoreIDAssociation: 0
+        product_invalidSkus: 0
       }
     }
   },
@@ -46,14 +45,9 @@ var DataAnalysis = React.createClass({
                 <div className="col-xs-2"><button type="button" onClick={this.handleViewDetailsClick.bind(this,'product_shortSkus', 'Short Product Skus')} className="btn btn-info btn-sm">Details</button></div>
               </div>
               <div className="row" style={{marginBottom:'10px'}}>
-                <div className="col-xs-6">Invalid Product Skus:</div>
+                <div className="col-xs-6">Invalid Products:</div>
                 <div className="col-xs-2">{this.state.AnalysisData.product_invalidSkus}</div>
-                <div className="col-xs-2"><button type="button" onClick={this.handleViewDetailsClick.bind(this,'product_invalidSkus', 'Invalid Product Skus')} className="btn btn-info btn-sm">Details</button></div>
-              </div>
-              <div className="row" style={{marginBottom:'10px'}}>
-                <div className="col-xs-6">Invalid Product Skus W/Store Association:</div>
-                <div className="col-xs-2">{this.state.AnalysisData.product_invalidSkusWStoreIDAssociation}</div>
-                <div className="col-xs-2"><button type="button" onClick={this.handleViewDetailsClick.bind(this,'product_invalidSkusWStoreIDAssociation', 'Invalid Skus W/Store Assocation')} className="btn btn-info btn-sm">Details</button></div>
+                <div className="col-xs-2"><button type="button" onClick={this.handleViewDetailsClick.bind(this,'product_invalidSkus', 'Invalid Products')} className="btn btn-info btn-sm">Details</button></div>
               </div>
           </div>);
           },
@@ -63,7 +57,6 @@ var DataAnalysis = React.createClass({
         ad.product_invalidChars = data.product_invalidChars;
         ad.product_shortSkus = data.product_shortSkus;
         ad.product_invalidSkus = data.product_invalidSkus;
-        ad.product_invalidSkusWStoreIDAssociation = data.product_invalidSkusWStoreIDAssociation;
 
         this.setState({AnalysisData : ad});
       }

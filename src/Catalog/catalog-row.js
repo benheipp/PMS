@@ -11,7 +11,8 @@ var CatalogTreeRow = React.createClass({
             nodeKey: this.props.node.name_key,
             showHistoryModal: false,
             showCopyModal:false,
-            nodeHistoryData: []
+            nodeHistoryData: [],
+            selectedCatalogType:this.props.node.type_id
         };
     },
     render: function () {
@@ -49,10 +50,14 @@ var CatalogTreeRow = React.createClass({
                     <input disabled type="text" className="form-control" id="txtNodeKey" value={this.state.nodeKey} onChange={this.handleNodeKeyChange} />
                 </td>
                 <td>
-                  <button onClick={this.handleSaveClick.bind(this, this.props.node, this.props.nodeLevel, this.state.nodeValue, this.state.nodeKey)} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-floppy-disk"></i></button>
+                  <select className="form-control" value={this.state.selectedCatalogType} style={{width:'150px'}} onChange={this.handleCatalogTypeChange}>
+                    {this.createCatalogTypeItems()}
+                  </select>
+                </td>
+                <td>
+                  <button onClick={this.handleSaveClick.bind(this, this.props.node, this.props.nodeLevel, this.state.nodeValue, this.state.nodeKey, this.props.node.type_id, this.state.selectedCatalogType)} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-floppy-disk"></i></button>
                   <button style={{marginLeft:'20px'}} onClick={this.handleCancelClick.bind(this, this.props.node, this.props.nodeLevel)} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-remove"></i></button>
                 </td>
-                <td></td>
               {disableVis ? <td>
                 <input
                     name="disabled"
@@ -74,9 +79,11 @@ var CatalogTreeRow = React.createClass({
             <tr>
             <td><a href="#" onClick={this.handleClick.bind(this, this.props.node.doc_key, this.props.node.name, this.props.nodeLevel) }>{this.props.node.name}</a></td>
             <td><button disabled={disableVar} onClick={this.handleEditClick.bind(this,this.props.node)} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-pencil"></i> Edit</button></td>
-            <td><button onClick={this.showCopyModal} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-copy"></i> Copy/Move</button></td>
-            <td><button disabled onClick={this.showHistoryModal} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-book"></i> History</button>
-                {this.state.showHistoryModal ? <NodeHistoryModal docKey={this.props.node.doc_key} catalogId={this.props.node.id} handleHideModal={this.handleHideModal} rollbackComplete={this.rollbackComplete} data={this.state.nodeHistoryData} webSent={this.props.node.web_sent} /> : null}
+            <td><button onClick={this.quickMove} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-copy"></i> Quick Move</button></td>
+            <td>{this.props.copyActive ? <button onClick={this.quickPaste} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-copy"></i> Paste</button> : null }</td>
+            <td><button onClick={this.showCopyModal} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-copy"></i> Custom Copy</button></td>
+            <td>{/*<button disabled onClick={this.showHistoryModal} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-book"></i> History</button>
+                {this.state.showHistoryModal ? <NodeHistoryModal docKey={this.props.node.doc_key} catalogId={this.props.node.id} handleHideModal={this.handleHideModal} rollbackComplete={this.rollbackComplete} data={this.state.nodeHistoryData} webSent={this.props.node.web_sent} /> : null}*/}
                 {this.state.showCopyModal ? <CopyModal handleHideModal={this.handleHideCopyModal} store={this.props.store} DocKey={this.props.node.doc_key} /> : null }
                 </td>
            {disableVis ? <td>
@@ -98,6 +105,29 @@ var CatalogTreeRow = React.createClass({
             );
 }
     },
+createCatalogTypeItems: function(){
+      let items = [];
+      items.push(<option value=''></option>);
+      for (let i = 0; i < this.props.catalogTypes.length; i++) {
+          items.push(<option key={i} value={this.props.catalogTypes[i].id}>{this.props.catalogTypes[i].name}</option>);
+        }
+        return items;
+ },
+handleCatalogTypeChange: function(event){
+      this.setState({selectedCatalogType: event.target.value});
+},
+quickMove: function(){
+    this.props.quickMove(this.props.node.doc_key);
+},
+quickPaste: function(){
+    var pieces = this.props.copyDocKey.split("/");
+    Move(pieces[pieces.length-1],this.props.copyDocKey,this.props.node.doc_key, this.props.store, this.handlePasteCallback);
+    nodeValue, originDocKey, destinationDocKey, store_id, callback
+},
+handlePasteCallback: function(data) {
+    this.props.showFeedBack(data);
+    this.props.reloadData(node.doc_key, node.name, nodeLevel);
+},
 handleHideCopyModal: function () {
     this.setState({ showCopyModal: false });
     this.props.reloadData(this.props.node.doc_key, this.props.node.name, this.props.nodeLevel);
@@ -135,19 +165,19 @@ handleClick: function(docKey,nodeName,nodeLevel) {
     this.props.onNodeClick(docKey, nodeName, nodeLevel);
 },
 handleEditClick: function () {
-    UpdateEditingFlag('catalog',true,this.props.node.doc_key);
+    UpdateEditingFlag('catalog',true,this.props.node.doc_key, this.props.store);
     this.setState({ isEditMode: true });
 },
 handleHideModal: function() {
     this.setState({ showHistoryModal: false });
 },
-handleSaveClick: function (node, nodeLevel, newNode, newNodeKey) {
+handleSaveClick: function (node, nodeLevel, newNode, newNodeKey, oldCatalogType, selectedCatalogType) {
     //Save Logic Here
-    saveNode(node, nodeLevel, newNode, newNodeKey, this.props.store, this.saveCallBack);
+    saveNode(node, nodeLevel, newNode, newNodeKey, oldCatalogType, selectedCatalogType, this.props.store, this.saveCallBack);
     this.setState({ isEditMode: false });
 },
 handleCancelClick: function (node, nodeLevel) {
-    UpdateEditingFlag('catalog',false,this.props.node.doc_key);
+    UpdateEditingFlag('catalog',false,this.props.node.doc_key, this.props.store);
     this.setState({ isEditMode: false });
 },
 saveCallBack: function (data, node, nodeLevel) {

@@ -28,8 +28,7 @@ var DataAnalysisDetailsModal = React.createClass({
                           <div className="col-sm-12">
                           <FeedBack Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
               { this.props.detailType == 'product_shortSkus' ||
-               this.props.detailType == 'product_invalidSkus' ||
-               this.props.detailType == 'product_invalidSkusWStoreIDAssociation' ? <ProductDetail type={this.props.detailType} showFeedBack={this.showFeedBack} /> : null }
+               this.props.detailType == 'product_invalidSkus' ? <ProductDetail type={this.props.detailType} showFeedBack={this.showFeedBack} /> : null }
               { this.props.detailType == 'catalog_invalidChars' ||
                 this.props.detailType == 'product_invalidChars' ? <EntityDetail type={this.props.detailType} showFeedBack={this.showFeedBack} /> : null }
                   </div>

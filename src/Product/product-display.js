@@ -100,11 +100,11 @@ handleEntityDataCallback: function(data)
     this.props.showFeedBack(data);
 },
 handleEditClick: function () {
-    UpdateEditingFlag('product',true,this.props.data.doc_key);
+    UpdateEditingFlag('product',true,this.props.data.doc_key, this.props.data.store_id);
 	this.setState({isEditMode:true,prodName:this.props.data.name});
 },
 handleCancelClick: function () {
-    UpdateEditingFlag('product',false,this.props.data.doc_key);
+    UpdateEditingFlag('product',false,this.props.data.doc_key, this.props.data.store_id);
 	this.setState({isEditMode:false});
 },
 handleSaveClick: function (){

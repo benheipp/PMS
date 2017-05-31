@@ -14,6 +14,7 @@ var CatalogTree = React.createClass({
             nodeLevel: 1,
             node: [],
             nodeName: "",
+            nodeNameCrumb: "catalog",
             docKey: 'catalog',
             showComponent: false,
             showProductList: false,
@@ -28,7 +29,9 @@ var CatalogTree = React.createClass({
             breadCrumbText: "",
             loading: false,
             noResultsMessage: false,
-            showDisabled: false
+            showDisabled: false,
+            copyActive: false,
+            copyDocKey:''
         };
     },
     componentWillMount: function() {
@@ -65,12 +68,12 @@ var CatalogTree = React.createClass({
         }
 
         var rows = this.state.node.map(function(node) {
-            return <CatalogTreeRow storeLookup={this.props.storeLookup} node={node} key={node.key} nodeLevel={this.state.nodeLevel} onNodeClick={this.onNodeClick} showFeedBack={this.showFeedBack} reloadData={this.reloadData} storeUpdate={this.storeUpdate } updateAllCatalogs={this.updateAllCatalogs} store={this.props.selectedStore.value} />;
+            return <CatalogTreeRow catalogTypes={this.props.catalogTypes} storeLookup={this.props.storeLookup} node={node} key={node.key} nodeLevel={this.state.nodeLevel} onNodeClick={this.onNodeClick} showFeedBack={this.showFeedBack} reloadData={this.reloadData} storeUpdate={this.storeUpdate } updateAllCatalogs={this.updateAllCatalogs} store={this.props.selectedStore.value} quickMove={this.quickMove} copyActive={this.state.copyActive} copyDocKey={this.state.copyDocKey}/>;
         }, this);
         return (
             <div style={stylemargin}>
              {this.props.disabled == "1" ? <h1>Disabled Items</h1> : null }
-              <BreadCrumb docKey={this.state.docKey} callbackBreadCrumbClick={this.BreadCrumbClick} handleEditBreadCrumbText={this.handleEditBreadCrumbText} selectedStore={this.props.selectedStore} handleClearSelectedStore={this.props.handleClearSelectedStore} />
+              <BreadCrumb nodeNameCrumb={this.state.nodeNameCrumb} docKey={this.state.docKey} callbackBreadCrumbClick={this.BreadCrumbClick} handleEditBreadCrumbText={this.handleEditBreadCrumbText} selectedStore={this.props.selectedStore} handleClearSelectedStore={this.props.handleClearSelectedStore} />
 {this.state.showBreadCrumbModal ? <BreadCrumbModal docKey={this.state.docKey} breadCrumbText={this.state.breadCrumbText} handleHideModal={this.handleHideModal} handleSaveBreadCrumbClick={this.handleSaveBreadCrumbClick}  /> : null}
               <FeedBack Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
               { this.state.showComponent ? <ComponentLevel component={this.state.componentData} componentName={this.state.componentName} diagramUrl={this.state.componentImage} docKey={this.state.docKey} showFeedBack={this.showFeedBack} nodeName={this.state.nodeName} nodeLevel={this.state.nodeLevel} reloadDataFromComponent={this.reloadDataFromComponent} storeLookup={this.props.storeLookup} store={this.props.selectedStore.value}/> : null }
@@ -82,10 +85,13 @@ var CatalogTree = React.createClass({
             defaultChecked={this.state.showDisabled}
             onChange={this.handleShowDisabledChange} />
             </div> : null }
+            {this.state.copyActive ? <div>Copy Doc Key: {this.state.copyDocKey} </div> : null}
               <table className="table table-striped">
                 <tbody>
                   <tr>
                     <td><b>Node</b></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -111,6 +117,9 @@ reloadData: function (docKey, nodeName, nodeLevel) {
     this.setState({ docKey: nDocKey, nodeName: nodeName });
     this.updateAllCatalogs(docKey);
 },
+quickMove: function(doc_key){
+    this.setState({copyActive:true,copyDocKey:doc_key});
+},
 reloadDataFromComponent: function (docKey, nodeName, nodeLevel) {
     getNodes(nodeLevel, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
     GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback);
@@ -120,7 +129,7 @@ reloadDataFromComponent: function (docKey, nodeName, nodeLevel) {
 onNodeClick: function (docKey, nodeName, nodeLevel) {
     getNodes(nodeLevel + 1, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
     GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback);
-    this.setState({ docKey: docKey, nodeLevel: nodeLevel + 1, showFeedback: false });
+    this.setState({ docKey: docKey, nodeNameCrumb: this.state.nodeNameCrumb + '[|]' + nodeName, nodeLevel: nodeLevel + 1, showFeedback: false });
     this.updateAllCatalogs(docKey);
 },
 handleNewData: function (data, docKey, nodeName) {
@@ -141,10 +150,21 @@ handleNewData: function (data, docKey, nodeName) {
         this.setState({ showComponent: false, showProductList:false, showFeedback:false });
     }
 },
-BreadCrumbClick: function (nodeLevel, docKey) {
+BreadCrumbClick: function (nodeLevel, docKey, nodeNameCrumb) {
+    console.log(nodeNameCrumb,nodeLevel);
+    var splitCrumb = nodeNameCrumb.split("[|]");
+    var newCrumb = "";
+    var i;
+    for (i = 0; i < nodeLevel; i++)
+    {
+        newCrumb = newCrumb + splitCrumb[i] + "[|]" ;
+    }
+    newCrumb = newCrumb.substring(0, newCrumb.length - 3);
+    console.log(newCrumb);
+
     getNodes(nodeLevel, docKey, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
     GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback);
-    this.setState({ docKey: docKey, nodeLevel: nodeLevel, showFeedback: false });
+    this.setState({ docKey: docKey, nodeLevel: nodeLevel, showFeedback: false, nodeNameCrumb: newCrumb });
     this.updateAllCatalogs(docKey);
 },
 HandleProductListData: function(data) {

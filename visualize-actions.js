@@ -8,7 +8,7 @@ var url = 'http://localhost:65515'
 function getNodes(nodeLevel, docKey, nodeName, storeId, disabled, showDisabled, callback) {
     $.getJSON(url + '/api/Pms/Get', { nodeLevel: nodeLevel, storeId: storeId, disabled: disabled, showDisabled:showDisabled, docKey: docKey, token: localStorage.token })
       .done(function (data) { callback(data, docKey, nodeName); })
-      .fail(function (data) {
+   .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
               window.location.href = "/";
@@ -19,7 +19,7 @@ function getNodes(nodeLevel, docKey, nodeName, storeId, disabled, showDisabled, 
 function getNodeList(nodeLevel, docKey, nodeName, storeId, disabled, callback) {
     $.getJSON(url + '/api/Pms/GetList', { storeId: storeId, disabled: disabled, docKey:docKey, token: localStorage.token })
       .done(function (data) { callback(data, docKey, nodeName); })
-      .fail(function (data) {
+   .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
               window.location.href = "/";
@@ -30,11 +30,10 @@ function getNodeList(nodeLevel, docKey, nodeName, storeId, disabled, callback) {
 function GetPendingCatalog(callback){
   $.getJSON(url + '/api/Pms/GetPendingCatalog', {token: localStorage.token})
       .done(function (data) { callback(data); })
-      .fail(function (data) {
-        console.log(data.status);
+   .fail(function (data) {
           if (data.status == '401') {
-              //localStorage.clear();
-            //  window.location.href = "/";
+              localStorage.clear();
+              window.location.href = "/";
           }
       });
 }
@@ -42,62 +41,117 @@ function GetPendingCatalog(callback){
 function getComponentProducts(docKey, componentName, storeId, callback) {
     return $.getJSON(url + '/api/Pms/GetComponent', { docKey: docKey, storeId: storeId, token: localStorage.token })
       .done(function (data) { callback(data, componentName); })
-      .fail(function (data) { console.log('GetComponent error: ' + data) });
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
 }
 
-function saveNode(node, nodeLevel, newNode, newNodeKey, storeId, callback) {
-    //document.getElementById("ThisIsTesting").style.display = "block"
-    return $.getJSON(url + '/api/Pms/SaveNode', { docKey: node.doc_key, oldNode: node.name, newNode: newNode, oldNodeKey: node.name_key, newNodeKey: newNodeKey, username: localStorage.username, storeId:storeId, token: localStorage.token })
+function saveNode(node, nodeLevel, newNode, newNodeKey, oldCatalogType, selectedCatalogType, storeId, callback) {
+    return $.getJSON(url + '/api/Pms/SaveNode', { docKey: node.doc_key, oldNode: node.name, newNode: newNode, oldNodeKey: node.name_key, newNodeKey: newNodeKey, oldCatalogType:oldCatalogType, selectedCatalogType:selectedCatalogType, username: localStorage.username, storeId:storeId, token: localStorage.token })
       .done(function (data) { callback(data, node, nodeLevel); })
-      .fail(function (data) { callback(data, node, nodeLevel); });
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
 }
 
 function rollback(docKey, oldNode, newNode, newNodeKey, catalogId, callback) {
     return $.getJSON(url + '/api/Pms/SaveNode', { docKey: docKey, oldNode: oldNode, newNode: newNode, newNodeKey: newNodeKey, catalogId: catalogId, username: localStorage.username, rollback: true, token: localStorage.token })
       .done(function (data) { callback(data); })
-      .fail(function (data) { callback(data); });
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
 }
 
 function SaveComponentData(docKey, component, refId, refQty, nodeName, nodeLevel, sku, storeId, callback) {
     return $.getJSON(url + '/api/Pms/SaveComponentData', { docKey: docKey, docId: component.id, oldRefId: component.RefId, refId: refId, oldRefQty: component.RefQty, refQty: refQty, oldSku: component.Sku, sku: sku, username: localStorage.username, storeId:storeId, token: localStorage.token })
   .done(function (data) { callback(data, docKey, nodeName, nodeLevel); })
-  .fail(function (data) { callback(data, docKey, nodeName, nodeLevel); });
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
 }
 
 function rollbackComponentData(docKey, docId, oldRefId, refId, oldRefQty, refQty, oldSku, sku, callback) {
     return $.getJSON(url + '/api/Pms/SaveComponentData', { docKey: docKey, docId: docId, oldRefId: oldRefId, refId: refId, oldRefQty: oldRefQty, refQty: refQty, oldSku: oldSku, sku: sku, username: localStorage.username, rollback: true, token: localStorage.token })
   .done(function (data) { callback(data); })
-  .fail(function (data) { callback(data); });
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
 }
 
 function saveProduct(productData, newName, newDescription, docId, storeId, sku, callback) {
     return $.getJSON(url + '/api/Pms/SaveProduct', { oldName: productData.name, oldDescription: productData.description, newName: newName, newDescription: newDescription, docId: docId, docKey: productData.docKey, username: localStorage.username, storeId:storeId, sku:sku, token: localStorage.token })
       .done(function (data) { callback(data); })
-      .fail(function (data) { callback(data); });
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
 }
 
 function rollBackProduct(oldName, oldDescription, newName, newDescription, docId, docKey, callback) {
     return $.getJSON(url + '/api/Pms/SaveProduct', { oldName: oldName, oldDescription: oldDescription, newName: newName, newDescription: newDescription, docId: docId, docKey: docKey, rollback: true, username: localStorage.username, token: localStorage.token })
       .done(function (data) { callback(data); })
-      .fail(function (data) { callback(data); });
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
 }
 
 function SaveBreadCrumbText(docKey, breadCrumbText, storeId, callback) {
     return $.getJSON(url + '/api/Pms/SaveBreadCrumbText', { docKey: docKey, breadCrumbText: breadCrumbText, storeId:storeId, username: localStorage.username, token: localStorage.token })
       .done(function (data) { callback(data); })
-      .fail(function (data) { callback(data); });
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
 }
 
 function GetBreadCrumbText(docKey, storeId, callback) {
     return $.getJSON(url + '/api/Pms/GetBreadCrumbText', { docKey: docKey, storeId: storeId, token: localStorage.token })
       .done(function (data) { callback(data); })
-      .fail(function (data) { console.log('GetBreadCrumbText error: ' + data) });
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
 }
 
 function GetStoreLookups(callback) {
     return $.getJSON(url + '/api/Pms/GetStoreLookups', { token: localStorage.token })
       .done(function (data) { callback(data); })
-       .fail(function (data) {
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
+}
+
+function GetCatalogNodeTypes(callback) {
+    return $.getJSON(url + '/api/Pms/GetCatalogNodeTypes', { token: localStorage.token })
+      .done(function (data) { callback(data); })
+   .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
               window.location.href = "/";
@@ -109,37 +163,67 @@ function SaveStore(docKey, storeId, chk, callback) {
   document.getElementById("ThisIsTesting").style.display = "block";
     return $.getJSON(url + '/api/Pms/SaveStore', { docKey: docKey, storeId: storeId, chk: chk, token: localStorage.token })
         .done(function(data) { callback(data); })
-        .fail(function(data) { callback(data); });
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
 }
 
 function SaveStoreComponent(docId, storeId, chk, callback) {
     return $.getJSON(url + '/api/Pms/SaveStoreComponent', { docId: docId, storeId: storeId, chk: chk, token: localStorage.token })
         .done(function (data) { callback(data); })
-        .fail(function (data) { callback(data); });
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
 }
 
 function GetNodeHistory(catalogId, callback) {
     return $.getJSON(url + '/api/Pms/GetNodeHistory', { catalogId: catalogId, token: localStorage.token })
   .done(function (data) { callback(data); })
-  .fail(function (data) { console.log('GetNodeHistory error: ' + data) });
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
 }
 
 function GetComponentHistory(docId, callback) {
     return $.getJSON(url + '/api/Pms/GetComponentHistory', { docId: docId, token: localStorage.token })
   .done(function (data) { callback(data); })
-  .fail(function (data) { console.log('GetComponentHistory error: ' + data) });
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
 }
 
 function GetComponentProductHistory(docId, callback) {
     return $.getJSON(url + '/api/Pms/GetComponentProductHistory', { docId: docId, token: localStorage.token })
   .done(function (data) { callback(data); })
-  .fail(function (data) { console.log('GetComponentProductHistory error: ' + data) });
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
 }
 
 function Login(username, password, cb, callback) {
     return $.getJSON(url + '/api/Account/Login', { username: username, password: password, token: localStorage.token })
   .done(function (data) { callback(data,cb); })
-  .fail(function (data) { callback(data,cb); });
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
 }
 
 function GetCurrentImportStatus(callback){
@@ -462,8 +546,8 @@ function UpdateSendToWebFlag(send_flag,status_message, selectedStore,callback){
       });
  }
 
- function UpdateEditingFlag(type,flag,doc_key){
-      return $.getJSON(url + '/api/Pms/UpdateEditingFlag', {type:type, flag: flag, username: localStorage.username, doc_key:doc_key, token: localStorage.token })
+ function UpdateEditingFlag(type,flag,doc_key,store_id){
+      return $.getJSON(url + '/api/Pms/UpdateEditingFlag', {type:type, flag: flag, username: localStorage.username, doc_key:doc_key, store_id:store_id, token: localStorage.token })
    .fail(function (data) {
           if (data.status == '401') {
               localStorage.clear();
@@ -485,6 +569,17 @@ function UpdateSendToWebFlag(send_flag,status_message, selectedStore,callback){
 
  function SaveProductEntityData(docKey,sku,edited_field,old_value,new_value,store_id,prodEntityId,callback){
       return $.getJSON(url + '/api/Pms/SaveProductEntityData', {docKey:docKey, sku: sku, edited_field:edited_field, old_value:old_value, new_value:new_value, store_id:store_id, username:localStorage.username,prodEntityId:prodEntityId, token: localStorage.token })
+  .done(function (data) { callback(data); })
+   .fail(function (data) {
+          if (data.status == '401') {
+              localStorage.clear();
+              window.location.href = "/";
+          }
+      });
+ }
+
+  function AddCatalogTypeRule(type_id, nodeLevel,vendor,store_id,callback){
+      return $.getJSON(url + '/api/Pms/AddCatalogTypeRule', {type_id:type_id, nodeLevel:nodeLevel, vendor: vendor, store_id:store_id, username:localStorage.username, token: localStorage.token })
   .done(function (data) { callback(data); })
    .fail(function (data) {
           if (data.status == '401') {

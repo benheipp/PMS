@@ -21,6 +21,9 @@ var ProductDetailRow = React.createClass({
                 <td>
                     <input type="text" className="form-control" id="txtName" value={this.state.name} onChange={this.handleChange.bind(this, 'name')} />
                 </td>
+                <td>
+                    {this.props.detail.store_name}
+                </td>
                 <td><button onClick={this.handleSaveClick} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-floppy-disk"></i></button></td>
                 <td><button onClick={this.handleCancelClick} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-remove"></i></button></td>
             </tr>
@@ -32,8 +35,9 @@ var ProductDetailRow = React.createClass({
             <td>{this.props.detail.doc_key}</td>
             <td>{this.props.detail.sku}</td>
             <td>{this.props.detail.name}</td>
-            <td><button onClick={this.handleEditClick} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-pencil"></i> Edit</button></td>
+            <td>{this.props.detail.store_name}</td>
             <td></td>
+            <td><button onClick={this.handleEditClick} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-pencil"></i> Edit</button></td>
            </tr>
             );
 }
