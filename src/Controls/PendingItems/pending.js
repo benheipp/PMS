@@ -1,44 +1,44 @@
-import React from 'react';
-import { Table, Column, Cell } from 'fixed-data-table';
+import React from 'react'
+import { Table, Column, Cell } from 'fixed-data-table'
 
 class MyTextCell extends React.Component {
-  render() {
-    const {rowIndex, field, data, ...props} = this.props;
+  render () {
+    const {rowIndex, field, data, ...props} = this.props
     return (
       <Cell {...props}>
         {data[rowIndex][field]}
       </Cell>
-    );
+    )
   }
 }
 
 class MyLinkCell extends React.Component {
-  render() {
-    const {rowIndex, field, data, ...props} = this.props;
-    const link = data[rowIndex][field];
+  render () {
+    const {rowIndex, field, data, ...props} = this.props
+    const link = data[rowIndex][field]
     return (
       <Cell {...props}>
         <a href={link}>{link}</a>
       </Cell>
-    );
+    )
   }
 }
 
 var PendingDataTable = React.createClass({
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       myTableData: []
     }
   },
-  componentDidMount() {
-    GetPendingCatalog(this.PendingCatalogCallback);
+  componentDidMount () {
+    GetPendingCatalog(this.PendingCatalogCallback)
   },
-   PendingCatalogCallback(data) {
-    this.setState({myTableData: data});
+  PendingCatalogCallback (data) {
+    this.setState({myTableData: data})
   },
-  render: function() {
+  render: function () {
     return (
-    <Table
+      <Table
         rowsCount={this.state.myTableData.length}
         rowHeight={50}
         headerHeight={50}
@@ -50,14 +50,14 @@ var PendingDataTable = React.createClass({
           cell={
             <MyTextCell
               data={this.state.myTableData}
-              field="doc_key"
+              field='doc_key'
             />
           }
           width={200}
         />
       </Table>
-    );
+    )
   }
-});
+})
 
-export default PendingDataTable;
+export default PendingDataTable

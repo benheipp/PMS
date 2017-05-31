@@ -1,21 +1,20 @@
-import React from 'react';
+import React from 'react'
 import VendorListRow from './product-vendorlistrow'
 var VendorList = React.createClass({
 	    render: function () {
-
- 		var rows = this.props.VendorList.map(function(vendor) {
-            return <VendorListRow vendor={vendor} key={vendor.id} handleVendorCheckChange={this.handleVendorCheckChange} />;
-        }, this);
+ 		var rows = this.props.VendorList.map(function (vendor) {
+   return <VendorListRow vendor={vendor} key={vendor.id} handleVendorCheckChange={this.handleVendorCheckChange} />
+ }, this)
 
     	return (
-    			<div>
-    				{rows}
-    			</div>
-    		);
+      <div>
+        {rows}
+      </div>
+    		)
     },
-    handleVendorCheckChange: function(chkValue,vendor){
-    	this.props.handleVendorCheckChange(chkValue,vendor);
-    }
-});
+  handleVendorCheckChange: function (chkValue, vendor) {
+    	this.props.handleVendorCheckChange(chkValue, vendor)
+  }
+})
 
-export default VendorList;
+export default VendorList

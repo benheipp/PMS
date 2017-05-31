@@ -1,55 +1,55 @@
-import React from 'react';
-import Autocomplete from 'react-autocomplete';
+import React from 'react'
+import Autocomplete from 'react-autocomplete'
 var CopyAutoComplete = React.createClass({
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       value: '',
       products: [],
       loading: false
-      }
+    }
   },
-    render: function () {
+  render: function () {
+    var inputStyle = {
+      padding: '6px 12px',
+      fontSize: '14px',
+      lineHeight: '1.42857143',
+      color: '#555',
+      width: '800px',
+      backgroundColor: '#fff',
+      backgroundImage: 'none',
+      border: '1px solid #ccc',
+      borderRadius: '4px',
+      boxShadow: 'inset 0 1px 1px rgba(0,0,0,.075)',
+      transition: 'border-color ease-in-out .15s,box-shadow ease-in-out .15s'
+    }
 
-      var inputStyle = {
-        padding : '6px 12px',
-        fontSize: '14px',
-        lineHeight: '1.42857143',
-        color: '#555',
-        width: '800px',
-        backgroundColor: '#fff',
-        backgroundImage: 'none',
-        border: '1px solid #ccc',
-        borderRadius: '4px',
-        boxShadow: 'inset 0 1px 1px rgba(0,0,0,.075)',
-        transition: 'border-color ease-in-out .15s,box-shadow ease-in-out .15s'
-      }
+    var menuStyle = {
+      position: 'absolute',
+      float: 'left',
+      zIndex: '100',
+      background: '#fff',
+      border: '1px solid #ccc',
+      boxShadow: 'inset 0 1px 1px rgba(0,0,0,.075)'
+    }
 
-      var menuStyle = {
-        position: 'absolute',
-        float: 'left',
-        zIndex: '100',
-        background: '#fff',
-        border: '1px solid #ccc',
-        boxShadow: 'inset 0 1px 1px rgba(0,0,0,.075)'
-      }
-
-
-      return (
-        <div>
-       <Autocomplete
-          inputProps={{name: "Copy", id: "copy-autocomplete", style: {padding : '6px 12px',
-          fontSize: '14px',
-          lineHeight: '1.42857143',
-          color: '#555',
-          position: 'relative',
-          backgroundColor: '#fff',
-          backgroundImage: 'none',
-          border: '1px solid #ccc',
-          borderRadius: '4px',
-          width:'800px',
-          boxShadow: 'inset 0 1px 1px rgba(0,0,0,.075)',
-          transition: 'border-color ease-in-out .15s,box-shadow ease-in-out .15s'   }}}
-          ref="autocomplete-copy"
+    return (
+      <div>
+        <Autocomplete
+          inputProps={{name: 'Copy',
+            id: 'copy-autocomplete',
+            style: {padding: '6px 12px',
+              fontSize: '14px',
+              lineHeight: '1.42857143',
+              color: '#555',
+              position: 'relative',
+              backgroundColor: '#fff',
+              backgroundImage: 'none',
+              border: '1px solid #ccc',
+              borderRadius: '4px',
+              width: '800px',
+              boxShadow: 'inset 0 1px 1px rgba(0,0,0,.075)',
+              transition: 'border-color ease-in-out .15s,box-shadow ease-in-out .15s' }}}
+          ref='autocomplete-copy'
           menuStyle={menuStyle}
           value={this.state.value}
           items={this.state.products}
@@ -57,24 +57,22 @@ var CopyAutoComplete = React.createClass({
           onSelect={(value, item) => {
             // set the menu to only the selected item
             this.setState({ value: item.doc_key, products: [ item ] })
-            this.selectRecord(item);
+            this.selectRecord(item)
             // or you could reset it to a default list again
             // this.setState({ unitedStates: getStates() })
           }}
           onChange={(event, value) => {
-            if (value.length < 5)
-            {
-              this.setState({ value });
-              return;
+            if (value.length < 5) {
+              this.setState({ value })
             } else {
-              var item = {doc_key:value};
-              this.props.selectRecord(item);
-              this.setState({ value, loading: true });
-              CopyAutoCompleteQuery(value,this.props.store,this.autoCompleteCallback)
+              var item = {doc_key: value}
+              this.props.selectRecord(item)
+              this.setState({ value, loading: true })
+              CopyAutoCompleteQuery(value, this.props.store, this.autoCompleteCallback)
             }
            // fakeRequest(value, (items) => {
            //   this.setState({ unitedStates: items, loading: false })
-            //})
+            // })
           }}
           renderItem={(item, isHighlighted) => (
             <div
@@ -85,21 +83,21 @@ var CopyAutoComplete = React.createClass({
           )}
         />
 
-              <span className="input-group-btn" style={{display: 'inline', position: 'absolute'}}>
-              <button className="btn btn-primary" type="button">
-              <span className="glyphicon glyphicon-search"></span>
-             </button>
-             </span>
+        <span className='input-group-btn' style={{display: 'inline', position: 'absolute'}}>
+          <button className='btn btn-primary' type='button'>
+            <span className='glyphicon glyphicon-search' />
+          </button>
+        </span>
 
-        </div>);
-    },
-    autoCompleteCallback: function(data){
-      this.setState({products:data });
-    },
-    selectRecord: function(item){
-      this.props.selectRecord(item);
-    }
-});
+      </div>)
+  },
+  autoCompleteCallback: function (data) {
+    this.setState({products: data })
+  },
+  selectRecord: function (item) {
+    this.props.selectRecord(item)
+  }
+})
 
 export let styles = {
   item: {
@@ -120,4 +118,4 @@ export let styles = {
   }
 }
 
-export default CopyAutoComplete;
+export default CopyAutoComplete

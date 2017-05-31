@@ -1,17 +1,16 @@
-import React from 'react';
-import Autocomplete from 'react-autocomplete';
+import React from 'react'
+import Autocomplete from 'react-autocomplete'
 var ProductAutoComplete = React.createClass({
-	getInitialState: function() {
-		return {
-			value: '',
-			products: [],
-			loading: false
-			}
-	},
-    render: function () {
-
+  getInitialState: function () {
+    return {
+      value: '',
+      products: [],
+      loading: false
+    }
+  },
+  render: function () {
     	var inputStyle = {
-    		padding : '6px 12px',
+    		padding: '6px 12px',
     		fontSize: '14px',
     		lineHeight: '1.42857143',
     		color: '#555',
@@ -32,11 +31,12 @@ var ProductAutoComplete = React.createClass({
     		boxShadow: 'inset 0 1px 1px rgba(0,0,0,.075)'
     	}
 
-
     	return (
-    		<div>
-  		 <Autocomplete
-          inputProps={{name: "Product", id: "product-autocomplete", style: {padding : '6px 12px',
+      <div>
+        <Autocomplete
+          inputProps={{name: 'Product',
+            id: 'product-autocomplete',
+            style: {padding: '6px 12px',
       		fontSize: '14px',
       		lineHeight: '1.42857143',
       		color: '#555',
@@ -45,10 +45,10 @@ var ProductAutoComplete = React.createClass({
       		backgroundImage: 'none',
       		border: '1px solid #ccc',
       		borderRadius: '4px',
-      		width:'400px',
+      		width: '400px',
       		boxShadow: 'inset 0 1px 1px rgba(0,0,0,.075)',
       		transition: 'border-color ease-in-out .15s,box-shadow ease-in-out .15s'		}}}
-          ref="autocomplete"
+          ref='autocomplete'
           menuStyle={menuStyle}
           value={this.state.value}
           items={this.state.products}
@@ -56,22 +56,20 @@ var ProductAutoComplete = React.createClass({
           onSelect={(value, item) => {
             // set the menu to only the selected item
             this.setState({ value, products: [ item ] })
-           	this.displayRecord(item);
+           	this.displayRecord(item)
             // or you could reset it to a default list again
             // this.setState({ unitedStates: getStates() })
           }}
           onChange={(event, value) => {
-          	if (value.length < 3)
-          	{
-          		this.setState({ value });
-          		return;
+          	if (value.length < 3)          	{
+          		this.setState({ value })
           	} else {
-	            this.setState({ value, loading: true });
-	            AutoCompleteQuery(value,this.props.searchVendors,this.autoCompleteCallback)
+	            this.setState({ value, loading: true })
+	            AutoCompleteQuery(value, this.props.searchVendors, this.autoCompleteCallback)
           	}
            // fakeRequest(value, (items) => {
            //   this.setState({ unitedStates: items, loading: false })
-            //})
+            // })
           }}
           renderItem={(item, isHighlighted) => (
             <div
@@ -82,21 +80,21 @@ var ProductAutoComplete = React.createClass({
           )}
         />
 
-                      <span className="input-group-btn" style={{display: 'inline', position: 'absolute'}}>
-              <button className="btn btn-primary" type="button">
-              <span className="glyphicon glyphicon-search"></span>
-             </button>
-             </span>
+        <span className='input-group-btn' style={{display: 'inline', position: 'absolute'}}>
+          <button className='btn btn-primary' type='button'>
+            <span className='glyphicon glyphicon-search' />
+          </button>
+        </span>
 
-    		</div>);
-    },
-    autoCompleteCallback: function(data){
-    	this.setState({products:data });
-    },
-    displayRecord: function(item){
-    	this.props.displayRecord(item);
-    }
-});
+      </div>)
+  },
+  autoCompleteCallback: function (data) {
+    	this.setState({products: data })
+  },
+  displayRecord: function (item) {
+    	this.props.displayRecord(item)
+  }
+})
 
 export let styles = {
   item: {
@@ -117,4 +115,4 @@ export let styles = {
   }
 }
 
-export default ProductAutoComplete;
+export default ProductAutoComplete
