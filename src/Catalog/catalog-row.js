@@ -117,7 +117,7 @@ var CatalogTreeRow = React.createClass({
   quickPaste: function () {
     var pieces = this.props.copyDocKey.split('/')
     Move(pieces[pieces.length - 1], this.props.copyDocKey, this.props.node.doc_key, this.props.store, this.handlePasteCallback)
-    nodeValue, originDocKey, destinationDocKey, store_id, callback
+    this.props.resetQuickMove()
   },
   handlePasteCallback: function (data) {
     this.props.showFeedBack(data)

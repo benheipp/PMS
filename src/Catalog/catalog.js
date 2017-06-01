@@ -63,7 +63,7 @@ var CatalogTree = React.createClass({
     }
 
     var rows = this.state.node.map(function (node) {
-      return <CatalogTreeRow catalogTypes={this.props.catalogTypes} storeLookup={this.props.storeLookup} node={node} key={node.key} nodeLevel={this.state.nodeLevel} onNodeClick={this.onNodeClick} showFeedBack={this.showFeedBack} reloadData={this.reloadData} storeUpdate={this.storeUpdate} updateAllCatalogs={this.updateAllCatalogs} store={this.props.selectedStore.value} quickMove={this.quickMove} copyActive={this.state.copyActive} copyDocKey={this.state.copyDocKey} />
+      return <CatalogTreeRow catalogTypes={this.props.catalogTypes} storeLookup={this.props.storeLookup} node={node} key={node.key} nodeLevel={this.state.nodeLevel} onNodeClick={this.onNodeClick} showFeedBack={this.showFeedBack} reloadData={this.reloadData} storeUpdate={this.storeUpdate} updateAllCatalogs={this.updateAllCatalogs} store={this.props.selectedStore.value} quickMove={this.quickMove} resetQuickMove={this.resetQuickMove} copyActive={this.state.copyActive} copyDocKey={this.state.copyDocKey} />
     }, this)
     return (
       <div style={stylemargin}>
@@ -114,6 +114,9 @@ var CatalogTree = React.createClass({
   },
   quickMove: function (doc_key) {
     this.setState({copyActive: true, copyDocKey: doc_key})
+  },
+  resetQuickMove: function () {
+    this.setState({copyActive: false, copyDocKey: ''})
   },
   reloadDataFromComponent: function (docKey, nodeName, nodeLevel) {
     getNodes(nodeLevel, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData)

@@ -1,4 +1,5 @@
 import React from 'react'
+import FeedBack from '../Controls/feedback'
 
 var CatalogTypeAssignment = React.createClass({
   getInitialState: function () {
@@ -9,7 +10,10 @@ var CatalogTypeAssignment = React.createClass({
       storeLookup: [],
       selectedStore: '',
       selectedCatalogType: '',
-      catalogTypes: []
+      catalogTypes: [],
+      feedbackResult: '',
+      feedbackMessage: '',
+      showFeedback: false
     }
   },
   componentDidMount: function () {
@@ -21,12 +25,20 @@ var CatalogTypeAssignment = React.createClass({
     return (
       <div className='webSend-container'>
         <div className='modal-header' style={{ backgroundColor: 'rgb(51, 122, 183)', color: 'white' }}><h4 className='modal-title'>Catalog Type Assignment</h4></div>
+          <div className='row'>
+            <div className='col-sm-12'>
+             <FeedBack Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
+            </div>
+          </div>
         <div className='row'>
           <div className='col-sm-3'>
                 Select a Type to apply:             <select className='form-control' value={this.state.selectedCatalogType} style={{width: '150px'}} onChange={this.handleCatalogTypeChange}>
                   {this.createCatalogTypeItems()}
                 </select>
           </div>
+        </div>
+        <div className='row'>
+          <div className='col-sm-3'>&nbsp;</div>
         </div>
         <div className='row'>
           <div className='col-sm-3'>
@@ -46,6 +58,9 @@ var CatalogTypeAssignment = React.createClass({
           </div>
         </div>
         <div className='row'>
+          <div className='col-sm-3'>&nbsp;</div>
+        </div>
+        <div className='row'>
           <div className='col-sm-3'>
             <button className='btn btn-success' onClick={this.handleApplyRuleClick}><span className='glyphicon glyphicon-arrow-up' /> Apply Rule</button>
           </div>
@@ -61,8 +76,8 @@ var CatalogTypeAssignment = React.createClass({
   handleApplyRuleClick: function () {
     AddCatalogTypeRule(this.state.selectedCatalogType, this.state.nodeLevel, this.state.selectedVendor, this.state.selectedStore, this.addCatalogTypeRuleCallback)
   },
-  addCatalogTypeRuleCallback: function () {
-
+  addCatalogTypeRuleCallback: function (data) {
+     this.setState({ showFeedback: true, feedbackResult: data.Result, feedbackMessage: data.Message})
   },
   createVendorItems: function () {
     let items = []
@@ -99,6 +114,9 @@ var CatalogTypeAssignment = React.createClass({
   },
   callbackCatalogNodeTypes: function (data) {
     this.setState({ catalogTypes: data })
+  },
+  resetFeedbackState: function () {
+    this.setState({ showFeedback: false })
   }
 })
 
