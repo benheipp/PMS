@@ -63,7 +63,8 @@ var WebSendComponent = React.createClass({
   		statusData.status_message = 'Cancelling send...'
   		statusData.send_flag = false
   		this.setState({totalRecordsSendClick: 0, StatusData: statusData })
-    UpdateWebSent(1, this.state.selectedStore, this.updateWebSentFlagCallback)
+      UpdateSendToWebFlag(false, 'Cancelled', this.state.selectedStore, this.updateSendToWebFlagCallback)
+      UpdateWebSent(1, this.state.selectedStore, this.updateWebSentFlagCallback)
   	},
   	updateSendToWebFlagCallback: function (data) {
   		if (data.Result.Result == 'Error') {
@@ -71,7 +72,13 @@ var WebSendComponent = React.createClass({
   }
   	},
   updateWebSentFlagCallback: function (data, webSentFlag) {
-    UpdateSendToWebFlag(webSentFlag, 'Preparing to send...', this.state.selectedStore, this.updateSendToWebFlagCallback)
+    console.log(webSentFlag);
+    if (webSentFlag == 1)
+    {
+      
+    } else {
+      UpdateSendToWebFlag(true, 'Preparing to send...', this.state.selectedStore, this.updateSendToWebFlagCallback)
+    }
   },
   	getCurrentImportStatusCallback: function (data) {
   		var statusData = this.state.StatusData

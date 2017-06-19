@@ -62,6 +62,14 @@ var CatalogTree = React.createClass({
       lockVis = true
     }
 
+    var catVis;
+    if (this.state.showComponent)
+    {
+      catVis = {display:'none'}
+    } else {
+      catVis = {display:'block'}
+    }
+
     var rows = this.state.node.map(function (node) {
       return <CatalogTreeRow catalogTypes={this.props.catalogTypes} storeLookup={this.props.storeLookup} node={node} key={node.key} nodeLevel={this.state.nodeLevel} onNodeClick={this.onNodeClick} showFeedBack={this.showFeedBack} reloadData={this.reloadData} storeUpdate={this.storeUpdate} updateAllCatalogs={this.updateAllCatalogs} store={this.props.selectedStore.value} quickMove={this.quickMove} resetQuickMove={this.resetQuickMove} copyActive={this.state.copyActive} copyDocKey={this.state.copyDocKey} />
     }, this)
@@ -70,9 +78,10 @@ var CatalogTree = React.createClass({
         {this.props.disabled == '1' ? <h1>Disabled Items</h1> : null }
         <BreadCrumb nodeNameCrumb={this.state.nodeNameCrumb} docKey={this.state.docKey} callbackBreadCrumbClick={this.BreadCrumbClick} handleEditBreadCrumbText={this.handleEditBreadCrumbText} selectedStore={this.props.selectedStore} handleClearSelectedStore={this.props.handleClearSelectedStore} />
         {this.state.showBreadCrumbModal ? <BreadCrumbModal docKey={this.state.docKey} breadCrumbText={this.state.breadCrumbText} handleHideModal={this.handleHideModal} handleSaveBreadCrumbClick={this.handleSaveBreadCrumbClick} /> : null}
-        <FeedBack Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
+        <FeedBack noTimer='true' Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
         { this.state.showComponent ? <ComponentLevel component={this.state.componentData} componentName={this.state.componentName} diagramUrl={this.state.componentImage} docKey={this.state.docKey} showFeedBack={this.showFeedBack} nodeName={this.state.nodeName} nodeLevel={this.state.nodeLevel} reloadDataFromComponent={this.reloadDataFromComponent} storeLookup={this.props.storeLookup} store={this.props.selectedStore.value} /> : null }
         { this.state.showProductList ? <ProductList products={this.state.productData} /> : null}
+      <div style={catVis}>
         {disableVis
             ? <div><b>Show Disabled </b> <input
               name='disabled'
@@ -84,19 +93,24 @@ var CatalogTree = React.createClass({
         <table className='table table-striped'>
           <tbody>
             <tr>
-              <td><b>Node</b></td>
-              <td />
-              <td />
-              <td />
-              <td />
-              <td />
-              {disableVis ? <td><b>Disabled</b></td> : null }
-              {disableVis ? <td><b>Locked</b></td> : null }
+              <th style={{width:'65%'}}><b>Node</b></th>
+              <th style={{width:'5%'}}><b>Type</b></th>
+              <th style={{width:'5%'}} />
+              <th style={{width:'5%'}} />
+              <th style={{width:'5%'}} />
+              <th style={{width:'5%'}} />
+              {disableVis ? <th style={{width:'5%'}}><b>Disabled</b></th> : null }
+              {disableVis ? <th style={{width:'5%'}}><b>Locked</b></th> : null }
             </tr>
             {rows}
+            <tr>
+              <td>Row Count: {this.state.node.length}</td>
+              <td colSpan="7"><a href={`http://192.168.2.16:84/api/Pms/ExportToExcel?nodeLevel=${this.state.nodeLevel}&docKey=${this.state.docKey}&storeId=${this.props.selectedStore.value}&showDisabled=${this.state.showDisabled}&token=${localStorage.token}`} target="_window" > <span className="glyphicon glyphicon-file"></span> Export</a></td>
+            </tr>
             {this.state.noResultsMessage ? <h4>No Results</h4> : null }
           </tbody>
         </table>
+        </div>
       </div>
     )
   },
@@ -129,6 +143,12 @@ var CatalogTree = React.createClass({
     GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback)
     this.setState({ docKey: docKey, nodeNameCrumb: this.state.nodeNameCrumb + '[|]' + nodeName, nodeLevel: nodeLevel + 1, showFeedback: false })
     this.updateAllCatalogs(docKey)
+  },
+  handleExportClick: function(){
+    ExportToExcel(this.state.nodeLevel,this.state.docKey,this.state.nodeName,this.props.selectedStore.value,this.props.disabled,this.state.showDisabled,this.handleExportCallBack)
+  },
+  handleExportCallBack: function(){
+    console.log("Export callback hit")
   },
   handleNewData: function (data, docKey, nodeName) {
     this.setState({ node: data, nodeName: nodeName })

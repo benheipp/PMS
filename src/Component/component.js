@@ -84,7 +84,12 @@ var ComponentLevel = React.createClass({
                     <th />
                   </tr>
                 </thead>
-                <tbody>{rows}</tbody>
+                <tbody>{rows}
+
+                  <tr>
+              <td colSpan="7">Row Count: {this.props.component.length}</td>
+            </tr>
+                </tbody>
               </table>
             </td>
           </tr>

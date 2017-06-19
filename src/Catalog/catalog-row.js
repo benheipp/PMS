@@ -35,6 +35,11 @@ var CatalogTreeRow = React.createClass({
       lockVis = true
     }
 
+    var QuickMoveVis = true
+    if (this.props.nodeLevel == '1'){
+      QuickMoveVis = false
+    }
+
     if (this.state.isEditMode) {
       return (
         <tr>
@@ -42,12 +47,12 @@ var CatalogTreeRow = React.createClass({
             <input type='text' className='form-control' id='txtNodeInput' value={this.state.nodeValue} onChange={this.handleInputChange} />
           </td>
           <td>
-            <input disabled type='text' className='form-control' id='txtNodeKey' value={this.state.nodeKey} onChange={this.handleNodeKeyChange} />
-          </td>
-          <td>
             <select className='form-control' value={this.state.selectedCatalogType} style={{width: '150px'}} onChange={this.handleCatalogTypeChange}>
               {this.createCatalogTypeItems()}
             </select>
+          </td>
+          <td colSpan="3">
+            <input disabled type='text' className='form-control' id='txtNodeKey' value={this.state.nodeKey} onChange={this.handleNodeKeyChange} />
           </td>
           <td>
             <button onClick={this.handleSaveClick.bind(this, this.props.node, this.props.nodeLevel, this.state.nodeValue, this.state.nodeKey, this.props.node.type_id, this.state.selectedCatalogType)} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-floppy-disk' /></button>
@@ -72,16 +77,15 @@ var CatalogTreeRow = React.createClass({
     } else {
       return (
         <tr>
-          <td><a href='#' onClick={this.handleClick.bind(this, this.props.node.doc_key, this.props.node.name, this.props.nodeLevel)}>{this.props.node.name}</a></td>
+          <td style={{verticalAlign:'middle'}}><a href='#' onClick={this.handleClick.bind(this, this.props.node.doc_key, this.props.node.name, this.props.nodeLevel)}>{this.props.node.name}</a></td>
+          <td style={{verticalAlign:'middle'}}>{this.props.node.type_name}</td>
           <td><button disabled={disableVar} onClick={this.handleEditClick.bind(this, this.props.node)} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-pencil' /> Edit</button></td>
-          <td><button onClick={this.quickMove} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Quick Move</button></td>
-          <td>{this.props.copyActive ? <button onClick={this.quickPaste} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Paste</button> : null }</td>
-          <td><button onClick={this.showCopyModal} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Custom Copy</button></td>
-          <td>{/* <button disabled onClick={this.showHistoryModal} className="btn btn-sm btn-default"><i className="glyphicon glyphicon-book"></i> History</button>
-                {this.state.showHistoryModal ? <NodeHistoryModal docKey={this.props.node.doc_key} catalogId={this.props.node.id} handleHideModal={this.handleHideModal} rollbackComplete={this.rollbackComplete} data={this.state.nodeHistoryData} webSent={this.props.node.web_sent} /> : null} */}
-            {this.state.showCopyModal ? <CopyModal handleHideModal={this.handleHideCopyModal} store={this.props.store} DocKey={this.props.node.doc_key} /> : null }
+          <td>{QuickMoveVis ? <button onClick={this.quickMove} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Quick Move</button> : null }</td>
+          <td>{this.props.copyActive && QuickMoveVis ? <button onClick={this.quickPaste} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Paste</button> : null }</td>
+          <td><button onClick={this.showCopyModal} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Custom Copy</button>
+          {this.state.showCopyModal ? <CopyModal handleHideModal={this.handleHideCopyModal} store={this.props.store} DocKey={this.props.node.doc_key} /> : null }
           </td>
-          {disableVis ? <td>
+          {disableVis ? <td style={{verticalAlign:'middle'}}>
             <input
               name='disabled'
               type='checkbox'
@@ -89,7 +93,7 @@ var CatalogTreeRow = React.createClass({
               onChange={this.handleDisabledChange} />
             {/* <StoreLookup storeLookup={this.props.storeLookup} docKey={this.props.node.doc_key} storeValues={this.props.node.store} storeUpdate={this.storeUpdate} type={'node'} docId={0} /> */}
           </td> : null }
-          {lockVis ? <td>
+          {lockVis ? <td style={{verticalAlign:'middle'}}>
             <input
               name='disabled'
               type='checkbox'
@@ -115,6 +119,11 @@ var CatalogTreeRow = React.createClass({
     this.props.quickMove(this.props.node.doc_key)
   },
   quickPaste: function () {
+    var data = {
+      Result:'',
+      Message:'Attempting to Copy Data'
+    }
+    this.props.showFeedBack(data)
     var pieces = this.props.copyDocKey.split('/')
     Move(pieces[pieces.length - 1], this.props.copyDocKey, this.props.node.doc_key, this.props.store, this.handlePasteCallback)
     this.props.resetQuickMove()

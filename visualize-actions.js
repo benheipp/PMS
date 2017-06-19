@@ -587,3 +587,14 @@ function AddCatalogTypeRule (type_id, nodeLevel, vendor, store_id, callback) {
      }
    })
 }
+
+function ExportToExcel (nodeLevel, docKey, nodeName, storeId, disabled, showDisabled, callback) {
+  $.getJSON(url + '/api/Pms/ExportToExcel', { nodeLevel: nodeLevel, storeId: storeId, disabled: disabled, showDisabled: showDisabled, docKey: docKey, token: localStorage.token })
+      .done(function (data) { callback(data) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}

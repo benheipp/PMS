@@ -71,201 +71,201 @@
 	
 	var _importmain2 = _interopRequireDefault(_importmain);
 	
-	var _login = __webpack_require__(328);
+	var _login = __webpack_require__(329);
 	
 	var _login2 = _interopRequireDefault(_login);
 	
-	var _auth = __webpack_require__(329);
+	var _auth = __webpack_require__(330);
 	
 	var _auth2 = _interopRequireDefault(_auth);
 	
-	var _product = __webpack_require__(330);
+	var _product = __webpack_require__(331);
 	
 	var _product2 = _interopRequireDefault(_product);
 	
-	var _useradminmain = __webpack_require__(339);
+	var _useradminmain = __webpack_require__(340);
 	
 	var _useradminmain2 = _interopRequireDefault(_useradminmain);
 	
-	var _productStandAlone = __webpack_require__(347);
+	var _productStandAlone = __webpack_require__(348);
 	
 	var _productStandAlone2 = _interopRequireDefault(_productStandAlone);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var App = _react2.default.createClass({
-	    displayName: 'App',
-	    getInitialState: function getInitialState() {
-	        return {
-	            loggedIn: _auth2.default.loggedIn()
-	        };
-	    },
-	    updateAuth: function updateAuth(loggedIn) {
-	        this.setState({
-	            loggedIn: loggedIn
-	        });
-	    },
-	    componentWillMount: function componentWillMount() {
-	        console.disableYellowBox = true;
-	        _auth2.default.onChange = this.updateAuth;
-	        _auth2.default.login();
-	    },
+	  displayName: 'App',
+	  getInitialState: function getInitialState() {
+	    return {
+	      loggedIn: _auth2.default.loggedIn()
+	    };
+	  },
+	  updateAuth: function updateAuth(loggedIn) {
+	    this.setState({
+	      loggedIn: loggedIn
+	    });
+	  },
+	  componentWillMount: function componentWillMount() {
+	    console.disableYellowBox = true;
+	    _auth2.default.onChange = this.updateAuth;
+	    _auth2.default.login();
+	  },
 	
-	    render: function render() {
-	        var renderImport, renderCatalog, renderProduct;
-	        if (_auth2.default.loggedIn() == true && localStorage.ImportVisibility == 'true') {
-	            renderImport = true;
-	        } else {
-	            renderImport = false;
-	        }
-	        if (_auth2.default.loggedIn() == true && localStorage.CatalogVisibility == 'true') {
-	            renderCatalog = true;
-	        } else {
-	            renderCatalog = false;
-	        }
-	        if (_auth2.default.loggedIn() == true && localStorage.ProductVisibility == 'true') {
-	            renderProduct = true;
-	        } else {
-	            renderProduct = false;
-	        }
-	        return _react2.default.createElement(
+	  render: function render() {
+	    var renderImport, renderCatalog, renderProduct;
+	    if (_auth2.default.loggedIn() == true && localStorage.ImportVisibility == 'true') {
+	      renderImport = true;
+	    } else {
+	      renderImport = false;
+	    }
+	    if (_auth2.default.loggedIn() == true && localStorage.CatalogVisibility == 'true') {
+	      renderCatalog = true;
+	    } else {
+	      renderCatalog = false;
+	    }
+	    if (_auth2.default.loggedIn() == true && localStorage.ProductVisibility == 'true') {
+	      renderProduct = true;
+	    } else {
+	      renderProduct = false;
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'navbar navbar-default navbar-static-top' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'container' },
+	          _react2.default.createElement(
 	            'div',
-	            null,
+	            { className: 'navbar-header' },
+	            _react2.default.createElement('img', { src: 'src/Images/odn-horizontal.jpg', height: '50px' })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'navbar-collapse collapse' },
 	            _react2.default.createElement(
-	                'div',
-	                { className: 'navbar navbar-default navbar-static-top' },
+	              'ul',
+	              { className: 'nav navbar-nav' },
+	              renderImport ? _react2.default.createElement(
+	                'li',
+	                null,
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'container' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'navbar-header' },
-	                        _react2.default.createElement('img', { src: 'src/Images/odn-horizontal.jpg', height: '50px' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'navbar-collapse collapse' },
-	                        _react2.default.createElement(
-	                            'ul',
-	                            { className: 'nav navbar-nav' },
-	                            renderImport ? _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: 'import' },
-	                                    'Data Tools'
-	                                )
-	                            ) : null,
-	                            renderCatalog ? _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: 'catalog' },
-	                                    'Catalog'
-	                                )
-	                            ) : null,
-	                            renderProduct ? _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: 'product' },
-	                                    'Products'
-	                                )
-	                            ) : null
-	                        ),
-	                        _react2.default.createElement(
-	                            'ul',
-	                            { className: 'nav navbar-nav navbar-right' },
-	                            _auth2.default.loggedIn() ? _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: 'user' },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-user' }),
-	                                    ' ',
-	                                    localStorage.username
-	                                )
-	                            ) : null,
-	                            _auth2.default.loggedIn() ? _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: 'logout' },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-log-in' }),
-	                                    ' Logout'
-	                                )
-	                            ) : null,
-	                            !_auth2.default.loggedIn() ? _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: 'login' },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-log-in' }),
-	                                    ' Login'
-	                                )
-	                            ) : null
-	                        )
-	                    )
+	                  _reactRouter.Link,
+	                  { to: 'import' },
+	                  'Data Tools'
 	                )
+	              ) : null,
+	              renderCatalog ? _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: 'catalog' },
+	                  'Catalog'
+	                )
+	              ) : null,
+	              renderProduct ? _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: 'product' },
+	                  'Products'
+	                )
+	              ) : null
 	            ),
 	            _react2.default.createElement(
-	                'div',
+	              'ul',
+	              { className: 'nav navbar-nav navbar-right' },
+	              _auth2.default.loggedIn() ? _react2.default.createElement(
+	                'li',
 	                null,
-	                this.props.children
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: 'user' },
+	                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-user' }),
+	                  ' ',
+	                  localStorage.username
+	                )
+	              ) : null,
+	              _auth2.default.loggedIn() ? _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: 'logout' },
+	                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-log-in' }),
+	                  ' Logout'
+	                )
+	              ) : null,
+	              !_auth2.default.loggedIn() ? _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: 'login' },
+	                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-log-in' }),
+	                  ' Login'
+	                )
+	              ) : null
 	            )
-	        );
-	    }
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.props.children
+	      )
+	    );
+	  }
 	});
 	
 	App.propTypes = {
-	    children: _react2.default.PropTypes.object
+	  children: _react2.default.PropTypes.object
 	};
 	
 	var Logout = _react2.default.createClass({
-	    displayName: 'Logout',
-	    componentDidMount: function componentDidMount() {
-	        _auth2.default.logout();
-	        this.context.router.push('/login');
-	    },
-	    render: function render() {
-	        return _react2.default.createElement(
-	            'p',
-	            null,
-	            'You are now logged out '
-	        );
-	    }
+	  displayName: 'Logout',
+	  componentDidMount: function componentDidMount() {
+	    _auth2.default.logout();
+	    this.context.router.push('/login');
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'p',
+	      null,
+	      'You are now logged out '
+	    );
+	  }
 	});
 	
 	function requireAuth(nextState, replace) {
-	    if (!_auth2.default.loggedIn()) {
-	        replace({
-	            pathname: '/login',
-	            state: { nextPathname: nextState.location.pathname }
-	        });
-	    }
+	  if (!_auth2.default.loggedIn()) {
+	    replace({
+	      pathname: '/login',
+	      state: { nextPathname: nextState.location.pathname }
+	    });
+	  }
 	}
 	
 	(0, _reactDom.render)(_react2.default.createElement(
-	    _reactRouter.Router,
-	    { history: _reactRouter.browserHistory },
-	    _react2.default.createElement(
-	        _reactRouter.Route,
-	        { path: '/', component: App },
-	        _react2.default.createElement(_reactRouter.IndexRoute, { component: _visualize2.default, onEnter: requireAuth }),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/catalog', component: _visualize2.default, onEnter: requireAuth }),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/import', component: _importmain2.default, onEnter: requireAuth }),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _login2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/logout', component: Logout }),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/product', component: _product2.default, onEnter: requireAuth }),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/user', component: _useradminmain2.default, onEnter: requireAuth }),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/product-detail', component: _productStandAlone2.default, onEnter: requireAuth })
-	    )
+	  _reactRouter.Router,
+	  { history: _reactRouter.browserHistory },
+	  _react2.default.createElement(
+	    _reactRouter.Route,
+	    { path: '/', component: App },
+	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _visualize2.default, onEnter: requireAuth }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/catalog', component: _visualize2.default, onEnter: requireAuth }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/import', component: _importmain2.default, onEnter: requireAuth }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _login2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/logout', component: Logout }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/product', component: _product2.default, onEnter: requireAuth }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/user', component: _useradminmain2.default, onEnter: requireAuth }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/product-detail', component: _productStandAlone2.default, onEnter: requireAuth })
+	  )
 	), document.getElementById('root'));
 
 /***/ },
@@ -26816,7 +26816,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -26838,62 +26838,66 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var CatalogMain = _react2.default.createClass({
-	    displayName: 'CatalogMain',
+	  displayName: 'CatalogMain',
 	
-	    componentWillMount: function componentWillMount() {},
-	    componentDidMount: function componentDidMount() {
-	        GetStoreLookups(this.callbackStoreLookups);
-	    },
-	    getInitialState: function getInitialState() {
-	        return {
-	            selectedStore: {
-	                name: '',
-	                value: ''
-	            },
-	            storeLookup: [],
-	            docKey: ''
-	        };
-	    },
-	    render: function render() {
-	
-	        var showCatalogTree;
-	        if (this.state.selectedStore.value != '') {
-	            showCatalogTree = true;
-	        } else {
-	            showCatalogTree = false;
-	        }
-	
-	        return _react2.default.createElement(
-	            'div',
-	            { className: 'container' },
-	            !showCatalogTree ? _react2.default.createElement(_storeControl2.default, { storeLookup: this.state.storeLookup, selectStore: this.selectStore }) : null,
-	            showCatalogTree ? _react2.default.createElement(_catalog2.default, { storeLookup: this.state.storeLookup, selectedStore: this.state.selectedStore, handleClearSelectedStore: this.handleClearSelectedStore, disabled: '0', updateControl: this.state.updateControl, updateAllCatalogs: this.updateAllCatalogs }) : null,
-	            _react2.default.createElement(
-	                'div',
-	                { style: { height: '100px' } },
-	                '\xA0'
-	            ),
-	            showCatalogTree ? _react2.default.createElement(_catalogDisabled2.default, { storeLookup: this.state.storeLookup, selectedStore: this.state.selectedStore, docKey: this.state.docKey, updateAllCatalogs: this.updateAllCatalogs }) : null
-	        );
-	    },
-	    callbackStoreLookups: function callbackStoreLookups(data) {
-	        this.setState({ storeLookup: data });
-	    },
-	    updateAllCatalogs: function updateAllCatalogs(docKey) {
-	        this.setState({ docKey: docKey });
-	    },
-	    selectStore: function selectStore(storeId, name) {
-	        var selectedStore = this.state.selectedStore;
-	        selectedStore.name = name;
-	        selectedStore.value = storeId;
-	        this.setState({ selectedStore: selectedStore });
-	    },
-	    handleClearSelectedStore: function handleClearSelectedStore() {
-	        var selectedStore = this.state.selectedStore;
-	        selectedStore.name = '';
-	        selectedStore.value = '';
-	        this.setState({ selectedStore: selectedStore });
+	  componentWillMount: function componentWillMount() {},
+	  componentDidMount: function componentDidMount() {
+	    GetStoreLookups(this.callbackStoreLookups);
+	    GetCatalogNodeTypes(this.callbackCatalogNodeTypes);
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      selectedStore: {
+	        name: '',
+	        value: ''
+	      },
+	      storeLookup: [],
+	      catalogTypes: [],
+	      docKey: ''
+	    };
+	  },
+	  render: function render() {
+	    var showCatalogTree;
+	    if (this.state.selectedStore.value != '') {
+	      showCatalogTree = true;
+	    } else {
+	      showCatalogTree = false;
 	    }
+	
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'container' },
+	      !showCatalogTree ? _react2.default.createElement(_storeControl2.default, { storeLookup: this.state.storeLookup, selectStore: this.selectStore }) : null,
+	      showCatalogTree ? _react2.default.createElement(_catalog2.default, { catalogTypes: this.state.catalogTypes, storeLookup: this.state.storeLookup, selectedStore: this.state.selectedStore, handleClearSelectedStore: this.handleClearSelectedStore, disabled: '0', updateControl: this.state.updateControl, updateAllCatalogs: this.updateAllCatalogs }) : null,
+	      _react2.default.createElement(
+	        'div',
+	        { style: { height: '100px' } },
+	        '\xA0'
+	      ),
+	      showCatalogTree ? _react2.default.createElement(_catalogDisabled2.default, { storeLookup: this.state.storeLookup, selectedStore: this.state.selectedStore, docKey: this.state.docKey, updateAllCatalogs: this.updateAllCatalogs }) : null
+	    );
+	  },
+	  callbackStoreLookups: function callbackStoreLookups(data) {
+	    this.setState({ storeLookup: data });
+	  },
+	  callbackCatalogNodeTypes: function callbackCatalogNodeTypes(data) {
+	    this.setState({ catalogTypes: data });
+	  },
+	  updateAllCatalogs: function updateAllCatalogs(docKey) {
+	    this.setState({ docKey: docKey });
+	  },
+	  selectStore: function selectStore(storeId, name) {
+	    var selectedStore = this.state.selectedStore;
+	    selectedStore.name = name;
+	    selectedStore.value = storeId;
+	    this.setState({ selectedStore: selectedStore });
+	  },
+	  handleClearSelectedStore: function handleClearSelectedStore() {
+	    var selectedStore = this.state.selectedStore;
+	    selectedStore.name = '';
+	    selectedStore.value = '';
+	    this.setState({ selectedStore: selectedStore });
+	  }
 	});
 	
 	exports.default = CatalogMain;
@@ -26905,7 +26909,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -26943,236 +26947,310 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var CatalogTree = _react2.default.createClass({
-	    displayName: 'CatalogTree',
+	  displayName: 'CatalogTree',
 	
-	    getInitialState: function getInitialState() {
-	        return {
-	            nodeLevel: 1,
-	            node: [],
-	            nodeName: "",
-	            docKey: 'catalog',
-	            showComponent: false,
-	            showProductList: false,
-	            componentData: [],
-	            productData: [],
-	            componentName: "",
-	            componentImage: "",
-	            showFeedback: true,
-	            feedbackResult: 0,
-	            feedbackMessage: "Loading...",
-	            showBreadCrumbModal: false,
-	            breadCrumbText: "",
-	            loading: false,
-	            noResultsMessage: false,
-	            showDisabled: false
-	        };
-	    },
-	    componentWillMount: function componentWillMount() {
-	        if (localStorage.CatalogVisibility != 'true') {
-	            localStorage.clear();
-	            window.location.href = "/login";
-	        }
-	    },
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	        if (nextProps.docKey != this.props.docKey) {
-	            getNodeList(1, nextProps.docKey, [], this.props.selectedStore.value, this.state.showDisabled, this.handleNewData);
-	        }
-	    },
-	    componentDidMount: function componentDidMount() {
-	        getNodes(1, null, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
-	    },
-	    render: function render() {
-	        var stylemargin = {
-	            marginTop: "60px"
-	        };
-	
-	        var disableVis = false;
-	        if (localStorage.Disable == 'true') {
-	            disableVis = true;
-	        }
-	
-	        var lockVis = false;
-	        if (localStorage.Lock == 'true') {
-	            lockVis = true;
-	        }
-	
-	        var rows = this.state.node.map(function (node) {
-	            return _react2.default.createElement(_catalogRow2.default, { storeLookup: this.props.storeLookup, node: node, key: node.key, nodeLevel: this.state.nodeLevel, onNodeClick: this.onNodeClick, showFeedBack: this.showFeedBack, reloadData: this.reloadData, storeUpdate: this.storeUpdate, updateAllCatalogs: this.updateAllCatalogs, store: this.props.selectedStore.value });
-	        }, this);
-	        return _react2.default.createElement(
-	            'div',
-	            { style: stylemargin },
-	            this.props.disabled == "1" ? _react2.default.createElement(
-	                'h1',
-	                null,
-	                'Disabled Items'
-	            ) : null,
-	            _react2.default.createElement(_breadcrumb2.default, { docKey: this.state.docKey, callbackBreadCrumbClick: this.BreadCrumbClick, handleEditBreadCrumbText: this.handleEditBreadCrumbText, selectedStore: this.props.selectedStore, handleClearSelectedStore: this.props.handleClearSelectedStore }),
-	            this.state.showBreadCrumbModal ? _react2.default.createElement(_breadcrumbModal2.default, { docKey: this.state.docKey, breadCrumbText: this.state.breadCrumbText, handleHideModal: this.handleHideModal, handleSaveBreadCrumbClick: this.handleSaveBreadCrumbClick }) : null,
-	            _react2.default.createElement(_feedback2.default, { Result: this.state.feedbackResult, Message: this.state.feedbackMessage, visible: this.state.showFeedback, delay: 2000, resetFeedbackState: this.resetFeedbackState }),
-	            this.state.showComponent ? _react2.default.createElement(_component2.default, { component: this.state.componentData, componentName: this.state.componentName, diagramUrl: this.state.componentImage, docKey: this.state.docKey, showFeedBack: this.showFeedBack, nodeName: this.state.nodeName, nodeLevel: this.state.nodeLevel, reloadDataFromComponent: this.reloadDataFromComponent, storeLookup: this.props.storeLookup, store: this.props.selectedStore.value }) : null,
-	            this.state.showProductList ? _react2.default.createElement(_productList2.default, { products: this.state.productData }) : null,
-	            disableVis ? _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'b',
-	                    null,
-	                    'Show Disabled '
-	                ),
-	                ' ',
-	                _react2.default.createElement('input', {
-	                    name: 'disabled',
-	                    type: 'checkbox',
-	                    defaultChecked: this.state.showDisabled,
-	                    onChange: this.handleShowDisabledChange })
-	            ) : null,
-	            _react2.default.createElement(
-	                'table',
-	                { className: 'table table-striped' },
-	                _react2.default.createElement(
-	                    'tbody',
-	                    null,
-	                    _react2.default.createElement(
-	                        'tr',
-	                        null,
-	                        _react2.default.createElement(
-	                            'td',
-	                            null,
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Node'
-	                            )
-	                        ),
-	                        _react2.default.createElement('td', null),
-	                        _react2.default.createElement('td', null),
-	                        _react2.default.createElement('td', null),
-	                        disableVis ? _react2.default.createElement(
-	                            'td',
-	                            null,
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Disabled'
-	                            )
-	                        ) : null,
-	                        disableVis ? _react2.default.createElement(
-	                            'td',
-	                            null,
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Locked'
-	                            )
-	                        ) : null
-	                    ),
-	                    rows,
-	                    this.state.noResultsMessage ? _react2.default.createElement(
-	                        'h4',
-	                        null,
-	                        'No Results'
-	                    ) : null
-	                )
-	            )
-	        );
-	    },
-	    handleShowDisabledChange: function handleShowDisabledChange(event) {
-	        this.setState({ showDisabled: event.target.checked });
-	        getNodes(this.state.nodeLevel, this.state.docKey, this.state.nodeName, this.props.selectedStore.value, this.props.disabled, event.target.checked, this.handleNewData);
-	        this.updateAllCatalogs(this.state.docKey);
-	    },
-	    reloadData: function reloadData(docKey, nodeName, nodeLevel) {
-	        var nDocKey = docKey.substring(0, docKey.lastIndexOf("/"));
-	        getNodes(nodeLevel, nDocKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
-	        GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback);
-	        this.setState({ docKey: nDocKey, nodeName: nodeName });
-	        this.updateAllCatalogs(docKey);
-	    },
-	    reloadDataFromComponent: function reloadDataFromComponent(docKey, nodeName, nodeLevel) {
-	        getNodes(nodeLevel, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
-	        GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback);
-	        this.setState({ docKey: docKey, nodeName: nodeName });
-	        this.updateAllCatalogs(docKey);
-	    },
-	    onNodeClick: function onNodeClick(docKey, nodeName, nodeLevel) {
-	        getNodes(nodeLevel + 1, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
-	        GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback);
-	        this.setState({ docKey: docKey, nodeLevel: nodeLevel + 1, showFeedback: false });
-	        this.updateAllCatalogs(docKey);
-	    },
-	    handleNewData: function handleNewData(data, docKey, nodeName) {
-	        this.setState({ node: data, nodeName: nodeName });
-	        if (data.length == 0 && this.state.nodeLevel == 1) {
-	            this.setState({ noResultsMessage: true });
-	        }
-	        if (data.length == 0 && docKey != null) {
-	            if (docKey.includes("catalog/aftermarket")) {
-	                GetProductList(docKey, this.props.selectedStore.value, this.HandleProductListData);
-	            } else {
-	                getComponentProducts(docKey, nodeName, this.props.selectedStore.value, this.HandleComponentData);
-	            }
-	        } else {
-	            this.setState({ componentData: [] });
-	            this.setState({ showComponent: false, showProductList: false, showFeedback: false });
-	        }
-	    },
-	    BreadCrumbClick: function BreadCrumbClick(nodeLevel, docKey) {
-	        getNodes(nodeLevel, docKey, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
-	        GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback);
-	        this.setState({ docKey: docKey, nodeLevel: nodeLevel, showFeedback: false });
-	        this.updateAllCatalogs(docKey);
-	    },
-	    HandleProductListData: function HandleProductListData(data) {
-	        this.setState({ productData: data, showProductList: true });
-	    },
-	    HandleComponentData: function HandleComponentData(data, componentName) {
-	        var imgPrefix;
-	        switch (this.props.selectedStore.value) {
-	            case 12:
-	                imgPrefix = '//cdn.firedog.com/diagram/';
-	                break;
-	            case 11:
-	                imgPrefix = '//cdn.partzilla.com/diagram/';
-	                break;
-	            case 10:
-	                imgPrefix = '//cdn.boats.net/diagram/';
-	                break;
-	        }
-	        this.setState({ componentData: data, componentName: componentName, componentImage: imgPrefix + data[0].ImageUrl + '.png', showComponent: true });
-	    },
-	    showFeedBack: function showFeedBack(data) {
-	        this.setState({ showFeedback: true, feedbackResult: data.Result, feedbackMessage: data.Message });
-	    },
-	    handleEditBreadCrumbText: function handleEditBreadCrumbText() {
-	        this.setState({ showBreadCrumbModal: true });
-	    },
-	    handleSaveBreadCrumbClick: function handleSaveBreadCrumbClick(docKey, breadCrumbText) {
-	        SaveBreadCrumbText(docKey, breadCrumbText, this.props.selectedStore.value, this.breadCrumbTextSaveCallback);
-	    },
-	    breadCrumbTextSaveCallback: function breadCrumbTextSaveCallback(data) {
-	        this.showFeedBack(data);
-	        this.setState({ showBreadCrumbModal: false });
-	        GetBreadCrumbText(this.state.docKey, this.props.selectedStore.value, this.editBreadCrumbCallback);
-	    },
-	    editBreadCrumbCallback: function editBreadCrumbCallback(data) {
-	        this.setState({ breadCrumbText: data.breadcrumb_text });
-	    },
-	    handleHideModal: function handleHideModal() {
-	        this.setState({ showBreadCrumbModal: false });
-	    },
-	    resetFeedbackState: function resetFeedbackState() {
-	        this.setState({ showFeedback: false });
-	    },
-	    storeUpdate: function storeUpdate(data) {
-	        this.showFeedBack(data);
-	    },
-	    handleClearSelectedStore: function handleClearSelectedStore() {
-	        this.props.handleClearSelectedStore();
-	    },
-	    updateAllCatalogs: function updateAllCatalogs(docKey) {
-	        this.props.updateAllCatalogs(docKey);
+	  getInitialState: function getInitialState() {
+	    return {
+	      nodeLevel: 1,
+	      node: [],
+	      nodeName: '',
+	      nodeNameCrumb: 'catalog',
+	      docKey: 'catalog',
+	      showComponent: false,
+	      showProductList: false,
+	      componentData: [],
+	      productData: [],
+	      componentName: '',
+	      componentImage: '',
+	      showFeedback: true,
+	      feedbackResult: 0,
+	      feedbackMessage: 'Loading...',
+	      showBreadCrumbModal: false,
+	      breadCrumbText: '',
+	      loading: false,
+	      noResultsMessage: false,
+	      showDisabled: false,
+	      copyActive: false,
+	      copyDocKey: ''
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    if (localStorage.CatalogVisibility != 'true') {
+	      localStorage.clear();
+	      window.location.href = '/login';
 	    }
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    if (nextProps.docKey != this.props.docKey) {
+	      getNodeList(1, nextProps.docKey, [], this.props.selectedStore.value, this.state.showDisabled, this.handleNewData);
+	    }
+	  },
+	  componentDidMount: function componentDidMount() {
+	    getNodes(1, null, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
+	  },
+	  render: function render() {
+	    var stylemargin = {
+	      marginTop: '60px'
+	    };
+	
+	    var disableVis = false;
+	    if (localStorage.Disable == 'true') {
+	      disableVis = true;
+	    }
+	
+	    var lockVis = false;
+	    if (localStorage.Lock == 'true') {
+	      lockVis = true;
+	    }
+	
+	    var catVis;
+	    if (this.state.showComponent) {
+	      catVis = { display: 'none' };
+	    } else {
+	      catVis = { display: 'block' };
+	    }
+	
+	    var rows = this.state.node.map(function (node) {
+	      return _react2.default.createElement(_catalogRow2.default, { catalogTypes: this.props.catalogTypes, storeLookup: this.props.storeLookup, node: node, key: node.key, nodeLevel: this.state.nodeLevel, onNodeClick: this.onNodeClick, showFeedBack: this.showFeedBack, reloadData: this.reloadData, storeUpdate: this.storeUpdate, updateAllCatalogs: this.updateAllCatalogs, store: this.props.selectedStore.value, quickMove: this.quickMove, resetQuickMove: this.resetQuickMove, copyActive: this.state.copyActive, copyDocKey: this.state.copyDocKey });
+	    }, this);
+	    return _react2.default.createElement(
+	      'div',
+	      { style: stylemargin },
+	      this.props.disabled == '1' ? _react2.default.createElement(
+	        'h1',
+	        null,
+	        'Disabled Items'
+	      ) : null,
+	      _react2.default.createElement(_breadcrumb2.default, { nodeNameCrumb: this.state.nodeNameCrumb, docKey: this.state.docKey, callbackBreadCrumbClick: this.BreadCrumbClick, handleEditBreadCrumbText: this.handleEditBreadCrumbText, selectedStore: this.props.selectedStore, handleClearSelectedStore: this.props.handleClearSelectedStore }),
+	      this.state.showBreadCrumbModal ? _react2.default.createElement(_breadcrumbModal2.default, { docKey: this.state.docKey, breadCrumbText: this.state.breadCrumbText, handleHideModal: this.handleHideModal, handleSaveBreadCrumbClick: this.handleSaveBreadCrumbClick }) : null,
+	      _react2.default.createElement(_feedback2.default, { noTimer: 'true', Result: this.state.feedbackResult, Message: this.state.feedbackMessage, visible: this.state.showFeedback, delay: 2000, resetFeedbackState: this.resetFeedbackState }),
+	      this.state.showComponent ? _react2.default.createElement(_component2.default, { component: this.state.componentData, componentName: this.state.componentName, diagramUrl: this.state.componentImage, docKey: this.state.docKey, showFeedBack: this.showFeedBack, nodeName: this.state.nodeName, nodeLevel: this.state.nodeLevel, reloadDataFromComponent: this.reloadDataFromComponent, storeLookup: this.props.storeLookup, store: this.props.selectedStore.value }) : null,
+	      this.state.showProductList ? _react2.default.createElement(_productList2.default, { products: this.state.productData }) : null,
+	      _react2.default.createElement(
+	        'div',
+	        { style: catVis },
+	        disableVis ? _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'b',
+	            null,
+	            'Show Disabled '
+	          ),
+	          ' ',
+	          _react2.default.createElement('input', {
+	            name: 'disabled',
+	            type: 'checkbox',
+	            defaultChecked: this.state.showDisabled,
+	            onChange: this.handleShowDisabledChange })
+	        ) : null,
+	        this.state.copyActive ? _react2.default.createElement(
+	          'div',
+	          null,
+	          'Copy Doc Key: ',
+	          this.state.copyDocKey,
+	          ' '
+	        ) : null,
+	        _react2.default.createElement(
+	          'table',
+	          { className: 'table table-striped' },
+	          _react2.default.createElement(
+	            'tbody',
+	            null,
+	            _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'th',
+	                { style: { width: '65%' } },
+	                _react2.default.createElement(
+	                  'b',
+	                  null,
+	                  'Node'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'th',
+	                { style: { width: '5%' } },
+	                _react2.default.createElement(
+	                  'b',
+	                  null,
+	                  'Type'
+	                )
+	              ),
+	              _react2.default.createElement('th', { style: { width: '5%' } }),
+	              _react2.default.createElement('th', { style: { width: '5%' } }),
+	              _react2.default.createElement('th', { style: { width: '5%' } }),
+	              _react2.default.createElement('th', { style: { width: '5%' } }),
+	              disableVis ? _react2.default.createElement(
+	                'th',
+	                { style: { width: '5%' } },
+	                _react2.default.createElement(
+	                  'b',
+	                  null,
+	                  'Disabled'
+	                )
+	              ) : null,
+	              disableVis ? _react2.default.createElement(
+	                'th',
+	                { style: { width: '5%' } },
+	                _react2.default.createElement(
+	                  'b',
+	                  null,
+	                  'Locked'
+	                )
+	              ) : null
+	            ),
+	            rows,
+	            _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                'Row Count: ',
+	                this.state.node.length
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                { colSpan: '7' },
+	                _react2.default.createElement(
+	                  'a',
+	                  { href: 'http://192.168.2.16:84/api/Pms/ExportToExcel?nodeLevel=' + this.state.nodeLevel + '&docKey=' + this.state.docKey + '&storeId=' + this.props.selectedStore.value + '&showDisabled=' + this.state.showDisabled + '&token=' + localStorage.token, target: '_window' },
+	                  ' ',
+	                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-file' }),
+	                  ' Export'
+	                )
+	              )
+	            ),
+	            this.state.noResultsMessage ? _react2.default.createElement(
+	              'h4',
+	              null,
+	              'No Results'
+	            ) : null
+	          )
+	        )
+	      )
+	    );
+	  },
+	  handleShowDisabledChange: function handleShowDisabledChange(event) {
+	    this.setState({ showDisabled: event.target.checked });
+	    getNodes(this.state.nodeLevel, this.state.docKey, this.state.nodeName, this.props.selectedStore.value, this.props.disabled, event.target.checked, this.handleNewData);
+	    this.updateAllCatalogs(this.state.docKey);
+	  },
+	  reloadData: function reloadData(docKey, nodeName, nodeLevel) {
+	    var nDocKey = docKey.substring(0, docKey.lastIndexOf('/'));
+	    getNodes(nodeLevel, nDocKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
+	    GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback);
+	    this.setState({ docKey: nDocKey, nodeName: nodeName });
+	    this.updateAllCatalogs(docKey);
+	  },
+	  quickMove: function quickMove(doc_key) {
+	    this.setState({ copyActive: true, copyDocKey: doc_key });
+	  },
+	  resetQuickMove: function resetQuickMove() {
+	    this.setState({ copyActive: false, copyDocKey: '' });
+	  },
+	  reloadDataFromComponent: function reloadDataFromComponent(docKey, nodeName, nodeLevel) {
+	    getNodes(nodeLevel, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
+	    GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback);
+	    this.setState({ docKey: docKey, nodeName: nodeName });
+	    this.updateAllCatalogs(docKey);
+	  },
+	  onNodeClick: function onNodeClick(docKey, nodeName, nodeLevel) {
+	    getNodes(nodeLevel + 1, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
+	    GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback);
+	    this.setState({ docKey: docKey, nodeNameCrumb: this.state.nodeNameCrumb + '[|]' + nodeName, nodeLevel: nodeLevel + 1, showFeedback: false });
+	    this.updateAllCatalogs(docKey);
+	  },
+	  handleExportClick: function handleExportClick() {
+	    ExportToExcel(this.state.nodeLevel, this.state.docKey, this.state.nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleExportCallBack);
+	  },
+	  handleExportCallBack: function handleExportCallBack() {
+	    console.log("Export callback hit");
+	  },
+	  handleNewData: function handleNewData(data, docKey, nodeName) {
+	    this.setState({ node: data, nodeName: nodeName });
+	    if (data.length == 0 && this.state.nodeLevel == 1) {
+	      this.setState({ noResultsMessage: true });
+	    }
+	    if (data.length == 0 && docKey != null) {
+	      if (docKey.includes('catalog/aftermarket')) {
+	        GetProductList(docKey, this.props.selectedStore.value, this.HandleProductListData);
+	      } else {
+	        getComponentProducts(docKey, nodeName, this.props.selectedStore.value, this.HandleComponentData);
+	      }
+	    } else {
+	      this.setState({ componentData: [] });
+	      this.setState({ showComponent: false, showProductList: false, showFeedback: false });
+	    }
+	  },
+	  BreadCrumbClick: function BreadCrumbClick(nodeLevel, docKey, nodeNameCrumb) {
+	    console.log(nodeNameCrumb, nodeLevel);
+	    var splitCrumb = nodeNameCrumb.split('[|]');
+	    var newCrumb = '';
+	    var i;
+	    for (i = 0; i < nodeLevel; i++) {
+	      newCrumb = newCrumb + splitCrumb[i] + '[|]';
+	    }
+	    newCrumb = newCrumb.substring(0, newCrumb.length - 3);
+	    console.log(newCrumb);
+	
+	    getNodes(nodeLevel, docKey, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData);
+	    GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback);
+	    this.setState({ docKey: docKey, nodeLevel: nodeLevel, showFeedback: false, nodeNameCrumb: newCrumb });
+	    this.updateAllCatalogs(docKey);
+	  },
+	  HandleProductListData: function HandleProductListData(data) {
+	    this.setState({ productData: data, showProductList: true });
+	  },
+	  HandleComponentData: function HandleComponentData(data, componentName) {
+	    var imgPrefix;
+	    switch (this.props.selectedStore.value) {
+	      case 12:
+	        imgPrefix = '//cdn.firedog.com/diagram/';
+	        break;
+	      case 11:
+	        imgPrefix = '//cdn.partzilla.com/diagram/';
+	        break;
+	      case 10:
+	        imgPrefix = '//cdn.boats.net/diagram/';
+	        break;
+	    }
+	    this.setState({ componentData: data, componentName: componentName, componentImage: imgPrefix + data[0].ImageUrl + '.png', showComponent: true });
+	  },
+	  showFeedBack: function showFeedBack(data) {
+	    this.setState({ showFeedback: true, feedbackResult: data.Result, feedbackMessage: data.Message });
+	  },
+	  handleEditBreadCrumbText: function handleEditBreadCrumbText() {
+	    this.setState({ showBreadCrumbModal: true });
+	  },
+	  handleSaveBreadCrumbClick: function handleSaveBreadCrumbClick(docKey, breadCrumbText) {
+	    SaveBreadCrumbText(docKey, breadCrumbText, this.props.selectedStore.value, this.breadCrumbTextSaveCallback);
+	  },
+	  breadCrumbTextSaveCallback: function breadCrumbTextSaveCallback(data) {
+	    this.showFeedBack(data);
+	    this.setState({ showBreadCrumbModal: false });
+	    GetBreadCrumbText(this.state.docKey, this.props.selectedStore.value, this.editBreadCrumbCallback);
+	  },
+	  editBreadCrumbCallback: function editBreadCrumbCallback(data) {
+	    this.setState({ breadCrumbText: data.breadcrumb_text });
+	  },
+	  handleHideModal: function handleHideModal() {
+	    this.setState({ showBreadCrumbModal: false });
+	  },
+	  resetFeedbackState: function resetFeedbackState() {
+	    this.setState({ showFeedback: false });
+	  },
+	  storeUpdate: function storeUpdate(data) {
+	    this.showFeedBack(data);
+	  },
+	  handleClearSelectedStore: function handleClearSelectedStore() {
+	    this.props.handleClearSelectedStore();
+	  },
+	  updateAllCatalogs: function updateAllCatalogs(docKey) {
+	    this.props.updateAllCatalogs(docKey);
+	  }
 	});
 	
 	exports.default = CatalogTree;
@@ -27184,7 +27262,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -27206,222 +27284,281 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var CatalogTreeRow = _react2.default.createClass({
-	    displayName: 'CatalogTreeRow',
+	  displayName: 'CatalogTreeRow',
 	
-	    getInitialState: function getInitialState() {
-	        return {
-	            isEditMode: false,
-	            nodeValue: this.props.node.name,
-	            nodeKey: this.props.node.name_key,
-	            showHistoryModal: false,
-	            showCopyModal: false,
-	            nodeHistoryData: []
-	        };
-	    },
-	    render: function render() {
+	  getInitialState: function getInitialState() {
+	    return {
+	      isEditMode: false,
+	      nodeValue: this.props.node.name,
+	      nodeKey: this.props.node.name_key,
+	      showHistoryModal: false,
+	      showCopyModal: false,
+	      nodeHistoryData: [],
+	      selectedCatalogType: this.props.node.type_id
+	    };
+	  },
+	  render: function render() {
+	    var disableVar;
 	
-	        var disableVar;
-	
-	        if (!this.props.node.edit_mode || this.props.node.username == localStorage.username) {
-	            disableVar = false;
-	            if (localStorage.CatalogEditing != 'true') {
-	                disableVar = true;
-	            }
-	        } else {
-	            disableVar = true;
-	        }
-	
-	        var disableVis = false;
-	        if (localStorage.Disable == 'true') {
-	            disableVis = true;
-	        }
-	
-	        var lockVis = false;
-	        if (localStorage.Lock == 'true') {
-	            lockVis = true;
-	        }
-	
-	        if (this.state.isEditMode) {
-	            return _react2.default.createElement(
-	                'tr',
-	                null,
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'txtNodeInput', value: this.state.nodeValue, onChange: this.handleInputChange })
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement('input', { disabled: true, type: 'text', className: 'form-control', id: 'txtNodeKey', value: this.state.nodeKey, onChange: this.handleNodeKeyChange })
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement(
-	                        'button',
-	                        { onClick: this.handleSaveClick.bind(this, this.props.node, this.props.nodeLevel, this.state.nodeValue, this.state.nodeKey), className: 'btn btn-sm btn-default' },
-	                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-floppy-disk' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { style: { marginLeft: '20px' }, onClick: this.handleCancelClick.bind(this, this.props.node, this.props.nodeLevel), className: 'btn btn-sm btn-default' },
-	                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-remove' })
-	                    )
-	                ),
-	                _react2.default.createElement('td', null),
-	                disableVis ? _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement('input', {
-	                        name: 'disabled',
-	                        type: 'checkbox',
-	                        defaultChecked: this.props.node.disabled,
-	                        disabled: true })
-	                ) : null,
-	                lockVis ? _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement('input', {
-	                        name: 'disabled',
-	                        type: 'checkbox',
-	                        defaultChecked: this.props.node.locked,
-	                        disabled: true })
-	                ) : null
-	            );
-	        } else {
-	            return _react2.default.createElement(
-	                'tr',
-	                null,
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement(
-	                        'a',
-	                        { href: '#', onClick: this.handleClick.bind(this, this.props.node.doc_key, this.props.node.name, this.props.nodeLevel) },
-	                        this.props.node.name
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement(
-	                        'button',
-	                        { disabled: disableVar, onClick: this.handleEditClick.bind(this, this.props.node), className: 'btn btn-sm btn-default' },
-	                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-pencil' }),
-	                        ' Edit'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement(
-	                        'button',
-	                        { onClick: this.showCopyModal, className: 'btn btn-sm btn-default' },
-	                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-copy' }),
-	                        ' Copy/Move'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement(
-	                        'button',
-	                        { disabled: true, onClick: this.showHistoryModal, className: 'btn btn-sm btn-default' },
-	                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-book' }),
-	                        ' History'
-	                    ),
-	                    this.state.showHistoryModal ? _react2.default.createElement(_catalogNodeHistory2.default, { docKey: this.props.node.doc_key, catalogId: this.props.node.id, handleHideModal: this.handleHideModal, rollbackComplete: this.rollbackComplete, data: this.state.nodeHistoryData, webSent: this.props.node.web_sent }) : null,
-	                    this.state.showCopyModal ? _react2.default.createElement(_copyModal2.default, { handleHideModal: this.handleHideCopyModal, store: this.props.store, DocKey: this.props.node.doc_key }) : null
-	                ),
-	                disableVis ? _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement('input', {
-	                        name: 'disabled',
-	                        type: 'checkbox',
-	                        defaultChecked: this.props.node.disabled,
-	                        onChange: this.handleDisabledChange })
-	                ) : null,
-	                lockVis ? _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement('input', {
-	                        name: 'disabled',
-	                        type: 'checkbox',
-	                        defaultChecked: this.props.node.locked,
-	                        onChange: this.handleLockedChange })
-	                ) : null
-	            );
-	        }
-	    },
-	    handleHideCopyModal: function handleHideCopyModal() {
-	        this.setState({ showCopyModal: false });
-	        this.props.reloadData(this.props.node.doc_key, this.props.node.name, this.props.nodeLevel);
-	    },
-	    showCopyModal: function showCopyModal() {
-	        this.setState({ showCopyModal: true });
-	    },
-	    closeCopy: function closeCopy() {
-	        this.props.reloadData(node.doc_key, node.name, nodeLevel);
-	    },
-	    showHistoryModal: function showHistoryModal() {
-	        GetNodeHistory(this.props.node.id, this.getNodeHistoryCallback);
-	    },
-	    handleDisabledChange: function handleDisabledChange(event) {
-	        SaveDisabled(this.props.node.doc_key, event.target.checked, this.props.node, this.props.nodeLevel, this.props.store, this.saveDisabledCallback);
-	    },
-	    handleLockedChange: function handleLockedChange(event) {
-	        SaveLocked(this.props.node.doc_key, event.target.checked, this.props.node, this.props.nodeLevel, this.props.store, this.saveLockedCallback);
-	    },
-	    saveDisabledCallback: function saveDisabledCallback(data, node, nodeLevel) {
-	        this.props.showFeedBack(data);
-	        this.props.updateAllCatalogs();
-	    },
-	    saveLockedCallback: function saveLockedCallback(data, node, nodeLevel) {
-	        this.props.showFeedBack(data);
-	        this.props.updateAllCatalogs();
-	    },
-	    getNodeHistoryCallback: function getNodeHistoryCallback(data) {
-	        this.setState({ nodeHistoryData: data, showHistoryModal: true });
-	    },
-	    storeUpdate: function storeUpdate(data) {
-	        this.props.storeUpdate(data);
-	    },
-	    handleClick: function handleClick(docKey, nodeName, nodeLevel) {
-	        this.props.onNodeClick(docKey, nodeName, nodeLevel);
-	    },
-	    handleEditClick: function handleEditClick() {
-	        UpdateEditingFlag('catalog', true, this.props.node.doc_key);
-	        this.setState({ isEditMode: true });
-	    },
-	    handleHideModal: function handleHideModal() {
-	        this.setState({ showHistoryModal: false });
-	    },
-	    handleSaveClick: function handleSaveClick(node, nodeLevel, newNode, newNodeKey) {
-	        //Save Logic Here
-	        saveNode(node, nodeLevel, newNode, newNodeKey, this.props.store, this.saveCallBack);
-	        this.setState({ isEditMode: false });
-	    },
-	    handleCancelClick: function handleCancelClick(node, nodeLevel) {
-	        UpdateEditingFlag('catalog', false, this.props.node.doc_key);
-	        this.setState({ isEditMode: false });
-	    },
-	    saveCallBack: function saveCallBack(data, node, nodeLevel) {
-	        this.props.showFeedBack(data);
-	        this.props.reloadData(node.doc_key, node.name, nodeLevel);
-	    },
-	    handleInputChange: function handleInputChange(event) {
-	        this.setState({ nodeValue: event.target.value });
-	        this.setState({ nodeKey: formatNameKey(event.target.value) });
-	    },
-	    handleNodeKeyChange: function handleNodeKeyChange(event) {
-	        this.setState({ nodeKey: event.target.value });
-	    },
-	    rollbackComplete: function rollbackComplete(data) {
-	        this.props.showFeedBack(data);
-	        this.props.reloadData(this.props.node.doc_key, this.props.node.name, this.props.nodeLevel);
+	    if (!this.props.node.edit_mode || this.props.node.username == localStorage.username) {
+	      disableVar = false;
+	      if (localStorage.CatalogEditing != 'true') {
+	        disableVar = true;
+	      }
+	    } else {
+	      disableVar = true;
 	    }
+	
+	    var disableVis = false;
+	    if (localStorage.Disable == 'true') {
+	      disableVis = true;
+	    }
+	
+	    var lockVis = false;
+	    if (localStorage.Lock == 'true') {
+	      lockVis = true;
+	    }
+	
+	    var QuickMoveVis = true;
+	    if (this.props.nodeLevel == '1') {
+	      QuickMoveVis = false;
+	    }
+	
+	    if (this.state.isEditMode) {
+	      return _react2.default.createElement(
+	        'tr',
+	        null,
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'txtNodeInput', value: this.state.nodeValue, onChange: this.handleInputChange })
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'select',
+	            { className: 'form-control', value: this.state.selectedCatalogType, style: { width: '150px' }, onChange: this.handleCatalogTypeChange },
+	            this.createCatalogTypeItems()
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          { colSpan: '3' },
+	          _react2.default.createElement('input', { disabled: true, type: 'text', className: 'form-control', id: 'txtNodeKey', value: this.state.nodeKey, onChange: this.handleNodeKeyChange })
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleSaveClick.bind(this, this.props.node, this.props.nodeLevel, this.state.nodeValue, this.state.nodeKey, this.props.node.type_id, this.state.selectedCatalogType), className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-floppy-disk' })
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { style: { marginLeft: '20px' }, onClick: this.handleCancelClick.bind(this, this.props.node, this.props.nodeLevel), className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-remove' })
+	          )
+	        ),
+	        disableVis ? _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement('input', {
+	            name: 'disabled',
+	            type: 'checkbox',
+	            defaultChecked: this.props.node.disabled,
+	            disabled: true })
+	        ) : null,
+	        lockVis ? _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement('input', {
+	            name: 'disabled',
+	            type: 'checkbox',
+	            defaultChecked: this.props.node.locked,
+	            disabled: true })
+	        ) : null
+	      );
+	    } else {
+	      return _react2.default.createElement(
+	        'tr',
+	        null,
+	        _react2.default.createElement(
+	          'td',
+	          { style: { verticalAlign: 'middle' } },
+	          _react2.default.createElement(
+	            'a',
+	            { href: '#', onClick: this.handleClick.bind(this, this.props.node.doc_key, this.props.node.name, this.props.nodeLevel) },
+	            this.props.node.name
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          { style: { verticalAlign: 'middle' } },
+	          this.props.node.type_name
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { disabled: disableVar, onClick: this.handleEditClick.bind(this, this.props.node), className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-pencil' }),
+	            ' Edit'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          QuickMoveVis ? _react2.default.createElement(
+	            'button',
+	            { onClick: this.quickMove, className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-copy' }),
+	            ' Quick Move'
+	          ) : null
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          this.props.copyActive && QuickMoveVis ? _react2.default.createElement(
+	            'button',
+	            { onClick: this.quickPaste, className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-copy' }),
+	            ' Paste'
+	          ) : null
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.showCopyModal, className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-copy' }),
+	            ' Custom Copy'
+	          ),
+	          this.state.showCopyModal ? _react2.default.createElement(_copyModal2.default, { handleHideModal: this.handleHideCopyModal, store: this.props.store, DocKey: this.props.node.doc_key }) : null
+	        ),
+	        disableVis ? _react2.default.createElement(
+	          'td',
+	          { style: { verticalAlign: 'middle' } },
+	          _react2.default.createElement('input', {
+	            name: 'disabled',
+	            type: 'checkbox',
+	            defaultChecked: this.props.node.disabled,
+	            onChange: this.handleDisabledChange })
+	        ) : null,
+	        lockVis ? _react2.default.createElement(
+	          'td',
+	          { style: { verticalAlign: 'middle' } },
+	          _react2.default.createElement('input', {
+	            name: 'disabled',
+	            type: 'checkbox',
+	            defaultChecked: this.props.node.locked,
+	            onChange: this.handleLockedChange })
+	        ) : null
+	      );
+	    }
+	  },
+	  createCatalogTypeItems: function createCatalogTypeItems() {
+	    var items = [];
+	    items.push(_react2.default.createElement('option', { value: '' }));
+	    for (var i = 0; i < this.props.catalogTypes.length; i++) {
+	      items.push(_react2.default.createElement(
+	        'option',
+	        { key: i, value: this.props.catalogTypes[i].id },
+	        this.props.catalogTypes[i].name
+	      ));
+	    }
+	    return items;
+	  },
+	  handleCatalogTypeChange: function handleCatalogTypeChange(event) {
+	    this.setState({ selectedCatalogType: event.target.value });
+	  },
+	  quickMove: function quickMove() {
+	    this.props.quickMove(this.props.node.doc_key);
+	  },
+	  quickPaste: function quickPaste() {
+	    var data = {
+	      Result: '',
+	      Message: 'Attempting to Copy Data'
+	    };
+	    this.props.showFeedBack(data);
+	    var pieces = this.props.copyDocKey.split('/');
+	    Move(pieces[pieces.length - 1], this.props.copyDocKey, this.props.node.doc_key, this.props.store, this.handlePasteCallback);
+	    this.props.resetQuickMove();
+	  },
+	  handlePasteCallback: function handlePasteCallback(data) {
+	    this.props.showFeedBack(data);
+	    this.props.reloadData(node.doc_key, node.name, nodeLevel);
+	  },
+	  handleHideCopyModal: function handleHideCopyModal() {
+	    this.setState({ showCopyModal: false });
+	    this.props.reloadData(this.props.node.doc_key, this.props.node.name, this.props.nodeLevel);
+	  },
+	  showCopyModal: function showCopyModal() {
+	    this.setState({ showCopyModal: true });
+	  },
+	  closeCopy: function closeCopy() {
+	    this.props.reloadData(node.doc_key, node.name, nodeLevel);
+	  },
+	  showHistoryModal: function showHistoryModal() {
+	    GetNodeHistory(this.props.node.id, this.getNodeHistoryCallback);
+	  },
+	  handleDisabledChange: function handleDisabledChange(event) {
+	    SaveDisabled(this.props.node.doc_key, event.target.checked, this.props.node, this.props.nodeLevel, this.props.store, this.saveDisabledCallback);
+	  },
+	  handleLockedChange: function handleLockedChange(event) {
+	    SaveLocked(this.props.node.doc_key, event.target.checked, this.props.node, this.props.nodeLevel, this.props.store, this.saveLockedCallback);
+	  },
+	  saveDisabledCallback: function saveDisabledCallback(data, node, nodeLevel) {
+	    this.props.showFeedBack(data);
+	    this.props.updateAllCatalogs();
+	  },
+	  saveLockedCallback: function saveLockedCallback(data, node, nodeLevel) {
+	    this.props.showFeedBack(data);
+	    this.props.updateAllCatalogs();
+	  },
+	  getNodeHistoryCallback: function getNodeHistoryCallback(data) {
+	    this.setState({ nodeHistoryData: data, showHistoryModal: true });
+	  },
+	  storeUpdate: function storeUpdate(data) {
+	    this.props.storeUpdate(data);
+	  },
+	  handleClick: function handleClick(docKey, nodeName, nodeLevel) {
+	    this.props.onNodeClick(docKey, nodeName, nodeLevel);
+	  },
+	  handleEditClick: function handleEditClick() {
+	    UpdateEditingFlag('catalog', true, this.props.node.doc_key, this.props.store);
+	    this.setState({ isEditMode: true });
+	  },
+	  handleHideModal: function handleHideModal() {
+	    this.setState({ showHistoryModal: false });
+	  },
+	  handleSaveClick: function handleSaveClick(node, nodeLevel, newNode, newNodeKey, oldCatalogType, selectedCatalogType) {
+	    // Save Logic Here
+	    saveNode(node, nodeLevel, newNode, newNodeKey, oldCatalogType, selectedCatalogType, this.props.store, this.saveCallBack);
+	    this.setState({ isEditMode: false });
+	  },
+	  handleCancelClick: function handleCancelClick(node, nodeLevel) {
+	    UpdateEditingFlag('catalog', false, this.props.node.doc_key, this.props.store);
+	    this.setState({ isEditMode: false });
+	  },
+	  saveCallBack: function saveCallBack(data, node, nodeLevel) {
+	    this.props.showFeedBack(data);
+	    this.props.reloadData(node.doc_key, node.name, nodeLevel);
+	  },
+	  handleInputChange: function handleInputChange(event) {
+	    this.setState({ nodeValue: event.target.value });
+	    this.setState({ nodeKey: formatNameKey(event.target.value) });
+	  },
+	  handleNodeKeyChange: function handleNodeKeyChange(event) {
+	    this.setState({ nodeKey: event.target.value });
+	  },
+	  rollbackComplete: function rollbackComplete(data) {
+	    this.props.showFeedBack(data);
+	    this.props.reloadData(this.props.node.doc_key, this.props.node.name, this.props.nodeLevel);
+	  }
 	});
 	
 	exports.default = CatalogTreeRow;
@@ -27433,7 +27570,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -27447,21 +27584,21 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var StoreLookup = _react2.default.createClass({
-	    displayName: 'StoreLookup',
+	  displayName: 'StoreLookup',
 	
-	    render: function render() {
-	        var rows = this.props.storeLookup.map(function (storeLookup) {
-	            return _react2.default.createElement(_storeLookupRow2.default, { storeLookup: storeLookup, docKey: this.props.docKey, storeValues: this.props.storeValues, key: storeLookup.key, showFeedback: this.showFeedback, type: this.props.type, docId: this.props.docId });
-	        }, this);
-	        return _react2.default.createElement(
-	            'div',
-	            { className: 'row' },
-	            rows
-	        );
-	    },
-	    showFeedback: function showFeedback(data) {
-	        this.props.storeUpdate(data);
-	    }
+	  render: function render() {
+	    var rows = this.props.storeLookup.map(function (storeLookup) {
+	      return _react2.default.createElement(_storeLookupRow2.default, { storeLookup: storeLookup, docKey: this.props.docKey, storeValues: this.props.storeValues, key: storeLookup.key, showFeedback: this.showFeedback, type: this.props.type, docId: this.props.docId });
+	    }, this);
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      rows
+	    );
+	  },
+	  showFeedback: function showFeedback(data) {
+	    this.props.storeUpdate(data);
+	  }
 	});
 	
 	exports.default = StoreLookup;
@@ -27473,7 +27610,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -27483,89 +27620,89 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var StoreLookupRow = _react2.default.createClass({
-	    displayName: 'StoreLookupRow',
+	  displayName: 'StoreLookupRow',
 	
-	    render: function render() {
-	        var chk = this.returnChecked(this.props.storeValues, this.props.storeLookup.id);
-	        var chkStyle = {
-	            width: 25,
-	            height: 25
-	        };
+	  render: function render() {
+	    var chk = this.returnChecked(this.props.storeValues, this.props.storeLookup.id);
+	    var chkStyle = {
+	      width: 25,
+	      height: 25
+	    };
 	
-	        var chkStyle2 = {
-	            display: 'inline'
-	        };
+	    var chkStyle2 = {
+	      display: 'inline'
+	    };
 	
-	        var keyUnique = this.props.docKey + this.props.storeLookup.id;
-	        var url = this.props.storeLookup.store_base_url + this.props.docKey;
+	    var keyUnique = this.props.docKey + this.props.storeLookup.id;
+	    var url = this.props.storeLookup.store_base_url + this.props.docKey;
 	
-	        var storeDisable;
-	        if (localStorage.StoreEditing == 'true') {
-	            storeDisable = false;
-	        } else {
-	            storeDisable = true;
-	        }
-	
-	        return _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-4', style: { fontSize: '12px' } },
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'row' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-3' },
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: url, target: '_window' },
-	                            this.props.storeLookup.store_name
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-4' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: this.props.storeLookup.store_name },
-	                        _react2.default.createElement('input', { disabled: storeDisable, type: 'checkbox', defaultChecked: chk, onChange: this.onChange, id: keyUnique, name: 'check' }),
-	                        _react2.default.createElement('label', { htmlFor: keyUnique })
-	                    )
-	                )
-	            )
-	        );
-	    },
-	    onChange: function onChange(event) {
-	        if (this.props.type == 'node') {
-	            SaveStore(this.props.docKey, this.props.storeLookup.id, event.target.checked, this.storeSaveCallback);
-	        } else if (this.props.type == 'component') {
-	            SaveStoreComponent(this.props.docId, this.props.storeLookup.id, event.target.checked, this.storeSaveCallback);
-	        }
-	    },
-	    storeSaveCallback: function storeSaveCallback(data) {
-	        this.props.showFeedback(data);
-	    },
-	    returnChecked: function returnChecked(storeValues, matchValue) {
-	        //trim leading comma
-	        storeValues = storeValues.substring(0, storeValues.length - 1);
-	        var strArrayComma = storeValues.split(",");
-	
-	        for (var i = 0; i < strArrayComma.length; i++) {
-	            var strArrayPipe = strArrayComma[i].split("|");
-	            if (strArrayPipe.length > 1) {
-	                if (strArrayPipe[0] == matchValue) {
-	                    if (strArrayPipe[1] == '1') {
-	                        return true;
-	                    } else {
-	                        return false;
-	                    }
-	                }
-	            }
-	        }
+	    var storeDisable;
+	    if (localStorage.StoreEditing == 'true') {
+	      storeDisable = false;
+	    } else {
+	      storeDisable = true;
 	    }
+	
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'col-sm-4', style: { fontSize: '12px' } },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-3' },
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            _react2.default.createElement(
+	              'a',
+	              { href: url, target: '_window' },
+	              this.props.storeLookup.store_name
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-4' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: this.props.storeLookup.store_name },
+	            _react2.default.createElement('input', { disabled: storeDisable, type: 'checkbox', defaultChecked: chk, onChange: this.onChange, id: keyUnique, name: 'check' }),
+	            _react2.default.createElement('label', { htmlFor: keyUnique })
+	          )
+	        )
+	      )
+	    );
+	  },
+	  onChange: function onChange(event) {
+	    if (this.props.type == 'node') {
+	      SaveStore(this.props.docKey, this.props.storeLookup.id, event.target.checked, this.storeSaveCallback);
+	    } else if (this.props.type == 'component') {
+	      SaveStoreComponent(this.props.docId, this.props.storeLookup.id, event.target.checked, this.storeSaveCallback);
+	    }
+	  },
+	  storeSaveCallback: function storeSaveCallback(data) {
+	    this.props.showFeedback(data);
+	  },
+	  returnChecked: function returnChecked(storeValues, matchValue) {
+	    // trim leading comma
+	    storeValues = storeValues.substring(0, storeValues.length - 1);
+	    var strArrayComma = storeValues.split(',');
+	
+	    for (var i = 0; i < strArrayComma.length; i++) {
+	      var strArrayPipe = strArrayComma[i].split('|');
+	      if (strArrayPipe.length > 1) {
+	        if (strArrayPipe[0] == matchValue) {
+	          if (strArrayPipe[1] == '1') {
+	            return true;
+	          } else {
+	            return false;
+	          }
+	        }
+	      }
+	    }
+	  }
 	});
 	
 	exports.default = StoreLookupRow;
@@ -27577,7 +27714,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -27591,82 +27728,82 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var NodeHistoryModal = _react2.default.createClass({
-	    displayName: 'NodeHistoryModal',
-	    componentDidMount: function componentDidMount() {
-	        $('#NodeHistoryModal').modal('show');
-	        $('#NodeHistoryModal').on('hidden.bs.modal', this.props.handleHideModal);
-	    },
+	  displayName: 'NodeHistoryModal',
+	  componentDidMount: function componentDidMount() {
+	    $('#NodeHistoryModal').modal('show');
+	    $('#NodeHistoryModal').on('hidden.bs.modal', this.props.handleHideModal);
+	  },
 	
-	    render: function render() {
-	        var rows = this.props.data.map(function (history) {
-	            return _react2.default.createElement(_catalogNodeHistoryRow2.default, { history: history, rollbackComplete: this.rollbackComplete, key: history.key, docKey: this.props.docKey, catalogId: this.props.catalogId, webSent: this.props.webSent });
-	        }, this);
-	        return _react2.default.createElement(
+	  render: function render() {
+	    var rows = this.props.data.map(function (history) {
+	      return _react2.default.createElement(_catalogNodeHistoryRow2.default, { history: history, rollbackComplete: this.rollbackComplete, key: history.key, docKey: this.props.docKey, catalogId: this.props.catalogId, webSent: this.props.webSent });
+	    }, this);
+	    return _react2.default.createElement(
+	      'div',
+	      { id: 'NodeHistoryModal', className: 'modal fade' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'modal-dialog modal-lg' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'modal-content' },
+	          _react2.default.createElement(
 	            'div',
-	            { id: 'NodeHistoryModal', className: 'modal fade' },
+	            { className: 'modal-header' },
 	            _react2.default.createElement(
-	                'div',
-	                { className: 'modal-dialog modal-lg' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'modal-content' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'modal-header' },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
-	                            _react2.default.createElement(
-	                                'span',
-	                                { 'aria-hidden': 'true' },
-	                                '\xD7'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'h4',
-	                            { className: 'modal-title' },
-	                            'Node History'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'modal-body' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-12' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'alert alert-info' },
-	                                    'History for: ',
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        null,
-	                                        this.props.docKey
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        rows
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'modal-footer' },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'btn btn-default', 'data-dismiss': 'modal' },
-	                            'Cancel'
-	                        )
-	                    )
-	                )
+	              'button',
+	              { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+	              _react2.default.createElement(
+	                'span',
+	                { 'aria-hidden': 'true' },
+	                '\xD7'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'h4',
+	              { className: 'modal-title' },
+	              'Node History'
 	            )
-	        );
-	    },
-	    rollbackComplete: function rollbackComplete(data) {
-	        this.props.rollbackComplete(data);
-	    }
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-body' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-12' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'alert alert-info' },
+	                  'History for: ',
+	                  _react2.default.createElement(
+	                    'strong',
+	                    null,
+	                    this.props.docKey
+	                  )
+	                )
+	              )
+	            ),
+	            rows
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-footer' },
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'button', className: 'btn btn-default', 'data-dismiss': 'modal' },
+	              'Cancel'
+	            )
+	          )
+	        )
+	      )
+	    );
+	  },
+	  rollbackComplete: function rollbackComplete(data) {
+	    this.props.rollbackComplete(data);
+	  }
 	});
 	
 	exports.default = NodeHistoryModal;
@@ -27678,7 +27815,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -27688,67 +27825,66 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var NodeHistoryRow = _react2.default.createClass({
-	    displayName: 'NodeHistoryRow',
+	  displayName: 'NodeHistoryRow',
 	
-	    render: function render() {
-	
-	        var rollBackDisable;
-	        if (localStorage.CatalogEditing == 'true' || this.props.web_sent == 1) {
-	            rollBackDisable = false;
-	        } else {
-	            rollBackDisable = true;
-	        }
-	
-	        return _react2.default.createElement(
-	            'div',
-	            { className: 'row', style: { marginTop: '5px' } },
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'col-sm-6' },
-	                _react2.default.createElement(
-	                    'h6',
-	                    null,
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        'Historical Value'
-	                    ),
-	                    ': ',
-	                    this.props.history.previous_node
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'col-sm-4' },
-	                _react2.default.createElement(
-	                    'h6',
-	                    null,
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        'Changed On'
-	                    ),
-	                    ': ',
-	                    this.props.history.change_date
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'col-sm-2' },
-	                _react2.default.createElement(
-	                    'button',
-	                    { disabled: rollBackDisable, 'data-dismiss': 'modal', onClick: this.handleRollbackClick, type: 'button', className: 'btn btn-primary' },
-	                    'Rollback'
-	                )
-	            )
-	        );
-	    },
-	    handleRollbackClick: function handleRollbackClick() {
-	        rollback(this.props.docKey, this.props.history.new_node, this.props.history.previous_node, formatNameKey(this.props.history.previous_node), this.props.catalogId, this.rollbackCallback);
-	    },
-	    rollbackCallback: function rollbackCallback(data) {
-	        this.props.rollbackComplete(data);
+	  render: function render() {
+	    var rollBackDisable;
+	    if (localStorage.CatalogEditing == 'true' || this.props.web_sent == 1) {
+	      rollBackDisable = false;
+	    } else {
+	      rollBackDisable = true;
 	    }
+	
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'row', style: { marginTop: '5px' } },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-sm-6' },
+	        _react2.default.createElement(
+	          'h6',
+	          null,
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            'Historical Value'
+	          ),
+	          ': ',
+	          this.props.history.previous_node
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-sm-4' },
+	        _react2.default.createElement(
+	          'h6',
+	          null,
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            'Changed On'
+	          ),
+	          ': ',
+	          this.props.history.change_date
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-sm-2' },
+	        _react2.default.createElement(
+	          'button',
+	          { disabled: rollBackDisable, 'data-dismiss': 'modal', onClick: this.handleRollbackClick, type: 'button', className: 'btn btn-primary' },
+	          'Rollback'
+	        )
+	      )
+	    );
+	  },
+	  handleRollbackClick: function handleRollbackClick() {
+	    rollback(this.props.docKey, this.props.history.new_node, this.props.history.previous_node, formatNameKey(this.props.history.previous_node), this.props.catalogId, this.rollbackCallback);
+	  },
+	  rollbackCallback: function rollbackCallback(data) {
+	    this.props.rollbackComplete(data);
+	  }
 	});
 	
 	exports.default = NodeHistoryRow;
@@ -27784,7 +27920,7 @@
 	    return {
 	      showFeedback: false,
 	      feedbackResult: 0,
-	      feedbackMessage: "",
+	      feedbackMessage: '',
 	      selectedItem: [],
 	      showCopyButton: false,
 	      disableButtons: false,
@@ -27797,7 +27933,6 @@
 	  },
 	
 	  render: function render() {
-	
 	    return _react2.default.createElement(
 	      'div',
 	      { id: 'CopyModal', className: 'modal fade', 'data-keyboard': 'false', 'data-backdrop': 'static' },
@@ -27929,16 +28064,16 @@
 	  },
 	  handleCopy: function handleCopy() {
 	    if (this.state.selectedOption == 'Copy') {
-	      this.setState({ disableButtons: true, showFeedback: true, feedbackResult: 2, feedbackMessage: "Copying Data..." });
-	      var pieces = this.props.DocKey.split("/");
+	      this.setState({ disableButtons: true, showFeedback: true, feedbackResult: 2, feedbackMessage: 'Copying Data...' });
+	      var pieces = this.props.DocKey.split('/');
 	      if (this.props.store == '0') {
 	        CopyStore0(pieces[pieces.length - 1], this.props.DocKey, this.state.selectedItem.doc_key, this.props.store, this.state.selectedItem.store_id, this.handleCopyCallback);
 	      } else {
 	        Copy(pieces[pieces.length - 1], this.props.DocKey, this.state.selectedItem.doc_key, this.props.store, this.handleCopyCallback);
 	      }
 	    } else if (this.state.selectedOption == 'Move') {
-	      this.setState({ disableButtons: true, showFeedback: true, feedbackResult: 2, feedbackMessage: "Moving Data..." });
-	      var pieces = this.props.DocKey.split("/");
+	      this.setState({ disableButtons: true, showFeedback: true, feedbackResult: 2, feedbackMessage: 'Moving Data...' });
+	      var pieces = this.props.DocKey.split('/');
 	      if (this.props.store == '0') {
 	        MoveStore0(pieces[pieces.length - 1], this.props.DocKey, this.state.selectedItem.doc_key, this.props.store, this.state.selectedItem.store_id, this.handleCopyCallback);
 	      } else {
@@ -27963,10 +28098,10 @@
 /* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -27976,104 +28111,104 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var FeedBack = _react2.default.createClass({
-	    displayName: "FeedBack",
+	  displayName: 'FeedBack',
 	
-	    getInitialState: function getInitialState() {
-	        return {
-	            visible: this.props.visible
-	        };
-	    },
-	    componentDidMount: function componentDidMount() {
-	        if (this.props.noTimer != undefined && this.props.noTimer == "true") {
-	            this.setTimer();
-	        } else {
-	            this.setTimer();
-	        }
-	    },
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	        if (this.props.noTimer != undefined && this.props.noTimer == "true") {
-	            this.setTimer();
-	        } else {
-	            this.setTimer();
-	        }
-	        this.setState({ visible: this.props.visible });
-	    },
-	    render: function render() {
-	        var classN;
-	        if (this.props.Result == 0) {
-	            classN = "alert alert-success";
-	        } else if (this.props.Result == 1) {
-	            classN = "alert alert-danger";
-	        } else if (this.props.Result == 2) {
-	            classN = "alert alert-info";
-	        }
-	
-	        var styleDisplayInline = {
-	            display: 'inline'
-	        };
-	
-	        var mainLoadingComponent = {
-	            display: 'none'
-	        };
-	
-	        var fadeOut = {
-	            display: 'inline',
-	            visibility: 'hidden',
-	            opacity: '0',
-	            transition: 'visibility 0s 2s, opacity 2s linear'
-	        };
-	
-	        var imgStyle = {
-	            display: 'inline',
-	            width: '50px',
-	            height: '50px'
-	        };
-	
-	        var main = {
-	            display: 'block',
-	            height: '50px'
-	        };
-	
-	        if (this.state.visible == true) {
-	            return _react2.default.createElement(
-	                "div",
-	                { className: classN },
-	                this.props.Message
-	            );
-	        } else {
-	            return _react2.default.createElement(
-	                "div",
-	                null,
-	                _react2.default.createElement(
-	                    "div",
-	                    { className: classN, style: fadeOut },
-	                    this.props.Message
-	                ),
-	                _react2.default.createElement(
-	                    "div",
-	                    { id: "ThisIsTesting", style: mainLoadingComponent },
-	                    _react2.default.createElement("img", { style: imgStyle, src: "../src/Images/loading_spinner.gif" }),
-	                    _react2.default.createElement(
-	                        "h4",
-	                        { style: styleDisplayInline },
-	                        "Working..."
-	                    )
-	                )
-	            );
-	        }
-	    },
-	    setTimer: function setTimer() {
-	        this._timer != null ? clearTimeout(this._timer) : null;
-	
-	        this._timer = setTimeout(function () {
-	            this.setState({ visible: false });
-	            this.props.resetFeedbackState();
-	            this._timer = null;
-	        }.bind(this), this.props.delay);
-	    },
-	    componentWillUnMount: function componentWillUnMount() {
-	        clearTimeout(this._timer);
+	  getInitialState: function getInitialState() {
+	    return {
+	      visible: this.props.visible
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    if (this.props.noTimer != undefined && this.props.noTimer == 'true') {
+	      this.setTimer();
+	    } else {
+	      this.setTimer();
 	    }
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    if (this.props.noTimer != undefined && this.props.noTimer == 'true') {
+	      this.setTimer();
+	    } else {
+	      this.setTimer();
+	    }
+	    this.setState({ visible: this.props.visible });
+	  },
+	  render: function render() {
+	    var classN;
+	    if (this.props.Result == 0) {
+	      classN = 'alert alert-success';
+	    } else if (this.props.Result == 1) {
+	      classN = 'alert alert-danger';
+	    } else if (this.props.Result == 2) {
+	      classN = 'alert alert-info';
+	    }
+	
+	    var styleDisplayInline = {
+	      display: 'inline'
+	    };
+	
+	    var mainLoadingComponent = {
+	      display: 'none'
+	    };
+	
+	    var fadeOut = {
+	      display: 'inline',
+	      visibility: 'hidden',
+	      opacity: '0',
+	      transition: 'visibility 0s 2s, opacity 2s linear'
+	    };
+	
+	    var imgStyle = {
+	      display: 'inline',
+	      width: '50px',
+	      height: '50px'
+	    };
+	
+	    var main = {
+	      display: 'block',
+	      height: '50px'
+	    };
+	
+	    if (this.state.visible == true) {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: classN },
+	        this.props.Message
+	      );
+	    } else {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          { className: classN, style: fadeOut },
+	          this.props.Message
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'ThisIsTesting', style: mainLoadingComponent },
+	          _react2.default.createElement('img', { style: imgStyle, src: '../src/Images/loading_spinner.gif' }),
+	          _react2.default.createElement(
+	            'h4',
+	            { style: styleDisplayInline },
+	            'Working...'
+	          )
+	        )
+	      );
+	    }
+	  },
+	  setTimer: function setTimer() {
+	    this._timer != null ? clearTimeout(this._timer) : null;
+	
+	    this._timer = setTimeout(function () {
+	      this.setState({ visible: false });
+	      this.props.resetFeedbackState();
+	      this._timer = null;
+	    }.bind(this), this.props.delay);
+	  },
+	  componentWillUnMount: function componentWillUnMount() {
+	    clearTimeout(this._timer);
+	  }
 	});
 	
 	exports.default = FeedBack;
@@ -28139,7 +28274,9 @@
 	      'div',
 	      null,
 	      _react2.default.createElement(_reactAutocomplete2.default, {
-	        inputProps: { name: "Copy", id: "copy-autocomplete", style: { padding: '6px 12px',
+	        inputProps: { name: 'Copy',
+	          id: 'copy-autocomplete',
+	          style: { padding: '6px 12px',
 	            fontSize: '14px',
 	            lineHeight: '1.42857143',
 	            color: '#555',
@@ -28168,7 +28305,6 @@
 	        onChange: function onChange(event, value) {
 	          if (value.length < 5) {
 	            _this.setState({ value: value });
-	            return;
 	          } else {
 	            var item = { doc_key: value };
 	            _this.props.selectRecord(item);
@@ -28177,7 +28313,7 @@
 	          }
 	          // fakeRequest(value, (items) => {
 	          //   this.setState({ unitedStates: items, loading: false })
-	          //})
+	          // })
 	        },
 	        renderItem: function renderItem(item, isHighlighted) {
 	          return _react2.default.createElement(
@@ -29198,7 +29334,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -29212,43 +29348,43 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var BreadCrumb = _react2.default.createClass({
-	    displayName: 'BreadCrumb',
+	  displayName: 'BreadCrumb',
 	
-	    render: function render() {
-	
-	        var editButton = _react2.default.createElement(
-	            'button',
-	            { onClick: this.handleEditClick, className: 'btn btn-default' },
-	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-pencil' })
-	        );
-	        var splitStr = this.props.docKey.split("/");
-	        return _react2.default.createElement(
-	            'div',
-	            { className: 'row' },
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'col-sm-11' },
-	                _react2.default.createElement(_breadcrumbComp2.default, { docKeySplit: splitStr,
-	                    callbackBreadCrumbClick: this.handleBreadCrumbClick,
-	                    selectedStore: this.props.selectedStore,
-	                    handleClearSelectedStore: this.props.handleClearSelectedStore })
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'col-sm-1' },
-	                editButton
-	            )
-	        );
-	    },
-	    handleBreadCrumbClick: function handleBreadCrumbClick(nodeLevel, docKey) {
-	        this.props.callbackBreadCrumbClick(nodeLevel, docKey);
-	    },
-	    handleEditClick: function handleEditClick() {
-	        this.props.handleEditBreadCrumbText();
-	    },
-	    handleClearSelectedStore: function handleClearSelectedStore() {
-	        this.props.handleClearSelectedStore();
-	    }
+	  render: function render() {
+	    var editButton = _react2.default.createElement(
+	      'button',
+	      { onClick: this.handleEditClick, className: 'btn btn-default' },
+	      _react2.default.createElement('i', { className: 'glyphicon glyphicon-pencil' })
+	    );
+	    var splitStr = this.props.docKey.split('/');
+	    var nodeNameCrumb = this.props.nodeNameCrumb.split('[|]');
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-sm-11' },
+	        _react2.default.createElement(_breadcrumbComp2.default, { docKeySplit: splitStr, nodeNameCrumb: nodeNameCrumb,
+	          callbackBreadCrumbClick: this.handleBreadCrumbClick,
+	          selectedStore: this.props.selectedStore,
+	          handleClearSelectedStore: this.props.handleClearSelectedStore })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-sm-1' },
+	        editButton
+	      )
+	    );
+	  },
+	  handleBreadCrumbClick: function handleBreadCrumbClick(nodeLevel, docKey, nodeNameCrumb) {
+	    this.props.callbackBreadCrumbClick(nodeLevel, docKey, nodeNameCrumb);
+	  },
+	  handleEditClick: function handleEditClick() {
+	    this.props.handleEditBreadCrumbText();
+	  },
+	  handleClearSelectedStore: function handleClearSelectedStore() {
+	    this.props.handleClearSelectedStore();
+	  }
 	});
 	
 	exports.default = BreadCrumb;
@@ -29260,7 +29396,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -29270,61 +29406,63 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var BreadCrumbComp = _react2.default.createClass({
-	    displayName: 'BreadCrumbComp',
+	  displayName: 'BreadCrumbComp',
 	
-	    render: function render() {
-	
-	        var strDocKeyBuild = '';
-	        var htmlStr = [];
-	        var i;
-	        if (this.props.docKeySplit.length > 1) {
-	            for (i = 0; i < this.props.docKeySplit.length; i++) {
-	                strDocKeyBuild = strDocKeyBuild + this.props.docKeySplit[i] + '/';
-	                if (this.props.docKeySplit.length - 1 == i) {
-	                    htmlStr.push(_react2.default.createElement(
-	                        'li',
-	                        { key: i, id: 'licomponent' },
-	                        this.props.docKeySplit[i]
-	                    ));
-	                } else {
-	                    htmlStr.push(_react2.default.createElement(
-	                        'li',
-	                        { key: i, id: 'lin1' },
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '#', onClick: this.handleBreadCrumbClick.bind(this, i + 1, strDocKeyBuild) },
-	                            this.props.docKeySplit[i]
-	                        )
-	                    ));
-	                }
-	            }
+	  render: function render() {
+	    var strDocKeyBuild = '';
+	    var strNodeNameCrumb = '';
+	    var htmlStr = [];
+	    var i;
+	    if (this.props.docKeySplit.length > 1) {
+	      for (i = 0; i < this.props.docKeySplit.length; i++) {
+	        strDocKeyBuild = strDocKeyBuild + this.props.docKeySplit[i] + '/';
+	        strNodeNameCrumb = strNodeNameCrumb + this.props.nodeNameCrumb[i] + '[|]';
+	        if (this.props.docKeySplit.length - 1 == i) {
+	          htmlStr.push(_react2.default.createElement(
+	            'li',
+	            { key: i, id: 'licomponent' },
+	            this.props.nodeNameCrumb[i]
+	          ));
 	        } else {
-	            htmlStr.push(_react2.default.createElement(
-	                'li',
-	                { key: i, id: 'licomponent' },
-	                this.props.docKeySplit[0]
-	            ));
-	        }
-	
-	        return _react2.default.createElement(
-	            'ol',
-	            { className: 'breadcrumb' },
+	          htmlStr.push(_react2.default.createElement(
+	            'li',
+	            { key: i, id: 'lin1' },
 	            _react2.default.createElement(
-	                'a',
-	                { onClick: this.handleClearSelectedStore, style: { cursor: 'pointer' } },
-	                this.props.selectedStore.name
-	            ),
-	            ' - \xA0',
-	            htmlStr
-	        );
-	    },
-	    handleBreadCrumbClick: function handleBreadCrumbClick(nodeLevel, docKey) {
-	        docKey = docKey.substring(0, docKey.length - 1);
-	        this.props.callbackBreadCrumbClick(nodeLevel, docKey);
-	    },
-	    handleClearSelectedStore: function handleClearSelectedStore() {
-	        this.props.handleClearSelectedStore();
+	              'a',
+	              { href: '#', onClick: this.handleBreadCrumbClick.bind(this, i + 1, strDocKeyBuild, strNodeNameCrumb) },
+	              this.props.nodeNameCrumb[i]
+	            )
+	          ));
+	        }
+	      }
+	    } else {
+	      htmlStr.push(_react2.default.createElement(
+	        'li',
+	        { key: i, id: 'licomponent' },
+	        this.props.nodeNameCrumb[0]
+	      ));
 	    }
+	
+	    return _react2.default.createElement(
+	      'ol',
+	      { className: 'breadcrumb' },
+	      _react2.default.createElement(
+	        'a',
+	        { onClick: this.handleClearSelectedStore, style: { cursor: 'pointer' } },
+	        this.props.selectedStore.name
+	      ),
+	      ' - \xA0',
+	      htmlStr
+	    );
+	  },
+	  handleBreadCrumbClick: function handleBreadCrumbClick(nodeLevel, docKey, nodeNameCrumb) {
+	    docKey = docKey.substring(0, docKey.length - 1);
+	    nodeNameCrumb = nodeNameCrumb.substring(0, nodeNameCrumb.length - 3);
+	    this.props.callbackBreadCrumbClick(nodeLevel, docKey, nodeNameCrumb);
+	  },
+	  handleClearSelectedStore: function handleClearSelectedStore() {
+	    this.props.handleClearSelectedStore();
+	  }
 	});
 	
 	exports.default = BreadCrumbComp;
@@ -29336,7 +29474,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -29346,107 +29484,107 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var BreadCrumbModal = _react2.default.createClass({
-	    displayName: 'BreadCrumbModal',
-	    componentDidMount: function componentDidMount() {
-	        $('#BreadCrumbModal').modal('show');
-	        $('#BreadCrumbModal').on('hidden.bs.modal', this.props.handleHideModal);
-	    },
+	  displayName: 'BreadCrumbModal',
+	  componentDidMount: function componentDidMount() {
+	    $('#BreadCrumbModal').modal('show');
+	    $('#BreadCrumbModal').on('hidden.bs.modal', this.props.handleHideModal);
+	  },
 	
-	    getInitialState: function getInitialState() {
-	        return {
-	            breadcrumbText: this.props.breadCrumbText
-	        };
-	    },
-	    render: function render() {
-	        return _react2.default.createElement(
+	  getInitialState: function getInitialState() {
+	    return {
+	      breadcrumbText: this.props.breadCrumbText
+	    };
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { id: 'BreadCrumbModal', className: 'modal fade' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'modal-dialog' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'modal-content' },
+	          _react2.default.createElement(
 	            'div',
-	            { id: 'BreadCrumbModal', className: 'modal fade' },
+	            { className: 'modal-header' },
 	            _react2.default.createElement(
-	                'div',
-	                { className: 'modal-dialog' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'modal-content' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'modal-header' },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
-	                            _react2.default.createElement(
-	                                'span',
-	                                { 'aria-hidden': 'true' },
-	                                '\xD7'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'h4',
-	                            { className: 'modal-title' },
-	                            'Breadcrumb Description'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'modal-body' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-12' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'alert alert-info' },
-	                                    'Editing Breadcrumb text for: ',
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        null,
-	                                        this.props.docKey
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-4' },
-	                                'Bread Crumb Text:'
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-8' },
-	                                _react2.default.createElement('textarea', { className: 'form-control', onChange: this.handleChange.bind(this, 'breadcrumbText'), value: this.state.breadcrumbText })
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'modal-footer' },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'btn btn-default', 'data-dismiss': 'modal' },
-	                            'Cancel'
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'btn btn-primary', 'data-dismiss': 'modal', onClick: this.handleSaveBreadCrumbClick.bind(this, this.props.docKey, this.state.breadcrumbText) },
-	                            'Save changes'
-	                        )
-	                    )
-	                )
+	              'button',
+	              { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+	              _react2.default.createElement(
+	                'span',
+	                { 'aria-hidden': 'true' },
+	                '\xD7'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'h4',
+	              { className: 'modal-title' },
+	              'Breadcrumb Description'
 	            )
-	        );
-	    },
-	    handleChange: function handleChange(name, e) {
-	        var change = {};
-	        change[name] = e.target.value;
-	        this.setState(change);
-	    },
-	    handleSaveBreadCrumbClick: function handleSaveBreadCrumbClick(docKey, breadcrumbText) {
-	        this.props.handleSaveBreadCrumbClick(docKey, breadcrumbText);
-	    }
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-body' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-12' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'alert alert-info' },
+	                  'Editing Breadcrumb text for: ',
+	                  _react2.default.createElement(
+	                    'strong',
+	                    null,
+	                    this.props.docKey
+	                  )
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-4' },
+	                'Bread Crumb Text:'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-8' },
+	                _react2.default.createElement('textarea', { className: 'form-control', onChange: this.handleChange.bind(this, 'breadcrumbText'), value: this.state.breadcrumbText })
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-footer' },
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'button', className: 'btn btn-default', 'data-dismiss': 'modal' },
+	              'Cancel'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'button', className: 'btn btn-primary', 'data-dismiss': 'modal', onClick: this.handleSaveBreadCrumbClick.bind(this, this.props.docKey, this.state.breadcrumbText) },
+	              'Save changes'
+	            )
+	          )
+	        )
+	      )
+	    );
+	  },
+	  handleChange: function handleChange(name, e) {
+	    var change = {};
+	    change[name] = e.target.value;
+	    this.setState(change);
+	  },
+	  handleSaveBreadCrumbClick: function handleSaveBreadCrumbClick(docKey, breadcrumbText) {
+	    this.props.handleSaveBreadCrumbClick(docKey, breadcrumbText);
+	  }
 	
 	});
 	
@@ -29459,7 +29597,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -29473,169 +29611,179 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ComponentLevel = _react2.default.createClass({
-	    displayName: 'ComponentLevel',
+	  displayName: 'ComponentLevel',
 	
-	    getInitialState: function getInitialState() {
-	        return {
-	            imageNotFound: false
-	        };
-	    },
-	    componentDidMount: function componentDidMount() {
-	        var $section = $('section').first();
-	        $section.find('.panzoom').panzoom({
-	            $zoomIn: $section.find(".zoom-in"),
-	            $zoomOut: $section.find(".zoom-out"),
-	            $zoomRange: $section.find(".zoom-range"),
-	            $reset: $section.find(".reset"),
-	            startTransform: "scale(1)",
-	            increment: 0.3,
-	            minScale: .1,
-	            contain: false,
-	            panOnlyWhenZoomed: "true",
-	            transformOrigin: "0% 0% 0px"
-	        });
-	    },
-	    render: function render() {
-	        var rows = this.props.component.map(function (component) {
-	            return _react2.default.createElement(_componentRow2.default, { component: component, key: component.key, store: this.props.store, docKey: this.props.docKey, componentName: this.props.componentName, nodeName: this.props.nodeName, nodeLevel: this.props.nodeLevel, showFeedBack: this.showFeedBack, reloadData: this.reloadData, handleShowModal: this.handleShowModal, handleHideModal: this.handleHideModal, storeLookup: this.props.storeLookup });
-	        }, this);
+	  getInitialState: function getInitialState() {
+	    return {
+	      imageNotFound: false
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var $section = $('section').first();
+	    $section.find('.panzoom').panzoom({
+	      $zoomIn: $section.find('.zoom-in'),
+	      $zoomOut: $section.find('.zoom-out'),
+	      $zoomRange: $section.find('.zoom-range'),
+	      $reset: $section.find('.reset'),
+	      startTransform: 'scale(1)',
+	      increment: 0.3,
+	      minScale: 0.1,
+	      contain: false,
+	      panOnlyWhenZoomed: 'true',
+	      transformOrigin: '0% 0% 0px'
+	    });
+	  },
+	  render: function render() {
+	    var rows = this.props.component.map(function (component) {
+	      return _react2.default.createElement(_componentRow2.default, { component: component, key: component.key, store: this.props.store, docKey: this.props.docKey, componentName: this.props.componentName, nodeName: this.props.nodeName, nodeLevel: this.props.nodeLevel, showFeedBack: this.showFeedBack, reloadData: this.reloadData, handleShowModal: this.handleShowModal, handleHideModal: this.handleHideModal, storeLookup: this.props.storeLookup });
+	    }, this);
 	
-	        var divPanZoomStyle = {
-	            textAlign: 'right',
-	            padding: '3px'
-	        };
+	    var divPanZoomStyle = {
+	      textAlign: 'right',
+	      padding: '3px'
+	    };
 	
-	        var divPanZoom = {
-	            transform: 'matrix(1, 0, 0, 1, 0, 0)',
-	            transition: 'transform 200ms ease-in-out',
-	            overflow: 'visible',
-	            width: '600px'
-	        };
+	    var divPanZoom = {
+	      transform: 'matrix(1, 0, 0, 1, 0, 0)',
+	      transition: 'transform 200ms ease-in-out',
+	      overflow: 'visible',
+	      width: '600px'
+	    };
 	
-	        var tdStyle = {
-	            verticalAlign: "top"
-	        };
+	    var tdStyle = {
+	      verticalAlign: 'top'
+	    };
 	
-	        var sectionStyle = {
-	            width: "600px"
-	        };
+	    var sectionStyle = {
+	      width: '600px'
+	    };
 	
-	        return _react2.default.createElement(
-	            'div',
-	            null,
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'table',
+	        { className: 'table', id: 'componentTable' },
+	        _react2.default.createElement(
+	          'tr',
+	          null,
+	          _react2.default.createElement(
+	            'td',
+	            { colSpan: '2' },
 	            _react2.default.createElement(
-	                'table',
-	                { className: 'table', id: 'componentTable' },
+	              'h2',
+	              { id: 'h2TopTag' },
+	              this.props.componentName
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'tr',
+	          null,
+	          _react2.default.createElement(
+	            'td',
+	            { style: tdStyle },
+	            _react2.default.createElement(
+	              'section',
+	              { id: 'pan-when-zoomed', style: sectionStyle },
+	              _react2.default.createElement(
+	                'div',
+	                { style: divPanZoomStyle },
 	                _react2.default.createElement(
-	                    'tr',
-	                    null,
-	                    _react2.default.createElement(
-	                        'td',
-	                        { colSpan: '2' },
-	                        _react2.default.createElement(
-	                            'h2',
-	                            { id: 'h2TopTag' },
-	                            this.props.componentName
-	                        )
-	                    )
+	                  'button',
+	                  { className: 'zoom-in btn-primary btn-sm', title: 'Zoom In' },
+	                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-zoom-in', 'aria-hidden': 'true' })
 	                ),
 	                _react2.default.createElement(
-	                    'tr',
-	                    null,
-	                    _react2.default.createElement(
-	                        'td',
-	                        { style: tdStyle },
-	                        _react2.default.createElement(
-	                            'section',
-	                            { id: 'pan-when-zoomed', style: sectionStyle },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { style: divPanZoomStyle },
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { className: 'zoom-in btn-primary btn-sm', title: 'Zoom In' },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-zoom-in', 'aria-hidden': 'true' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { className: 'zoom-out btn-primary btn-sm', title: 'Zoom Out' },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-zoom-out', 'aria-hidden': 'true' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { className: 'reset btn-primary btn-sm', title: 'Reset' },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-repeat', 'aria-hidden': 'true' })
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'panzoom', style: divPanZoom },
-	                                !this.state.imageNotFound ? _react2.default.createElement('img', { src: this.props.diagramUrl, onError: this.handleImageErrored.bind(this), style: divPanZoom, id: 'compdiagimg', alt: this.props.componentName }) : null,
-	                                this.state.imageNotFound ? _react2.default.createElement(
-	                                    'h2',
-	                                    null,
-	                                    'Image Not Found'
-	                                ) : null
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'td',
-	                        { style: tdStyle },
-	                        _react2.default.createElement(
-	                            'table',
-	                            { className: 'table table-striped table-inverse' },
-	                            _react2.default.createElement(
-	                                'thead',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'tr',
-	                                    null,
-	                                    _react2.default.createElement('th', null),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        'ref-id'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        'Product Name'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        'ref-qty'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        'sku'
-	                                    ),
-	                                    _react2.default.createElement('th', null),
-	                                    _react2.default.createElement('th', null)
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'tbody',
-	                                null,
-	                                rows
-	                            )
-	                        )
-	                    )
+	                  'button',
+	                  { className: 'zoom-out btn-primary btn-sm', title: 'Zoom Out' },
+	                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-zoom-out', 'aria-hidden': 'true' })
+	                ),
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'reset btn-primary btn-sm', title: 'Reset' },
+	                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-repeat', 'aria-hidden': 'true' })
 	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'panzoom', style: divPanZoom },
+	                !this.state.imageNotFound ? _react2.default.createElement('img', { src: this.props.diagramUrl, onError: this.handleImageErrored.bind(this), style: divPanZoom, id: 'compdiagimg', alt: this.props.componentName }) : null,
+	                this.state.imageNotFound ? _react2.default.createElement(
+	                  'h2',
+	                  null,
+	                  'Image Not Found'
+	                ) : null
+	              )
 	            )
-	        );
-	    },
-	    showFeedBack: function showFeedBack(data) {
-	        this.props.showFeedBack(data);
-	    },
-	    reloadData: function reloadData(docKey, nodeName, nodeLevel) {
-	        this.props.reloadDataFromComponent(docKey, nodeName, nodeLevel);
-	    },
-	    handleImageErrored: function handleImageErrored() {
-	        this.setState({ imageNotFound: true });
-	    }
+	          ),
+	          _react2.default.createElement(
+	            'td',
+	            { style: tdStyle },
+	            _react2.default.createElement(
+	              'table',
+	              { className: 'table table-striped table-inverse' },
+	              _react2.default.createElement(
+	                'thead',
+	                null,
+	                _react2.default.createElement(
+	                  'tr',
+	                  null,
+	                  _react2.default.createElement('th', null),
+	                  _react2.default.createElement(
+	                    'th',
+	                    null,
+	                    'ref-id'
+	                  ),
+	                  _react2.default.createElement(
+	                    'th',
+	                    null,
+	                    'Product Name'
+	                  ),
+	                  _react2.default.createElement(
+	                    'th',
+	                    null,
+	                    'ref-qty'
+	                  ),
+	                  _react2.default.createElement(
+	                    'th',
+	                    null,
+	                    'sku'
+	                  ),
+	                  _react2.default.createElement('th', null),
+	                  _react2.default.createElement('th', null)
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'tbody',
+	                null,
+	                rows,
+	                _react2.default.createElement(
+	                  'tr',
+	                  null,
+	                  _react2.default.createElement(
+	                    'td',
+	                    { colSpan: '7' },
+	                    'Row Count: ',
+	                    this.props.component.length
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        )
+	      )
+	    );
+	  },
+	  showFeedBack: function showFeedBack(data) {
+	    this.props.showFeedBack(data);
+	  },
+	  reloadData: function reloadData(docKey, nodeName, nodeLevel) {
+	    this.props.reloadDataFromComponent(docKey, nodeName, nodeLevel);
+	  },
+	  handleImageErrored: function handleImageErrored() {
+	    this.setState({ imageNotFound: true });
+	  }
 	});
 	
 	exports.default = ComponentLevel;
@@ -29647,7 +29795,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -29667,205 +29815,204 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ComponentRow = _react2.default.createClass({
-	    displayName: 'ComponentRow',
+	  displayName: 'ComponentRow',
 	
-	    getInitialState: function getInitialState() {
-	        return {
-	            isEditMode: false,
-	            refId: this.props.component.RefId,
-	            qty: this.props.component.RefQty,
-	            sku: this.props.component.Sku,
-	            showHistoryModal: false,
-	            showModal: false,
-	            showProductDetail: false,
-	            ProductData: {
-	                docKey: "",
-	                sku: "",
-	                name: "",
-	                description: "",
-	                id: ""
-	            }
-	        };
-	    },
-	    render: function render() {
-	
-	        var editDisable = true;
-	        if (!this.props.component.edit_mode || this.props.component.username == localStorage.username) {
-	            editDisable = false;
-	            if (localStorage.CatalogEditing != 'true') {
-	                editDisable = true;
-	            }
-	        } else {
-	            editDisable = true;
-	        }
-	
-	        if (this.state.isEditMode) {
-	            return _react2.default.createElement(
-	                'tr',
-	                null,
-	                _react2.default.createElement('td', null),
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement('input', { type: 'text', style: { "width": "70px" }, className: 'form-control', id: 'txtEditRefId', value: this.state.refId, onChange: this.handleChange.bind(this, 'refId') })
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement(
-	                        'a',
-	                        { href: '#', onClick: this.handleShowModal.bind(this, this.props.docKey, this.props.component.Sku, this.props.component.ProductName, this.props.component.Description) },
-	                        this.props.component.ProductName
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement('input', { type: 'number', style: { "width": "70px" }, className: 'form-control', id: 'txtEditQty', value: this.state.qty, onChange: this.handleChange.bind(this, 'qty') })
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    this.props.component.Sku
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement(
-	                        'button',
-	                        { onClick: this.handleSaveClick.bind(this, this.props.docKey, this.props.component, this.state.refId, this.state.qty, this.props.nodeName, this.props.nodeLevel, this.state.sku), className: 'btn btn-sm btn-default' },
-	                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-floppy-disk' })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement(
-	                        'button',
-	                        { onClick: this.handleCancelClick, className: 'btn btn-sm btn-default' },
-	                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-remove' })
-	                    )
-	                )
-	            );
-	        } else {
-	            return _react2.default.createElement(
-	                'tr',
-	                null,
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    this.state.showModal ? _react2.default.createElement(_productModal2.default, { handleHideModal: this.handleHideModal, productData: this.state.ProductData, handleSaveProductClick: this.handleSaveProductClick, storeValues: this.props.component.StoreInfo, storeLookup: this.props.storeLookup, handleCancelClick: this.handleProductModalCancelClick }) : null
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    this.props.component.RefId
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement(
-	                        'a',
-	                        { href: '#', onClick: this.handleShowModal.bind(this, this.props.docKey, this.props.component.Sku, this.props.component.ProductName, this.props.component.Description, this.props.component.id) },
-	                        this.props.component.ProductName
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    this.props.component.RefQty
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement(
-	                        _reactRouter.Link,
-	                        { to: '/product-detail?id=' + this.props.component.docId + '&store_id=' + this.props.store },
-	                        this.props.component.Sku
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement(
-	                        'button',
-	                        { disabled: editDisable, onClick: this.handleEditClick, className: 'btn btn-sm btn-default' },
-	                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-pencil' })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement(
-	                        'button',
-	                        { onClick: this.showHistoryModal, className: 'btn btn-sm btn-default' },
-	                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-book' })
-	                    ),
-	                    this.state.showHistoryModal ? _react2.default.createElement(_componentHistory2.default, { docKey: this.props.docKey, component: this.props.component, handleHideComponentHistoryModal: this.handleHideComponentHistoryModal, rollbackComplete: this.rollbackComplete }) : null
-	                )
-	            );
-	        }
-	    },
-	    handleChange: function handleChange(name, e) {
-	        var change = {};
-	        change[name] = e.target.value;
-	        this.setState(change);
-	    },
-	    handleHideComponentHistoryModal: function handleHideComponentHistoryModal() {
-	        this.setState({ showHistoryModal: false });
-	    },
-	    showHistoryModal: function showHistoryModal() {
-	        this.setState({ showHistoryModal: true });
-	    },
-	    handleCancelClick: function handleCancelClick() {
-	        UpdateEditingFlag('catalog', false, this.props.docKey);
-	        this.setState({ isEditMode: false });
-	    },
-	    handleEditClick: function handleEditClick() {
-	        UpdateEditingFlag('catalog', true, this.props.docKey);
-	        this.setState({ isEditMode: true });
-	    },
-	    handleSaveClick: function handleSaveClick(docKey, component, refId, refQty, nodeName, nodeLevel, sku) {
-	        SaveComponentData(docKey, component, refId, refQty, nodeName, nodeLevel, sku, this.props.store, this.saveComponentCallback);
-	        this.setState({ isEditMode: false });
-	    },
-	    saveComponentCallback: function saveComponentCallback(data, docKey, nodeName, nodeLevel) {
-	        this.props.showFeedBack(data);
-	        this.props.reloadData(docKey, nodeName, nodeLevel);
-	    },
-	    handleHideModal: function handleHideModal() {
-	        this.setState({ showModal: false });
-	    },
-	    handleShowModal: function handleShowModal(docKey, sku, productName, description, id) {
-	        var prodData = this.state.ProductData;
-	        prodData.docKey = docKey;
-	        prodData.sku = sku;
-	        prodData.name = productName;
-	        prodData.description = description;
-	        prodData.id = id;
-	        this.setState({ showModal: true });
-	    },
-	    handleHideProductDetailModal: function handleHideProductDetailModal() {
-	        this.setState({ showProductDetail: false });
-	    },
-	    handleHideModal: function handleHideModal() {
-	        this.setState({ showModal: false });
-	    },
-	    handleSaveProductClick: function handleSaveProductClick(productData, newName, newDescription) {
-	        saveProduct(productData, newName, newDescription, this.props.component.id, this.props.store, this.props.component.Sku, this.saveProductCallback);
-	    },
-	    saveProductCallback: function saveProductCallback(data) {
-	        this.props.showFeedBack(data);
-	        this.setState({ showModal: false });
-	        this.props.reloadData(this.props.docKey, this.props.nodeName, this.props.nodeLevel);
-	    },
-	    handleProductModalCancelClick: function handleProductModalCancelClick() {
-	        this.props.reloadData(this.props.docKey, this.props.nodeName, this.props.nodeLevel);
-	    },
-	    rollbackComplete: function rollbackComplete(data) {
-	        this.props.showFeedBack(data);
-	        this.props.reloadData(this.props.docKey, this.props.nodeName, this.props.nodeLevel);
+	  getInitialState: function getInitialState() {
+	    return {
+	      isEditMode: false,
+	      refId: this.props.component.RefId,
+	      qty: this.props.component.RefQty,
+	      sku: this.props.component.Sku,
+	      showHistoryModal: false,
+	      showModal: false,
+	      showProductDetail: false,
+	      ProductData: {
+	        docKey: '',
+	        sku: '',
+	        name: '',
+	        description: '',
+	        id: ''
+	      }
+	    };
+	  },
+	  render: function render() {
+	    var editDisable = true;
+	    if (!this.props.component.edit_mode || this.props.component.username == localStorage.username) {
+	      editDisable = false;
+	      if (localStorage.CatalogEditing != 'true') {
+	        editDisable = true;
+	      }
+	    } else {
+	      editDisable = true;
 	    }
+	
+	    if (this.state.isEditMode) {
+	      return _react2.default.createElement(
+	        'tr',
+	        null,
+	        _react2.default.createElement('td', null),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement('input', { type: 'text', style: { 'width': '70px' }, className: 'form-control', id: 'txtEditRefId', value: this.state.refId, onChange: this.handleChange.bind(this, 'refId') })
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'a',
+	            { href: '#', onClick: this.handleShowModal.bind(this, this.props.docKey, this.props.component.Sku, this.props.component.ProductName, this.props.component.Description) },
+	            this.props.component.ProductName
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement('input', { type: 'number', style: { 'width': '70px' }, className: 'form-control', id: 'txtEditQty', value: this.state.qty, onChange: this.handleChange.bind(this, 'qty') })
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          this.props.component.Sku
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleSaveClick.bind(this, this.props.docKey, this.props.component, this.state.refId, this.state.qty, this.props.nodeName, this.props.nodeLevel, this.state.sku), className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-floppy-disk' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleCancelClick, className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-remove' })
+	          )
+	        )
+	      );
+	    } else {
+	      return _react2.default.createElement(
+	        'tr',
+	        null,
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          this.state.showModal ? _react2.default.createElement(_productModal2.default, { handleHideModal: this.handleHideModal, productData: this.state.ProductData, handleSaveProductClick: this.handleSaveProductClick, storeValues: this.props.component.StoreInfo, storeLookup: this.props.storeLookup, handleCancelClick: this.handleProductModalCancelClick }) : null
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          this.props.component.RefId
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'a',
+	            { href: '#', onClick: this.handleShowModal.bind(this, this.props.docKey, this.props.component.Sku, this.props.component.ProductName, this.props.component.Description, this.props.component.id) },
+	            this.props.component.ProductName
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          this.props.component.RefQty
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            _reactRouter.Link,
+	            { to: '/product-detail?id=' + this.props.component.docId + '&store_id=' + this.props.store },
+	            this.props.component.Sku
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { disabled: editDisable, onClick: this.handleEditClick, className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-pencil' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.showHistoryModal, className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-book' })
+	          ),
+	          this.state.showHistoryModal ? _react2.default.createElement(_componentHistory2.default, { docKey: this.props.docKey, component: this.props.component, handleHideComponentHistoryModal: this.handleHideComponentHistoryModal, rollbackComplete: this.rollbackComplete }) : null
+	        )
+	      );
+	    }
+	  },
+	  handleChange: function handleChange(name, e) {
+	    var change = {};
+	    change[name] = e.target.value;
+	    this.setState(change);
+	  },
+	  handleHideComponentHistoryModal: function handleHideComponentHistoryModal() {
+	    this.setState({ showHistoryModal: false });
+	  },
+	  showHistoryModal: function showHistoryModal() {
+	    this.setState({ showHistoryModal: true });
+	  },
+	  handleCancelClick: function handleCancelClick() {
+	    UpdateEditingFlag('catalog', false, this.props.docKey, this.props.store);
+	    this.setState({ isEditMode: false });
+	  },
+	  handleEditClick: function handleEditClick() {
+	    UpdateEditingFlag('catalog', true, this.props.docKey, this.props.store);
+	    this.setState({ isEditMode: true });
+	  },
+	  handleSaveClick: function handleSaveClick(docKey, component, refId, refQty, nodeName, nodeLevel, sku) {
+	    SaveComponentData(docKey, component, refId, refQty, nodeName, nodeLevel, sku, this.props.store, this.saveComponentCallback);
+	    this.setState({ isEditMode: false });
+	  },
+	  saveComponentCallback: function saveComponentCallback(data, docKey, nodeName, nodeLevel) {
+	    this.props.showFeedBack(data);
+	    this.props.reloadData(docKey, nodeName, nodeLevel);
+	  },
+	  handleHideModal: function handleHideModal() {
+	    this.setState({ showModal: false });
+	  },
+	  handleShowModal: function handleShowModal(docKey, sku, productName, description, id) {
+	    var prodData = this.state.ProductData;
+	    prodData.docKey = docKey;
+	    prodData.sku = sku;
+	    prodData.name = productName;
+	    prodData.description = description;
+	    prodData.id = id;
+	    this.setState({ showModal: true });
+	  },
+	  handleHideProductDetailModal: function handleHideProductDetailModal() {
+	    this.setState({ showProductDetail: false });
+	  },
+	  handleHideModal: function handleHideModal() {
+	    this.setState({ showModal: false });
+	  },
+	  handleSaveProductClick: function handleSaveProductClick(productData, newName, newDescription) {
+	    saveProduct(productData, newName, newDescription, this.props.component.id, this.props.store, this.props.component.Sku, this.saveProductCallback);
+	  },
+	  saveProductCallback: function saveProductCallback(data) {
+	    this.props.showFeedBack(data);
+	    this.setState({ showModal: false });
+	    this.props.reloadData(this.props.docKey, this.props.nodeName, this.props.nodeLevel);
+	  },
+	  handleProductModalCancelClick: function handleProductModalCancelClick() {
+	    this.props.reloadData(this.props.docKey, this.props.nodeName, this.props.nodeLevel);
+	  },
+	  rollbackComplete: function rollbackComplete(data) {
+	    this.props.showFeedBack(data);
+	    this.props.reloadData(this.props.docKey, this.props.nodeName, this.props.nodeLevel);
+	  }
 	
 	});
 	
@@ -29878,7 +30025,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -29896,195 +30043,194 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ProductModal = _react2.default.createClass({
-	    displayName: 'ProductModal',
-	    componentDidMount: function componentDidMount() {
-	        $('#ProductDetailModal').modal('show');
-	        $('#ProductDetailModal').on('hidden.bs.modal', this.props.handleHideModal);
-	    },
+	  displayName: 'ProductModal',
+	  componentDidMount: function componentDidMount() {
+	    $('#ProductDetailModal').modal('show');
+	    $('#ProductDetailModal').on('hidden.bs.modal', this.props.handleHideModal);
+	  },
 	
-	    getInitialState: function getInitialState() {
-	        return {
-	            name: this.props.productData.name,
-	            description: this.props.productData.description,
-	            sku: this.props.productData.sku,
-	            feedbackResult: 0,
-	            feedbackMessage: "",
-	            showFeedback: false,
-	            prodHistory: false,
-	            prodHistoryData: []
-	        };
-	    },
-	    render: function render() {
-	
-	        var saveDisable;
-	        if (localStorage.CatalogEditing == 'true') {
-	            saveDisable = false;
-	        } else {
-	            saveDisable = true;
-	        }
-	
-	        return _react2.default.createElement(
-	            'div',
-	            { id: 'ProductDetailModal', className: 'modal fade' },
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'modal-dialog modal-lg' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'modal-content' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'modal-header' },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
-	                            _react2.default.createElement(
-	                                'span',
-	                                { 'aria-hidden': 'true' },
-	                                '\xD7'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'h4',
-	                            { className: 'modal-title' },
-	                            'Product Detail'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'modal-body' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-12' },
-	                                _react2.default.createElement(_feedback2.default, { Result: this.state.feedbackResult, Message: this.state.feedbackMessage, visible: this.state.showFeedback, delay: 2000, resetFeedbackState: this.resetFeedbackState })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-12' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'alert alert-info' },
-	                                    'Editing: ',
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        null,
-	                                        this.props.productData.name
-	                                    ),
-	                                    ' with a sku of ',
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        null,
-	                                        this.props.productData.sku,
-	                                        ' '
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row', style: { marginTop: '5px' } },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-2' },
-	                                'Name:'
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-10' },
-	                                _react2.default.createElement('input', { type: 'text', maxLength: '255', className: 'form-control', value: this.state.name, onChange: this.handleChange.bind(this, 'name') })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row', style: { marginTop: '5px' } },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-2' },
-	                                'Description:'
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-10' },
-	                                _react2.default.createElement('input', { type: 'text', maxLength: '255', className: 'form-control', value: this.state.description, onChange: this.handleChange.bind(this, 'description') })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row', style: { marginTop: '5px' } },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-10' },
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { onClick: this.showProdHistory, className: 'btn btn-default' },
-	                                    _react2.default.createElement('i', { className: 'glyphicon glyphicon-book' })
-	                                ),
-	                                ' ',
-	                                _react2.default.createElement(
-	                                    'strong',
-	                                    null,
-	                                    'Show History'
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row', style: { marginTop: '5px' } },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-11' },
-	                                this.state.prodHistory ? _react2.default.createElement(_productHistory2.default, { docId: this.props.productData.id, docKey: this.props.productData.docKey, data: this.state.prodHistoryData, rollbackComplete: this.rollbackComplete }) : null
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'modal-footer' },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'btn btn-default', 'data-dismiss': 'modal', onClick: this.handleCancelClick },
-	                            'Cancel'
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { disabled: saveDisable, type: 'button', className: 'btn btn-primary', 'data-dismiss': 'modal', onClick: this.handleSaveProductClick.bind(this, this.props.productData, this.state.name, this.state.description) },
-	                            'Save changes'
-	                        )
-	                    )
-	                )
-	            )
-	        );
-	    },
-	    handleChange: function handleChange(name, e) {
-	        var change = {};
-	        change[name] = e.target.value;
-	        this.setState(change);
-	    },
-	    showProdHistory: function showProdHistory() {
-	        GetComponentProductHistory(this.props.productData.id, this.historyCallBack);
-	    },
-	    handleSaveProductClick: function handleSaveProductClick(productData, newName, newDescription) {
-	        this.props.handleSaveProductClick(productData, newName, newDescription);
-	    },
-	    handleCancelClick: function handleCancelClick() {
-	        this.props.handleCancelClick();
-	    },
-	    historyCallBack: function historyCallBack(data) {
-	        this.setState({ prodHistoryData: data, prodHistory: true });
-	    },
-	    resetFeedbackState: function resetFeedbackState() {
-	        this.setState({ showFeedback: false });
-	    },
-	    rollbackComplete: function rollbackComplete(oldName, oldDescription) {
-	        this.setState({ name: oldName, description: oldDescription });
+	  getInitialState: function getInitialState() {
+	    return {
+	      name: this.props.productData.name,
+	      description: this.props.productData.description,
+	      sku: this.props.productData.sku,
+	      feedbackResult: 0,
+	      feedbackMessage: '',
+	      showFeedback: false,
+	      prodHistory: false,
+	      prodHistoryData: []
+	    };
+	  },
+	  render: function render() {
+	    var saveDisable;
+	    if (localStorage.CatalogEditing == 'true') {
+	      saveDisable = false;
+	    } else {
+	      saveDisable = true;
 	    }
+	
+	    return _react2.default.createElement(
+	      'div',
+	      { id: 'ProductDetailModal', className: 'modal fade' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'modal-dialog modal-lg' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'modal-content' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-header' },
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+	              _react2.default.createElement(
+	                'span',
+	                { 'aria-hidden': 'true' },
+	                '\xD7'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'h4',
+	              { className: 'modal-title' },
+	              'Product Detail'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-body' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-12' },
+	                _react2.default.createElement(_feedback2.default, { Result: this.state.feedbackResult, Message: this.state.feedbackMessage, visible: this.state.showFeedback, delay: 2000, resetFeedbackState: this.resetFeedbackState })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-12' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'alert alert-info' },
+	                  'Editing: ',
+	                  _react2.default.createElement(
+	                    'strong',
+	                    null,
+	                    this.props.productData.name
+	                  ),
+	                  ' with a sku of ',
+	                  _react2.default.createElement(
+	                    'strong',
+	                    null,
+	                    this.props.productData.sku,
+	                    ' '
+	                  )
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row', style: { marginTop: '5px' } },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-2' },
+	                'Name:'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-10' },
+	                _react2.default.createElement('input', { type: 'text', maxLength: '255', className: 'form-control', value: this.state.name, onChange: this.handleChange.bind(this, 'name') })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row', style: { marginTop: '5px' } },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-2' },
+	                'Description:'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-10' },
+	                _react2.default.createElement('input', { type: 'text', maxLength: '255', className: 'form-control', value: this.state.description, onChange: this.handleChange.bind(this, 'description') })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row', style: { marginTop: '5px' } },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-10' },
+	                _react2.default.createElement(
+	                  'button',
+	                  { onClick: this.showProdHistory, className: 'btn btn-default' },
+	                  _react2.default.createElement('i', { className: 'glyphicon glyphicon-book' })
+	                ),
+	                ' ',
+	                _react2.default.createElement(
+	                  'strong',
+	                  null,
+	                  'Show History'
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row', style: { marginTop: '5px' } },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-11' },
+	                this.state.prodHistory ? _react2.default.createElement(_productHistory2.default, { docId: this.props.productData.id, docKey: this.props.productData.docKey, data: this.state.prodHistoryData, rollbackComplete: this.rollbackComplete }) : null
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-footer' },
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'button', className: 'btn btn-default', 'data-dismiss': 'modal', onClick: this.handleCancelClick },
+	              'Cancel'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { disabled: saveDisable, type: 'button', className: 'btn btn-primary', 'data-dismiss': 'modal', onClick: this.handleSaveProductClick.bind(this, this.props.productData, this.state.name, this.state.description) },
+	              'Save changes'
+	            )
+	          )
+	        )
+	      )
+	    );
+	  },
+	  handleChange: function handleChange(name, e) {
+	    var change = {};
+	    change[name] = e.target.value;
+	    this.setState(change);
+	  },
+	  showProdHistory: function showProdHistory() {
+	    GetComponentProductHistory(this.props.productData.id, this.historyCallBack);
+	  },
+	  handleSaveProductClick: function handleSaveProductClick(productData, newName, newDescription) {
+	    this.props.handleSaveProductClick(productData, newName, newDescription);
+	  },
+	  handleCancelClick: function handleCancelClick() {
+	    this.props.handleCancelClick();
+	  },
+	  historyCallBack: function historyCallBack(data) {
+	    this.setState({ prodHistoryData: data, prodHistory: true });
+	  },
+	  resetFeedbackState: function resetFeedbackState() {
+	    this.setState({ showFeedback: false });
+	  },
+	  rollbackComplete: function rollbackComplete(oldName, oldDescription) {
+	    this.setState({ name: oldName, description: oldDescription });
+	  }
 	});
 	
 	exports.default = ProductModal;
@@ -30096,7 +30242,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -30110,21 +30256,21 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ProductHistoryComponent = _react2.default.createClass({
-	    displayName: 'ProductHistoryComponent',
+	  displayName: 'ProductHistoryComponent',
 	
-	    render: function render() {
-	        var rows = this.props.data.map(function (history) {
-	            return _react2.default.createElement(_productHistoryRow2.default, { data: history, rollbackComplete: this.rollbackComplete, key: history.key, docId: this.props.docId, docKey: this.props.docKey });
-	        }, this);
-	        return _react2.default.createElement(
-	            'div',
-	            null,
-	            rows
-	        );
-	    },
-	    rollbackComplete: function rollbackComplete(oldName, oldDescription) {
-	        this.props.rollbackComplete(oldName, oldDescription);
-	    }
+	  render: function render() {
+	    var rows = this.props.data.map(function (history) {
+	      return _react2.default.createElement(_productHistoryRow2.default, { data: history, rollbackComplete: this.rollbackComplete, key: history.key, docId: this.props.docId, docKey: this.props.docKey });
+	    }, this);
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      rows
+	    );
+	  },
+	  rollbackComplete: function rollbackComplete(oldName, oldDescription) {
+	    this.props.rollbackComplete(oldName, oldDescription);
+	  }
 	});
 	
 	exports.default = ProductHistoryComponent;
@@ -30136,7 +30282,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -30146,73 +30292,72 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ProductHistoryRow = _react2.default.createClass({
-	    displayName: 'ProductHistoryRow',
+	  displayName: 'ProductHistoryRow',
 	
-	    render: function render() {
-	
-	        var rollbackDisable;
-	        if (localStorage.CatalogEditing == 'true') {
-	            rollbackDisable = false;
-	        } else {
-	            rollbackDisable = true;
-	        }
-	
-	        return _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'row' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-2' },
-	                    'Name: ',
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        this.props.data.old_name
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-6' },
-	                    'Description: ',
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        this.props.data.old_description
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-3' },
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        'Changed: ',
-	                        this.props.data.change_date
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-1' },
-	                    _react2.default.createElement(
-	                        'button',
-	                        { disabled: rollbackDisable, onClick: this.handleRollbackClick, type: 'button', className: 'btn btn-primary' },
-	                        'Rollback'
-	                    )
-	                )
-	            )
-	        );
-	    },
-	    handleRollbackClick: function handleRollbackClick() {
-	        var desc;
-	        desc = this.props.data.old_description;
-	        if (!this.props.data.old_description) {
-	            desc = "";
-	        }
-	        this.props.rollbackComplete(this.props.data.old_name, desc);
+	  render: function render() {
+	    var rollbackDisable;
+	    if (localStorage.CatalogEditing == 'true') {
+	      rollbackDisable = false;
+	    } else {
+	      rollbackDisable = true;
 	    }
+	
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-2' },
+	          'Name: ',
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            this.props.data.old_name
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-6' },
+	          'Description: ',
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            this.props.data.old_description
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-3' },
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            'Changed: ',
+	            this.props.data.change_date
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-1' },
+	          _react2.default.createElement(
+	            'button',
+	            { disabled: rollbackDisable, onClick: this.handleRollbackClick, type: 'button', className: 'btn btn-primary' },
+	            'Rollback'
+	          )
+	        )
+	      )
+	    );
+	  },
+	  handleRollbackClick: function handleRollbackClick() {
+	    var desc;
+	    desc = this.props.data.old_description;
+	    if (!this.props.data.old_description) {
+	      desc = '';
+	    }
+	    this.props.rollbackComplete(this.props.data.old_name, desc);
+	  }
 	});
 	
 	exports.default = ProductHistoryRow;
@@ -30224,7 +30369,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -30238,113 +30383,113 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ComponentHistoryModal = _react2.default.createClass({
-	    displayName: 'ComponentHistoryModal',
+	  displayName: 'ComponentHistoryModal',
 	
-	    getInitialState: function getInitialState() {
-	        return {
-	            data: []
-	        };
-	    },
-	    componentDidMount: function componentDidMount() {
-	        $('#ComponentHistoryModal').modal('show');
-	        $('#ComponentHistoryModal').on('hidden.bs.modal', this.props.handleHideComponentHistoryModal);
-	        GetComponentHistory(this.props.component.id, this.getComponentHistoryCallback);
-	    },
+	  getInitialState: function getInitialState() {
+	    return {
+	      data: []
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    $('#ComponentHistoryModal').modal('show');
+	    $('#ComponentHistoryModal').on('hidden.bs.modal', this.props.handleHideComponentHistoryModal);
+	    GetComponentHistory(this.props.component.id, this.getComponentHistoryCallback);
+	  },
 	
-	    componentWillReceiveProps: function componentWillReceiveProps() {},
-	    getComponentHistoryCallback: function getComponentHistoryCallback(data) {
-	        this.setState({ data: data });
-	    },
-	    render: function render() {
-	        var rows = this.state.data.map(function (history) {
-	            return _react2.default.createElement(_componentHistoryRow2.default, { history: history, rollbackComplete: this.rollbackComplete, key: history.key, docKey: this.props.docKey, docId: this.props.component.id });
-	        }, this);
-	        return _react2.default.createElement(
+	  componentWillReceiveProps: function componentWillReceiveProps() {},
+	  getComponentHistoryCallback: function getComponentHistoryCallback(data) {
+	    this.setState({ data: data });
+	  },
+	  render: function render() {
+	    var rows = this.state.data.map(function (history) {
+	      return _react2.default.createElement(_componentHistoryRow2.default, { history: history, rollbackComplete: this.rollbackComplete, key: history.key, docKey: this.props.docKey, docId: this.props.component.id });
+	    }, this);
+	    return _react2.default.createElement(
+	      'div',
+	      { id: 'ComponentHistoryModal', className: 'modal fade' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'modal-dialog modal-lg' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'modal-content' },
+	          _react2.default.createElement(
 	            'div',
-	            { id: 'ComponentHistoryModal', className: 'modal fade' },
+	            { className: 'modal-header' },
 	            _react2.default.createElement(
-	                'div',
-	                { className: 'modal-dialog modal-lg' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'modal-content' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'modal-header' },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
-	                            _react2.default.createElement(
-	                                'span',
-	                                { 'aria-hidden': 'true' },
-	                                '\xD7'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'h4',
-	                            { className: 'modal-title' },
-	                            'Component History'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'modal-body' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-12' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'alert alert-info' },
-	                                    'History for: ',
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        null,
-	                                        this.props.component.ProductName
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-4' },
-	                                _react2.default.createElement(
-	                                    'h4',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        null,
-	                                        'Previous Values'
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        rows
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'modal-footer' },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'btn btn-default', 'data-dismiss': 'modal' },
-	                            'Cancel'
-	                        )
-	                    )
-	                )
+	              'button',
+	              { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+	              _react2.default.createElement(
+	                'span',
+	                { 'aria-hidden': 'true' },
+	                '\xD7'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'h4',
+	              { className: 'modal-title' },
+	              'Component History'
 	            )
-	        );
-	    },
-	    rollbackComplete: function rollbackComplete(data) {
-	        this.props.rollbackComplete(data);
-	    },
-	    handleHideModal: function handleHideModal() {
-	        this.props.handleHideModal();
-	    }
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-body' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-12' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'alert alert-info' },
+	                  'History for: ',
+	                  _react2.default.createElement(
+	                    'strong',
+	                    null,
+	                    this.props.component.ProductName
+	                  )
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-4' },
+	                _react2.default.createElement(
+	                  'h4',
+	                  null,
+	                  _react2.default.createElement(
+	                    'strong',
+	                    null,
+	                    'Previous Values'
+	                  )
+	                )
+	              )
+	            ),
+	            rows
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-footer' },
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'button', className: 'btn btn-default', 'data-dismiss': 'modal' },
+	              'Cancel'
+	            )
+	          )
+	        )
+	      )
+	    );
+	  },
+	  rollbackComplete: function rollbackComplete(data) {
+	    this.props.rollbackComplete(data);
+	  },
+	  handleHideModal: function handleHideModal() {
+	    this.props.handleHideModal();
+	  }
 	});
 	
 	exports.default = ComponentHistoryModal;
@@ -30356,7 +30501,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -30366,82 +30511,81 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ComponentHistoryRow = _react2.default.createClass({
-	    displayName: 'ComponentHistoryRow',
+	  displayName: 'ComponentHistoryRow',
 	
-	    render: function render() {
-	
-	        var rollbackDisable;
-	        if (localStorage.CatalogEditing == 'true') {
-	            rollbackDisable = false;
-	        } else {
-	            rollbackDisable = true;
-	        }
-	
-	        return _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'row', style: { marginTop: '5px' } },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-2' },
-	                    'Ref Id: ',
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        this.props.history.old_ref_id
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-2' },
-	                    'Ref Qty: ',
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        this.props.history.old_ref_qty
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-2' },
-	                    'Sku: ',
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        this.props.history.old_sku
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-4' },
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        'Changed On: ',
-	                        this.props.history.change_date
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-2' },
-	                    ' ',
-	                    _react2.default.createElement(
-	                        'button',
-	                        { disabled: rollbackDisable, 'data-dismiss': 'modal', onClick: this.handleRollbackClick, type: 'button', className: 'btn btn-primary' },
-	                        'Rollback'
-	                    )
-	                )
-	            )
-	        );
-	    },
-	    handleRollbackClick: function handleRollbackClick() {
-	        rollbackComponentData(this.props.docKey, this.props.docId, this.props.history.new_ref_id, this.props.history.old_ref_id, this.props.history.new_ref_qty, this.props.history.old_ref_qty, this.props.history.new_sku, this.props.history.old_sku, this.rollbackCallback);
-	    },
-	    rollbackCallback: function rollbackCallback(data) {
-	        this.props.rollbackComplete(data);
+	  render: function render() {
+	    var rollbackDisable;
+	    if (localStorage.CatalogEditing == 'true') {
+	      rollbackDisable = false;
+	    } else {
+	      rollbackDisable = true;
 	    }
+	
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row', style: { marginTop: '5px' } },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-2' },
+	          'Ref Id: ',
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            this.props.history.old_ref_id
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-2' },
+	          'Ref Qty: ',
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            this.props.history.old_ref_qty
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-2' },
+	          'Sku: ',
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            this.props.history.old_sku
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-4' },
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            'Changed On: ',
+	            this.props.history.change_date
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-2' },
+	          ' ',
+	          _react2.default.createElement(
+	            'button',
+	            { disabled: rollbackDisable, 'data-dismiss': 'modal', onClick: this.handleRollbackClick, type: 'button', className: 'btn btn-primary' },
+	            'Rollback'
+	          )
+	        )
+	      )
+	    );
+	  },
+	  handleRollbackClick: function handleRollbackClick() {
+	    rollbackComponentData(this.props.docKey, this.props.docId, this.props.history.new_ref_id, this.props.history.old_ref_id, this.props.history.new_ref_qty, this.props.history.old_ref_qty, this.props.history.new_sku, this.props.history.old_sku, this.rollbackCallback);
+	  },
+	  rollbackCallback: function rollbackCallback(data) {
+	    this.props.rollbackComplete(data);
+	  }
 	});
 	
 	exports.default = ComponentHistoryRow;
@@ -30492,7 +30636,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -30506,45 +30650,45 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ProductList = _react2.default.createClass({
-	    displayName: 'ProductList',
+	  displayName: 'ProductList',
 	
-	    render: function render() {
-	        var rows = this.props.products.map(function (product) {
-	            return _react2.default.createElement(_productListRow2.default, { product: product, key: product.key });
-	        }, this);
-	        return _react2.default.createElement(
-	            'table',
-	            { className: 'table table-bordered table-hover table-responsive table-striped' },
-	            _react2.default.createElement(
-	                'thead',
-	                null,
-	                _react2.default.createElement(
-	                    'tr',
-	                    null,
-	                    _react2.default.createElement(
-	                        'th',
-	                        null,
-	                        'Sku'
-	                    ),
-	                    _react2.default.createElement(
-	                        'th',
-	                        null,
-	                        'Doc Key'
-	                    ),
-	                    _react2.default.createElement(
-	                        'th',
-	                        null,
-	                        'Name'
-	                    )
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'tbody',
-	                null,
-	                rows
-	            )
-	        );
-	    }
+	  render: function render() {
+	    var rows = this.props.products.map(function (product) {
+	      return _react2.default.createElement(_productListRow2.default, { product: product, key: product.key });
+	    }, this);
+	    return _react2.default.createElement(
+	      'table',
+	      { className: 'table table-bordered table-hover table-responsive table-striped' },
+	      _react2.default.createElement(
+	        'thead',
+	        null,
+	        _react2.default.createElement(
+	          'tr',
+	          null,
+	          _react2.default.createElement(
+	            'th',
+	            null,
+	            'Sku'
+	          ),
+	          _react2.default.createElement(
+	            'th',
+	            null,
+	            'Doc Key'
+	          ),
+	          _react2.default.createElement(
+	            'th',
+	            null,
+	            'Name'
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'tbody',
+	        null,
+	        rows
+	      )
+	    );
+	  }
 	});
 	
 	exports.default = ProductList;
@@ -30606,7 +30750,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -30620,42 +30764,42 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var StoreControl = _react2.default.createClass({
-	    displayName: 'StoreControl',
+	  displayName: 'StoreControl',
 	
-	    render: function render() {
-	        var rows = this.props.storeLookup.map(function (storeLookup) {
-	            return _react2.default.createElement(_storeControlRow2.default, { storeLookup: storeLookup, key: storeLookup.key, selectStore: this.props.selectStore });
-	        }, this);
-	        return _react2.default.createElement(
+	  render: function render() {
+	    var rows = this.props.storeLookup.map(function (storeLookup) {
+	      return _react2.default.createElement(_storeControlRow2.default, { storeLookup: storeLookup, key: storeLookup.key, selectStore: this.props.selectStore });
+	    }, this);
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      rows,
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-sm-12', style: { fontSize: '50px' } },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
 	            'div',
-	            { className: 'row' },
-	            rows,
+	            { className: 'col-sm-6' },
 	            _react2.default.createElement(
-	                'div',
-	                { className: 'col-sm-12', style: { fontSize: '50px' } },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'row' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-sm-6' },
-	                        _react2.default.createElement(
-	                            'strong',
-	                            null,
-	                            _react2.default.createElement(
-	                                'a',
-	                                { style: { cursor: 'pointer', color: 'black' }, onClick: this.selectStore.bind(this, '0', 'Not Assigned') },
-	                                'Not Assigned'
-	                            )
-	                        )
-	                    )
-	                )
+	              'strong',
+	              null,
+	              _react2.default.createElement(
+	                'a',
+	                { style: { cursor: 'pointer', color: 'black' }, onClick: this.selectStore.bind(this, '0', 'Not Assigned') },
+	                'Not Assigned'
+	              )
 	            )
-	        );
-	    },
-	    selectStore: function selectStore(storeId, name) {
-	        this.props.selectStore(storeId, name);
-	    }
+	          )
+	        )
+	      )
+	    );
+	  },
+	  selectStore: function selectStore(storeId, name) {
+	    this.props.selectStore(storeId, name);
+	  }
 	});
 	
 	exports.default = StoreControl;
@@ -30667,7 +30811,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -30677,34 +30821,34 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var StoreControlRow = _react2.default.createClass({
-	    displayName: 'StoreControlRow',
+	  displayName: 'StoreControlRow',
 	
-	    render: function render() {
-	        return _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-12', style: { fontSize: '12px' } },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'col-sm-12', style: { fontSize: '12px' } },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-6', style: { fontSize: '50px' } },
+	          _react2.default.createElement(
+	            'strong',
+	            null,
 	            _react2.default.createElement(
-	                'div',
-	                { className: 'row' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-6', style: { fontSize: '50px' } },
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { style: { cursor: 'pointer', color: this.props.storeLookup.css_box_color }, onClick: this.handleSelectStore.bind(this, this.props.storeLookup.id, this.props.storeLookup.store_name) },
-	                            this.props.storeLookup.store_name
-	                        )
-	                    )
-	                )
+	              'a',
+	              { style: { cursor: 'pointer', color: this.props.storeLookup.css_box_color }, onClick: this.handleSelectStore.bind(this, this.props.storeLookup.id, this.props.storeLookup.store_name) },
+	              this.props.storeLookup.store_name
 	            )
-	        );
-	    },
-	    handleSelectStore: function handleSelectStore(storeId, name) {
-	        this.props.selectStore(storeId, name);
-	    }
+	          )
+	        )
+	      )
+	    );
+	  },
+	  handleSelectStore: function handleSelectStore(storeId, name) {
+	    this.props.selectStore(storeId, name);
+	  }
 	});
 	
 	exports.default = StoreControlRow;
@@ -30716,7 +30860,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -30730,157 +30874,157 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var CatalogDisabled = _react2.default.createClass({
-	    displayName: 'CatalogDisabled',
+	  displayName: 'CatalogDisabled',
 	
-	    getInitialState: function getInitialState() {
-	        return {
-	            nodes: [],
-	            noResultsMessage: false,
-	            page: 0,
-	            pageCount: 0,
-	            pagesVisible: 20,
-	            numberPerPage: 50
-	        };
-	    },
-	    componentWillMount: function componentWillMount() {
-	        getNodeList(1, null, [], this.props.selectedStore.value, 1, this.handleNewData);
-	    },
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	        if (nextProps.docKey != this.props.docKey) {
-	            getNodeList(1, nextProps.docKey, [], this.props.selectedStore.value, 1, this.handleNewData);
-	        }
-	    },
-	    render: function render() {
-	        var _this = this;
+	  getInitialState: function getInitialState() {
+	    return {
+	      nodes: [],
+	      noResultsMessage: false,
+	      page: 0,
+	      pageCount: 0,
+	      pagesVisible: 20,
+	      numberPerPage: 50
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    getNodeList(1, null, [], this.props.selectedStore.value, 1, this.handleNewData);
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    if (nextProps.docKey != this.props.docKey) {
+	      getNodeList(1, nextProps.docKey, [], this.props.selectedStore.value, 1, this.handleNewData);
+	    }
+	  },
+	  render: function render() {
+	    var _this = this;
 	
-	        var pageButtons = [];
-	        var visiblePages = Math.ceil(this.state.page / this.state.pagesVisible);
-	        var styleDisplay = '';
+	    var pageButtons = [];
+	    var visiblePages = Math.ceil(this.state.page / this.state.pagesVisible);
+	    var styleDisplay = '';
 	
-	        var _loop = function _loop(i) {
-	            if (Math.ceil(i / _this.state.pagesVisible) === visiblePages) {
-	                styleDisplay = 'block';
-	            } else {
-	                styleDisplay = 'none';
+	    var _loop = function _loop(i) {
+	      if (Math.ceil(i / _this.state.pagesVisible) === visiblePages) {
+	        styleDisplay = 'block';
+	      } else {
+	        styleDisplay = 'none';
+	      }
+	
+	      pageButtons.push(_react2.default.createElement(
+	        'li',
+	        { key: i, className: i === _this.state.page ? 'active' : '', style: { display: styleDisplay } },
+	        _react2.default.createElement(
+	          'a',
+	          {
+	            href: '#unpaidBalancesTable',
+	            onClick: function onClick() {
+	              return _this.setPageNumber(i);
 	            }
+	          },
+	          i
+	        )
+	      ));
+	    };
 	
-	            pageButtons.push(_react2.default.createElement(
-	                'li',
-	                { key: i, className: i === _this.state.page ? 'active' : '', style: { display: styleDisplay } },
-	                _react2.default.createElement(
-	                    'a',
-	                    {
-	                        href: '#unpaidBalancesTable',
-	                        onClick: function onClick() {
-	                            return _this.setPageNumber(i);
-	                        }
-	                    },
-	                    i
-	                )
-	            ));
-	        };
+	    for (var i = 1; i <= this.state.pageCount; i += 1) {
+	      _loop(i);
+	    }
 	
-	        for (var i = 1; i <= this.state.pageCount; i += 1) {
-	            _loop(i);
-	        }
-	
-	        if (this.state.page == 1) {
-	            var rows = this.state.nodes.slice(0, this.state.numberPerPage).map(function (node) {
-	                return _react2.default.createElement(_catalogDisabledRow2.default, { node: node, key: node.key });
-	            }, this);
-	        } else {
-	            var rows = this.state.nodes.slice((this.state.page - 1) * this.state.numberPerPage, this.state.page * this.state.numberPerPage).map(function (node) {
-	                return _react2.default.createElement(_catalogDisabledRow2.default, { node: node, key: node.key });
-	            }, this);
-	        }
-	        return _react2.default.createElement(
-	            'div',
+	    if (this.state.page == 1) {
+	      var rows = this.state.nodes.slice(0, this.state.numberPerPage).map(function (node) {
+	        return _react2.default.createElement(_catalogDisabledRow2.default, { node: node, key: node.key });
+	      }, this);
+	    } else {
+	      var rows = this.state.nodes.slice((this.state.page - 1) * this.state.numberPerPage, this.state.page * this.state.numberPerPage).map(function (node) {
+	        return _react2.default.createElement(_catalogDisabledRow2.default, { node: node, key: node.key });
+	      }, this);
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'h3',
+	        { className: 'text-danger' },
+	        'Disabled Items'
+	      ),
+	      _react2.default.createElement(
+	        'table',
+	        { className: 'table table-striped', id: 'Disabled' },
+	        _react2.default.createElement(
+	          'tbody',
+	          null,
+	          _react2.default.createElement(
+	            'tr',
 	            null,
 	            _react2.default.createElement(
-	                'h3',
-	                { className: 'text-danger' },
-	                'Disabled Items'
-	            ),
-	            _react2.default.createElement(
-	                'table',
-	                { className: 'table table-striped', id: 'Disabled' },
-	                _react2.default.createElement(
-	                    'tbody',
-	                    null,
-	                    _react2.default.createElement(
-	                        'tr',
-	                        null,
-	                        _react2.default.createElement(
-	                            'td',
-	                            null,
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Node'
-	                            )
-	                        )
-	                    ),
-	                    rows,
-	                    this.state.noResultsMessage ? _react2.default.createElement(
-	                        'h4',
-	                        null,
-	                        'No Results'
-	                    ) : null
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
+	              'td',
+	              null,
+	              _react2.default.createElement(
+	                'b',
 	                null,
-	                _react2.default.createElement(
-	                    'ul',
-	                    { className: 'pagination', style: { width: '1000px', marginTop: '5px' } },
-	                    _react2.default.createElement(
-	                        'li',
-	                        { className: 'page-item' },
-	                        _react2.default.createElement(
-	                            'a',
-	                            { className: 'page-link', href: '#Disabled', onClick: function onClick() {
-	                                    if (_this.state.page > 1) {
-	                                        _this.setPageMinus();
-	                                    }
-	                                } },
-	                            '\xAB Back'
-	                        )
-	                    ),
-	                    pageButtons,
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '#statusTable', disabled: this.state.page === this.state.pageCount, onClick: function onClick() {
-	                                    if (_this.state.page < _this.state.pageCount) {
-	                                        _this.setPagePlus();
-	                                    }
-	                                } },
-	                            'Next \xBB'
-	                        )
-	                    )
-	                )
+	                'Node'
+	              )
 	            )
-	        );
-	    },
-	    setPageMinus: function setPageMinus() {
-	        this.setState({ page: this.state.page - 1 });
-	    },
-	    setPagePlus: function setPagePlus() {
-	        this.setState({ page: this.state.page + 1 });
-	    },
-	    setPageNumber: function setPageNumber(i) {
-	        this.setState({ page: i });
-	    },
-	    handleNewData: function handleNewData(data, docKey, nodeName) {
-	        var pc = Math.ceil(data.length / this.state.numberPerPage);
-	        this.setState({ pageCount: pc, page: 1, nodes: data });
-	        if (data.length == 0) {
-	            this.setState({ noResultsMessage: true });
-	        }
+	          ),
+	          rows,
+	          this.state.noResultsMessage ? _react2.default.createElement(
+	            'h4',
+	            null,
+	            'No Results'
+	          ) : null
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'pagination', style: { width: '1000px', marginTop: '5px' } },
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'page-item' },
+	            _react2.default.createElement(
+	              'a',
+	              { className: 'page-link', href: '#Disabled', onClick: function onClick() {
+	                  if (_this.state.page > 1) {
+	                    _this.setPageMinus();
+	                  }
+	                } },
+	              '\xAB Back'
+	            )
+	          ),
+	          pageButtons,
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            _react2.default.createElement(
+	              'a',
+	              { href: '#statusTable', disabled: this.state.page === this.state.pageCount, onClick: function onClick() {
+	                  if (_this.state.page < _this.state.pageCount) {
+	                    _this.setPagePlus();
+	                  }
+	                } },
+	              'Next \xBB'
+	            )
+	          )
+	        )
+	      )
+	    );
+	  },
+	  setPageMinus: function setPageMinus() {
+	    this.setState({ page: this.state.page - 1 });
+	  },
+	  setPagePlus: function setPagePlus() {
+	    this.setState({ page: this.state.page + 1 });
+	  },
+	  setPageNumber: function setPageNumber(i) {
+	    this.setState({ page: i });
+	  },
+	  handleNewData: function handleNewData(data, docKey, nodeName) {
+	    var pc = Math.ceil(data.length / this.state.numberPerPage);
+	    this.setState({ pageCount: pc, page: 1, nodes: data });
+	    if (data.length == 0) {
+	      this.setState({ noResultsMessage: true });
 	    }
+	  }
 	});
 	
 	exports.default = CatalogDisabled;
@@ -30892,7 +31036,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	        value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -30902,19 +31046,19 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var CatalogDisabledRow = _react2.default.createClass({
-	        displayName: 'CatalogDisabledRow',
+	  displayName: 'CatalogDisabledRow',
 	
-	        render: function render() {
-	                return _react2.default.createElement(
-	                        'tr',
-	                        null,
-	                        _react2.default.createElement(
-	                                'td',
-	                                null,
-	                                this.props.node.doc_key
-	                        )
-	                );
-	        }
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'tr',
+	      null,
+	      _react2.default.createElement(
+	        'td',
+	        null,
+	        this.props.node.doc_key
+	      )
+	    );
+	  }
 	});
 	
 	exports.default = CatalogDisabledRow;
@@ -30926,7 +31070,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -30945,37 +31089,42 @@
 	
 	var _vendorImport2 = _interopRequireDefault(_vendorImport);
 	
+	var _catalogTypeAssignment = __webpack_require__(328);
+	
+	var _catalogTypeAssignment2 = _interopRequireDefault(_catalogTypeAssignment);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ImportMain = _react2.default.createClass({
-	    displayName: 'ImportMain',
+	  displayName: 'ImportMain',
 	
-	    getInitialState: function getInitialState() {
-	        return {
-	            storeLookup: []
-	        };
-	    },
-	    componentDidMount: function componentDidMount() {
-	        GetStoreLookups(this.callbackStoreLookups);
-	    },
-	    componentWillMount: function componentWillMount() {
-	        if (localStorage.ImportVisibility != 'true') {
-	            localStorage.clear();
-	            window.location.href = "/login";
-	        }
-	    },
-	    render: function render() {
-	        return _react2.default.createElement(
-	            'div',
-	            { className: 'container' },
-	            _react2.default.createElement(_webstats2.default, { storeLookup: this.state.storeLookup }),
-	            _react2.default.createElement(_vendorImport2.default, null),
-	            _react2.default.createElement(_dataanalysis2.default, null)
-	        );
-	    },
-	    callbackStoreLookups: function callbackStoreLookups(data) {
-	        this.setState({ storeLookup: data });
+	  getInitialState: function getInitialState() {
+	    return {
+	      storeLookup: []
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    GetStoreLookups(this.callbackStoreLookups);
+	  },
+	  componentWillMount: function componentWillMount() {
+	    if (localStorage.ImportVisibility != 'true') {
+	      localStorage.clear();
+	      window.location.href = '/login';
 	    }
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'container' },
+	      _react2.default.createElement(_webstats2.default, { storeLookup: this.state.storeLookup }),
+	      _react2.default.createElement(_vendorImport2.default, null),
+	      _react2.default.createElement(_dataanalysis2.default, null),
+	      _react2.default.createElement(_catalogTypeAssignment2.default, { storeLookup: this.state.storeLookup })
+	    );
+	  },
+	  callbackStoreLookups: function callbackStoreLookups(data) {
+	    this.setState({ storeLookup: data });
+	  }
 	});
 	
 	exports.default = ImportMain;
@@ -30987,7 +31136,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -31009,283 +31158,286 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var WebSendComponent = _react2.default.createClass({
-	    displayName: 'WebSendComponent',
+	  displayName: 'WebSendComponent',
 	
-	    mixins: [_reactTimerMixin2.default],
-	    getInitialState: function getInitialState() {
-	        return {
-	            counter: 0,
-	            webSendInProgress: false,
-	            intervalId: 0,
-	            totalRecordsSendClick: 0,
-	            showPendingItems: false,
-	            selectedStore: '0',
-	            StatusData: {
-	                status_message: "",
-	                percent_complete: 0,
-	                catalog_records_remaining: 0,
-	                product_records_remaining: 0,
-	                last_checked: "",
-	                status_flag: true,
-	                send_flag: false,
-	                storeId: 0
-	            }
-	        };
-	    },
-	    componentDidMount: function componentDidMount() {
-	        var _this = this;
+	  mixins: [_reactTimerMixin2.default],
+	  getInitialState: function getInitialState() {
+	    return {
+	      counter: 0,
+	      webSendInProgress: false,
+	      intervalId: 0,
+	      totalRecordsSendClick: 0,
+	      showPendingItems: false,
+	      selectedStore: '0',
+	      StatusData: {
+	        status_message: '',
+	        percent_complete: 0,
+	        catalog_records_remaining: 0,
+	        product_records_remaining: 0,
+	        last_checked: '',
+	        status_flag: true,
+	        send_flag: false,
+	        storeId: 0
+	      }
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var _this = this;
 	
-	        GetCurrentImportStatus(this.getCurrentImportStatusCallback);
-	        var intId = this.setInterval(function () {
-	            if (_this.state.counter >= 15) {
-	                GetCurrentImportStatus(_this.getCurrentImportStatusCallback);
-	                _this.setState({
-	                    counter: 0
-	                });
-	            } else {
-	                _this.setState({
-	                    counter: _this.state.counter + 1
-	                });
-	            }
-	        }, 1000);
-	        this.setState({ intervalId: intId });
-	    },
-	    handleSendToWebClick: function handleSendToWebClick() {
-	        var statusData = this.state.StatusData;
-	        var totalRecords = this.state.StatusData.catalog_records_remaining + this.state.StatusData.product_records_remaining;
-	        if (this.state.selectedStore == '0') {
-	            statusData.status_message = "Select a store.";
-	            this.setState({ StatusData: statusData });
-	            return;
-	        }
-	        statusData.status_message = "Queueing data...";
-	        statusData.send_flag = true;
-	        this.setState({ totalRecordsSendClick: totalRecords, StatusData: statusData });
-	        UpdateWebSent(0, this.state.selectedStore, this.updateWebSentFlagCallback);
-	    },
-	    handleCancelClick: function handleCancelClick() {
-	        var statusData = this.state.StatusData;
-	        if (statusData.send_flag == false) {
-	            statusData.status_message = "Nothing to cancel!";
-	            this.setState({ StatusData: statusData });
-	            return;
-	        }
-	        statusData.status_message = "Cancelling send...";
-	        statusData.send_flag = false;
-	        this.setState({ totalRecordsSendClick: 0, StatusData: statusData });
-	        UpdateWebSent(1, this.state.selectedStore, this.updateWebSentFlagCallback);
-	    },
-	    updateSendToWebFlagCallback: function updateSendToWebFlagCallback(data) {
-	        if (data.Result.Result == 'Error') {
-	            UpdateWebSent(1, this.state.selectedStore, this.updateWebSentFlagCallback);
-	        }
-	    },
-	    updateWebSentFlagCallback: function updateWebSentFlagCallback(data, webSentFlag) {
-	        UpdateSendToWebFlag(webSentFlag, "Preparing to send...", this.state.selectedStore, this.updateSendToWebFlagCallback);
-	    },
-	    getCurrentImportStatusCallback: function getCurrentImportStatusCallback(data) {
-	        var statusData = this.state.StatusData;
-	        statusData.status_message = data.status_message;
-	        statusData.catalog_records_remaining = data.catalog_records_remaining;
-	        statusData.product_records_remaining = data.product_records_remaining;
-	        statusData.last_checked = data.last_checked;
-	        statusData.status_flag = data.status_flag;
-	        statusData.send_flag = data.send_flag;
-	        statusData.percent_complete = data.percent_complete;
-	        statusData.storeId = data.storeId;
-	        this.setState({ StatusData: statusData, selectedStore: data.storeId });
-	    },
-	    handleViewPendingClick: function handleViewPendingClick() {
-	        this.setState({ showPendingItems: true });
-	    },
-	    handleHidePendingModal: function handleHidePendingModal() {
-	        this.setState({ showPendingItems: false });
-	    },
-	    handleStoreSelectChange: function handleStoreSelectChange(event) {
-	        this.setState({ selectedStore: event.target.value });
-	    },
-	    createStoreItems: function createStoreItems() {
-	        var items = [];
-	        items.push(_react2.default.createElement('option', { value: '0' }));
-	        for (var i = 0; i < this.props.storeLookup.length; i++) {
-	            items.push(_react2.default.createElement(
-	                'option',
-	                { key: i, value: this.props.storeLookup[i].id },
-	                this.props.storeLookup[i].store_name
-	            ));
-	        }
-	        return items;
-	    },
-	    render: function render() {
-	
-	        var styleMargin25 = {
-	            marginTop: 50,
-	            borderRadius: '4px',
-	            backgroundColor: "grey"
-	        };
-	
-	        var countDown = 15 - this.state.counter;
-	
-	        return _react2.default.createElement(
-	            'div',
-	            { className: 'webSend-container' },
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'modal-header', style: { backgroundColor: 'rgb(51, 122, 183)', color: 'white' } },
-	                _react2.default.createElement(
-	                    'h4',
-	                    { className: 'modal-title' },
-	                    'Data Export'
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'table',
-	                { className: 'table table-striped' },
-	                _react2.default.createElement(
-	                    'tr',
-	                    null,
-	                    _react2.default.createElement(
-	                        'td',
-	                        null,
-	                        _react2.default.createElement('br', null)
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'tr',
-	                    null,
-	                    _react2.default.createElement(
-	                        'td',
-	                        null,
-	                        _react2.default.createElement(
-	                            'strong',
-	                            null,
-	                            'Pending Catalog Items'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'td',
-	                        null,
-	                        _react2.default.createElement(
-	                            'strong',
-	                            null,
-	                            'Pending Products'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'td',
-	                        null,
-	                        this.state.showPendingItems ? _react2.default.createElement(_pendingModal2.default, { handleHidePendingModal: this.handleHidePendingModal }) : null,
-	                        ' '
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'tr',
-	                    null,
-	                    _react2.default.createElement(
-	                        'td',
-	                        null,
-	                        this.state.StatusData.catalog_records_remaining
-	                    ),
-	                    _react2.default.createElement(
-	                        'td',
-	                        null,
-	                        this.state.StatusData.product_records_remaining
-	                    ),
-	                    _react2.default.createElement(
-	                        'td',
-	                        null,
-	                        _react2.default.createElement(
-	                            'button',
-	                            { className: 'btn btn-info', onClick: this.handleViewPendingClick },
-	                            'View Pending Items'
-	                        )
-	                    )
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'row' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-3' },
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        'Select a Store'
-	                    ),
-	                    _react2.default.createElement(
-	                        'select',
-	                        { className: 'form-control', value: this.state.selectedStore, style: { width: '300px' }, onChange: this.handleStoreSelectChange },
-	                        this.createStoreItems()
-	                    )
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'row' },
-	                '\xA0'
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'row' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-3' },
-	                    _react2.default.createElement(
-	                        'button',
-	                        { disabled: this.state.StatusData.send_flag || this.state.selectedStore == '', className: 'btn btn-success', onClick: this.handleSendToWebClick },
-	                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-arrow-up', 'aria-hidden': 'true' }),
-	                        ' Send to Titan'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-3' },
-	                    _react2.default.createElement(
-	                        'button',
-	                        { disabled: !this.state.StatusData.send_flag, type: 'button', className: 'btn btn-danger', onClick: this.handleCancelClick },
-	                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' }),
-	                        ' Cancel'
-	                    )
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'row' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-12' },
-	                    _react2.default.createElement(_progressbar2.default, { data: this.state.StatusData })
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'row' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-6' },
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        'Time til next update: ',
-	                        countDown,
-	                        ' seconds...'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-6' },
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        'Last Updated: ',
-	                        this.state.StatusData.last_checked,
-	                        ' '
-	                    )
-	                )
-	            )
-	        );
+	    GetCurrentImportStatus(this.getCurrentImportStatusCallback);
+	    var intId = this.setInterval(function () {
+	      if (_this.state.counter >= 15) {
+	        GetCurrentImportStatus(_this.getCurrentImportStatusCallback);
+	        _this.setState({
+	          counter: 0
+	        });
+	      } else {
+	        _this.setState({
+	          counter: _this.state.counter + 1
+	        });
+	      }
+	    }, 1000);
+	    this.setState({ intervalId: intId });
+	  },
+	  handleSendToWebClick: function handleSendToWebClick() {
+	    var statusData = this.state.StatusData;
+	    var totalRecords = this.state.StatusData.catalog_records_remaining + this.state.StatusData.product_records_remaining;
+	    if (this.state.selectedStore == '0') {
+	      statusData.status_message = 'Select a store.';
+	      this.setState({ StatusData: statusData });
+	      return;
 	    }
+	    statusData.status_message = 'Queueing data...';
+	    statusData.send_flag = true;
+	    this.setState({ totalRecordsSendClick: totalRecords, StatusData: statusData });
+	    UpdateWebSent(0, this.state.selectedStore, this.updateWebSentFlagCallback);
+	  },
+	  handleCancelClick: function handleCancelClick() {
+	    var statusData = this.state.StatusData;
+	    if (statusData.send_flag == false) {
+	      statusData.status_message = 'Nothing to cancel!';
+	      this.setState({ StatusData: statusData });
+	      return;
+	    }
+	    statusData.status_message = 'Cancelling send...';
+	    statusData.send_flag = false;
+	    this.setState({ totalRecordsSendClick: 0, StatusData: statusData });
+	    UpdateSendToWebFlag(false, 'Cancelled', this.state.selectedStore, this.updateSendToWebFlagCallback);
+	    UpdateWebSent(1, this.state.selectedStore, this.updateWebSentFlagCallback);
+	  },
+	  updateSendToWebFlagCallback: function updateSendToWebFlagCallback(data) {
+	    if (data.Result.Result == 'Error') {
+	      UpdateWebSent(1, this.state.selectedStore, this.updateWebSentFlagCallback);
+	    }
+	  },
+	  updateWebSentFlagCallback: function updateWebSentFlagCallback(data, webSentFlag) {
+	    console.log(webSentFlag);
+	    if (webSentFlag == 1) {} else {
+	      UpdateSendToWebFlag(true, 'Preparing to send...', this.state.selectedStore, this.updateSendToWebFlagCallback);
+	    }
+	  },
+	  getCurrentImportStatusCallback: function getCurrentImportStatusCallback(data) {
+	    var statusData = this.state.StatusData;
+	    statusData.status_message = data.status_message;
+	    statusData.catalog_records_remaining = data.catalog_records_remaining;
+	    statusData.product_records_remaining = data.product_records_remaining;
+	    statusData.last_checked = data.last_checked;
+	    statusData.status_flag = data.status_flag;
+	    statusData.send_flag = data.send_flag;
+	    statusData.percent_complete = data.percent_complete;
+	    statusData.storeId = data.storeId;
+	    this.setState({ StatusData: statusData, selectedStore: data.storeId });
+	  },
+	  handleViewPendingClick: function handleViewPendingClick() {
+	    this.setState({ showPendingItems: true });
+	  },
+	  handleHidePendingModal: function handleHidePendingModal() {
+	    this.setState({ showPendingItems: false });
+	  },
+	  handleStoreSelectChange: function handleStoreSelectChange(event) {
+	    this.setState({ selectedStore: event.target.value });
+	  },
+	  createStoreItems: function createStoreItems() {
+	    var items = [];
+	    items.push(_react2.default.createElement('option', { value: '0' }));
+	    for (var i = 0; i < this.props.storeLookup.length; i++) {
+	      items.push(_react2.default.createElement(
+	        'option',
+	        { key: i, value: this.props.storeLookup[i].id },
+	        this.props.storeLookup[i].store_name
+	      ));
+	    }
+	    return items;
+	  },
+	  render: function render() {
+	    var styleMargin25 = {
+	      marginTop: 50,
+	      borderRadius: '4px',
+	      backgroundColor: 'grey'
+	    };
+	
+	    var countDown = 15 - this.state.counter;
+	
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'webSend-container' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'modal-header', style: { backgroundColor: 'rgb(51, 122, 183)', color: 'white' } },
+	        _react2.default.createElement(
+	          'h4',
+	          { className: 'modal-title' },
+	          'Data Export'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'table',
+	        { className: 'table table-striped' },
+	        _react2.default.createElement(
+	          'tr',
+	          null,
+	          _react2.default.createElement(
+	            'td',
+	            null,
+	            _react2.default.createElement('br', null)
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'tr',
+	          null,
+	          _react2.default.createElement(
+	            'td',
+	            null,
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'Pending Catalog Items'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'td',
+	            null,
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'Pending Products'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'td',
+	            null,
+	            this.state.showPendingItems ? _react2.default.createElement(_pendingModal2.default, { handleHidePendingModal: this.handleHidePendingModal }) : null,
+	            ' '
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'tr',
+	          null,
+	          _react2.default.createElement(
+	            'td',
+	            null,
+	            this.state.StatusData.catalog_records_remaining
+	          ),
+	          _react2.default.createElement(
+	            'td',
+	            null,
+	            this.state.StatusData.product_records_remaining
+	          ),
+	          _react2.default.createElement(
+	            'td',
+	            null,
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn btn-info', onClick: this.handleViewPendingClick },
+	              'View Pending Items'
+	            )
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-3' },
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            'Select a Store'
+	          ),
+	          _react2.default.createElement(
+	            'select',
+	            { className: 'form-control', value: this.state.selectedStore, style: { width: '300px' }, onChange: this.handleStoreSelectChange },
+	            this.createStoreItems()
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        '\xA0'
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-3' },
+	          _react2.default.createElement(
+	            'button',
+	            { disabled: this.state.StatusData.send_flag || this.state.selectedStore == '', className: 'btn btn-success', onClick: this.handleSendToWebClick },
+	            _react2.default.createElement('span', { className: 'glyphicon glyphicon-arrow-up', 'aria-hidden': 'true' }),
+	            ' Send to Titan'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-3' },
+	          _react2.default.createElement(
+	            'button',
+	            { disabled: !this.state.StatusData.send_flag, type: 'button', className: 'btn btn-danger', onClick: this.handleCancelClick },
+	            _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' }),
+	            ' Cancel'
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-12' },
+	          _react2.default.createElement(_progressbar2.default, { data: this.state.StatusData })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-6' },
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            'Time til next update: ',
+	            countDown,
+	            ' seconds...'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-6' },
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            'Last Updated: ',
+	            this.state.StatusData.last_checked,
+	            ' '
+	          )
+	        )
+	      )
+	    );
+	  }
 	});
 	
 	exports.default = WebSendComponent;
@@ -31297,7 +31449,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -31307,38 +31459,37 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ProgressBar = _react2.default.createClass({
-	    displayName: 'ProgressBar',
+	  displayName: 'ProgressBar',
 	
-	    render: function render() {
+	  render: function render() {
+	    var styleWidth = {
+	      width: this.props.data.percent_complete + '%'
+	    };
 	
-	        var styleWidth = {
-	            width: this.props.data.percent_complete + '%'
-	        };
-	
-	        return _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(
-	                'h4',
-	                null,
-	                this.props.data.status_message
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'progress' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'progress-bar', role: 'progressbar', 'aria-valuenow': this.props.data.percent_complete, 'aria-valuemin': '0', 'aria-valuemax': '100', style: styleWidth },
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: 'sr-only' },
-	                        this.props.data.percent_complete,
-	                        '% Complete'
-	                    )
-	                )
-	            )
-	        );
-	    }
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'h4',
+	        null,
+	        this.props.data.status_message
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'progress' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'progress-bar', role: 'progressbar', 'aria-valuenow': this.props.data.percent_complete, 'aria-valuemin': '0', 'aria-valuemax': '100', style: styleWidth },
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'sr-only' },
+	            this.props.data.percent_complete,
+	            '% Complete'
+	          )
+	        )
+	      )
+	    );
+	  }
 	});
 	
 	exports.default = ProgressBar;
@@ -31469,7 +31620,6 @@
 	  },
 	
 	  render: function render() {
-	
 	    return _react2.default.createElement(
 	      'div',
 	      { id: 'PendingItemsModal', className: 'modal fade' },
@@ -38460,8 +38610,7 @@
 	        catalog_invalidChars: 0,
 	        product_invalidChars: 0,
 	        product_shortSkus: 0,
-	        product_invalidSkus: 0,
-	        product_invalidSkusWStoreIDAssociation: 0
+	        product_invalidSkus: 0
 	      }
 	    };
 	  },
@@ -38563,7 +38712,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'col-xs-6' },
-	          'Invalid Product Skus:'
+	          'Invalid Products:'
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -38575,30 +38724,7 @@
 	          { className: 'col-xs-2' },
 	          _react2.default.createElement(
 	            'button',
-	            { type: 'button', onClick: this.handleViewDetailsClick.bind(this, 'product_invalidSkus', 'Invalid Product Skus'), className: 'btn btn-info btn-sm' },
-	            'Details'
-	          )
-	        )
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'row', style: { marginBottom: '10px' } },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'col-xs-6' },
-	          'Invalid Product Skus W/Store Association:'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'col-xs-2' },
-	          this.state.AnalysisData.product_invalidSkusWStoreIDAssociation
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'col-xs-2' },
-	          _react2.default.createElement(
-	            'button',
-	            { type: 'button', onClick: this.handleViewDetailsClick.bind(this, 'product_invalidSkusWStoreIDAssociation', 'Invalid Skus W/Store Assocation'), className: 'btn btn-info btn-sm' },
+	            { type: 'button', onClick: this.handleViewDetailsClick.bind(this, 'product_invalidSkus', 'Invalid Products'), className: 'btn btn-info btn-sm' },
 	            'Details'
 	          )
 	        )
@@ -38611,7 +38737,6 @@
 	    ad.product_invalidChars = data.product_invalidChars;
 	    ad.product_shortSkus = data.product_shortSkus;
 	    ad.product_invalidSkus = data.product_invalidSkus;
-	    ad.product_invalidSkusWStoreIDAssociation = data.product_invalidSkusWStoreIDAssociation;
 	
 	    this.setState({ AnalysisData: ad });
 	  }
@@ -38692,7 +38817,7 @@
 	                'div',
 	                { className: 'col-sm-12' },
 	                _react2.default.createElement(_feedback2.default, { Result: this.state.feedbackResult, Message: this.state.feedbackMessage, visible: this.state.showFeedback, delay: 2000, resetFeedbackState: this.resetFeedbackState }),
-	                this.props.detailType == 'product_shortSkus' || this.props.detailType == 'product_invalidSkus' || this.props.detailType == 'product_invalidSkusWStoreIDAssociation' ? _react2.default.createElement(_productdetail2.default, { type: this.props.detailType, showFeedBack: this.showFeedBack }) : null,
+	                this.props.detailType == 'product_shortSkus' || this.props.detailType == 'product_invalidSkus' ? _react2.default.createElement(_productdetail2.default, { type: this.props.detailType, showFeedBack: this.showFeedBack }) : null,
 	                this.props.detailType == 'catalog_invalidChars' || this.props.detailType == 'product_invalidChars' ? _react2.default.createElement(_entitydetail2.default, { type: this.props.detailType, showFeedBack: this.showFeedBack }) : null
 	              )
 	            )
@@ -38822,6 +38947,11 @@
 	            'th',
 	            null,
 	            'Name'
+	          ),
+	          _react2.default.createElement(
+	            'th',
+	            null,
+	            'Store'
 	          )
 	        ),
 	        rows
@@ -38890,10 +39020,10 @@
 /* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -38903,112 +39033,121 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ProductDetailRow = _react2.default.createClass({
-	    displayName: "ProductDetailRow",
+	  displayName: 'ProductDetailRow',
 	
-	    getInitialState: function getInitialState() {
-	        return {
-	            isEditMode: false,
-	            sku: this.props.detail.sku,
-	            name: this.props.detail.name,
-	            docKey: this.props.detail.doc_key
-	        };
-	    },
-	    render: function render() {
-	
-	        if (this.state.isEditMode) {
-	            return _react2.default.createElement(
-	                "tr",
-	                null,
-	                _react2.default.createElement(
-	                    "td",
-	                    null,
-	                    _react2.default.createElement("input", { type: "text", className: "form-control", id: "txtDocKey", value: this.state.docKey, disabled: true })
-	                ),
-	                _react2.default.createElement(
-	                    "td",
-	                    null,
-	                    _react2.default.createElement("input", { type: "text", className: "form-control", id: "txtSku", value: this.state.sku, onChange: this.handleChange.bind(this, 'sku'), onChange: this.handleInputChange })
-	                ),
-	                _react2.default.createElement(
-	                    "td",
-	                    null,
-	                    _react2.default.createElement("input", { type: "text", className: "form-control", id: "txtName", value: this.state.name, onChange: this.handleChange.bind(this, 'name') })
-	                ),
-	                _react2.default.createElement(
-	                    "td",
-	                    null,
-	                    _react2.default.createElement(
-	                        "button",
-	                        { onClick: this.handleSaveClick, className: "btn btn-sm btn-default" },
-	                        _react2.default.createElement("i", { className: "glyphicon glyphicon-floppy-disk" })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    "td",
-	                    null,
-	                    _react2.default.createElement(
-	                        "button",
-	                        { onClick: this.handleCancelClick, className: "btn btn-sm btn-default" },
-	                        _react2.default.createElement("i", { className: "glyphicon glyphicon-remove" })
-	                    )
-	                )
-	            );
-	        } else {
-	            return _react2.default.createElement(
-	                "tr",
-	                null,
-	                _react2.default.createElement(
-	                    "td",
-	                    null,
-	                    this.props.detail.doc_key
-	                ),
-	                _react2.default.createElement(
-	                    "td",
-	                    null,
-	                    this.props.detail.sku
-	                ),
-	                _react2.default.createElement(
-	                    "td",
-	                    null,
-	                    this.props.detail.name
-	                ),
-	                _react2.default.createElement(
-	                    "td",
-	                    null,
-	                    _react2.default.createElement(
-	                        "button",
-	                        { onClick: this.handleEditClick, className: "btn btn-sm btn-default" },
-	                        _react2.default.createElement("i", { className: "glyphicon glyphicon-pencil" }),
-	                        " Edit"
-	                    )
-	                ),
-	                _react2.default.createElement("td", null)
-	            );
-	        }
-	    },
-	    handleEditClick: function handleEditClick() {
-	        this.setState({ isEditMode: true });
-	    },
-	    handleSaveClick: function handleSaveClick() {
-	        SaveProdEnt(this.props.detail.doc_key, this.state.docKey, this.state.sku, this.state.name, this.saveCallBack);
-	        this.setState({ isEditMode: false });
-	    },
-	    handleCancelClick: function handleCancelClick() {
-	        this.setState({ isEditMode: false });
-	    },
-	    handleInputChange: function handleInputChange(event) {
-	        this.setState({ sku: event.target.value });
-	        this.setState({ docKey: this.props.detail.doc_key.substr(0, this.props.detail.doc_key.lastIndexOf('/') + 1) + formatNameKey(event.target.value) });
-	    },
-	    saveCallBack: function saveCallBack(data) {
-	        this.props.showFeedBack(data);
-	        this.props.reloadData();
-	    },
-	    handleChange: function handleChange(name, e) {
-	        var change = {};
-	        change[name] = e.target.value;
-	        this.setState(change);
+	  getInitialState: function getInitialState() {
+	    return {
+	      isEditMode: false,
+	      sku: this.props.detail.sku,
+	      name: this.props.detail.name,
+	      docKey: this.props.detail.doc_key
+	    };
+	  },
+	  render: function render() {
+	    if (this.state.isEditMode) {
+	      return _react2.default.createElement(
+	        'tr',
+	        null,
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'txtDocKey', value: this.state.docKey, disabled: true })
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'txtSku', value: this.state.sku, onChange: this.handleChange.bind(this, 'sku'), onChange: this.handleInputChange })
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'txtName', value: this.state.name, onChange: this.handleChange.bind(this, 'name') })
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          this.props.detail.store_name
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleSaveClick, className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-floppy-disk' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleCancelClick, className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-remove' })
+	          )
+	        )
+	      );
+	    } else {
+	      return _react2.default.createElement(
+	        'tr',
+	        null,
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          this.props.detail.doc_key
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          this.props.detail.sku
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          this.props.detail.name
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          this.props.detail.store_name
+	        ),
+	        _react2.default.createElement('td', null),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleEditClick, className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-pencil' }),
+	            ' Edit'
+	          )
+	        )
+	      );
 	    }
+	  },
+	  handleEditClick: function handleEditClick() {
+	    this.setState({ isEditMode: true });
+	  },
+	  handleSaveClick: function handleSaveClick() {
+	    SaveProdEnt(this.props.detail.doc_key, this.state.docKey, this.state.sku, this.state.name, this.saveCallBack);
+	    this.setState({ isEditMode: false });
+	  },
+	  handleCancelClick: function handleCancelClick() {
+	    this.setState({ isEditMode: false });
+	  },
+	  handleInputChange: function handleInputChange(event) {
+	    this.setState({ sku: event.target.value });
+	    this.setState({ docKey: this.props.detail.doc_key.substr(0, this.props.detail.doc_key.lastIndexOf('/') + 1) + formatNameKey(event.target.value) });
+	  },
+	  saveCallBack: function saveCallBack(data) {
+	    this.props.showFeedBack(data);
+	    this.props.reloadData();
+	  },
+	  handleChange: function handleChange(name, e) {
+	    var change = {};
+	    change[name] = e.target.value;
+	    this.setState(change);
+	  }
 	});
 	
 	exports.default = ProductDetailRow;
@@ -39173,10 +39312,10 @@
 /* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -39186,86 +39325,85 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var EntityDetailRow = _react2.default.createClass({
-	    displayName: "EntityDetailRow",
+	  displayName: 'EntityDetailRow',
 	
-	    getInitialState: function getInitialState() {
-	        return {
-	            isEditMode: false,
-	            name: this.props.detail.name
-	        };
-	    },
-	    render: function render() {
-	
-	        if (this.state.isEditMode) {
-	            return _react2.default.createElement(
-	                "tr",
-	                null,
-	                _react2.default.createElement(
-	                    "td",
-	                    null,
-	                    _react2.default.createElement("input", { type: "text", className: "form-control", id: "txtName", value: this.state.name, onChange: this.handleChange.bind(this, 'name') })
-	                ),
-	                _react2.default.createElement(
-	                    "td",
-	                    null,
-	                    _react2.default.createElement(
-	                        "button",
-	                        { onClick: this.handleSaveClick.bind(this, this.props.detail, this.state.name), className: "btn btn-sm btn-default" },
-	                        _react2.default.createElement("i", { className: "glyphicon glyphicon-floppy-disk" })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    "td",
-	                    null,
-	                    _react2.default.createElement(
-	                        "button",
-	                        { onClick: this.handleCancelClick, className: "btn btn-sm btn-default" },
-	                        _react2.default.createElement("i", { className: "glyphicon glyphicon-remove" })
-	                    )
-	                )
-	            );
-	        } else {
-	            return _react2.default.createElement(
-	                "tr",
-	                null,
-	                _react2.default.createElement(
-	                    "td",
-	                    null,
-	                    this.props.detail.name
-	                ),
-	                _react2.default.createElement(
-	                    "td",
-	                    null,
-	                    _react2.default.createElement(
-	                        "button",
-	                        { onClick: this.handleEditClick, className: "btn btn-sm btn-default" },
-	                        _react2.default.createElement("i", { className: "glyphicon glyphicon-pencil" }),
-	                        " Edit"
-	                    )
-	                ),
-	                _react2.default.createElement("td", null)
-	            );
-	        }
-	    },
-	    handleEditClick: function handleEditClick() {
-	        this.setState({ isEditMode: true });
-	    },
-	    handleSaveClick: function handleSaveClick(detail, name) {
-	        SaveCatEntity(this.props.type, detail.id, name, this.saveCallBack);
-	        this.setState({ isEditMode: false });
-	    },
-	    handleCancelClick: function handleCancelClick() {
-	        this.setState({ isEditMode: false });
-	    },
-	    saveCallBack: function saveCallBack(data, node, nodeLevel) {
-	        this.props.showFeedBack(data);
-	        this.props.reloadData();
-	    },
-	    handleChange: function handleChange(name, e) {
-	        var change = {};
-	        change[name] = e.target.value;
-	        this.setState(change);
+	  getInitialState: function getInitialState() {
+	    return {
+	      isEditMode: false,
+	      name: this.props.detail.name
+	    };
+	  },
+	  render: function render() {
+	    if (this.state.isEditMode) {
+	      return _react2.default.createElement(
+	        'tr',
+	        null,
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'txtName', value: this.state.name, onChange: this.handleChange.bind(this, 'name') })
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleSaveClick.bind(this, this.props.detail, this.state.name), className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-floppy-disk' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleCancelClick, className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-remove' })
+	          )
+	        )
+	      );
+	    } else {
+	      return _react2.default.createElement(
+	        'tr',
+	        null,
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          this.props.detail.name
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleEditClick, className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-pencil' }),
+	            ' Edit'
+	          )
+	        ),
+	        _react2.default.createElement('td', null)
+	      );
 	    }
+	  },
+	  handleEditClick: function handleEditClick() {
+	    this.setState({ isEditMode: true });
+	  },
+	  handleSaveClick: function handleSaveClick(detail, name) {
+	    SaveCatEntity(this.props.type, detail.id, name, this.saveCallBack);
+	    this.setState({ isEditMode: false });
+	  },
+	  handleCancelClick: function handleCancelClick() {
+	    this.setState({ isEditMode: false });
+	  },
+	  saveCallBack: function saveCallBack(data, node, nodeLevel) {
+	    this.props.showFeedBack(data);
+	    this.props.reloadData();
+	  },
+	  handleChange: function handleChange(name, e) {
+	    var change = {};
+	    change[name] = e.target.value;
+	    this.setState(change);
+	  }
 	});
 	
 	exports.default = EntityDetailRow;
@@ -39308,9 +39446,9 @@
 	      selectedVendor: '',
 	      vendorList: [],
 	      status: {
-	        status_message: "",
+	        status_message: '',
 	        percent_complete: 0,
-	        last_checked: "",
+	        last_checked: '',
 	        importing: false
 	      }
 	    };
@@ -39340,26 +39478,26 @@
 	  handleImportClick: function handleImportClick() {
 	    var statusData = this.state.status;
 	    if (this.state.selectedVendor == '') {
-	      statusData.status_message = "Select a vendor";
+	      statusData.status_message = 'Select a vendor';
 	      this.setState({ status: statusData });
 	      return;
 	    }
-	    statusData.status_message = "Starting Import...";
+	    statusData.status_message = 'Starting Import...';
 	    statusData.importing = true;
 	    this.setState({ status: statusData });
-	    UpdateImportFlag(this.state.selectedVendor, true, "Starting Import...", this.importCallback);
+	    UpdateImportFlag(this.state.selectedVendor, true, 'Starting Import...', this.importCallback);
 	  },
 	  handleCancelClick: function handleCancelClick() {
 	    var statusData = this.state.status;
 	    if (statusData.importing == false) {
-	      statusData.status_message = "Nothing to cancel!";
+	      statusData.status_message = 'Nothing to cancel!';
 	      this.setState({ status: statusData });
 	      return;
 	    }
-	    statusData.status_message = "Cancelling send...";
+	    statusData.status_message = 'Cancelling send...';
 	    statusData.importing = false;
 	    this.setState({ status: statusData });
-	    UpdateImportFlag(this.state.selectedVendor, false, "Send Cancelled", this.importCallback);
+	    UpdateImportFlag(this.state.selectedVendor, false, 'Send Cancelled', this.importCallback);
 	  },
 	  importCallback: function importCallback(data) {},
 	  getStatusCallback: function getStatusCallback(data) {
@@ -39386,11 +39524,10 @@
 	    return items;
 	  },
 	  render: function render() {
-	
 	    var styleMargin25 = {
 	      marginTop: 50,
 	      borderRadius: '4px',
-	      backgroundColor: "grey"
+	      backgroundColor: 'grey'
 	    };
 	
 	    var countDown = 30 - this.state.counter;
@@ -39501,7 +39638,216 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _feedback = __webpack_require__(241);
+	
+	var _feedback2 = _interopRequireDefault(_feedback);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var CatalogTypeAssignment = _react2.default.createClass({
+	  displayName: 'CatalogTypeAssignment',
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      nodeLevel: 2,
+	      selectedVendor: '',
+	      vendorList: [],
+	      storeLookup: [],
+	      selectedStore: '',
+	      selectedCatalogType: '',
+	      catalogTypes: [],
+	      feedbackResult: '',
+	      feedbackMessage: '',
+	      showFeedback: false
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    GetVendorList(this.vendorListCallback);
+	    GetCatalogNodeTypes(this.callbackCatalogNodeTypes);
+	    // GetDataAnalysisStats(this.statsCallback);
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'webSend-container' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'modal-header', style: { backgroundColor: 'rgb(51, 122, 183)', color: 'white' } },
+	        _react2.default.createElement(
+	          'h4',
+	          { className: 'modal-title' },
+	          'Catalog Type Assignment'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-12' },
+	          _react2.default.createElement(_feedback2.default, { Result: this.state.feedbackResult, Message: this.state.feedbackMessage, visible: this.state.showFeedback, delay: 2000, resetFeedbackState: this.resetFeedbackState })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-3' },
+	          'Select a Type to apply:             ',
+	          _react2.default.createElement(
+	            'select',
+	            { className: 'form-control', value: this.state.selectedCatalogType, style: { width: '150px' }, onChange: this.handleCatalogTypeChange },
+	            this.createCatalogTypeItems()
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-3' },
+	          '\xA0'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-3' },
+	          'Node Level: ',
+	          _react2.default.createElement('input', { type: 'number', className: 'form-control', min: '2', value: this.state.nodeLevel, onChange: this.handleNodeLevelChange, style: { width: '50px' } })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-6' },
+	          'Vendor:',
+	          _react2.default.createElement(
+	            'select',
+	            { className: 'form-control', value: this.state.selectedVendor, style: { width: '300px' }, onChange: this.handleVendorChange },
+	            this.createVendorItems()
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-3' },
+	          'Store:',
+	          _react2.default.createElement(
+	            'select',
+	            { className: 'form-control', value: this.state.selectedStore, style: { width: '100px' }, onChange: this.handleStoreSelectChange },
+	            this.createStoreItems()
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-3' },
+	          '\xA0'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-3' },
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-success', onClick: this.handleApplyRuleClick },
+	            _react2.default.createElement('span', { className: 'glyphicon glyphicon-arrow-up' }),
+	            ' Apply Rule'
+	          )
+	        )
+	      )
+	    );
+	  },
+	  handleNodeLevelChange: function handleNodeLevelChange(event) {
+	    this.setState({ nodeLevel: event.target.value });
+	  },
+	  handleVendorChange: function handleVendorChange(event) {
+	    this.setState({ selectedVendor: event.target.value });
+	  },
+	  handleApplyRuleClick: function handleApplyRuleClick() {
+	    AddCatalogTypeRule(this.state.selectedCatalogType, this.state.nodeLevel, this.state.selectedVendor, this.state.selectedStore, this.addCatalogTypeRuleCallback);
+	  },
+	  addCatalogTypeRuleCallback: function addCatalogTypeRuleCallback(data) {
+	    this.setState({ showFeedback: true, feedbackResult: data.Result, feedbackMessage: data.Message });
+	  },
+	  createVendorItems: function createVendorItems() {
+	    var items = [];
+	    items.push(_react2.default.createElement('option', { value: '' }));
+	    for (var i = 0; i < this.state.vendorList.length; i++) {
+	      items.push(_react2.default.createElement(
+	        'option',
+	        { key: i, value: this.state.vendorList[i].id },
+	        this.state.vendorList[i].vendor_name
+	      ));
+	    }
+	    return items;
+	  },
+	  vendorListCallback: function vendorListCallback(data) {
+	    this.setState({ vendorList: data });
+	  },
+	  handleStoreSelectChange: function handleStoreSelectChange(event) {
+	    this.setState({ selectedStore: event.target.value });
+	  },
+	  createStoreItems: function createStoreItems() {
+	    var items = [];
+	    items.push(_react2.default.createElement('option', { value: '0' }));
+	    for (var i = 0; i < this.props.storeLookup.length; i++) {
+	      items.push(_react2.default.createElement(
+	        'option',
+	        { key: i, value: this.props.storeLookup[i].id },
+	        this.props.storeLookup[i].store_name
+	      ));
+	    }
+	    return items;
+	  },
+	  handleCatalogTypeChange: function handleCatalogTypeChange(event) {
+	    this.setState({ selectedCatalogType: event.target.value });
+	  },
+	  createCatalogTypeItems: function createCatalogTypeItems() {
+	    var items = [];
+	    items.push(_react2.default.createElement('option', { value: '' }));
+	    for (var i = 0; i < this.state.catalogTypes.length; i++) {
+	      items.push(_react2.default.createElement(
+	        'option',
+	        { key: i, value: this.state.catalogTypes[i].id },
+	        this.state.catalogTypes[i].name
+	      ));
+	    }
+	    return items;
+	  },
+	  callbackCatalogNodeTypes: function callbackCatalogNodeTypes(data) {
+	    this.setState({ catalogTypes: data });
+	  },
+	  resetFeedbackState: function resetFeedbackState() {
+	    this.setState({ showFeedback: false });
+	  }
+	});
+	
+	exports.default = CatalogTypeAssignment;
+
+/***/ },
+/* 329 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -39512,293 +39858,295 @@
 	
 	var _reactRouter = __webpack_require__(171);
 	
-	var _auth = __webpack_require__(329);
+	var _auth = __webpack_require__(330);
 	
 	var _auth2 = _interopRequireDefault(_auth);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var LoginControl = (0, _reactRouter.withRouter)(_react2.default.createClass({
-	    displayName: 'LoginControl',
-	    getInitialState: function getInitialState() {
-	        return {
-	            error: false
-	        };
-	    },
-	    handleSubmit: function handleSubmit(event) {
-	        var _this = this;
+	  displayName: 'LoginControl',
+	  getInitialState: function getInitialState() {
+	    return {
+	      error: false
+	    };
+	  },
+	  handleSubmit: function handleSubmit(event) {
+	    var _this = this;
 	
-	        event.preventDefault();
+	    event.preventDefault();
 	
-	        var email = this.refs.email.value;
-	        var pass = this.refs.pass.value;
+	    var email = this.refs.email.value;
+	    var pass = this.refs.pass.value;
 	
-	        _auth2.default.login(email, pass, function (loggedIn) {
-	            if (!loggedIn) return _this.setState({ error: true });
+	    _auth2.default.login(email, pass, function (loggedIn) {
+	      if (!loggedIn) {
+	        return _this.setState({ error: true });
+	      }
 	
-	            var location = _this.props.location;
+	      var location = _this.props.location;
 	
 	
-	            if (location.state && location.state.nextPathname) {
-	                _this.props.router.replace(location.state.nextPathname);
-	            } else {
-	                _this.props.router.replace('/');
-	            }
-	        });
-	    },
-	    render: function render() {
-	        return _react2.default.createElement(
+	      if (location.state && location.state.nextPathname) {
+	        _this.props.router.replace(location.state.nextPathname);
+	      } else {
+	        _this.props.router.replace('/');
+	      }
+	    });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'loginmodal-container' },
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'ODN Product Management Login'
+	        ),
+	        _react2.default.createElement(
+	          'form',
+	          { onSubmit: this.handleSubmit },
+	          _react2.default.createElement('input', { type: 'text', ref: 'email', placeholder: 'email' }),
+	          _react2.default.createElement('input', { type: 'password', ref: 'pass', placeholder: 'password' }),
+	          _react2.default.createElement('input', { type: 'submit', name: 'login', className: 'login loginmodal-submit', value: 'Login' })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'login-help' },
+	          _react2.default.createElement(
 	            'div',
 	            null,
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'loginmodal-container' },
-	                _react2.default.createElement(
-	                    'h1',
-	                    null,
-	                    'ODN Product Management Login'
-	                ),
-	                _react2.default.createElement(
-	                    'form',
-	                    { onSubmit: this.handleSubmit },
-	                    _react2.default.createElement('input', { type: 'text', ref: 'email', placeholder: 'email' }),
-	                    _react2.default.createElement('input', { type: 'password', ref: 'pass', placeholder: 'password' }),
-	                    _react2.default.createElement('input', { type: 'submit', name: 'login', className: 'login loginmodal-submit', value: 'Login' })
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'login-help' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        null,
-	                        this.props.message
-	                    ),
-	                    this.state.error && _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        'Bad login information'
-	                    )
-	                )
-	            )
-	        );
-	    }
+	            this.props.message
+	          ),
+	          this.state.error && _react2.default.createElement(
+	            'p',
+	            null,
+	            'Bad login information'
+	          )
+	        )
+	      )
+	    );
+	  }
 	}));
 	
 	exports.default = LoginControl;
 
 /***/ },
-/* 329 */
+/* 330 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 	
 	module.exports = {
-	    login: function login(email, pass, cb) {
-	        var _this = this;
+	  login: function login(email, pass, cb) {
+	    var _this = this;
 	
-	        cb = arguments[arguments.length - 1];
-	        if (localStorage.token) {
-	            if (cb) cb(true);
-	            this.onChange(true);
-	            return;
-	        }
+	    cb = arguments[arguments.length - 1];
+	    if (localStorage.token) {
+	      if (cb) cb(true);
+	      this.onChange(true);
+	      return;
+	    }
 	
-	        loginRequest(email, pass, function (res) {
-	            if (res.authenticated) {
-	                localStorage.token = res.token;
-	                localStorage.username = res.username;
-	                if (typeof res.permissions.find(_this.findImportVisibility) !== 'undefined') {
-	                    localStorage.ImportVisibility = "true";
-	                } else {
-	                    localStorage.ImportVisibility = "false";
-	                }
-	
-	                if (typeof res.permissions.find(_this.findCatalogVisibility) !== 'undefined') {
-	                    localStorage.CatalogVisibility = "true";
-	                } else {
-	                    localStorage.CatalogVisibility = "false";
-	                }
-	
-	                if (typeof res.permissions.find(_this.findProductVisibility) !== 'undefined') {
-	                    localStorage.ProductVisibility = "true";
-	                } else {
-	                    localStorage.ProductVisibility = "false";
-	                }
-	
-	                if (typeof res.permissions.find(_this.findStoreEditing) !== 'undefined') {
-	                    localStorage.StoreEditing = "true";
-	                } else {
-	                    localStorage.StoreEditing = "false";
-	                }
-	
-	                if (typeof res.permissions.find(_this.findCatalogEditing) !== 'undefined') {
-	                    localStorage.CatalogEditing = "true";
-	                } else {
-	                    localStorage.CatalogEditing = "false";
-	                }
-	
-	                if (typeof res.permissions.find(_this.findProductEditing) !== 'undefined') {
-	                    localStorage.ProductEditing = "true";
-	                } else {
-	                    localStorage.ProductEditing = "false";
-	                }
-	
-	                if (typeof res.permissions.find(_this.findUserAdmin) !== 'undefined') {
-	                    localStorage.UserAdmin = "true";
-	                } else {
-	                    localStorage.UserAdmin = "false";
-	                }
-	
-	                if (typeof res.permissions.find(_this.findDisable) !== 'undefined') {
-	                    localStorage.Disable = "true";
-	                } else {
-	                    localStorage.Disable = "false";
-	                }
-	
-	                if (typeof res.permissions.find(_this.findLock) !== 'undefined') {
-	                    localStorage.Lock = "true";
-	                } else {
-	                    localStorage.Lock = "false";
-	                }
-	
-	                if (cb) cb(true);
-	                _this.onChange(true);
-	            } else {
-	                if (cb) cb(false);
-	                _this.onChange(false);
-	            }
-	        });
-	    },
-	    findImportVisibility: function findImportVisibility(obj) {
-	        if (obj.permission_id === 1) {
-	            return true;
+	    loginRequest(email, pass, function (res) {
+	      if (res.authenticated) {
+	        localStorage.token = res.token;
+	        localStorage.username = res.username;
+	        if (typeof res.permissions.find(_this.findImportVisibility) !== 'undefined') {
+	          localStorage.ImportVisibility = 'true';
 	        } else {
-	            return false;
+	          localStorage.ImportVisibility = 'false';
 	        }
-	    },
-	    findCatalogVisibility: function findCatalogVisibility(obj) {
-	        if (obj.permission_id === 2) {
-	            return true;
+	
+	        if (typeof res.permissions.find(_this.findCatalogVisibility) !== 'undefined') {
+	          localStorage.CatalogVisibility = 'true';
 	        } else {
-	            return false;
+	          localStorage.CatalogVisibility = 'false';
 	        }
-	    },
-	    findProductVisibility: function findProductVisibility(obj) {
-	        if (obj.permission_id === 3) {
-	            return true;
+	
+	        if (typeof res.permissions.find(_this.findProductVisibility) !== 'undefined') {
+	          localStorage.ProductVisibility = 'true';
 	        } else {
-	            return false;
+	          localStorage.ProductVisibility = 'false';
 	        }
-	    },
-	    findStoreEditing: function findStoreEditing(obj) {
-	        if (obj.permission_id === 4) {
-	            return true;
+	
+	        if (typeof res.permissions.find(_this.findStoreEditing) !== 'undefined') {
+	          localStorage.StoreEditing = 'true';
 	        } else {
-	            return false;
+	          localStorage.StoreEditing = 'false';
 	        }
-	    },
-	    findCatalogEditing: function findCatalogEditing(obj) {
-	        if (obj.permission_id === 5) {
-	            return true;
+	
+	        if (typeof res.permissions.find(_this.findCatalogEditing) !== 'undefined') {
+	          localStorage.CatalogEditing = 'true';
 	        } else {
-	            return false;
+	          localStorage.CatalogEditing = 'false';
 	        }
-	    },
-	    findProductEditing: function findProductEditing(obj) {
-	        if (obj.permission_id === 6) {
-	            return true;
+	
+	        if (typeof res.permissions.find(_this.findProductEditing) !== 'undefined') {
+	          localStorage.ProductEditing = 'true';
 	        } else {
-	            return false;
+	          localStorage.ProductEditing = 'false';
 	        }
-	    },
-	    findUserAdmin: function findUserAdmin(obj) {
-	        if (obj.permission_id === 7) {
-	            return true;
+	
+	        if (typeof res.permissions.find(_this.findUserAdmin) !== 'undefined') {
+	          localStorage.UserAdmin = 'true';
 	        } else {
-	            return false;
+	          localStorage.UserAdmin = 'false';
 	        }
-	    },
-	    findDisable: function findDisable(obj) {
-	        if (obj.permission_id === 8) {
-	            return true;
+	
+	        if (typeof res.permissions.find(_this.findDisable) !== 'undefined') {
+	          localStorage.Disable = 'true';
 	        } else {
-	            return false;
+	          localStorage.Disable = 'false';
 	        }
-	    },
-	    findLock: function findLock(obj) {
-	        if (obj.permission_id === 9) {
-	            return true;
+	
+	        if (typeof res.permissions.find(_this.findLock) !== 'undefined') {
+	          localStorage.Lock = 'true';
 	        } else {
-	            return false;
+	          localStorage.Lock = 'false';
 	        }
-	    },
-	    getToken: function getToken() {
-	        return localStorage.token;
-	    },
-	    logout: function logout(cb) {
-	        delete localStorage.token;
-	        delete localStorage.username;
-	        delete localStorage.ImportVisibility;
-	        delete localStorage.CatalogVisibility;
-	        delete localStorage.ProductVisibility;
-	        delete localStorage.StoreEditing;
-	        delete localStorage.CatalogEditing;
-	        delete localStorage.ProductEditing;
-	        delete localStorage.UserAdmin;
-	        delete localStorage.Disable;
-	        delete localStorage.Lock;
-	        if (cb) cb();
-	        this.onChange(false);
-	    },
-	    loggedIn: function loggedIn() {
-	        return !!localStorage.token;
-	    },
-	    onChange: function onChange() {}
+	
+	        if (cb) cb(true);
+	        _this.onChange(true);
+	      } else {
+	        if (cb) cb(false);
+	        _this.onChange(false);
+	      }
+	    });
+	  },
+	  findImportVisibility: function findImportVisibility(obj) {
+	    if (obj.permission_id === 1) {
+	      return true;
+	    } else {
+	      return false;
+	    }
+	  },
+	  findCatalogVisibility: function findCatalogVisibility(obj) {
+	    if (obj.permission_id === 2) {
+	      return true;
+	    } else {
+	      return false;
+	    }
+	  },
+	  findProductVisibility: function findProductVisibility(obj) {
+	    if (obj.permission_id === 3) {
+	      return true;
+	    } else {
+	      return false;
+	    }
+	  },
+	  findStoreEditing: function findStoreEditing(obj) {
+	    if (obj.permission_id === 4) {
+	      return true;
+	    } else {
+	      return false;
+	    }
+	  },
+	  findCatalogEditing: function findCatalogEditing(obj) {
+	    if (obj.permission_id === 5) {
+	      return true;
+	    } else {
+	      return false;
+	    }
+	  },
+	  findProductEditing: function findProductEditing(obj) {
+	    if (obj.permission_id === 6) {
+	      return true;
+	    } else {
+	      return false;
+	    }
+	  },
+	  findUserAdmin: function findUserAdmin(obj) {
+	    if (obj.permission_id === 7) {
+	      return true;
+	    } else {
+	      return false;
+	    }
+	  },
+	  findDisable: function findDisable(obj) {
+	    if (obj.permission_id === 8) {
+	      return true;
+	    } else {
+	      return false;
+	    }
+	  },
+	  findLock: function findLock(obj) {
+	    if (obj.permission_id === 9) {
+	      return true;
+	    } else {
+	      return false;
+	    }
+	  },
+	  getToken: function getToken() {
+	    return localStorage.token;
+	  },
+	  logout: function logout(cb) {
+	    delete localStorage.token;
+	    delete localStorage.username;
+	    delete localStorage.ImportVisibility;
+	    delete localStorage.CatalogVisibility;
+	    delete localStorage.ProductVisibility;
+	    delete localStorage.StoreEditing;
+	    delete localStorage.CatalogEditing;
+	    delete localStorage.ProductEditing;
+	    delete localStorage.UserAdmin;
+	    delete localStorage.Disable;
+	    delete localStorage.Lock;
+	    if (cb) cb();
+	    this.onChange(false);
+	  },
+	  loggedIn: function loggedIn() {
+	    return !!localStorage.token;
+	  },
+	  onChange: function onChange() {}
 	};
 	
 	function loginRequest(user, pass, cb) {
-	    setTimeout(function () {
-	        Login(user, pass, cb, loginCallbackfunc);
-	    }, 0);
+	  setTimeout(function () {
+	    Login(user, pass, cb, loginCallbackfunc);
+	  }, 0);
 	}
 	
 	function loginCallbackfunc(data, cb) {
-	    if (data.token != undefined) {
-	        // console.log(data);
-	        cb({
-	            authenticated: true,
-	            token: data.token,
-	            username: data.username,
-	            permissions: data.PermissionList
-	        });
-	    } else {
-	        cb({ authenticated: false });
-	    }
+	  if (data.token != undefined) {
+	    // console.log(data);
+	    cb({
+	      authenticated: true,
+	      token: data.token,
+	      username: data.username,
+	      permissions: data.PermissionList
+	    });
+	  } else {
+	    cb({ authenticated: false });
+	  }
 	}
 
 /***/ },
-/* 330 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	   value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _productAutocomplete = __webpack_require__(331);
+	var _productAutocomplete = __webpack_require__(332);
 	
 	var _productAutocomplete2 = _interopRequireDefault(_productAutocomplete);
 	
-	var _productDisplay = __webpack_require__(332);
+	var _productDisplay = __webpack_require__(333);
 	
 	var _productDisplay2 = _interopRequireDefault(_productDisplay);
 	
-	var _productVendorlist = __webpack_require__(337);
+	var _productVendorlist = __webpack_require__(338);
 	
 	var _productVendorlist2 = _interopRequireDefault(_productVendorlist);
 	
@@ -39809,95 +40157,95 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ProductMain = _react2.default.createClass({
-	   displayName: 'ProductMain',
+	  displayName: 'ProductMain',
 	
-	   componentWillMount: function componentWillMount() {
-	      if (localStorage.ProductVisibility != 'true') {
-	         localStorage.clear();
-	         window.location.href = "/login";
-	      }
-	   },
-	   componentDidMount: function componentDidMount() {
-	      GetVendorList(this.vendorListCallback);
-	   },
-	   getInitialState: function getInitialState() {
-	      return {
-	         showProductDisplay: false,
-	         prod: [],
-	         vendorList: [],
-	         searchVendors: [],
-	         showFeedback: false,
-	         feedbackResult: 0,
-	         feedbackMessage: ""
-	      };
-	   },
-	   render: function render() {
-	      return _react2.default.createElement(
-	         'div',
-	         { className: 'container marginTop100', style: { width: '50%' } },
-	         _react2.default.createElement(_feedback2.default, { Result: this.state.feedbackResult, Message: this.state.feedbackMessage, visible: this.state.showFeedback, delay: 2000, resetFeedbackState: this.resetFeedbackState }),
-	         _react2.default.createElement(
+	  componentWillMount: function componentWillMount() {
+	    if (localStorage.ProductVisibility != 'true') {
+	      localStorage.clear();
+	      window.location.href = '/login';
+	    }
+	  },
+	  componentDidMount: function componentDidMount() {
+	    GetVendorList(this.vendorListCallback);
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      showProductDisplay: false,
+	      prod: [],
+	      vendorList: [],
+	      searchVendors: [],
+	      showFeedback: false,
+	      feedbackResult: 0,
+	      feedbackMessage: ''
+	    };
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'container marginTop100', style: { width: '50%' } },
+	      _react2.default.createElement(_feedback2.default, { Result: this.state.feedbackResult, Message: this.state.feedbackMessage, visible: this.state.showFeedback, delay: 2000, resetFeedbackState: this.resetFeedbackState }),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'panel panel-default' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'panel-heading' },
+	          'Product Search'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'panel-body' },
+	          _react2.default.createElement(_productAutocomplete2.default, { displayRecord: this.displayRecord, searchVendors: this.state.searchVendors }),
+	          _react2.default.createElement(
 	            'div',
-	            { className: 'panel panel-default' },
+	            { className: 'panel panel-default', style: { marginTop: '25px' } },
 	            _react2.default.createElement(
-	               'div',
-	               { className: 'panel-heading' },
-	               'Product Search'
-	            ),
-	            _react2.default.createElement(
-	               'div',
-	               { className: 'panel-body' },
-	               _react2.default.createElement(_productAutocomplete2.default, { displayRecord: this.displayRecord, searchVendors: this.state.searchVendors }),
-	               _react2.default.createElement(
-	                  'div',
-	                  { className: 'panel panel-default', style: { marginTop: '25px' } },
-	                  _react2.default.createElement(
-	                     'div',
-	                     { className: 'panel-body' },
-	                     _react2.default.createElement(_productVendorlist2.default, { VendorList: this.state.vendorList, handleVendorCheckChange: this.handleVendorCheckChange })
-	                  )
-	               )
+	              'div',
+	              { className: 'panel-body' },
+	              _react2.default.createElement(_productVendorlist2.default, { VendorList: this.state.vendorList, handleVendorCheckChange: this.handleVendorCheckChange })
 	            )
-	         ),
-	         this.state.showProductDisplay ? _react2.default.createElement(_productDisplay2.default, { data: this.state.prod, handleSaveProdClick: this.handleSaveProdClick, showFeedBack: this.showFeedBack, rollbackComplete: this.saveProdCallback }) : null
-	      );
-	   },
-	   displayRecord: function displayRecord(item) {
-	      this.setState({ showProductDisplay: true, prod: item });
-	   },
-	   vendorListCallback: function vendorListCallback(data) {
-	      this.setState({ vendorList: data });
-	   },
-	   handleVendorCheckChange: function handleVendorCheckChange(chkValue, vendor) {
-	      var itmArray = this.state.searchVendors;
-	      if (chkValue) {
-	         itmArray.push(vendor.id);
-	      } else {
-	         itmArray.splice(itmArray.indexOf(vendor.id), 1);
-	      }
-	      this.setState({ searchVendors: itmArray });
-	   },
-	   handleSaveProdClick: function handleSaveProdClick(newProdName, prodData) {
-	      SaveProductMaster(newProdName, prodData.name, prodData.id, prodData.doc_key, prodData.store_id, this.saveProdCallback);
-	   },
-	   saveProdCallback: function saveProdCallback(data, newName) {
-	      var prodNew = this.state.prod;
-	      prodNew.name = newName;
-	      this.setState({ prod: prodNew });
-	      this.showFeedBack(data);
-	   },
-	   resetFeedbackState: function resetFeedbackState() {
-	      this.setState({ showFeedback: false });
-	   },
-	   showFeedBack: function showFeedBack(data) {
-	      this.setState({ showFeedback: true, feedbackResult: data.Result, feedbackMessage: data.Message });
-	   }
+	          )
+	        )
+	      ),
+	      this.state.showProductDisplay ? _react2.default.createElement(_productDisplay2.default, { data: this.state.prod, handleSaveProdClick: this.handleSaveProdClick, showFeedBack: this.showFeedBack, rollbackComplete: this.saveProdCallback }) : null
+	    );
+	  },
+	  displayRecord: function displayRecord(item) {
+	    this.setState({ showProductDisplay: true, prod: item });
+	  },
+	  vendorListCallback: function vendorListCallback(data) {
+	    this.setState({ vendorList: data });
+	  },
+	  handleVendorCheckChange: function handleVendorCheckChange(chkValue, vendor) {
+	    var itmArray = this.state.searchVendors;
+	    if (chkValue) {
+	      itmArray.push(vendor.id);
+	    } else {
+	      itmArray.splice(itmArray.indexOf(vendor.id), 1);
+	    }
+	    this.setState({ searchVendors: itmArray });
+	  },
+	  handleSaveProdClick: function handleSaveProdClick(newProdName, prodData) {
+	    SaveProductMaster(newProdName, prodData.name, prodData.id, prodData.doc_key, prodData.store_id, this.saveProdCallback);
+	  },
+	  saveProdCallback: function saveProdCallback(data, newName) {
+	    var prodNew = this.state.prod;
+	    prodNew.name = newName;
+	    this.setState({ prod: prodNew });
+	    this.showFeedBack(data);
+	  },
+	  resetFeedbackState: function resetFeedbackState() {
+	    this.setState({ showFeedback: false });
+	  },
+	  showFeedBack: function showFeedBack(data) {
+	    this.setState({ showFeedback: true, feedbackResult: data.Result, feedbackMessage: data.Message });
+	  }
 	});
 	
 	exports.default = ProductMain;
 
 /***/ },
-/* 331 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39956,7 +40304,9 @@
 	      'div',
 	      null,
 	      _react2.default.createElement(_reactAutocomplete2.default, {
-	        inputProps: { name: "Product", id: "product-autocomplete", style: { padding: '6px 12px',
+	        inputProps: { name: 'Product',
+	          id: 'product-autocomplete',
+	          style: { padding: '6px 12px',
 	            fontSize: '14px',
 	            lineHeight: '1.42857143',
 	            color: '#555',
@@ -39985,14 +40335,13 @@
 	        onChange: function onChange(event, value) {
 	          if (value.length < 3) {
 	            _this.setState({ value: value });
-	            return;
 	          } else {
 	            _this.setState({ value: value, loading: true });
 	            AutoCompleteQuery(value, _this.props.searchVendors, _this.autoCompleteCallback);
 	          }
 	          // fakeRequest(value, (items) => {
 	          //   this.setState({ unitedStates: items, loading: false })
-	          //})
+	          // })
 	        },
 	        renderItem: function renderItem(item, isHighlighted) {
 	          return _react2.default.createElement(
@@ -40049,417 +40398,282 @@
 	exports.default = ProductAutoComplete;
 
 /***/ },
-/* 332 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _productHistoryMaster = __webpack_require__(333);
-	
-	var _productHistoryMaster2 = _interopRequireDefault(_productHistoryMaster);
-	
-	var _productEntity = __webpack_require__(335);
-	
-	var _productEntity2 = _interopRequireDefault(_productEntity);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var ProductDisplay = _react2.default.createClass({
-	    displayName: 'ProductDisplay',
-	
-	    getInitialState: function getInitialState() {
-	        return {
-	            isEditMode: false,
-	            prodName: this.props.data.name,
-	            showHistory: false
-	        };
-	    },
-	    render: function render() {
-	        var disableVar;
-	        if (!this.props.data.edit_mode || this.props.data.username == localStorage.username) {
-	            disableVar = false;
-	            if (localStorage.ProductEditing != 'true') {
-	                disableVar = true;
-	            }
-	        } else {
-	            disableVar = true;
-	        }
-	
-	        if (this.state.isEditMode) {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'panel panel-default', style: { marginTop: '20px', position: 'static', zIndex: '1' } },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'panel-heading' },
-	                    _react2.default.createElement(
-	                        'h3',
-	                        { className: 'panel-title' },
-	                        _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'txtNodeInput', value: this.state.prodName, onChange: this.handleChange.bind(this, 'prodName') })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'panel-body' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-2' },
-	                            'Sku: '
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-10' },
-	                            this.props.data.sku
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-2' },
-	                            'Doc Key: '
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-10' },
-	                            this.props.data.doc_key
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-2' },
-	                            'Web Sent: '
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-10' },
-	                            String(this.props.data.webSent)
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-2' },
-	                            'Web Sent DT: '
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-10' },
-	                            this.props.data.webSentDatetime
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { style: { marginTop: '20px' } },
-	                        _react2.default.createElement(_productEntity2.default, { entities: this.props.data.Entities, SaveEnityData: this.SaveEnityData })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'panel-footer' },
-	                    _react2.default.createElement(
-	                        'button',
-	                        { className: 'btn btn-default', onClick: this.handleCancelClick },
-	                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-remove' }),
-	                        ' Cancel'
-	                    ),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { style: { marginLeft: '20px' }, className: 'btn btn-default', onClick: this.handleSaveClick },
-	                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-floppy-disk' }),
-	                        ' Save'
-	                    )
-	                )
-	            );
-	        } else {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'panel panel-default', style: { marginTop: '20px', position: 'static', zIndex: '1' } },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'panel-heading' },
-	                    _react2.default.createElement(
-	                        'h3',
-	                        { className: 'panel-title' },
-	                        this.props.data.name
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'panel-body' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-2' },
-	                            'Sku: '
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-10' },
-	                            this.props.data.sku
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-2' },
-	                            'Doc Key: '
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-10' },
-	                            this.props.data.doc_key
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-2' },
-	                            'Web Sent: '
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-10' },
-	                            String(this.props.data.webSent)
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-2' },
-	                            'Web Sent DT: '
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-10' },
-	                            this.props.data.webSentDatetime
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { style: { marginTop: '20px' } },
-	                        _react2.default.createElement(_productEntity2.default, { entities: this.props.data.Entities, SaveEnityData: this.SaveEnityData })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'panel-footer' },
-	                    _react2.default.createElement(
-	                        'button',
-	                        { disabled: disableVar, className: 'btn btn-default', onClick: this.handleEditClick },
-	                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-pencil' }),
-	                        ' Edit'
-	                    ),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { style: { marginLeft: '20px' }, onClick: this.showHistoryModal, className: 'btn btn-default' },
-	                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-book' }),
-	                        ' History'
-	                    )
-	                ),
-	                this.state.showHistory ? _react2.default.createElement(_productHistoryMaster2.default, { prod: this.props.data, handleHideProductMasterHistoryModal: this.handleHideProductMasterHistoryModal, handleHideModal: this.handleHideModal, rollbackComplete: this.rollbackComplete }) : null
-	            );
-	        }
-	    },
-	    handleChange: function handleChange(name, e) {
-	        var change = {};
-	        change[name] = e.target.value;
-	        this.setState(change);
-	    },
-	    SaveEnityData: function SaveEnityData(edited_field, old_value, new_value, entityId) {
-	        SaveProductEntityData(this.props.data.doc_key, this.props.data.sku, edited_field, old_value, new_value, this.props.data.store_id, entityId, this.handleEntityDataCallback);
-	    },
-	    handleEntityDataCallback: function handleEntityDataCallback(data) {
-	        this.props.showFeedBack(data);
-	    },
-	    handleEditClick: function handleEditClick() {
-	        UpdateEditingFlag('product', true, this.props.data.doc_key);
-	        this.setState({ isEditMode: true, prodName: this.props.data.name });
-	    },
-	    handleCancelClick: function handleCancelClick() {
-	        UpdateEditingFlag('product', false, this.props.data.doc_key);
-	        this.setState({ isEditMode: false });
-	    },
-	    handleSaveClick: function handleSaveClick() {
-	        this.setState({ isEditMode: false });
-	        this.props.handleSaveProdClick(this.state.prodName, this.props.data);
-	    },
-	    showHistoryModal: function showHistoryModal() {
-	        this.setState({ showHistory: true });
-	    },
-	    handleHideProductMasterHistoryModal: function handleHideProductMasterHistoryModal() {
-	        this.setState({ showHistory: false });
-	    },
-	    handleHideModal: function handleHideModal() {
-	        this.setState({ showHistory: false });
-	    },
-	    rollbackComplete: function rollbackComplete(data, newName) {
-	        this.setState({ showHistory: false });
-	        this.props.rollbackComplete(data, newName);
-	    }
-	});
-	
-	exports.default = ProductDisplay;
-
-/***/ },
 /* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _productHistoryMasterRow = __webpack_require__(334);
+	var _productHistoryMaster = __webpack_require__(334);
 	
-	var _productHistoryMasterRow2 = _interopRequireDefault(_productHistoryMasterRow);
+	var _productHistoryMaster2 = _interopRequireDefault(_productHistoryMaster);
+	
+	var _productEntity = __webpack_require__(336);
+	
+	var _productEntity2 = _interopRequireDefault(_productEntity);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var ProductHistoryMaster = _react2.default.createClass({
-	    displayName: 'ProductHistoryMaster',
+	var ProductDisplay = _react2.default.createClass({
+	  displayName: 'ProductDisplay',
 	
-	    getInitialState: function getInitialState() {
-	        return {
-	            data: []
-	        };
-	    },
-	    componentDidMount: function componentDidMount() {
-	        $('#ProductHistoryMasterModal').modal('show');
-	        $('#ProductHistoryMasterModal').on('hidden.bs.modal', this.props.handleHideProductMasterHistoryModal);
-	        GetProductMasterHistory(this.props.prod.id, this.getProductMasterHistoryCallback);
-	    },
-	
-	    componentWillReceiveProps: function componentWillReceiveProps() {},
-	    getProductMasterHistoryCallback: function getProductMasterHistoryCallback(data) {
-	        this.setState({ data: data });
-	    },
-	    render: function render() {
-	        var rows = this.state.data.map(function (history) {
-	            return _react2.default.createElement(_productHistoryMasterRow2.default, { history: history, rollbackComplete: this.rollbackComplete, key: history.key, docKey: this.props.prod.doc_key, id: this.props.prod.id, handleRollbackClick: this.handleRollbackClick });
-	        }, this);
-	        return _react2.default.createElement(
-	            'div',
-	            { id: 'ProductHistoryMasterModal', className: 'modal fade' },
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'modal-dialog modal-lg' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'modal-content' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'modal-header' },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
-	                            _react2.default.createElement(
-	                                'span',
-	                                { 'aria-hidden': 'true' },
-	                                '\xD7'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'h4',
-	                            { className: 'modal-title' },
-	                            'Product History'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'modal-body' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-12' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'alert alert-info' },
-	                                    'History for: ',
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        null,
-	                                        this.props.prod.name
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-4' },
-	                                _react2.default.createElement(
-	                                    'h4',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        null,
-	                                        'Previous Values'
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        rows
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'modal-footer' },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'btn btn-default', 'data-dismiss': 'modal' },
-	                            'Cancel'
-	                        )
-	                    )
-	                )
-	            )
-	        );
-	    },
-	    rollbackComplete: function rollbackComplete(data, newName) {
-	        this.props.rollbackComplete(data, newName);
-	    },
-	    handleHideModal: function handleHideModal() {
-	        this.props.handleHideModal();
-	    },
-	    handleRollbackClick: function handleRollbackClick(history) {
-	        RollbackProductMaster(history.previous_name, history.new_name, history.product_id, history.doc_key, this.rollbackComplete);
+	  getInitialState: function getInitialState() {
+	    return {
+	      isEditMode: false,
+	      prodName: this.props.data.name,
+	      showHistory: false
+	    };
+	  },
+	  render: function render() {
+	    var disableVar;
+	    if (!this.props.data.edit_mode || this.props.data.username == localStorage.username) {
+	      disableVar = false;
+	      if (localStorage.ProductEditing != 'true') {
+	        disableVar = true;
+	      }
+	    } else {
+	      disableVar = true;
 	    }
+	
+	    if (this.state.isEditMode) {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'panel panel-default', style: { marginTop: '20px', position: 'static', zIndex: '1' } },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'panel-heading' },
+	          _react2.default.createElement(
+	            'h3',
+	            { className: 'panel-title' },
+	            _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'txtNodeInput', value: this.state.prodName, onChange: this.handleChange.bind(this, 'prodName') })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'panel-body' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-2' },
+	              'Sku: '
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-10' },
+	              this.props.data.sku
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-2' },
+	              'Doc Key: '
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-10' },
+	              this.props.data.doc_key
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-2' },
+	              'Web Sent: '
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-10' },
+	              String(this.props.data.webSent)
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-2' },
+	              'Web Sent DT: '
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-10' },
+	              this.props.data.webSentDatetime
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { style: { marginTop: '20px' } },
+	            _react2.default.createElement(_productEntity2.default, { entities: this.props.data.Entities, SaveEnityData: this.SaveEnityData })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'panel-footer' },
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-default', onClick: this.handleCancelClick },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-remove' }),
+	            ' Cancel'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { style: { marginLeft: '20px' }, className: 'btn btn-default', onClick: this.handleSaveClick },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-floppy-disk' }),
+	            ' Save'
+	          )
+	        )
+	      );
+	    } else {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'panel panel-default', style: { marginTop: '20px', position: 'static', zIndex: '1' } },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'panel-heading' },
+	          _react2.default.createElement(
+	            'h3',
+	            { className: 'panel-title' },
+	            this.props.data.name
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'panel-body' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-2' },
+	              'Sku: '
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-10' },
+	              this.props.data.sku
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-2' },
+	              'Doc Key: '
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-10' },
+	              this.props.data.doc_key
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-2' },
+	              'Web Sent: '
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-10' },
+	              String(this.props.data.webSent)
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-2' },
+	              'Web Sent DT: '
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-10' },
+	              this.props.data.webSentDatetime
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { style: { marginTop: '20px' } },
+	            _react2.default.createElement(_productEntity2.default, { entities: this.props.data.Entities, SaveEnityData: this.SaveEnityData })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'panel-footer' },
+	          _react2.default.createElement(
+	            'button',
+	            { disabled: disableVar, className: 'btn btn-default', onClick: this.handleEditClick },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-pencil' }),
+	            ' Edit'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { style: { marginLeft: '20px' }, onClick: this.showHistoryModal, className: 'btn btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-book' }),
+	            ' History'
+	          )
+	        ),
+	        this.state.showHistory ? _react2.default.createElement(_productHistoryMaster2.default, { prod: this.props.data, handleHideProductMasterHistoryModal: this.handleHideProductMasterHistoryModal, handleHideModal: this.handleHideModal, rollbackComplete: this.rollbackComplete }) : null
+	      );
+	    }
+	  },
+	  handleChange: function handleChange(name, e) {
+	    var change = {};
+	    change[name] = e.target.value;
+	    this.setState(change);
+	  },
+	  SaveEnityData: function SaveEnityData(edited_field, old_value, new_value, entityId) {
+	    SaveProductEntityData(this.props.data.doc_key, this.props.data.sku, edited_field, old_value, new_value, this.props.data.store_id, entityId, this.handleEntityDataCallback);
+	  },
+	  handleEntityDataCallback: function handleEntityDataCallback(data) {
+	    this.props.showFeedBack(data);
+	  },
+	  handleEditClick: function handleEditClick() {
+	    UpdateEditingFlag('product', true, this.props.data.doc_key, this.props.data.store_id);
+	    this.setState({ isEditMode: true, prodName: this.props.data.name });
+	  },
+	  handleCancelClick: function handleCancelClick() {
+	    UpdateEditingFlag('product', false, this.props.data.doc_key, this.props.data.store_id);
+	    this.setState({ isEditMode: false });
+	  },
+	  handleSaveClick: function handleSaveClick() {
+	    this.setState({ isEditMode: false });
+	    this.props.handleSaveProdClick(this.state.prodName, this.props.data);
+	  },
+	  showHistoryModal: function showHistoryModal() {
+	    this.setState({ showHistory: true });
+	  },
+	  handleHideProductMasterHistoryModal: function handleHideProductMasterHistoryModal() {
+	    this.setState({ showHistory: false });
+	  },
+	  handleHideModal: function handleHideModal() {
+	    this.setState({ showHistory: false });
+	  },
+	  rollbackComplete: function rollbackComplete(data, newName) {
+	    this.setState({ showHistory: false });
+	    this.props.rollbackComplete(data, newName);
+	  }
 	});
 	
-	exports.default = ProductHistoryMaster;
+	exports.default = ProductDisplay;
 
 /***/ },
 /* 334 */
@@ -40468,7 +40682,142 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _productHistoryMasterRow = __webpack_require__(335);
+	
+	var _productHistoryMasterRow2 = _interopRequireDefault(_productHistoryMasterRow);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ProductHistoryMaster = _react2.default.createClass({
+	  displayName: 'ProductHistoryMaster',
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      data: []
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    $('#ProductHistoryMasterModal').modal('show');
+	    $('#ProductHistoryMasterModal').on('hidden.bs.modal', this.props.handleHideProductMasterHistoryModal);
+	    GetProductMasterHistory(this.props.prod.id, this.getProductMasterHistoryCallback);
+	  },
+	
+	  componentWillReceiveProps: function componentWillReceiveProps() {},
+	  getProductMasterHistoryCallback: function getProductMasterHistoryCallback(data) {
+	    this.setState({ data: data });
+	  },
+	  render: function render() {
+	    var rows = this.state.data.map(function (history) {
+	      return _react2.default.createElement(_productHistoryMasterRow2.default, { history: history, rollbackComplete: this.rollbackComplete, key: history.key, docKey: this.props.prod.doc_key, id: this.props.prod.id, handleRollbackClick: this.handleRollbackClick });
+	    }, this);
+	    return _react2.default.createElement(
+	      'div',
+	      { id: 'ProductHistoryMasterModal', className: 'modal fade' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'modal-dialog modal-lg' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'modal-content' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-header' },
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+	              _react2.default.createElement(
+	                'span',
+	                { 'aria-hidden': 'true' },
+	                '\xD7'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'h4',
+	              { className: 'modal-title' },
+	              'Product History'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-body' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-12' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'alert alert-info' },
+	                  'History for: ',
+	                  _react2.default.createElement(
+	                    'strong',
+	                    null,
+	                    this.props.prod.name
+	                  )
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-4' },
+	                _react2.default.createElement(
+	                  'h4',
+	                  null,
+	                  _react2.default.createElement(
+	                    'strong',
+	                    null,
+	                    'Previous Values'
+	                  )
+	                )
+	              )
+	            ),
+	            rows
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-footer' },
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'button', className: 'btn btn-default', 'data-dismiss': 'modal' },
+	              'Cancel'
+	            )
+	          )
+	        )
+	      )
+	    );
+	  },
+	  rollbackComplete: function rollbackComplete(data, newName) {
+	    this.props.rollbackComplete(data, newName);
+	  },
+	  handleHideModal: function handleHideModal() {
+	    this.props.handleHideModal();
+	  },
+	  handleRollbackClick: function handleRollbackClick(history) {
+	    RollbackProductMaster(history.previous_name, history.new_name, history.product_id, history.doc_key, this.rollbackComplete);
+	  }
+	});
+	
+	exports.default = ProductHistoryMaster;
+
+/***/ },
+/* 335 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
@@ -40478,220 +40827,109 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ProductHistoryMasterRow = _react2.default.createClass({
-	    displayName: 'ProductHistoryMasterRow',
+	  displayName: 'ProductHistoryMasterRow',
 	
-	    render: function render() {
-	
-	        var rollbackDisable;
-	        if (localStorage.ProductEditing == 'true') {
-	            rollbackDisable = false;
-	        } else {
-	            rollbackDisable = true;
-	        }
-	
-	        return _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'row', style: { marginTop: '5px' } },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-6' },
-	                    'Name: ',
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        this.props.history.previous_name
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-4' },
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        'Changed On: ',
-	                        this.props.history.change_date
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-2' },
-	                    ' ',
-	                    _react2.default.createElement(
-	                        'button',
-	                        { disabled: rollbackDisable, 'data-dismiss': 'modal', onClick: this.handleRollbackClick.bind(this, this.props.history), type: 'button', className: 'btn btn-primary' },
-	                        'Rollback'
-	                    )
-	                )
-	            )
-	        );
-	    },
-	    handleRollbackClick: function handleRollbackClick(history) {
-	        this.props.handleRollbackClick(history);
-	    },
-	    rollbackCallback: function rollbackCallback(data) {
-	        this.props.rollbackComplete(data);
+	  render: function render() {
+	    var rollbackDisable;
+	    if (localStorage.ProductEditing == 'true') {
+	      rollbackDisable = false;
+	    } else {
+	      rollbackDisable = true;
 	    }
+	
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row', style: { marginTop: '5px' } },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-6' },
+	          'Name: ',
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            this.props.history.previous_name
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-4' },
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            'Changed On: ',
+	            this.props.history.change_date
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-2' },
+	          ' ',
+	          _react2.default.createElement(
+	            'button',
+	            { disabled: rollbackDisable, 'data-dismiss': 'modal', onClick: this.handleRollbackClick.bind(this, this.props.history), type: 'button', className: 'btn btn-primary' },
+	            'Rollback'
+	          )
+	        )
+	      )
+	    );
+	  },
+	  handleRollbackClick: function handleRollbackClick(history) {
+	    this.props.handleRollbackClick(history);
+	  },
+	  rollbackCallback: function rollbackCallback(data) {
+	    this.props.rollbackComplete(data);
+	  }
 	});
 	
 	exports.default = ProductHistoryMasterRow;
 
 /***/ },
-/* 335 */
+/* 336 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(2);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _productEntityRow = __webpack_require__(336);
+	var _productEntityRow = __webpack_require__(337);
 	
 	var _productEntityRow2 = _interopRequireDefault(_productEntityRow);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ProductEntity = _react2.default.createClass({
-		displayName: 'ProductEntity',
+	  displayName: 'ProductEntity',
 	
-		render: function render() {
-			var rows = this.props.entities.map(function (entity) {
-				return _react2.default.createElement(_productEntityRow2.default, { entity: entity, key: entity.key, SaveEnityData: this.SaveEnityData });
-			}, this);
-			return _react2.default.createElement(
-				'div',
-				{ className: 'row' },
-				_react2.default.createElement(
-					'div',
-					{ className: 'col-sm-12' },
-					rows
-				)
-			);
-		},
-		SaveEnityData: function SaveEnityData(edited_field, old_value, new_value, entityId) {
-			this.props.SaveEnityData(edited_field, old_value, new_value, entityId);
-		}
+	  render: function render() {
+	    var rows = this.props.entities.map(function (entity) {
+	      return _react2.default.createElement(_productEntityRow2.default, { entity: entity, key: entity.key, SaveEnityData: this.SaveEnityData });
+	    }, this);
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-sm-12' },
+	        rows
+	      )
+	    );
+	  },
+	  SaveEnityData: function SaveEnityData(edited_field, old_value, new_value, entityId) {
+	    this.props.SaveEnityData(edited_field, old_value, new_value, entityId);
+	  }
 	
 	});
 	
 	exports.default = ProductEntity;
-
-/***/ },
-/* 336 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var ProductEntityRow = _react2.default.createClass({
-		displayName: "ProductEntityRow",
-	
-		getInitialState: function getInitialState() {
-			return {
-				isEditMode: false,
-				entityVal: this.props.entity.value
-			};
-		},
-		render: function render() {
-	
-			if (this.state.isEditMode) {
-				return _react2.default.createElement(
-					"div",
-					{ className: "row" },
-					_react2.default.createElement(
-						"div",
-						{ className: "col-sm-4" },
-						"Entity Type:",
-						this.props.entity.type
-					),
-					_react2.default.createElement(
-						"div",
-						{ className: "col-sm-6" },
-						_react2.default.createElement("input", { type: "text", className: "form-control", id: "txtEntity", value: this.state.entityVal, onChange: this.handleChange.bind(this, 'entityVal') })
-					),
-					_react2.default.createElement(
-						"div",
-						{ className: "col-sm-1" },
-						_react2.default.createElement(
-							"button",
-							{ onClick: this.handleCancelClick, className: "btn btn-sm btn-default" },
-							_react2.default.createElement("i", { className: "glyphicon glyphicon-remove" }),
-							" Cancel"
-						)
-					),
-					_react2.default.createElement(
-						"div",
-						{ className: "col-sm-1" },
-						_react2.default.createElement(
-							"button",
-							{ onClick: this.handleSaveClick.bind(this, this.props.entity.type, this.props.entity.value, this.state.entityVal, this.props.entity.entityId), className: "btn btn-sm btn-default" },
-							_react2.default.createElement("i", { className: "glyphicon glyphicon-floppy-disk" }),
-							" Save"
-						)
-					)
-				);
-			} else {
-				return _react2.default.createElement(
-					"div",
-					{ className: "row" },
-					_react2.default.createElement(
-						"div",
-						{ className: "col-sm-4" },
-						"Entity Type:",
-						this.props.entity.type
-					),
-					_react2.default.createElement(
-						"div",
-						{ className: "col-sm-6" },
-						this.state.entityVal
-					),
-					_react2.default.createElement(
-						"div",
-						{ className: "col-sm-1" },
-						_react2.default.createElement(
-							"button",
-							{ onClick: this.handleEditClick, className: "btn btn-sm btn-default" },
-							_react2.default.createElement("i", { className: "glyphicon glyphicon-pencil" }),
-							" Edit"
-						)
-					)
-				);
-			}
-		},
-		handleChange: function handleChange(name, e) {
-			var change = {};
-			change[name] = e.target.value;
-			this.setState(change);
-		},
-		handleEditClick: function handleEditClick() {
-			this.setState({ isEditMode: true });
-		},
-		handleCancelClick: function handleCancelClick() {
-			this.setState({ isEditMode: false });
-		},
-		handleSaveClick: function handleSaveClick(edited_field, old_value, new_value, entityId) {
-			this.props.SaveEnityData(edited_field, old_value, new_value, entityId);
-			this.setState({ isEditMode: false });
-		}
-	});
-	
-	exports.default = ProductEntityRow;
 
 /***/ },
 /* 337 */
@@ -40707,7 +40945,116 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _productVendorlistrow = __webpack_require__(338);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ProductEntityRow = _react2.default.createClass({
+	  displayName: 'ProductEntityRow',
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      isEditMode: false,
+	      entityVal: this.props.entity.value
+	    };
+	  },
+	  render: function render() {
+	    if (this.state.isEditMode) {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-4' },
+	          'Entity Type:',
+	          this.props.entity.type
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-6' },
+	          _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'txtEntity', value: this.state.entityVal, onChange: this.handleChange.bind(this, 'entityVal') })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-1' },
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleCancelClick, className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-remove' }),
+	            ' Cancel'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-1' },
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleSaveClick.bind(this, this.props.entity.type, this.props.entity.value, this.state.entityVal, this.props.entity.entityId), className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-floppy-disk' }),
+	            ' Save'
+	          )
+	        )
+	      );
+	    } else {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-4' },
+	          'Entity Type:',
+	          this.props.entity.type
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-6' },
+	          this.state.entityVal
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-1' },
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleEditClick, className: 'btn btn-sm btn-default' },
+	            _react2.default.createElement('i', { className: 'glyphicon glyphicon-pencil' }),
+	            ' Edit'
+	          )
+	        )
+	      );
+	    }
+	  },
+	  handleChange: function handleChange(name, e) {
+	    var change = {};
+	    change[name] = e.target.value;
+	    this.setState(change);
+	  },
+	  handleEditClick: function handleEditClick() {
+	    this.setState({ isEditMode: true });
+	  },
+	  handleCancelClick: function handleCancelClick() {
+	    this.setState({ isEditMode: false });
+	  },
+	  handleSaveClick: function handleSaveClick(edited_field, old_value, new_value, entityId) {
+	    this.props.SaveEnityData(edited_field, old_value, new_value, entityId);
+	    this.setState({ isEditMode: false });
+	  }
+	});
+	
+	exports.default = ProductEntityRow;
+
+/***/ },
+/* 338 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _productVendorlistrow = __webpack_require__(339);
 	
 	var _productVendorlistrow2 = _interopRequireDefault(_productVendorlistrow);
 	
@@ -40717,7 +41064,6 @@
 	  displayName: 'VendorList',
 	
 	  render: function render() {
-	
 	    var rows = this.props.VendorList.map(function (vendor) {
 	      return _react2.default.createElement(_productVendorlistrow2.default, { vendor: vendor, key: vendor.id, handleVendorCheckChange: this.handleVendorCheckChange });
 	    }, this);
@@ -40736,44 +41082,6 @@
 	exports.default = VendorList;
 
 /***/ },
-/* 338 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var VendorListRow = _react2.default.createClass({
-		displayName: "VendorListRow",
-	
-		render: function render() {
-			var _this = this;
-	
-			return _react2.default.createElement(
-				"div",
-				null,
-				_react2.default.createElement("input", { type: "checkbox", onChange: function onChange(e) {
-						return _this.handleCheckChange(e, _this.props.vendor);
-					}, name: "Vendor", style: { visibility: 'visible' }, value: this.props.vendor.vendor_name }),
-				this.props.vendor.vendor_name
-			);
-		},
-		handleCheckChange: function handleCheckChange(e, vendor) {
-			this.props.handleVendorCheckChange(e.target.checked, vendor);
-		}
-	});
-	
-	exports.default = VendorListRow;
-
-/***/ },
 /* 339 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -40787,75 +41095,112 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _userstats = __webpack_require__(340);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var VendorListRow = _react2.default.createClass({
+		displayName: 'VendorListRow',
+	
+		render: function render() {
+			var _this = this;
+	
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement('input', { type: 'checkbox', onChange: function onChange(e) {
+						return _this.handleCheckChange(e, _this.props.vendor);
+					}, name: 'Vendor', style: { visibility: 'visible' }, value: this.props.vendor.vendor_name }),
+				this.props.vendor.vendor_name
+			);
+		},
+		handleCheckChange: function handleCheckChange(e, vendor) {
+			this.props.handleVendorCheckChange(e.target.checked, vendor);
+		}
+	});
+	
+	exports.default = VendorListRow;
+
+/***/ },
+/* 340 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _userstats = __webpack_require__(341);
 	
 	var _userstats2 = _interopRequireDefault(_userstats);
 	
-	var _useradmingrid = __webpack_require__(341);
+	var _useradmingrid = __webpack_require__(342);
 	
 	var _useradmingrid2 = _interopRequireDefault(_useradmingrid);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var UserAdminMain = _react2.default.createClass({
-		displayName: 'UserAdminMain',
+	  displayName: 'UserAdminMain',
 	
-		getInitialState: function getInitialState() {
-			return {
-				userData: [],
-				userAdminGridData: []
-			};
-		},
-		componentDidMount: function componentDidMount() {
-			GetUserStats(localStorage.username, this.GetUserStatsCallback);
+	  getInitialState: function getInitialState() {
+	    return {
+	      userData: [],
+	      userAdminGridData: []
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    GetUserStats(localStorage.username, this.GetUserStatsCallback);
 	
-			if (localStorage.UserAdmin == 'true') {
-				GetAllUsers(this.userAdminGridCallback);
-			}
-		},
+	    if (localStorage.UserAdmin == 'true') {
+	      GetAllUsers(this.userAdminGridCallback);
+	    }
+	  },
 	
-		render: function render() {
+	  render: function render() {
+	    var adminGridVis = false;
+	    if (localStorage.UserAdmin == 'true') {
+	      adminGridVis = true;
+	    }
 	
-			var adminGridVis = false;
-			if (localStorage.UserAdmin == 'true') {
-				adminGridVis = true;
-			}
-	
-			return _react2.default.createElement(
-				'div',
-				{ className: 'container', style: { marginTop: '100px', width: '50%' } },
-				_react2.default.createElement(_userstats2.default, { user: this.state.userData, reloadUserStats: this.reloadUserStats }),
-				adminGridVis ? _react2.default.createElement(_useradmingrid2.default, { users: this.state.userAdminGridData, reloadGrid: this.reloadGrid, reloadPermissions: this.reloadPermissions }) : null
-			);
-		},
-		GetUserStatsCallback: function GetUserStatsCallback(data) {
-			this.setState({ userData: data });
-		},
-		reloadUserStats: function reloadUserStats(data) {
-			GetUserStats(localStorage.username, this.GetUserStatsCallback);
-		},
-		userAdminGridCallback: function userAdminGridCallback(data) {
-			this.setState({ userAdminGridData: data });
-		},
-		reloadGrid: function reloadGrid() {
-			if (localStorage.UserAdmin == 'true') {
-				GetAllUsers(this.userAdminGridCallback);
-			}
-		},
-		reloadPermissions: function reloadPermissions() {
-			if (localStorage.UserAdmin == 'true') {
-				GetAllUsers(this.userAdminGridCallback);
-			}
-		}
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'container', style: { marginTop: '100px', width: '50%' } },
+	      _react2.default.createElement(_userstats2.default, { user: this.state.userData, reloadUserStats: this.reloadUserStats }),
+	      adminGridVis ? _react2.default.createElement(_useradmingrid2.default, { users: this.state.userAdminGridData, reloadGrid: this.reloadGrid, reloadPermissions: this.reloadPermissions }) : null
+	    );
+	  },
+	  GetUserStatsCallback: function GetUserStatsCallback(data) {
+	    this.setState({ userData: data });
+	  },
+	  reloadUserStats: function reloadUserStats(data) {
+	    GetUserStats(localStorage.username, this.GetUserStatsCallback);
+	  },
+	  userAdminGridCallback: function userAdminGridCallback(data) {
+	    this.setState({ userAdminGridData: data });
+	  },
+	  reloadGrid: function reloadGrid() {
+	    if (localStorage.UserAdmin == 'true') {
+	      GetAllUsers(this.userAdminGridCallback);
+	    }
+	  },
+	  reloadPermissions: function reloadPermissions() {
+	    if (localStorage.UserAdmin == 'true') {
+	      GetAllUsers(this.userAdminGridCallback);
+	    }
+	  }
 	});
 	
 	exports.default = UserAdminMain;
 
 /***/ },
-/* 340 */
+/* 341 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -40868,7 +41213,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var UserStats = _react2.default.createClass({
-	  displayName: "UserStats",
+	  displayName: 'UserStats',
 	
 	  getInitialState: function getInitialState() {
 	    return {
@@ -40879,161 +41224,160 @@
 	    };
 	  },
 	  render: function render() {
-	
-	    var mailtoStr = "mailto:" + this.props.user.email;
+	    var mailtoStr = 'mailto:' + this.props.user.email;
 	
 	    if (this.state.isEditMode) {
 	      return _react2.default.createElement(
-	        "div",
-	        { className: "panel panel-info", style: { width: '600px' } },
+	        'div',
+	        { className: 'panel panel-info', style: { width: '600px' } },
 	        _react2.default.createElement(
-	          "div",
-	          { className: "panel-heading" },
-	          "User Details"
+	          'div',
+	          { className: 'panel-heading' },
+	          'User Details'
 	        ),
 	        _react2.default.createElement(
-	          "div",
-	          { className: "panel-body" },
+	          'div',
+	          { className: 'panel-body' },
 	          _react2.default.createElement(
-	            "table",
-	            { className: "table table-user-information", style: { marginBottom: '0px' } },
+	            'table',
+	            { className: 'table table-user-information', style: { marginBottom: '0px' } },
 	            _react2.default.createElement(
-	              "tbody",
+	              'tbody',
 	              null,
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  "Username:"
+	                  'Username:'
 	                ),
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
 	                  this.props.user.username
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  "Last Login DT:"
+	                  'Last Login DT:'
 	                ),
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
 	                  this.props.user.lastloginDT
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  "Full Name:"
+	                  'Full Name:'
 	                ),
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  "First Name:",
-	                  _react2.default.createElement("input", { type: "text", id: "txtFirstNameUser", className: "form-control", defaultValue: this.props.user.firstname, onChange: this.handleChange.bind(this, 'firstname') }),
-	                  "Last Name:",
-	                  _react2.default.createElement("input", { type: "text", id: "txtLastNameUser", className: "form-control", defaultValue: this.props.user.lastname, onChange: this.handleChange.bind(this, 'lastname') })
+	                  'First Name:',
+	                  _react2.default.createElement('input', { type: 'text', id: 'txtFirstNameUser', className: 'form-control', defaultValue: this.props.user.firstname, onChange: this.handleChange.bind(this, 'firstname') }),
+	                  'Last Name:',
+	                  _react2.default.createElement('input', { type: 'text', id: 'txtLastNameUser', className: 'form-control', defaultValue: this.props.user.lastname, onChange: this.handleChange.bind(this, 'lastname') })
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  "Email:"
+	                  'Email:'
 	                ),
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  _react2.default.createElement("input", { type: "text", className: "form-control", value: this.state.email, onChange: this.handleChange.bind(this, 'email') })
+	                  _react2.default.createElement('input', { type: 'text', className: 'form-control', value: this.state.email, onChange: this.handleChange.bind(this, 'email') })
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  "# Node Changes"
+	                  '# Node Changes'
 	                ),
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
 	                  this.props.user.nodeChanges
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  "# Component Changes"
+	                  '# Component Changes'
 	                ),
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
 	                  this.props.user.componentChanges
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  "# Component Product Changes"
+	                  '# Component Product Changes'
 	                ),
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
 	                  this.props.user.componentProductChanges
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  "# Master Product Changes"
+	                  '# Master Product Changes'
 	                ),
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
 	                  this.props.user.masterProductChanges
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
 	                  _react2.default.createElement(
-	                    "button",
-	                    { onClick: this.handleSaveClick, className: "btn btn-md btn-default", style: { marginRight: '20px' } },
-	                    _react2.default.createElement("i", { className: "glyphicon glyphicon-floppy-disk" }),
-	                    " Save"
+	                    'button',
+	                    { onClick: this.handleSaveClick, className: 'btn btn-md btn-default', style: { marginRight: '20px' } },
+	                    _react2.default.createElement('i', { className: 'glyphicon glyphicon-floppy-disk' }),
+	                    ' Save'
 	                  ),
 	                  _react2.default.createElement(
-	                    "button",
-	                    { onClick: this.handleCancelClick, className: "btn btn-md btn-default" },
-	                    _react2.default.createElement("i", { className: "glyphicon glyphicon-remove" })
+	                    'button',
+	                    { onClick: this.handleCancelClick, className: 'btn btn-md btn-default' },
+	                    _react2.default.createElement('i', { className: 'glyphicon glyphicon-remove' })
 	                  )
 	                ),
-	                _react2.default.createElement("td", null)
+	                _react2.default.createElement('td', null)
 	              )
 	            )
 	          )
@@ -41041,154 +41385,154 @@
 	      );
 	    } else {
 	      return _react2.default.createElement(
-	        "div",
-	        { className: "panel panel-info", style: { width: '600px' } },
+	        'div',
+	        { className: 'panel panel-info', style: { width: '600px' } },
 	        _react2.default.createElement(
-	          "div",
-	          { className: "panel-heading" },
-	          "User Details"
+	          'div',
+	          { className: 'panel-heading' },
+	          'User Details'
 	        ),
 	        _react2.default.createElement(
-	          "div",
-	          { className: "panel-body" },
+	          'div',
+	          { className: 'panel-body' },
 	          _react2.default.createElement(
-	            "table",
-	            { className: "table table-user-information", style: { marginBottom: '0px' } },
+	            'table',
+	            { className: 'table table-user-information', style: { marginBottom: '0px' } },
 	            _react2.default.createElement(
-	              "tbody",
+	              'tbody',
 	              null,
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  "Username:"
+	                  'Username:'
 	                ),
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
 	                  this.props.user.username
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  "Last Login DT:"
+	                  'Last Login DT:'
 	                ),
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
 	                  this.props.user.lastloginDT
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  "Full Name:"
+	                  'Full Name:'
 	                ),
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
 	                  this.props.user.firstname,
-	                  " ",
+	                  ' ',
 	                  this.props.user.lastname
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  "Email:"
+	                  'Email:'
 	                ),
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
 	                  _react2.default.createElement(
-	                    "a",
+	                    'a',
 	                    { href: mailtoStr },
 	                    this.props.user.email
 	                  )
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  "# Node Changes"
+	                  '# Node Changes'
 	                ),
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
 	                  this.props.user.nodeChanges
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  "# Component Changes"
+	                  '# Component Changes'
 	                ),
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
 	                  this.props.user.componentChanges
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  "# Component Product Changes"
+	                  '# Component Product Changes'
 	                ),
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
 	                  this.props.user.componentProductChanges
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
-	                  "# Master Product Changes"
+	                  '# Master Product Changes'
 	                ),
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
 	                  this.props.user.masterProductChanges
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                _react2.default.createElement(
-	                  "td",
+	                  'td',
 	                  null,
 	                  _react2.default.createElement(
-	                    "button",
-	                    { onClick: this.handleEditClick, className: "btn btn-md btn-default" },
-	                    _react2.default.createElement("i", { className: "glyphicon glyphicon-book" }),
-	                    " Edit"
+	                    'button',
+	                    { onClick: this.handleEditClick, className: 'btn btn-md btn-default' },
+	                    _react2.default.createElement('i', { className: 'glyphicon glyphicon-book' }),
+	                    ' Edit'
 	                  )
 	                ),
-	                _react2.default.createElement("td", null)
+	                _react2.default.createElement('td', null)
 	              )
 	            )
 	          )
@@ -41219,7 +41563,7 @@
 	exports.default = UserStats;
 
 /***/ },
-/* 341 */
+/* 342 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41232,11 +41576,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _useradmingridrow = __webpack_require__(342);
+	var _useradmingridrow = __webpack_require__(343);
 	
 	var _useradmingridrow2 = _interopRequireDefault(_useradmingridrow);
 	
-	var _addusermodal = __webpack_require__(346);
+	var _addusermodal = __webpack_require__(347);
 	
 	var _addusermodal2 = _interopRequireDefault(_addusermodal);
 	
@@ -41325,7 +41669,7 @@
 	exports.default = UserAdminGrid;
 
 /***/ },
-/* 342 */
+/* 343 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41338,11 +41682,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _userstatsmodal = __webpack_require__(343);
+	var _userstatsmodal = __webpack_require__(344);
 	
 	var _userstatsmodal2 = _interopRequireDefault(_userstatsmodal);
 	
-	var _useradminpermissiongrid = __webpack_require__(344);
+	var _useradminpermissiongrid = __webpack_require__(345);
 	
 	var _useradminpermissiongrid2 = _interopRequireDefault(_useradminpermissiongrid);
 	
@@ -41441,7 +41785,7 @@
 	exports.default = UserAdminGridRow;
 
 /***/ },
-/* 343 */
+/* 344 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41454,7 +41798,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _userstats = __webpack_require__(340);
+	var _userstats = __webpack_require__(341);
 	
 	var _userstats2 = _interopRequireDefault(_userstats);
 	
@@ -41468,7 +41812,6 @@
 	  },
 	
 	  render: function render() {
-	
 	    return _react2.default.createElement(
 	      'div',
 	      { id: 'UserStatsModal', className: 'modal fade' },
@@ -41512,7 +41855,7 @@
 	exports.default = UserStatsModal;
 
 /***/ },
-/* 344 */
+/* 345 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41525,7 +41868,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _useradminpermissiongridrow = __webpack_require__(345);
+	var _useradminpermissiongridrow = __webpack_require__(346);
 	
 	var _useradminpermissiongridrow2 = _interopRequireDefault(_useradminpermissiongridrow);
 	
@@ -41591,7 +41934,7 @@
 	exports.default = UserAdminPermissionGrid;
 
 /***/ },
-/* 345 */
+/* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41604,7 +41947,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _useradminpermissiongrid = __webpack_require__(344);
+	var _useradminpermissiongrid = __webpack_require__(345);
 	
 	var _useradminpermissiongrid2 = _interopRequireDefault(_useradminpermissiongrid);
 	
@@ -41615,7 +41958,6 @@
 	
 	
 	  render: function render() {
-	
 	    var chk;
 	    if (this.props.permission.username != '') {
 	      chk = true;
@@ -41651,10 +41993,10 @@
 	exports.default = UserAdminPermissionGridRow;
 
 /***/ },
-/* 346 */
+/* 347 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -41667,19 +42009,19 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var AddUserModal = _react2.default.createClass({
-	  displayName: "AddUserModal",
+	  displayName: 'AddUserModal',
 	
 	  getInitialState: function getInitialState() {
 	    return {
-	      username: "",
-	      password: "",
-	      passwordconfirm: "",
-	      first: "",
-	      last: "",
-	      email: "",
+	      username: '',
+	      password: '',
+	      passwordconfirm: '',
+	      first: '',
+	      last: '',
+	      email: '',
 	      error: false,
 	      invalidUsername: false,
-	      errorMessage: ""
+	      errorMessage: ''
 	    };
 	  },
 	  componentDidMount: function componentDidMount() {
@@ -41688,140 +42030,139 @@
 	  },
 	
 	  render: function render() {
-	
 	    return _react2.default.createElement(
-	      "div",
-	      { id: "AddUserModal", className: "modal fade" },
+	      'div',
+	      { id: 'AddUserModal', className: 'modal fade' },
 	      _react2.default.createElement(
-	        "div",
-	        { className: "modal-dialog modal-md", style: { width: '630px' } },
+	        'div',
+	        { className: 'modal-dialog modal-md', style: { width: '630px' } },
 	        _react2.default.createElement(
-	          "div",
-	          { className: "modal-content" },
+	          'div',
+	          { className: 'modal-content' },
 	          _react2.default.createElement(
-	            "div",
-	            { className: "modal-header" },
+	            'div',
+	            { className: 'modal-header' },
 	            _react2.default.createElement(
-	              "h4",
-	              { className: "modal-title" },
-	              "New User"
+	              'h4',
+	              { className: 'modal-title' },
+	              'New User'
 	            )
 	          ),
 	          _react2.default.createElement(
-	            "div",
-	            { className: "modal-body" },
+	            'div',
+	            { className: 'modal-body' },
 	            _react2.default.createElement(
-	              "div",
-	              { className: "row" },
+	              'div',
+	              { className: 'row' },
 	              _react2.default.createElement(
-	                "div",
-	                { className: "col-sm-12" },
+	                'div',
+	                { className: 'col-sm-12' },
 	                this.state.error ? _react2.default.createElement(
-	                  "div",
-	                  { className: "alert alert-warning" },
+	                  'div',
+	                  { className: 'alert alert-warning' },
 	                  _react2.default.createElement(
-	                    "strong",
+	                    'strong',
 	                    null,
-	                    "Warning"
+	                    'Warning'
 	                  ),
-	                  " ",
+	                  ' ',
 	                  this.state.errorMessage
 	                ) : null,
 	                this.state.invalidUsername ? _react2.default.createElement(
-	                  "div",
-	                  { className: "alert alert-danger" },
+	                  'div',
+	                  { className: 'alert alert-danger' },
 	                  _react2.default.createElement(
-	                    "strong",
+	                    'strong',
 	                    null,
-	                    "Error"
+	                    'Error'
 	                  ),
-	                  " Invalid Username"
+	                  ' Invalid Username'
 	                ) : null,
 	                _react2.default.createElement(
-	                  "table",
+	                  'table',
 	                  { style: { width: '500px' } },
 	                  _react2.default.createElement(
-	                    "tr",
+	                    'tr',
 	                    null,
 	                    _react2.default.createElement(
-	                      "td",
+	                      'td',
 	                      null,
-	                      "Username"
+	                      'Username'
 	                    ),
 	                    _react2.default.createElement(
-	                      "td",
+	                      'td',
 	                      null,
-	                      _react2.default.createElement("input", { type: "text", className: "form-control", value: this.state.username, onChange: this.handleChange.bind(this, 'username'), onBlur: this.validateUsername, style: { marginTop: '5px', height: '34px' } })
+	                      _react2.default.createElement('input', { type: 'text', className: 'form-control', value: this.state.username, onChange: this.handleChange.bind(this, 'username'), onBlur: this.validateUsername, style: { marginTop: '5px', height: '34px' } })
 	                    )
 	                  ),
 	                  _react2.default.createElement(
-	                    "tr",
+	                    'tr',
 	                    null,
 	                    _react2.default.createElement(
-	                      "td",
+	                      'td',
 	                      null,
-	                      "Password"
+	                      'Password'
 	                    ),
 	                    _react2.default.createElement(
-	                      "td",
+	                      'td',
 	                      null,
-	                      _react2.default.createElement("input", { maxLength: "50", type: "password", className: "form-control", value: this.state.password, onChange: this.handleChange.bind(this, 'password'), onBlur: this.validatePasswords, style: { marginTop: '5px', height: '34px', marginBottom: 0 } })
+	                      _react2.default.createElement('input', { maxLength: '50', type: 'password', className: 'form-control', value: this.state.password, onChange: this.handleChange.bind(this, 'password'), onBlur: this.validatePasswords, style: { marginTop: '5px', height: '34px', marginBottom: 0 } })
 	                    )
 	                  ),
 	                  _react2.default.createElement(
-	                    "tr",
+	                    'tr',
 	                    null,
 	                    _react2.default.createElement(
-	                      "td",
+	                      'td',
 	                      null,
-	                      "Confirm Password"
+	                      'Confirm Password'
 	                    ),
 	                    _react2.default.createElement(
-	                      "td",
+	                      'td',
 	                      null,
-	                      _react2.default.createElement("input", { maxLength: "50", type: "password", className: "form-control", value: this.state.passwordconfirm, onChange: this.handleChange.bind(this, 'passwordconfirm'), onBlur: this.validatePasswords, style: { marginTop: '5px', height: '34px', marginBottom: 0 } })
+	                      _react2.default.createElement('input', { maxLength: '50', type: 'password', className: 'form-control', value: this.state.passwordconfirm, onChange: this.handleChange.bind(this, 'passwordconfirm'), onBlur: this.validatePasswords, style: { marginTop: '5px', height: '34px', marginBottom: 0 } })
 	                    )
 	                  ),
 	                  _react2.default.createElement(
-	                    "tr",
+	                    'tr',
 	                    null,
 	                    _react2.default.createElement(
-	                      "td",
+	                      'td',
 	                      null,
-	                      "First Name"
+	                      'First Name'
 	                    ),
 	                    _react2.default.createElement(
-	                      "td",
+	                      'td',
 	                      null,
-	                      _react2.default.createElement("input", { maxLength: "100", type: "text", className: "form-control", value: this.state.first, onChange: this.handleChange.bind(this, 'first'), style: { marginTop: '5px', height: '34px', marginBottom: 0 }, onBlur: this.validate })
+	                      _react2.default.createElement('input', { maxLength: '100', type: 'text', className: 'form-control', value: this.state.first, onChange: this.handleChange.bind(this, 'first'), style: { marginTop: '5px', height: '34px', marginBottom: 0 }, onBlur: this.validate })
 	                    )
 	                  ),
 	                  _react2.default.createElement(
-	                    "tr",
+	                    'tr',
 	                    null,
 	                    _react2.default.createElement(
-	                      "td",
+	                      'td',
 	                      null,
-	                      "Last Name"
+	                      'Last Name'
 	                    ),
 	                    _react2.default.createElement(
-	                      "td",
+	                      'td',
 	                      null,
-	                      _react2.default.createElement("input", { maxLength: "100", type: "text", className: "form-control", value: this.state.last, onChange: this.handleChange.bind(this, 'last'), style: { marginTop: '5px', height: '34px', marginBottom: 0 }, onBlur: this.validate })
+	                      _react2.default.createElement('input', { maxLength: '100', type: 'text', className: 'form-control', value: this.state.last, onChange: this.handleChange.bind(this, 'last'), style: { marginTop: '5px', height: '34px', marginBottom: 0 }, onBlur: this.validate })
 	                    )
 	                  ),
 	                  _react2.default.createElement(
-	                    "tr",
+	                    'tr',
 	                    null,
 	                    _react2.default.createElement(
-	                      "td",
+	                      'td',
 	                      null,
-	                      "Email"
+	                      'Email'
 	                    ),
 	                    _react2.default.createElement(
-	                      "td",
+	                      'td',
 	                      null,
-	                      _react2.default.createElement("input", { maxLength: "200", type: "text", className: "form-control", value: this.state.email, onChange: this.handleChange.bind(this, 'email'), style: { marginTop: '5px', height: '34px', marginBottom: 0 }, onBlur: this.validate })
+	                      _react2.default.createElement('input', { maxLength: '200', type: 'text', className: 'form-control', value: this.state.email, onChange: this.handleChange.bind(this, 'email'), style: { marginTop: '5px', height: '34px', marginBottom: 0 }, onBlur: this.validate })
 	                    )
 	                  )
 	                )
@@ -41829,17 +42170,17 @@
 	            )
 	          ),
 	          _react2.default.createElement(
-	            "div",
-	            { className: "modal-footer" },
+	            'div',
+	            { className: 'modal-footer' },
 	            _react2.default.createElement(
-	              "button",
-	              { type: "button", className: "btn btn-primary", onClick: this.AddUser },
-	              "Add User"
+	              'button',
+	              { type: 'button', className: 'btn btn-primary', onClick: this.AddUser },
+	              'Add User'
 	            ),
 	            _react2.default.createElement(
-	              "button",
-	              { type: "button", className: "btn btn-default", "data-dismiss": "modal" },
-	              "Cancel"
+	              'button',
+	              { type: 'button', className: 'btn btn-default', 'data-dismiss': 'modal' },
+	              'Cancel'
 	            )
 	          )
 	        )
@@ -41854,12 +42195,12 @@
 	  validatePasswords: function validatePasswords() {
 	    this.validate();
 	    if (this.state.password != this.state.passwordconfirm) {
-	      this.setState({ error: true, errorMessage: "Passwords Must Match" });
+	      this.setState({ error: true, errorMessage: 'Passwords Must Match' });
 	    }
 	  },
 	  validateUsername: function validateUsername() {
 	    this.validate();
-	    if (this.state.username != "") {
+	    if (this.state.username != '') {
 	      IsUniqueUsername(this.state.username, this.IsUniqueUsernameCallback);
 	    }
 	  },
@@ -41891,37 +42232,37 @@
 	  },
 	  validate: function validate() {
 	    var Err = false;
-	    var ErrMessage = "";
+	    var ErrMessage = '';
 	
-	    if (this.state.username == "") {
-	      this.setState({ error: true, errorMessage: "Username is required" });
+	    if (this.state.username == '') {
+	      this.setState({ error: true, errorMessage: 'Username is required' });
 	      return;
 	    }
-	    if (this.state.password == "") {
-	      this.setState({ error: true, errorMessage: "Password is required" });
+	    if (this.state.password == '') {
+	      this.setState({ error: true, errorMessage: 'Password is required' });
 	      return;
 	    }
-	    if (this.state.first == "") {
-	      this.setState({ error: true, errorMessage: "First Name is required" });
+	    if (this.state.first == '') {
+	      this.setState({ error: true, errorMessage: 'First Name is required' });
 	      return;
 	    }
-	    if (this.state.last == "") {
-	      this.setState({ error: true, errorMessage: "Last Name is required" });
+	    if (this.state.last == '') {
+	      this.setState({ error: true, errorMessage: 'Last Name is required' });
 	      return;
 	    }
-	    if (this.state.email == "") {
-	      this.setState({ error: true, errorMessage: "Email is required" });
+	    if (this.state.email == '') {
+	      this.setState({ error: true, errorMessage: 'Email is required' });
 	      return;
 	    }
 	
-	    this.setState({ error: false, errorMessage: "" });
+	    this.setState({ error: false, errorMessage: '' });
 	  }
 	});
 	
 	exports.default = AddUserModal;
 
 /***/ },
-/* 347 */
+/* 348 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41934,15 +42275,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _productAutocomplete = __webpack_require__(331);
+	var _productAutocomplete = __webpack_require__(332);
 	
 	var _productAutocomplete2 = _interopRequireDefault(_productAutocomplete);
 	
-	var _productDisplay = __webpack_require__(332);
+	var _productDisplay = __webpack_require__(333);
 	
 	var _productDisplay2 = _interopRequireDefault(_productDisplay);
 	
-	var _productVendorlist = __webpack_require__(337);
+	var _productVendorlist = __webpack_require__(338);
 	
 	var _productVendorlist2 = _interopRequireDefault(_productVendorlist);
 	
@@ -41962,15 +42303,15 @@
 	    return {
 	      showFeedback: false,
 	      feedbackResult: 0,
-	      feedbackMessage: "",
+	      feedbackMessage: '',
 	      product: {
 	        id: 0,
-	        doc_key: "",
+	        doc_key: '',
 	        vendor_id: 0,
-	        sku: "",
-	        name: "",
+	        sku: '',
+	        name: '',
 	        webSent: false,
-	        webSentDatetime: "",
+	        webSentDatetime: '',
 	        Entities: []
 	      }
 	    };
