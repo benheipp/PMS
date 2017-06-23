@@ -20,26 +20,36 @@ var WebSendComponent = React.createClass({
         last_checked: '',
         status_flag: true,
         send_flag: false,
-        storeId: 0
+        storeId: 0,
+        isTimerPaused: true
       }
     }
   },
   componentDidMount: function () {
-    GetCurrentImportStatus(this.getCurrentImportStatusCallback)
-		    var intId = this.setInterval(() => {
-		      if (this.state.counter >= 15)				{
-        GetCurrentImportStatus(this.getCurrentImportStatusCallback)
-        this.setState({
-			        counter: 0
-        })
-      } else {
-				      this.setState({
-				        counter: this.state.counter + 1
-				      })
-      }
-		    }, 1000)
-		    this.setState({intervalId: intId})
+      GetCurrentImportStatus(this.getCurrentImportStatusCallback)
+      this.initTimer()
   	},
+    initTimer: function () {
+      if (this.state.intervalId === 0) {
+        var intId = this.setInterval(() => {
+          if (this.state.counter >= 15) {
+            GetCurrentImportStatus(this.getCurrentImportStatusCallback)
+            this.setState({
+              counter: 0
+            })
+          } else {
+            this.setState({
+              counter: this.state.counter + 1
+            })
+          }
+        }, 1000)
+        this.setState({intervalId: intId, isTimerPaused: false})
+      }
+    },
+    pauseTimer: function () {
+      this.setState({ isTimerPaused: true, intervalId: 0 })
+      this.clearInterval(this.state.intervalId)
+    },
   	handleSendToWebClick: function () {
   		var statusData = this.state.StatusData
   		var totalRecords = this.state.StatusData.catalog_records_remaining + this.state.StatusData.product_records_remaining
@@ -63,6 +73,7 @@ var WebSendComponent = React.createClass({
   		statusData.status_message = 'Cancelling send...'
   		statusData.send_flag = false
   		this.setState({totalRecordsSendClick: 0, StatusData: statusData })
+      this.pauseTimer()
       UpdateSendToWebFlag(false, 'Cancelled', this.state.selectedStore, this.updateSendToWebFlagCallback)
       UpdateWebSent(1, this.state.selectedStore, this.updateWebSentFlagCallback)
   	},
@@ -75,7 +86,7 @@ var WebSendComponent = React.createClass({
     console.log(webSentFlag);
     if (webSentFlag == 1)
     {
-      
+      this.initTimer()
     } else {
       UpdateSendToWebFlag(true, 'Preparing to send...', this.state.selectedStore, this.updateSendToWebFlagCallback)
     }
@@ -89,7 +100,7 @@ var WebSendComponent = React.createClass({
   		statusData.status_flag = data.status_flag
   		statusData.send_flag = data.send_flag
   		statusData.percent_complete = data.percent_complete
-    statusData.storeId = data.storeId
+      statusData.storeId = data.storeId
   		this.setState({StatusData: statusData, selectedStore: data.storeId})
   	},
   handleViewPendingClick: function () {
@@ -161,7 +172,18 @@ var WebSendComponent = React.createClass({
         </div>
         <div className='row'>
           <div className='col-sm-6'>
-            <strong>Time til next update: {countDown} seconds...</strong>
+            <strong>Time til next update:&nbsp;
+            { this.state.isTimerPaused &&
+              <span>
+                <span className="glyphicon glyphicon-pause" /> Paused
+              </span>
+            }
+            { !this.state.isTimerPaused &&
+              <span>
+                {countDown} seconds...
+              </span>
+            }
+            </strong>
           </div>
           <div className='col-sm-6'>
             <strong>Last Updated: {this.state.StatusData.last_checked} </strong>
