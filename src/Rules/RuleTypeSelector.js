@@ -5,7 +5,7 @@ var RuleTypeSelector = React.createClass({
   render: function () {
     return (
       <select className="form-control" onChange={this.props.onChange}>
-        <option value="0">-- Filter By Rule Type --</option>
+        <option value="">-- Filter By Rule Type --</option>
         { this.props.ruleTypes.map((s) => 
           (<option key={s.id} value={s.rule_type}>{s.rule_type}</option>)
         )}

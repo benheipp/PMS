@@ -34,13 +34,13 @@ var RulesGrid = React.createClass({
               .filter(r => {
                 for(var key in exactFilter) {
                   const filterValue = exactFilter[key];
-                  if (filterValue > 0 && (r[key] === undefined || r[key] !== filterValue)) {
+                  if (filterValue && (r[key] === undefined || r[key] !== filterValue)) {
                     return false;
                   }
                 }
                 for (var includeKey in includesFilter) {
                   const filterValue = includesFilter[includeKey];
-                  if (filterValue.length > 0 && (r[includeKey] === undefined || !r[includeKey].includes(filterValue))) {
+                  if (filterValue && (r[includeKey] === undefined || !r[includeKey].includes(filterValue))) {
                     return false;
                   }
                 }
