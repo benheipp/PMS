@@ -4,6 +4,14 @@ import RuleRow from './RuleRow'
 
 var RulesGrid = React.createClass({
   render: function () {
+    const exactFilter = { 
+      store_id: this.props.storeFilter,
+      rule_type: this.props.ruleTypeFilter,
+    };
+    const includesFilter = {
+      sku: this.props.skuFilter,
+      doc_key: this.props.docKeyFilter,
+    };
     const hasRules = this.props.rules && this.props.rules.length > 0;
     return (
       hasRules &&
@@ -24,14 +32,21 @@ var RulesGrid = React.createClass({
           <tbody>
             { this.props.rules
               .filter(r => {
-                const isStore = this.props.storeFilter <= 0 || r.store_id === this.props.storeFilter;
-                const isType = !this.props.ruleTypeFilter || r.rule_type === this.props.ruleTypeFilter;
-                const isSku = !this.props.skuFilter || r.sku.includes(this.props.skuFilter);
-                const isDocKey = !this.props.docKeyFilter || r.doc_key.includes(this.props.docKeyFilter);
-
-                return isStore && isType && isSku && isDocKey;
+                for(var key in exactFilter) {
+                  const filterValue = exactFilter[key];
+                  if (filterValue > 0 && (r[key] === undefined || r[key] !== filterValue)) {
+                    return false;
+                  }
+                }
+                for (var includeKey in includesFilter) {
+                  const filterValue = includesFilter[includeKey];
+                  if (filterValue.length > 0 && (r[includeKey] === undefined || !r[includeKey].includes(filterValue))) {
+                    return false;
+                  }
+                }
+                return true;
               })
-              .map(r => (<RuleRow key={r.id} rule={r} />))}
+              .map(r => (<RuleRow key={r.id} rule={r} storeLookup={this.props.storeLookup} />))}
           </tbody>
         </table>
     )
@@ -44,6 +59,7 @@ RulesGrid.PropTypes = {
   ruleTypeFilter: PropTypes.number,
   skuFilter: PropTypes.string,
   docKeyFilter: PropTypes.string,
+  storeLookup: PropTypes.array,
 };
 
 export default RulesGrid

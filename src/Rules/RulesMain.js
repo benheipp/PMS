@@ -38,7 +38,8 @@ var RulesMain = React.createClass({
     this.setState({ ruleTypes: data });
   },
   setStoreFilter: function (event) {
-    this.setState({ storeFilter: event.target.value });
+    const storeFilter = parseInt(event.target.value);
+    this.setState({ storeFilter });
   },
   setRuleTypeFilter: function (event) {
     this.setState({ ruleTypeFilter: event.target.value });
@@ -80,6 +81,7 @@ var RulesMain = React.createClass({
               docKeyFilter={this.state.docKeyFilter}
               storeFilter={this.state.storeFilter}
               ruleTypeFilter={this.state.ruleTypeFilter}
+              storeLookup={this.state.stores}
             />
           </div>
         }

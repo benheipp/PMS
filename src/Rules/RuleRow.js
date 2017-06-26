@@ -2,6 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 var RuleRow = React.createClass({
+  lookupStoreName: function() {
+    const store = this.props.storeLookup.find(s => s.id === this.props.rule.store_id);
+
+    return store ? store.store_name : "Unknown";
+  },
   render: function () {
     const datestamp = new Date(this.props.rule.datestamp);
     return (
@@ -31,7 +36,7 @@ var RuleRow = React.createClass({
           {this.props.rule.username}
         </td>
         <td>
-          {this.props.rule.store_id}
+          {this.lookupStoreName()}
         </td>
       </tr>
     )
@@ -40,6 +45,7 @@ var RuleRow = React.createClass({
 
 RuleRow.PropTypes = {
   rule: PropTypes.object,
+  storeLookup: PropTypes.array,
 };
 
 export default RuleRow
