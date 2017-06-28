@@ -52,9 +52,9 @@ var RulesMain = React.createClass({
   },
   render: function () {
     return (
-      <div className="container">
-        <div>
-          <h4>Filter Rules</h4>
+      <div>
+        <div className="container">
+          <h4>Filters</h4>
           <div className="row">
             <div className="col-xs-4">
               <StoreSelector stores={this.state.stores} onChange={this.setStoreFilter} />
@@ -73,7 +73,7 @@ var RulesMain = React.createClass({
           </div>
         </div>
         { this.state.rules.length > 0 &&
-          <div>
+          <div style={{ margin: '0 2%' }}>
             <h4>Rules</h4>
             <RulesGrid
               rules={this.state.rules}
