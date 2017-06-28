@@ -1,5 +1,6 @@
 import React from 'react'
 import FeedBack from '../Controls/feedback'
+import CatalogTypeRules from './CatalogTypeRules/catalogtyperules'
 
 var CatalogTypeAssignment = React.createClass({
   getInitialState: function () {
@@ -65,6 +66,12 @@ var CatalogTypeAssignment = React.createClass({
             <button className='btn btn-success' onClick={this.handleApplyRuleClick}><span className='glyphicon glyphicon-arrow-up' /> Apply Rule</button>
           </div>
         </div>
+        <div className='row'>
+          <div className='col-sm-12' style={{marginTop:'50px'}}>
+            <b>Current Catalog Type Rules</b>
+            <CatalogTypeRules />
+          </div>
+        </div>
       </div>)
   },
   handleNodeLevelChange: function (event) {
@@ -78,6 +85,7 @@ var CatalogTypeAssignment = React.createClass({
   },
   addCatalogTypeRuleCallback: function (data) {
      this.setState({ showFeedback: true, feedbackResult: data.Result, feedbackMessage: data.Message})
+     this.forceUpdate();
   },
   createVendorItems: function () {
     let items = []
