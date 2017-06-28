@@ -69,7 +69,7 @@ var RulesGrid = React.createClass({
     const rows = this.props.rules
       .filter(applyFilters)
       .sort(this.sortBy(this.state.sortField, this.state.isReverseSort, this.getPrimer()))
-      .map(r => (<RuleRow key={r.id} rule={r} storeLookup={this.props.storeLookup} />));
+      .map(r => (<RuleRow key={r.id} rule={r} storeLookup={this.props.storeLookup} rulesLookup={this.props.rulesLookup} />));
     const hasVisibleRules = rows.length > 0;
     
     return (
@@ -116,6 +116,7 @@ RulesGrid.PropTypes = {
   docKeyFilter: PropTypes.string,
   editedFieldFilter: PropTypes.string,
   storeLookup: PropTypes.array,
+  rulesLookup: PropTypes.array,
 };
 
 export default RulesGrid

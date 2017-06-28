@@ -2,6 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 var RuleRow = React.createClass({
+  getRuleDescription: function () {
+    const ruleType = this.props.rulesLookup.find(r => r.rule_type === this.props.rule.rule_type);
+    return ruleType ? ruleType.description : null;
+  },
   render: function () {
     const datestamp = new Date(this.props.rule.datestamp);
     return (
@@ -10,7 +14,7 @@ var RuleRow = React.createClass({
           {this.props.rule.doc_key}
         </td>
         <td>
-          {this.props.rule.rule_type}
+          <span style={{ cursor: 'help' }} title={this.getRuleDescription()}>{this.props.rule.rule_type}</span>
         </td>
         <td>
           {this.props.rule.sku}
@@ -41,6 +45,7 @@ var RuleRow = React.createClass({
 RuleRow.PropTypes = {
   rule: PropTypes.object,
   storeLookup: PropTypes.array,
+  rulesLookup: PropTypes.array,
 };
 
 export default RuleRow
