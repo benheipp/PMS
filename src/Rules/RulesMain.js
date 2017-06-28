@@ -4,6 +4,7 @@ import RuleTypeSelector from './RuleTypeSelector'
 import SkuFilter from './SkuFilter'
 import DocKeyFilter from './DocKeyFilter'
 import RulesGrid from './RulesGrid'
+import EditedFieldFilter from './EditedFieldFilter'
 
 var RulesMain = React.createClass({
   getInitialState: function () {
@@ -15,6 +16,7 @@ var RulesMain = React.createClass({
       ruleTypeFilter: "",
       docKeyFilter: "",
       skuFilter: "",
+      editedFieldFilter: "",
     }
   },
   componentWillMount: function () {
@@ -50,6 +52,9 @@ var RulesMain = React.createClass({
   setDocKeyFilter: function (event) {
     this.setState({ docKeyFilter: event.target.value });
   },
+  setEditedFieldFilter: function (event) {
+    this.setState({ editedFieldFilter: event.target.value });
+  },
   render: function () {
     return (
       <div>
@@ -61,6 +66,9 @@ var RulesMain = React.createClass({
             </div>
             <div className="col-xs-4">
               <RuleTypeSelector ruleTypes={this.state.ruleTypes} onChange={this.setRuleTypeFilter} />
+            </div>
+            <div className="col-xs-4">
+              <EditedFieldFilter onChange={this.setEditedFieldFilter} editedFields={[...new Set(this.state.rules.map(r => r.edited_field))].filter(f => f)} />
             </div>
           </div>
           <div className="row top-10">
@@ -81,6 +89,7 @@ var RulesMain = React.createClass({
               docKeyFilter={this.state.docKeyFilter}
               storeFilter={this.state.storeFilter}
               ruleTypeFilter={this.state.ruleTypeFilter}
+              editedFieldFilter={this.state.editedFieldFilter}
               storeLookup={this.state.stores}
             />
           </div>

@@ -45,6 +45,7 @@ var RulesGrid = React.createClass({
     const exactFilters = { 
       store_id: this.props.storeFilter,
       rule_type: this.props.ruleTypeFilter,
+      edited_field: this.props.editedFieldFilter,
     };
     const includesFilter = {
       sku: this.props.skuFilter,
@@ -113,6 +114,7 @@ RulesGrid.PropTypes = {
   ruleTypeFilter: PropTypes.number,
   skuFilter: PropTypes.string,
   docKeyFilter: PropTypes.string,
+  editedFieldFilter: PropTypes.string,
   storeLookup: PropTypes.array,
 };
 
