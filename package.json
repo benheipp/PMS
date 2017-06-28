@@ -14,6 +14,7 @@
     "babel-polyfill": "6.9.1",
     "debounce": "1.0.0",
     "fixed-data-table": "^0.6.4",
+    "prop-types": "^15.5.10",
     "react": "15.2.0",
     "react-autocomplete": "^1.5.9",
     "react-dom": "15.2.0",

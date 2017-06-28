@@ -21,9 +21,9 @@ var CatalogTree = React.createClass({
       productData: [],
       componentName: '',
       componentImage: '',
-      showFeedback: true,
+      showFeedback: false,
       feedbackResult: 0,
-      feedbackMessage: 'Loading...',
+      feedbackMessage: '',
       showBreadCrumbModal: false,
       breadCrumbText: '',
       loading: false,
@@ -63,7 +63,7 @@ var CatalogTree = React.createClass({
     }
 
     var catVis;
-    if (this.state.showComponent)
+    if (this.state.showComponent || this.state.showProductList)
     {
       catVis = {display:'none'}
     } else {
@@ -75,10 +75,11 @@ var CatalogTree = React.createClass({
     }, this)
     return (
       <div style={stylemargin}>
+        <a name="top"></a>
         {this.props.disabled == '1' ? <h1>Disabled Items</h1> : null }
         <BreadCrumb nodeNameCrumb={this.state.nodeNameCrumb} docKey={this.state.docKey} callbackBreadCrumbClick={this.BreadCrumbClick} handleEditBreadCrumbText={this.handleEditBreadCrumbText} selectedStore={this.props.selectedStore} handleClearSelectedStore={this.props.handleClearSelectedStore} />
         {this.state.showBreadCrumbModal ? <BreadCrumbModal docKey={this.state.docKey} breadCrumbText={this.state.breadCrumbText} handleHideModal={this.handleHideModal} handleSaveBreadCrumbClick={this.handleSaveBreadCrumbClick} /> : null}
-        <FeedBack noTimer='true' Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
+        <FeedBack noTimer="true" Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
         { this.state.showComponent ? <ComponentLevel component={this.state.componentData} componentName={this.state.componentName} diagramUrl={this.state.componentImage} docKey={this.state.docKey} showFeedBack={this.showFeedBack} nodeName={this.state.nodeName} nodeLevel={this.state.nodeLevel} reloadDataFromComponent={this.reloadDataFromComponent} storeLookup={this.props.storeLookup} store={this.props.selectedStore.value} /> : null }
         { this.state.showProductList ? <ProductList products={this.state.productData} /> : null}
       <div style={catVis}>
@@ -139,9 +140,9 @@ var CatalogTree = React.createClass({
     this.updateAllCatalogs(docKey)
   },
   onNodeClick: function (docKey, nodeName, nodeLevel) {
+    this.setState({ docKey: docKey, nodeNameCrumb: this.state.nodeNameCrumb + '[|]' + nodeName, nodeLevel: nodeLevel + 1, showFeedback: true,feedbackMessage:"Loading..." })
     getNodes(nodeLevel + 1, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData)
     GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback)
-    this.setState({ docKey: docKey, nodeNameCrumb: this.state.nodeNameCrumb + '[|]' + nodeName, nodeLevel: nodeLevel + 1, showFeedback: false })
     this.updateAllCatalogs(docKey)
   },
   handleExportClick: function(){
@@ -153,17 +154,19 @@ var CatalogTree = React.createClass({
   handleNewData: function (data, docKey, nodeName) {
     this.setState({ node: data, nodeName: nodeName })
     if (data.length == 0 && this.state.nodeLevel == 1) {
-      this.setState({noResultsMessage: true})
+      this.setState({noResultsMessage: true, showFeedback: false, feedbackMessage:""})
     }
     if (data.length == 0 && docKey != null) {
       if (docKey.includes('catalog/aftermarket')) {
         GetProductList(docKey, this.props.selectedStore.value, this.HandleProductListData)
+        this.setState({showFeedback: false, feedbackMessage:"" })
       } else {
         getComponentProducts(docKey, nodeName, this.props.selectedStore.value, this.HandleComponentData)
+        this.setState({showFeedback: false, feedbackMessage:"" })
       }
     } else {
       this.setState({ componentData: [] })
-      this.setState({ showComponent: false, showProductList: false, showFeedback: false })
+      this.setState({ showComponent: false, showProductList: false, showFeedback: false, feedbackMessage:"" })
     }
   },
   BreadCrumbClick: function (nodeLevel, docKey, nodeNameCrumb) {
@@ -175,15 +178,14 @@ var CatalogTree = React.createClass({
       newCrumb = newCrumb + splitCrumb[i] + '[|]'
     }
     newCrumb = newCrumb.substring(0, newCrumb.length - 3)
-    console.log(newCrumb)
-
+    this.setState({ docKey: docKey, nodeLevel: nodeLevel, showFeedback: true, feedbackMessage:"Loading...", nodeNameCrumb: newCrumb })
     getNodes(nodeLevel, docKey, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData)
     GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback)
-    this.setState({ docKey: docKey, nodeLevel: nodeLevel, showFeedback: false, nodeNameCrumb: newCrumb })
     this.updateAllCatalogs(docKey)
   },
   HandleProductListData: function (data) {
-    this.setState({ productData: data, showProductList: true })
+    this.setState({ productData: data, showProductList: true, showFeedBack:false,feedbackMessage:"" })
+    console.log("testing");
   },
   HandleComponentData: function (data, componentName) {
     var imgPrefix
@@ -198,7 +200,7 @@ var CatalogTree = React.createClass({
         imgPrefix = '//cdn.boats.net/diagram/'
         break
     }
-    this.setState({ componentData: data, componentName: componentName, componentImage: imgPrefix + data[0].ImageUrl + '.png', showComponent: true })
+    this.setState({ componentData: data, componentName: componentName, componentImage: imgPrefix + data[0].ImageUrl + '.png', showComponent: true, showFeedBack:false,feedbackMessage:"" })
   },
   showFeedBack: function (data) {
     this.setState({ showFeedback: true, feedbackResult: data.Result, feedbackMessage: data.Message})

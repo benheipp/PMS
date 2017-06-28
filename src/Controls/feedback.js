@@ -7,14 +7,14 @@ var FeedBack = React.createClass({
   },
   componentDidMount: function () {
     if (this.props.noTimer != undefined && this.props.noTimer == 'true') {
-      this.setTimer()
+     // this.setTimer()
     } else {
       this.setTimer()
     }
   },
   componentWillReceiveProps: function (nextProps) {
     if (this.props.noTimer != undefined && this.props.noTimer == 'true') {
-      this.setTimer()
+     // this.setTimer()
     } else {
       this.setTimer()
     }
@@ -56,9 +56,11 @@ var FeedBack = React.createClass({
       height: '50px'
     }
 
-    if (this.state.visible == true) {
+    if (this.props.visible == true) {
       return (<div className={classN}>{this.props.Message}</div>)
-    } else {
+    }
+    
+     else {
       return (
         <div>
           <div className={classN} style={fadeOut}>{this.props.Message}</div>

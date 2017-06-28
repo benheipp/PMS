@@ -81,7 +81,7 @@ var CatalogTreeRow = React.createClass({
           <td style={{verticalAlign:'middle'}}>{this.props.node.type_name}</td>
           <td><button disabled={disableVar} onClick={this.handleEditClick.bind(this, this.props.node)} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-pencil' /> Edit</button></td>
           <td>{QuickMoveVis ? <button onClick={this.quickMove} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Quick Move</button> : null }</td>
-          <td>{this.props.copyActive && QuickMoveVis ? <button onClick={this.quickPaste} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Paste</button> : null }</td>
+          <td>{this.props.copyActive && QuickMoveVis ? <a href="#top"><button onClick={this.quickPaste} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Paste</button></a> : null }</td>
           <td><button onClick={this.showCopyModal} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Custom Copy</button>
           {this.state.showCopyModal ? <CopyModal handleHideModal={this.handleHideCopyModal} store={this.props.store} DocKey={this.props.node.doc_key} /> : null }
           </td>
@@ -130,7 +130,6 @@ var CatalogTreeRow = React.createClass({
   },
   handlePasteCallback: function (data) {
     this.props.showFeedBack(data)
-    this.props.reloadData(node.doc_key, node.name, nodeLevel)
   },
   handleHideCopyModal: function () {
     this.setState({ showCopyModal: false })

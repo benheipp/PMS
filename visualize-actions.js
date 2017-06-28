@@ -607,7 +607,7 @@ function GetRuleTypes (callback) {
       localStorage.clear()
       window.location.href = '/'
     }
-  });
+  })
 }
 
 function GetRules (callback) {
