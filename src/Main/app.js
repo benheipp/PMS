@@ -8,6 +8,7 @@ import auth from '../Login/auth'
 import ProductMain from '../Product/product'
 import UserAdminMain from '../UserAdmin/useradminmain'
 import ProductStandAlone from '../Product/product-stand-alone'
+import RulesMain from '../Rules/rulesmain'
 
 const App = React.createClass({
   getInitialState () {
@@ -26,10 +27,11 @@ const App = React.createClass({
     auth.login()
   },
   render: function () {
-    var renderImport, renderCatalog, renderProduct
+    var renderImport, renderCatalog, renderProduct, renderRules
     if (auth.loggedIn() == true && localStorage.ImportVisibility == 'true') { renderImport = true } else { renderImport = false }
     if (auth.loggedIn() == true && localStorage.CatalogVisibility == 'true') { renderCatalog = true } else { renderCatalog = false }
     if (auth.loggedIn() == true && localStorage.ProductVisibility == 'true') { renderProduct = true } else { renderProduct = false }
+    if (auth.loggedIn() == true && localStorage.RuleVisibility == 'true') { renderRules = true } else { renderRules = false }
     return (<div>
       <div className='navbar navbar-default navbar-static-top'>
         <div className='container'>
@@ -41,6 +43,7 @@ const App = React.createClass({
               {renderImport ? <li><Link to='import'>Data Tools</Link></li> : null}
               {renderCatalog ? <li><Link to='catalog'>Catalog</Link></li> : null}
               {renderProduct ? <li><Link to='product'>Products</Link></li> : null}
+              {renderRules && <li><Link to='rules'>Rules</Link></li>}
             </ul>
             <ul className='nav navbar-nav navbar-right'>
               {auth.loggedIn() ? <li><Link to='user'><span className='glyphicon glyphicon-user' /> {localStorage.username}</Link></li> : null}
@@ -92,6 +95,7 @@ render(
       <Route path='/product' component={ProductMain} onEnter={requireAuth} />
       <Route path='/user' component={UserAdminMain} onEnter={requireAuth} />
       <Route path='/product-detail' component={ProductStandAlone} onEnter={requireAuth} />
+      <Route path='/rules' component={RulesMain} onEnter={requireAuth} />
     </Route>
   </Router>
 , document.getElementById('root'))
