@@ -38,7 +38,7 @@ var PasteModal = React.createClass({
     MoveMultiple(this.state.copyDocKeys, this.props.targetDocKey, this.props.store, this.handlePasteCallback);
   },
   handlePasteCallback: function (data) {
-    if (this.data.Result === 0) { this.setState({ copyDocKeys: [] }); }
+    if (data.Result === 0) { this.setState({ copyDocKeys: [] }); }
     this.showFeedback(data);
     this.setState({ disableButtons: false });
   },
