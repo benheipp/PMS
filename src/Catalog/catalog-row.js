@@ -2,6 +2,7 @@ import React from 'react'
 import StoreLookup from '../Controls/store-lookup'
 import NodeHistoryModal from './catalog-node-history'
 import CopyModal from './copy-modal'
+import PasteModal from './paste-modal'
 
 var CatalogTreeRow = React.createClass({
   getInitialState: function () {
@@ -80,10 +81,11 @@ var CatalogTreeRow = React.createClass({
           <td style={{verticalAlign:'middle'}}><a href='#' onClick={this.handleClick.bind(this, this.props.node.doc_key, this.props.node.name, this.props.nodeLevel)}>{this.props.node.name}</a></td>
           <td style={{verticalAlign:'middle'}}>{this.props.node.type_name}</td>
           <td><button disabled={disableVar} onClick={this.handleEditClick.bind(this, this.props.node)} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-pencil' /> Edit</button></td>
-          <td>{QuickMoveVis ? <button onClick={this.quickMove} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Quick Move</button> : null }</td>
-          <td>{this.props.copyActive && QuickMoveVis ? <a href="#top"><button onClick={this.quickPaste} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Paste</button></a> : null }</td>
+          <td>{QuickMoveVis ? <button onClick={this.quickMove} className={`btn btn-sm btn-default${this.props.copyDocKeys.indexOf(this.props.node.doc_key) > -1 ? ' active' : ''}`}><i className='glyphicon glyphicon-copy' /> Quick Move</button> : null }</td>
+          <td>{this.props.copyActive && QuickMoveVis ? <a href="#top"><button onClick={this.showPasteModal} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Paste</button></a> : null }</td>
           <td><button onClick={this.showCopyModal} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Custom Copy</button>
           {this.state.showCopyModal ? <CopyModal handleHideModal={this.handleHideCopyModal} store={this.props.store} DocKey={this.props.node.doc_key} /> : null }
+          {this.state.showPasteModal ? <PasteModal handleHideModal={this.handleHidePasteModal} copyDocKeys={this.props.copyDocKeys} targetDocKey={this.props.node.doc_key} store={this.props.store} /> : null }
           </td>
           {disableVis ? <td style={{verticalAlign:'middle'}}>
             <input
@@ -123,9 +125,11 @@ var CatalogTreeRow = React.createClass({
       Result:'',
       Message:'Attempting to Copy Data'
     }
-    this.props.showFeedBack(data)
-    var pieces = this.props.copyDocKey.split('/')
-    Move(pieces[pieces.length - 1], this.props.copyDocKey, this.props.node.doc_key, this.props.store, this.handlePasteCallback)
+    for(var docKey in this.props.copyDocKeys) {
+      this.props.showFeedBack(data)
+      var pieces = this.props.copyDocKey.split('/')
+      Move(pieces[pieces.length - 1], docKey, this.props.node.doc_key, this.props.store, this.handlePasteCallback)
+    }
     this.props.resetQuickMove()
   },
   handlePasteCallback: function (data) {
@@ -134,6 +138,13 @@ var CatalogTreeRow = React.createClass({
   handleHideCopyModal: function () {
     this.setState({ showCopyModal: false })
     this.props.reloadData(this.props.node.doc_key, this.props.node.name, this.props.nodeLevel)
+  },
+  handleHidePasteModal: function () {
+    this.setState({ showPasteModal: false })
+    this.props.reloadData(this.props.node.doc_key, this.props.node.name, this.props.nodeLevel)
+  },
+  showPasteModal: function () {
+    this.setState({ showPasteModal: true })
   },
   showCopyModal: function () {
     this.setState({ showCopyModal: true })

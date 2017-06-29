@@ -30,7 +30,7 @@ var CatalogTree = React.createClass({
       noResultsMessage: false,
       showDisabled: false,
       copyActive: false,
-      copyDocKey: ''
+      copyDocKeys: [],
     }
   },
   componentWillMount: function () {
@@ -71,7 +71,7 @@ var CatalogTree = React.createClass({
     }
 
     var rows = this.state.node.map(function (node) {
-      return <CatalogTreeRow catalogTypes={this.props.catalogTypes} storeLookup={this.props.storeLookup} node={node} key={node.key} nodeLevel={this.state.nodeLevel} onNodeClick={this.onNodeClick} showFeedBack={this.showFeedBack} reloadData={this.reloadData} storeUpdate={this.storeUpdate} updateAllCatalogs={this.updateAllCatalogs} store={this.props.selectedStore.value} quickMove={this.quickMove} resetQuickMove={this.resetQuickMove} copyActive={this.state.copyActive} copyDocKey={this.state.copyDocKey} />
+      return <CatalogTreeRow catalogTypes={this.props.catalogTypes} storeLookup={this.props.storeLookup} node={node} key={node.key} nodeLevel={this.state.nodeLevel} onNodeClick={this.onNodeClick} showFeedBack={this.showFeedBack} reloadData={this.reloadData} storeUpdate={this.storeUpdate} updateAllCatalogs={this.updateAllCatalogs} store={this.props.selectedStore.value} quickMove={this.quickMove} resetQuickMove={this.resetQuickMove} copyActive={this.state.copyActive} copyDocKeys={this.state.copyDocKeys} />
     }, this)
     return (
       <div style={stylemargin}>
@@ -90,7 +90,6 @@ var CatalogTree = React.createClass({
               defaultChecked={this.state.showDisabled}
               onChange={this.handleShowDisabledChange} />
             </div> : null }
-        {this.state.copyActive ? <div>Copy Doc Key: {this.state.copyDocKey} </div> : null}
         <table className='table table-striped'>
           <tbody>
             <tr>
@@ -111,6 +110,15 @@ var CatalogTree = React.createClass({
             {this.state.noResultsMessage ? <h4>No Results</h4> : null }
           </tbody>
         </table>
+        { this.state.copyActive ? 
+          <div>
+            Copy Doc Keys
+            <ul>
+              {this.state.copyDocKeys.map(d => (<li>{d}</li>))}
+            </ul>
+          </div> : 
+          null
+        }
         </div>
       </div>
     )
@@ -128,10 +136,14 @@ var CatalogTree = React.createClass({
     this.updateAllCatalogs(docKey)
   },
   quickMove: function (doc_key) {
-    this.setState({copyActive: true, copyDocKey: doc_key})
+    let copyDocKeys = this.state.copyDocKeys;
+    const index = copyDocKeys.indexOf(doc_key);
+    index === -1 ? copyDocKeys.push(doc_key) : copyDocKeys.splice(index, 1);
+
+    this.setState({copyActive: copyDocKeys.length > 0, copyDocKeys})
   },
   resetQuickMove: function () {
-    this.setState({copyActive: false, copyDocKey: ''})
+    this.setState({copyActive: false, copyDocKeys: []})
   },
   reloadDataFromComponent: function (docKey, nodeName, nodeLevel) {
     getNodes(nodeLevel, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData)

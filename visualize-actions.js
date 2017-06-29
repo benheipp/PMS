@@ -336,6 +336,23 @@ function Move (nodeValue, originDocKey, destinationDocKey, store_id, callback) {
    })
 }
 
+function MoveMultiple (originDocKeys, destinationDocKey, store_id, callback) {
+  const data = { originDocKeys: originDocKeys, destinationDocKey: destinationDocKey, username: localStorage.username, store_id: store_id, token: localStorage.token };
+  return $.ajax({
+    dataType: 'json',
+    url: url + '/api/Pms/Move',
+    traditional: false,
+    data: data
+  })
+  .done(function (data) { callback(data) })
+  .fail(function (data) {
+    if (data.status == '401') {
+      localStorage.clear()
+      window.location.href = '/'
+    }
+  })
+}
+
 function MoveStore0 (nodeValue, originDocKey, destinationDocKey, store_id, destination_store_id, callback) {
   return $.getJSON(url + '/api/Pms/Move', {nodeValue: nodeValue, originDocKey: originDocKey, destinationDocKey: destinationDocKey, username: localStorage.username, store_id: store_id, destination_store_id: destination_store_id, token: localStorage.token })
   .done(function (data) { callback(data) })
