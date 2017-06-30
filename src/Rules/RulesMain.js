@@ -91,6 +91,7 @@ var RulesMain = React.createClass({
               ruleTypeFilter={this.state.ruleTypeFilter}
               editedFieldFilter={this.state.editedFieldFilter}
               storeLookup={this.state.stores}
+              rulesLookup={this.state.ruleTypes}
             />
           </div>
         }

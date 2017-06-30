@@ -618,8 +618,9 @@ function GetRules (callback) {
       localStorage.clear()
       window.location.href = '/'
     }
-  })
+  });
 }
+
 function GetRulesByType (type, callback) {
   $.getJSON(url + '/api/Pms/GetRulesByType', { type: type, token: localStorage.token })
       .done(function (data) { callback(data) })
