@@ -35,12 +35,33 @@ var PasteModal = React.createClass({
     }
     this.setState({ disableButtons: true });
     this.showFeedback(data);
-    MoveMultiple(this.state.copyDocKeys, this.props.targetDocKey, this.props.store, this.handlePasteCallback);
+    MoveMultiple(this.state.copyDocKeys, this.props.targetDocKey, this.props.store, this.handlePasteCallback, this.pasteErrorCallback);
   },
-  handlePasteCallback: function (data) {
-    if (data.Result === 0) { this.setState({ copyDocKeys: [] }); }
+  pasteErrorCallback: function (msg) {
+    const data = { Result: 1, Message: msg };
     this.showFeedback(data);
     this.setState({ disableButtons: false });
+  },
+  handlePasteCallback: function (data) {
+    if (data.Result === 0) { 
+      this.removeAll(); 
+    }
+    else {
+      const docKeysToRemove = [];
+      this.state.copyDocKeys.forEach(docKey => {
+        if (data.Message.indexOf(`${docKey}`) < 0) {
+          docKeysToRemove.push(docKey);
+        }
+      });
+      docKeysToRemove.forEach(d => { this.handleRemove(d); });
+    }
+    this.showFeedback(data);
+    this.setState({ disableButtons: false });
+  },
+  removeAll: function () {
+    const copyDocKeys = this.state.copyDocKeys;
+    copyDocKeys.splice(0, copyDocKeys.length);
+    this.setState({ copyDocKeys });
   },
   render () {
     return (
@@ -78,8 +99,15 @@ var PasteModal = React.createClass({
               </table>
             </div>
             <div className='modal-footer'>
-              <button disabled={this.state.disableButtons} type="button" className="btn btn-primary btn-large" onClick={this.handlePaste}>Quick Paste</button>
-              <button disabled={this.state.disableButtons} type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+              { this.state.copyDocKeys.length > 0 &&
+                <div>
+                  <button  disabled={this.state.disableButtons} type="button" className="btn btn-danger" onClick={this.removeAll}>Remove All</button>
+                  <button disabled={this.state.disableButtons} type="button" className="btn btn-primary btn-large" onClick={this.handlePaste}>Quick Paste</button>
+                </div>
+              }
+              <div className="top-10">
+                <button disabled={this.state.disableButtons} type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
             </div>
           </div>
         </div>

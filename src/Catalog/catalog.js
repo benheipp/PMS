@@ -47,6 +47,14 @@ var CatalogTree = React.createClass({
   componentDidMount: function () {
     getNodes(1, null, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData)
   },
+  handleQuickMoveAll: function () {
+    const copyDocKeys = this.state.copyDocKeys;
+    this.state.node.forEach(n => {
+      const index = copyDocKeys.indexOf(n.doc_key);
+      if (index < 0) { copyDocKeys.push(n.doc_key); }
+    });
+    this.setState({ copyDocKeys, copyActive: copyDocKeys.length > 0 });
+  },
   render: function () {
     var stylemargin = {
       marginTop: '60px'
@@ -90,13 +98,24 @@ var CatalogTree = React.createClass({
               defaultChecked={this.state.showDisabled}
               onChange={this.handleShowDisabledChange} />
             </div> : null }
+        { this.state.copyDocKeys && this.state.copyDocKeys.length > 0 &&
+          <div>
+            {`${this.state.copyDocKeys.length} doc keys selected to copy`}
+          </div>  
+        }
         <table className='table table-striped'>
           <tbody>
             <tr>
               <th style={{width:'65%'}}><b>Node</b></th>
               <th style={{width:'5%'}}><b>Type</b></th>
               <th style={{width:'5%'}} />
-              <th style={{width:'5%'}} />
+              <th style={{width:'5%'}}>
+                { this.state.nodeLevel !== 1 &&
+                  <button style={{ width:'100%' }} type="button" onClick={this.handleQuickMoveAll} className="btn btn-sm btn-default">
+                    <span className="glyphicon glyphicon-copy" />Move All
+                  </button>
+                }
+              </th>
               <th style={{width:'5%'}} />
               <th style={{width:'5%'}} />
               {disableVis ? <th style={{width:'5%'}}><b>Disabled</b></th> : null }
@@ -110,11 +129,11 @@ var CatalogTree = React.createClass({
             {this.state.noResultsMessage ? <h4>No Results</h4> : null }
           </tbody>
         </table>
-        { this.state.copyActive ? 
+        { this.state.copyDocKeys && this.state.copyDocKeys.length > 0 ? 
           <div>
             Copy Doc Keys
             <ul>
-              {this.state.copyDocKeys.map(d => (<li>{d}</li>))}
+              {this.state.copyDocKeys.map(d => (<li key={d}>{d}</li>))}
             </ul>
           </div> : 
           null

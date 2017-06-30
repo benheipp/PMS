@@ -13,7 +13,7 @@ var CatalogTreeRow = React.createClass({
       showHistoryModal: false,
       showCopyModal: false,
       nodeHistoryData: [],
-      selectedCatalogType: this.props.node.type_id
+      selectedCatalogType: this.props.node.type_id,
     }
   },
   render: function () {
@@ -82,7 +82,7 @@ var CatalogTreeRow = React.createClass({
           <td style={{verticalAlign:'middle'}}>{this.props.node.type_name}</td>
           <td><button disabled={disableVar} onClick={this.handleEditClick.bind(this, this.props.node)} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-pencil' /> Edit</button></td>
           <td>{QuickMoveVis ? <button onClick={this.quickMove} className={`btn btn-sm btn-default${this.props.copyDocKeys.indexOf(this.props.node.doc_key) > -1 ? ' active' : ''}`}><i className='glyphicon glyphicon-copy' /> Quick Move</button> : null }</td>
-          <td>{this.props.copyActive && QuickMoveVis ? <a href="#top"><button onClick={this.showPasteModal} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Paste</button></a> : null }</td>
+          <td>{this.props.copyActive && this.props.copyDocKeys.length > 0 && QuickMoveVis ? <a href="#top"><button onClick={this.showPasteModal} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-paste' /> Paste</button></a> : null }</td>
           <td><button onClick={this.showCopyModal} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Custom Copy</button>
           {this.state.showCopyModal ? <CopyModal handleHideModal={this.handleHideCopyModal} store={this.props.store} DocKey={this.props.node.doc_key} /> : null }
           {this.state.showPasteModal ? <PasteModal handleHideModal={this.handleHidePasteModal} copyDocKeys={this.props.copyDocKeys} targetDocKey={this.props.node.doc_key} store={this.props.store} /> : null }
