@@ -102,7 +102,7 @@ var PasteModal = React.createClass({
               { this.state.copyDocKeys.length > 0 &&
                 <div>
                   <button  disabled={this.state.disableButtons} type="button" className="btn btn-danger" onClick={this.removeAll}>Remove All</button>
-                  <button disabled={this.state.disableButtons} type="button" className="btn btn-primary btn-large" onClick={this.handlePaste}>Quick Paste</button>
+                  <button disabled={this.state.disableButtons} type="button" className="btn btn-primary btn-large" onClick={this.handlePaste}><span className="glyphicon glyphicon-paste" />Paste</button>
                 </div>
               }
               <div className="top-10">
