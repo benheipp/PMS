@@ -336,6 +336,26 @@ function Move (nodeValue, originDocKey, destinationDocKey, store_id, callback) {
    })
 }
 
+function MoveMultiple (originDocKeys, destinationDocKey, store_id, callback, errorCallback) {
+  return $.ajax({
+    type: 'POST',
+    dataType: 'json',
+    url: `${url}/api/Pms/Move?destinationDocKey=${destinationDocKey}&store_id=${store_id}&username=${localStorage.username}&token=${localStorage.token}`,
+    data: JSON.stringify(originDocKeys),
+    contentType: 'application/json',
+  })
+  .done(function (data) { callback(data) })
+  .fail(function (data) {
+    if (data.status == '401') {
+      localStorage.clear()
+      window.location.href = '/'
+    } else {
+      const error = JSON.parse(data.responseText);
+      errorCallback(`${error.Message} ${error.ExceptionMessage}`);
+    }
+  })
+}
+
 function MoveStore0 (nodeValue, originDocKey, destinationDocKey, store_id, destination_store_id, callback) {
   return $.getJSON(url + '/api/Pms/Move', {nodeValue: nodeValue, originDocKey: originDocKey, destinationDocKey: destinationDocKey, username: localStorage.username, store_id: store_id, destination_store_id: destination_store_id, token: localStorage.token })
   .done(function (data) { callback(data) })
