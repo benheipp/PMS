@@ -651,3 +651,14 @@ function GetRulesByType (type, callback) {
      }
    })
 }
+
+function GetMissingCatalogTypes (callback) {
+  $.getJSON(url + '/api/Pms/GetMissingCatalogTypes', { token: localStorage.token })
+      .done(function (data) { callback(data) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}
