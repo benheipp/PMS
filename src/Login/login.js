@@ -8,7 +8,8 @@ const LoginControl = withRouter(
 
     getInitialState () {
       return {
-        error: false
+        error: false,
+        errorMessage: ''
       }
     },
 
@@ -19,7 +20,7 @@ const LoginControl = withRouter(
       const pass = this.refs.pass.value
 
       auth.login(email, pass, (loggedIn) => {
-        if (!loggedIn) { return this.setState({ error: true }) }
+        if (!loggedIn) { return this.setState({ error: true, errorMessage: 'Bad login information' }) }
 
         const { location } = this.props
 
@@ -31,6 +32,19 @@ const LoginControl = withRouter(
       })
     },
 
+    handleReset (event) {
+      event.preventDefault();
+
+      const username = this.refs.email.value;
+      if (!username || username.length < 1) {
+        this.setState({ error: true, errorMessage: 'Enter username to reset password' });
+      }
+
+      auth.resetPassword(username, (message) => {
+        this.setState({ error: true, errorMessage: message })
+      });
+    },
+
     render () {
       return (
         <div>
@@ -38,14 +52,17 @@ const LoginControl = withRouter(
 
             <h1>ODN Product Management Login</h1>
             <form onSubmit={this.handleSubmit}>
-              <input type='text' ref='email' placeholder='email' />
+              <input type='text' ref='email' placeholder='username' />
               <input type='password' ref='pass' placeholder='password' />
               <input type='submit' name='login' className='login loginmodal-submit' value='Login' />
+              <button type="button" className="btn btn-default" onClick={this.handleReset}>
+                Reset Password
+              </button>
             </form>
 
             <div className='login-help'>
               <div>{this.props.message}</div>
-              {this.state.error && (<p>Bad login information</p>)}
+              {this.state.error && (<p>{this.state.errorMessage}</p>)}
             </div>
           </div>
         </div>

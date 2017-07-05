@@ -94,7 +94,11 @@ module.exports = {
     return !!localStorage.token
   },
 
-  onChange () { }
+  onChange () { },
+
+  resetPassword (user, callback) {
+    ResetPassword(user, callback)
+  }
 }
 
 function loginRequest (user, pass, cb) {
@@ -116,3 +120,4 @@ function loginCallbackfunc (data, cb) {
     cb({ authenticated: false })
   }
 }
+

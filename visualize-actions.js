@@ -225,6 +225,17 @@ function Login (username, password, cb, callback) {
    })
 }
 
+function ResetPassword(username, callback) {
+  return $.post(`${url}/api/Account/ResetPassword?username=${username}`)
+  .done(function (data) { callback(data) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}
+
 function GetCurrentImportStatus (callback) {
   return $.getJSON(url + '/api/Pms/GetCurrentImportStatus', {token: localStorage.token })
   .done(function (data) { callback(data) })
