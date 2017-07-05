@@ -37,11 +37,11 @@ const LoginControl = withRouter(
 
       const username = this.refs.email.value;
       if (!username || username.length < 1) {
-        this.setState({ error: true, errorMessage: 'Enter username to reset password' });
+        return this.setState({ error: true, errorMessage: 'Enter username to reset password' });
       }
 
-      auth.resetPassword(username, (message) => {
-        this.setState({ error: true, errorMessage: message })
+      auth.resetPassword(username, (response) => {
+        this.setState({ error: true, errorMessage: response.Message })
       });
     },
 
@@ -55,7 +55,7 @@ const LoginControl = withRouter(
               <input type='text' ref='email' placeholder='username' />
               <input type='password' ref='pass' placeholder='password' />
               <input type='submit' name='login' className='login loginmodal-submit' value='Login' />
-              <button type="button" className="btn btn-default" onClick={this.handleReset}>
+              <button type="button" className="btn btn-warning" onClick={this.handleReset} style={{ width: '100%' }}>
                 Reset Password
               </button>
             </form>

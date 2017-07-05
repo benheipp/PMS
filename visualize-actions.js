@@ -226,7 +226,12 @@ function Login (username, password, cb, callback) {
 }
 
 function ResetPassword(username, callback) {
-  return $.post(`${url}/api/Account/ResetPassword?username=${username}`)
+  return $.ajax({
+    type: 'POST',
+    dataType: 'json',
+    url: `${url}/api/Account/ResetPassword?username=${username}`,
+    contentType: 'application/json',
+  })
   .done(function (data) { callback(data) })
    .fail(function (data) {
      if (data.status == '401') {
