@@ -1,6 +1,7 @@
 import React from 'react'
 import FeedBack from '../Controls/feedback'
 import CatalogTypeRules from './CatalogTypeRules/catalogtyperules'
+import MissingCatalogTypes from './MissingCatalogTypes/missingcatalogtypes'
 
 var CatalogTypeAssignment = React.createClass({
   getInitialState: function () {
@@ -68,7 +69,13 @@ var CatalogTypeAssignment = React.createClass({
         </div>
         <div className='row'>
           <div className='col-sm-12' style={{marginTop:'50px'}}>
-            <b>Current Catalog Type Rules</b>
+            <h2>Missing Catalog Types</h2>
+             <MissingCatalogTypes />
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-sm-12' style={{marginTop:'50px'}}>
+            <h2>Current Catalog Type Rules</h2>
             <CatalogTypeRules />
           </div>
         </div>
