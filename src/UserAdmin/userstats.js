@@ -103,7 +103,10 @@ var UserStats = React.createClass({
             <td>{this.props.user.masterProductChanges}</td>
           </tr>
           <tr>
-            <td><button onClick={this.handleEditClick} className='btn btn-md btn-default'><i className='glyphicon glyphicon-book' /> Edit</button></td>
+            <td>
+              <button onClick={this.handleEditClick} className='btn btn-md btn-default' style={{ marginRight: '20px' }}><i className='glyphicon glyphicon-book' /> Edit</button>
+              <button onClick={this.handlePasswordReset} className="btn btn-sm btn-warning"><i className="glyphicon glyphicon-send" /> Send Password Reset Email</button>
+            </td>
             <td />
           </tr>
         </tbody>
@@ -129,6 +132,9 @@ var UserStats = React.createClass({
     var change = {}
     change[name] = e.target.value
     this.setState(change)
+  },
+  handlePasswordReset: function () {
+    ResetPassword(this.props.user.username);
   }
 })
 
