@@ -31,7 +31,7 @@ module.exports = {
 
         if (typeof res.permissions.find(this.findLock) !== 'undefined') { localStorage.Lock = 'true' } else { localStorage.Lock = 'false' }
 
-        if (cb) cb(true)
+        if (cb) cb(true, res.requirePasswordReset)
         this.onChange(true)
       } else {
         if (cb) cb(false)
@@ -94,7 +94,22 @@ module.exports = {
     return !!localStorage.token
   },
 
-  onChange () { }
+  onChange () { },
+
+  resetPassword (user, callback) {
+    ResetPassword(user, callback)
+  },
+
+  setPassword(password, callback) {
+    SetPassword(localStorage.username, password, (response) => {
+      if (response.token) {
+        localStorage.token = response.token;
+        callback(true);
+      }
+
+      callback(false);
+    });
+  },
 }
 
 function loginRequest (user, pass, cb) {
@@ -110,9 +125,11 @@ function loginCallbackfunc (data, cb) {
       authenticated: true,
       token: data.token,
       username: data.username,
-      permissions: data.PermissionList
+      permissions: data.PermissionList,
+      requirePasswordReset: data.RequirePasswordReset,
     })
   } else {
     cb({ authenticated: false })
   }
 }
+

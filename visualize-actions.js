@@ -215,8 +215,47 @@ function GetComponentProductHistory (docId, callback) {
 }
 
 function Login (username, password, cb, callback) {
-  return $.getJSON(url + '/api/Account/Login', { username: username, password: password, token: localStorage.token })
+  return $.ajax({
+    type: 'POST',
+    dataType: 'json',
+    url:`${url}/api/Account/Login?username=${username}`,
+    data: JSON.stringify(password),
+    contentType: 'application/json'
+  })
   .done(function (data) { callback(data, cb) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}
+
+function ResetPassword(username, callback) {
+  return $.ajax({
+    type: 'POST',
+    dataType: 'json',
+    url: `${url}/api/Account/ResetPassword?username=${username}`,
+    contentType: 'application/json',
+  })
+  .done(function (data) { callback(data) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}
+
+function SetPassword(username, password, callback) {
+  return $.ajax({
+    type: 'POST',
+    dataType: 'json',
+    url: `${url}/api/Account/SetPassword?username=${username}&token=${localStorage.token}`,
+    data: JSON.stringify(password),
+    contentType: 'application/json',
+  })
+  .done(function (data) { callback(data) })
    .fail(function (data) {
      if (data.status == '401') {
        localStorage.clear()
