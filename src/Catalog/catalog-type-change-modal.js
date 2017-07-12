@@ -9,6 +9,7 @@ var CatalogTypeChangeModal = React.createClass({
       showFeedback: false,
       feedbackResult: 0,
       feedbackMessage: '',
+      isEdit: false,
     }
   },
   componentDidMount () {
@@ -17,7 +18,7 @@ var CatalogTypeChangeModal = React.createClass({
   },
   handleRemove (nodeToRemove) {
     const nodesToUpdate = this.state.nodesToUpdate.filter(n => n !== nodeToRemove);
-    this.setState({ nodesToUpdate });
+    this.setState({ nodesToUpdate, isEdit: true });
   },
   lookupCatalogTypeName (typeId) {
     const selectedType = this.props.catalogTypes.find(t => Number(t.id) === Number(typeId));
@@ -28,7 +29,11 @@ var CatalogTypeChangeModal = React.createClass({
   },
   handleUpdate () {
     this.setState({ disableButtons: true });
-    UpdateCatalogType(this.state.nodesToUpdate, this.props.nodeLevel, this.props.targetCatalogTypeId, this.props.storeId, this.handleSuccess, this.handleError);
+    if (this.state.isEdit) {
+      UpdateCatalogType(this.state.nodesToUpdate, this.props.nodeLevel, this.props.targetCatalogTypeId, this.props.storeId, this.handleSuccess, this.handleError);
+    } else {
+      AddCatalogTypeRuleByDocKey(this.props.docKey, this.props.nodeLevel, this.props.targetCatalogTypeId, this.props.storeId, this.handleSuccess, this.handleError);
+    }
   },
   handleSuccess (data) {
     this.showFeedback(data);

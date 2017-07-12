@@ -395,11 +395,28 @@ function MoveMultiple (originDocKeys, destinationDocKey, store_id, callback, err
   })
 }
 
-
+function AddCatalogTypeRuleByDocKey (docKey, nodeLevel, selectedCatalogType, storeId, callback, errorCallback) {
+  return $.ajax({
+    type: 'POST',
+    dataType: 'json',
+    url: `${url}/api/Pms/AddCatalogTypeRuleByDocKey?selectedCatalogType=${selectedCatalogType}&nodeLevel=${nodeLevel}&storeId=${storeId}&username=${localStorage.username}&token=${localStorage.token}`,
+    data: JSON.stringify(docKey),
+    contentType: 'application/json',
+  })
+  .done(function (data) { callback(data) })
+  .fail(function (data) {
+    if (data.status == '401') {
+      localStorage.clear()
+      window.location.href = '/'
+    } else {
+      const error = JSON.parse(data.responseText);
+      errorCallback(`${error.Message} ${error.ExceptionMessage}`);
+    }
+  })
+}
 
 function UpdateCatalogType (nodes, nodeLevel, selectedCatalogType, storeId, callback, errorCallback) {
   const docKeys = nodes.map(n => n.doc_key);
-  console.log(docKeys);
   return $.ajax({
     type: 'POST',
     dataType: 'json',

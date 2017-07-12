@@ -110,6 +110,7 @@ var CatalogTree = React.createClass({
         { this.state.showProductList ? <ProductList products={this.state.productData} /> : null}
         { this.state.showCatalogTypeChangeModal &&
           <CatalogTypeChangeModal
+            docKey={this.state.docKey}
             nodes={this.state.node}
             hideModal={this.handleHideCatalogTypeChangeModal}
             catalogTypes={this.props.catalogTypes}
