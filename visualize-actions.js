@@ -398,12 +398,33 @@ function MoveMultiple (originDocKeys, destinationDocKey, store_id, callback, err
 function ValidateDocKey (sourceDocKey, targetDocKey, storeId, callback) {
   return $.getJSON(`${url}/api/Pms/DocKeyExists?docKey=${targetDocKey}&storeId=${storeId}&token=${localStorage.token}`)
   .done((data) => { callback(sourceDocKey, data) })
-  .fail(function (data) {
+   .fail(function (data) {
     if (data.status == '401') {
       localStorage.clear()
       window.location.href = '/'
     }
   });
+}
+
+function UpdateCatalogType (nodes, nodeLevel, selectedCatalogType, storeId, callback, errorCallback) {
+  const docKeys = nodes.map(n => n.doc_key);
+  return $.ajax({
+    type: 'POST',
+    dataType: 'json',
+    url: `${url}/api/Pms/UpdateCatalogType?selectedCatalogType=${selectedCatalogType}&nodeLevel=${nodeLevel}&storeId=${storeId}&username=${localStorage.username}&token=${localStorage.token}`,
+    data: JSON.stringify(docKeys),
+    contentType: 'application/json',
+  })
+  .done(function (data) { callback(data) })
+  .fail(function (data) {
+    if (data.status == '401') {
+      localStorage.clear()
+      window.location.href = '/'
+    } else {
+      const error = JSON.parse(data.responseText);
+      errorCallback(`${error.Message} ${error.ExceptionMessage}`);
+    }
+  })
 }
 
 function MoveStore0 (nodeValue, originDocKey, destinationDocKey, store_id, destination_store_id, callback) {

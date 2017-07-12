@@ -6,6 +6,7 @@ import BreadCrumbModal from '../BreadCrumb/breadcrumb-modal'
 import ComponentLevel from '../Component/component'
 import LoadingControl from '../Controls/loading'
 import ProductList from './product-list'
+import CatalogTypeChangeModal from './catalog-type-change-modal'
 
 var CatalogTree = React.createClass({
   getInitialState: function () {
@@ -31,6 +32,8 @@ var CatalogTree = React.createClass({
       showDisabled: false,
       copyActive: false,
       copyDocKeys: [],
+      selectedCatalogType: '',
+      showCatalogTypeChangeModal: false,
     }
   },
   componentWillMount: function () {
@@ -46,6 +49,21 @@ var CatalogTree = React.createClass({
   },
   componentDidMount: function () {
     getNodes(1, null, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData)
+  },
+  createCatalogTypeItems: function () {
+    let items = []
+    items.push(<option value='' />)
+    for (let i = 0; i < this.props.catalogTypes.length; i++) {
+      const id = this.props.catalogTypes[i].id;
+      items.push(<option key={id} value={id}>{this.props.catalogTypes[i].name}</option>)
+    }
+    return items
+  },
+  handleCatalogTypeChange: function (event) {
+    this.setState({ selectedCatalogType: event.target.value, showCatalogTypeChangeModal: true });
+  },
+  handleHideCatalogTypeChangeModal: function () {
+    this.setState({ showCatalogTypeChangeModal: false });
   },
   handleQuickMoveAll: function () {
     const copyDocKeys = this.state.copyDocKeys;
@@ -90,6 +108,17 @@ var CatalogTree = React.createClass({
         <FeedBack noTimer="true" Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
         { this.state.showComponent ? <ComponentLevel component={this.state.componentData} componentName={this.state.componentName} diagramUrl={this.state.componentImage} docKey={this.state.docKey} showFeedBack={this.showFeedBack} nodeName={this.state.nodeName} nodeLevel={this.state.nodeLevel} reloadDataFromComponent={this.reloadDataFromComponent} storeLookup={this.props.storeLookup} store={this.props.selectedStore.value} /> : null }
         { this.state.showProductList ? <ProductList products={this.state.productData} /> : null}
+        { this.state.showCatalogTypeChangeModal &&
+          <CatalogTypeChangeModal
+            nodes={this.state.node}
+            hideModal={this.handleHideCatalogTypeChangeModal}
+            catalogTypes={this.props.catalogTypes}
+            nodeLevel={this.state.nodeLevel}
+            storeId={this.props.selectedStore.value}
+            targetCatalogTypeId={this.state.selectedCatalogType}
+            reloadData={() => { this.reloadDataFromComponent(this.state.docKey, this.state.nodeName, this.state.nodeLevel); }}
+          /> 
+        }
       <div style={catVis}>
         {disableVis
             ? <div><b>Show Disabled </b> <input
@@ -107,13 +136,21 @@ var CatalogTree = React.createClass({
           <tbody>
             <tr>
               <th style={{width:'65%'}}><b>Node</b></th>
-              <th style={{width:'5%'}}><b>Type</b></th>
+              <th style={{width:'5%'}}>
+                <b>Type</b>
+                <select className='form-control input-sm' style={{ width: '120px' }} value={this.state.selectedCatalogType}  onChange={this.handleCatalogTypeChange}>
+                  {this.createCatalogTypeItems()}
+                </select>
+              </th>
               <th style={{width:'5%'}} />
               <th style={{width:'5%'}}>
                 { this.state.nodeLevel !== 1 &&
-                  <button style={{ width:'100%' }} type="button" onClick={this.handleQuickMoveAll} className="btn btn-sm btn-default">
-                    <span className="glyphicon glyphicon-copy" />Move All
-                  </button>
+                  <div>
+                  <br />
+                    <button style={{ width:'100%' }} type="button" onClick={this.handleQuickMoveAll} className="btn btn-sm btn-default">
+                      <span className="glyphicon glyphicon-copy" />Move All
+                    </button>
+                  </div>
                 }
               </th>
               <th style={{width:'5%'}} />
@@ -171,7 +208,7 @@ var CatalogTree = React.createClass({
     this.updateAllCatalogs(docKey)
   },
   onNodeClick: function (docKey, nodeName, nodeLevel) {
-    this.setState({ docKey: docKey, nodeNameCrumb: this.state.nodeNameCrumb + '[|]' + nodeName, nodeLevel: nodeLevel + 1, showFeedback: true,feedbackMessage:"Loading..." })
+    this.setState({ docKey: docKey, nodeNameCrumb: this.state.nodeNameCrumb + '[|]' + nodeName, nodeLevel: nodeLevel + 1, showFeedback: true,feedbackMessage:"Loading...", selectedCatalogType: '' })
     getNodes(nodeLevel + 1, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData)
     GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback)
     this.updateAllCatalogs(docKey)
@@ -209,7 +246,7 @@ var CatalogTree = React.createClass({
       newCrumb = newCrumb + splitCrumb[i] + '[|]'
     }
     newCrumb = newCrumb.substring(0, newCrumb.length - 3)
-    this.setState({ docKey: docKey, nodeLevel: nodeLevel, showFeedback: true, feedbackMessage:"Loading...", nodeNameCrumb: newCrumb })
+    this.setState({ docKey: docKey, nodeLevel: nodeLevel, showFeedback: true, feedbackMessage:"Loading...", nodeNameCrumb: newCrumb, selectedCatalogType: '' })
     getNodes(nodeLevel, docKey, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData)
     GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback)
     this.updateAllCatalogs(docKey)
