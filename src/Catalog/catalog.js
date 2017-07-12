@@ -116,6 +116,7 @@ var CatalogTree = React.createClass({
             nodeLevel={this.state.nodeLevel}
             storeId={this.props.selectedStore.value}
             targetCatalogTypeId={this.state.selectedCatalogType}
+            reloadData={() => { this.reloadDataFromComponent(this.state.docKey, this.state.nodeName, this.state.nodeLevel); }}
           /> 
         }
       <div style={catVis}>

@@ -33,6 +33,7 @@ var CatalogTypeChangeModal = React.createClass({
   handleSuccess (data) {
     this.showFeedback(data);
     this.setState({ disableButtons: false });
+    this.props.reloadData();
   },
   handleError (errorMsg) {
     const data = { Result: 1, Message: errorMsg };
