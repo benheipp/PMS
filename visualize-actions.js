@@ -395,6 +395,17 @@ function MoveMultiple (originDocKeys, destinationDocKey, store_id, callback, err
   })
 }
 
+
+function ValidateDocKey (sourceDocKey, targetDocKey, storeId, callback) {
+  return $.getJSON(`${url}/api/Pms/DocKeyExists?docKey=${targetDocKey}&storeId=${storeId}&token=${localStorage.token}`)
+  .done((data) => { callback(sourceDocKey, data) })
+   .fail(function (data) {
+    if (data.status == '401') {
+      localStorage.clear()
+      window.location.href = '/'
+    }
+  });
+
 function AddCatalogTypeRuleByDocKey (docKey, nodeLevel, selectedCatalogType, storeId, callback, errorCallback) {
   return $.ajax({
     type: 'POST',

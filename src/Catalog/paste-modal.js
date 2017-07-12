@@ -9,11 +9,26 @@ var PasteModal = React.createClass({
       feedbackMessage: '',
       copyDocKeys: this.props.copyDocKeys,
       disableButtons: false,
+      targetValidation: this.props.copyDocKeys.reduce((acc, v) => {
+        acc[v] = true;
+        return acc;
+      }, {})
     }
   },
   componentDidMount () {
     $('#PasteModal').modal('show')
     $('#PasteModal').on('hidden.bs.modal', this.props.handleHideModal)
+    this.validateCopyDocKeys();
+  },
+  validateCopyDocKeys () {
+    this.state.copyDocKeys.forEach((docKey) => {
+      ValidateDocKey(docKey, this.getNewDocKey(docKey), this.props.store, this.updateTargetValidation);
+    });
+  },
+  updateTargetValidation (docKey, docKeyExists) {
+    const targetValidation = { ...this.state.targetValidation };
+    targetValidation[docKey] = !docKeyExists;
+    this.setState({ targetValidation });
   },
   getNewDocKey (docKey) {
     const pieces = docKey.split('/');
@@ -49,7 +64,7 @@ var PasteModal = React.createClass({
     else {
       const docKeysToRemove = [];
       this.state.copyDocKeys.forEach(docKey => {
-        if (data.Message.indexOf(`${docKey}`) < 0) {
+        if (data.Message.indexOf(`${docKey}:`) < 0) {
           docKeysToRemove.push(docKey);
         }
       });
@@ -84,7 +99,7 @@ var PasteModal = React.createClass({
                 <tbody>
                   { this.state.copyDocKeys.map(doc_key =>
                     (
-                      <tr key={doc_key}>
+                      <tr key={doc_key} className={this.state.targetValidation[doc_key] ? '' : 'danger'} title={this.state.targetValidation[doc_key] ? '' : 'Target doc key already exists'}>
                         <td>
                           <button disabled={this.state.disableButtons} type="button" className="btn btn-sm btn-danger" onClick={() => { this.handleRemove(doc_key); }}>
                             Remove
