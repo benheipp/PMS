@@ -3,6 +3,7 @@ import { render } from 'react-dom'
 import { browserHistory, Router, Route, Link, withRouter, IndexRoute } from 'react-router'
 import CatalogMain from './visualize'
 import ImportMain from '../Import/importmain'
+import ImportNew from '../Import/newimport'
 import LoginControl from '../Login/login'
 import auth from '../Login/auth'
 import ProductMain from '../Product/product'
@@ -40,7 +41,8 @@ const App = React.createClass({
           </div>
           <div className='navbar-collapse collapse'>
             <ul className='nav navbar-nav'>
-              {renderImport ? <li><Link to='import'>Data Tools</Link></li> : null}
+              {renderImport ? <li><Link to='datatools'>Data Tools</Link></li> : null}
+              {renderImport ? <li><Link to='import'>Vendor Import</Link></li> : null}
               {renderCatalog ? <li><Link to='catalog'>Catalog</Link></li> : null}
               {renderProduct ? <li><Link to='product'>Products</Link></li> : null}
               {renderRules && <li><Link to='rules'>Rules</Link></li>}
@@ -89,7 +91,8 @@ render(
     <Route path='/' component={App}>
       <IndexRoute component={CatalogMain} onEnter={requireAuth} />
       <Route path='/catalog' component={CatalogMain} onEnter={requireAuth} />
-      <Route path='/import' component={ImportMain} onEnter={requireAuth} />
+      <Route path='/datatools' component={ImportMain} onEnter={requireAuth} />
+      <Route path='/import' component={ImportNew} onEnter={requireAuth} />
       <Route path='/login' component={LoginControl} />
       <Route path='/logout' component={Logout} />
       <Route path='/product' component={ProductMain} onEnter={requireAuth} />

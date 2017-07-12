@@ -1,7 +1,6 @@
 import React from 'react'
 import WebSendComponent from './webstats'
 import DataAnalysis from './dataanalysis'
-import VendorImport from './vendor-import'
 import CatalogTypeAssignment from './catalog-type-assignment'
 var ImportMain = React.createClass({
   getInitialState: function () {
@@ -21,7 +20,6 @@ var ImportMain = React.createClass({
   render: function () {
     	return (<div className='container'>
       <WebSendComponent storeLookup={this.state.storeLookup} />
-      <VendorImport />
       <DataAnalysis />
       <CatalogTypeAssignment storeLookup={this.state.storeLookup} />
     			</div>
