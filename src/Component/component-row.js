@@ -1,6 +1,7 @@
 import React from 'react'
 import ProductModal from './product-modal'
 import ComponentHistoryModal from './component-history'
+import ProductListDetailModal from '../Catalog/product-detail-modal'
 import {Link} from 'react-router'
 
 var ComponentRow = React.createClass({
@@ -13,6 +14,7 @@ var ComponentRow = React.createClass({
       showHistoryModal: false,
       showModal: false,
       showProductDetail: false,
+      showProductDetailModal: false,
       ProductData: {
         docKey: '',
         sku: '',
@@ -50,10 +52,12 @@ var ComponentRow = React.createClass({
           <td>{this.props.component.RefId}</td>
           <td><a href='#' onClick={this.handleShowModal.bind(this, this.props.docKey, this.props.component.Sku, this.props.component.ProductName, this.props.component.Description, this.props.component.id)}>{this.props.component.ProductName}</a></td>
           <td>{this.props.component.RefQty}</td>
-          <td><Link target="_blank" to={`/product-detail?id=${this.props.component.docId}&store_id=${this.props.store}`}>{this.props.component.Sku}</Link></td>
+          <td>
+            <a href='#' onClick={this.handleShowProductDetailListModal}>{this.props.component.Sku}</a></td>
           <td><button disabled={editDisable} onClick={this.handleEditClick} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-pencil' /></button></td>
           <td><button onClick={this.showHistoryModal} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-book' /></button>
             {this.state.showHistoryModal ? <ComponentHistoryModal docKey={this.props.docKey} component={this.props.component} handleHideComponentHistoryModal={this.handleHideComponentHistoryModal} rollbackComplete={this.rollbackComplete} /> : null}
+            {this.state.showProductDetailModal ? <ProductListDetailModal product_id={this.props.component.docId} store_id={this.props.store} handleHideModal={this.handleHideProductDetailListModal} /> : null}
           </td>
         </tr>
       )
@@ -98,8 +102,14 @@ var ComponentRow = React.createClass({
     prodData.id = id
     this.setState({ showModal: true })
   },
+  handleShowProductDetailListModal: function(){
+    this.setState({ showProductDetailModal: true })
+  },
   handleHideProductDetailModal: function () {
     this.setState({ showProductDetail: false })
+  },
+  handleHideProductDetailListModal: function () {
+    this.setState({ showProductDetailModal: false })
   },
   handleHideModal: function () {
     this.setState({ showModal: false })
