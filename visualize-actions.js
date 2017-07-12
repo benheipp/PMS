@@ -404,7 +404,8 @@ function ValidateDocKey (sourceDocKey, targetDocKey, storeId, callback) {
       localStorage.clear()
       window.location.href = '/'
     }
-  });
+  })
+}
 
 function AddCatalogTypeRuleByDocKey (docKey, nodeLevel, selectedCatalogType, storeId, callback, errorCallback) {
   return $.ajax({
@@ -712,7 +713,7 @@ function ExportToExcel (nodeLevel, docKey, nodeName, storeId, disabled, showDisa
 
 function GetRuleTypes (callback) {
   $.getJSON(url + '/api/Rule/GetRuleTypes', { token: localStorage.token })
-    .done(function (data) { callback(data); })
+    .done(function (data) { callback(data) })
   .fail(function (data) {
     if (data.status === '401') {
       localStorage.clear()
@@ -723,13 +724,13 @@ function GetRuleTypes (callback) {
 
 function GetRules (callback) {
   $.getJSON(url + '/api/Rule/GetRules', { token: localStorage.token })
-    .done(function (data) { callback(data); })
+    .done(function (data) { callback(data) })
   .fail(function (data) {
     if (data.status === '401') {
       localStorage.clear()
       window.location.href = '/'
     }
-  });
+  })
 }
 
 function GetRulesByType (type, callback) {
