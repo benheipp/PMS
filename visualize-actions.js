@@ -395,6 +395,17 @@ function MoveMultiple (originDocKeys, destinationDocKey, store_id, callback, err
   })
 }
 
+function ValidateDocKey (sourceDocKey, targetDocKey, storeId, callback) {
+  return $.getJSON(`${url}/api/Pms/DocKeyExists?docKey=${targetDocKey}&storeId=${storeId}&token=${localStorage.token}`)
+  .done((data) => { callback(sourceDocKey, data) })
+  .fail(function (data) {
+    if (data.status == '401') {
+      localStorage.clear()
+      window.location.href = '/'
+    }
+  });
+}
+
 function MoveStore0 (nodeValue, originDocKey, destinationDocKey, store_id, destination_store_id, callback) {
   return $.getJSON(url + '/api/Pms/Move', {nodeValue: nodeValue, originDocKey: originDocKey, destinationDocKey: destinationDocKey, username: localStorage.username, store_id: store_id, destination_store_id: destination_store_id, token: localStorage.token })
   .done(function (data) { callback(data) })
