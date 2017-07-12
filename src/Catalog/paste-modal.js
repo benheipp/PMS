@@ -49,7 +49,7 @@ var PasteModal = React.createClass({
     else {
       const docKeysToRemove = [];
       this.state.copyDocKeys.forEach(docKey => {
-        if (data.Message.indexOf(`${docKey}`) < 0) {
+        if (data.Message.indexOf(`${docKey}:`) < 0) {
           docKeysToRemove.push(docKey);
         }
       });
