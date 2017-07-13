@@ -7,6 +7,7 @@ import ComponentLevel from '../Component/component'
 import LoadingControl from '../Controls/loading'
 import ProductList from './product-list'
 import CatalogTypeChangeModal from './catalog-type-change-modal'
+import CatalogAddNode from './catalog-add-node'
 
 var CatalogTree = React.createClass({
   getInitialState: function () {
@@ -34,6 +35,7 @@ var CatalogTree = React.createClass({
       copyDocKeys: [],
       selectedCatalogType: '',
       showCatalogTypeChangeModal: false,
+      showCatalogAddNode: false
     }
   },
   componentWillMount: function () {
@@ -161,6 +163,9 @@ var CatalogTree = React.createClass({
             </tr>
             {rows}
             <tr>
+              <td><button onClick={this.handleShowAddNode} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-plus' /> Add Node</button>
+               { this.state.showCatalogAddNode ? <CatalogAddNode handleHideModal={this.handleHideAddNode} doc_key={this.state.docKey} reloadData={this.reloadDataFromComponent} showFeedBack={this.showFeedBack} store_id={this.props.selectedStore.value} nodeLevel={this.state.nodeLevel} nodeName={this.state.nodeName} /> : null}
+              </td>
               <td>Row Count: {this.state.node.length}</td>
               <td colSpan="7"><a href={`http://192.168.2.16:84/api/Pms/ExportToExcel?nodeLevel=${this.state.nodeLevel}&docKey=${this.state.docKey}&storeId=${this.props.selectedStore.value}&showDisabled=${this.state.showDisabled}&token=${localStorage.token}`} target="_window" > <span className="glyphicon glyphicon-file"></span> Export</a></td>
             </tr>
@@ -179,6 +184,12 @@ var CatalogTree = React.createClass({
         </div>
       </div>
     )
+  },
+  handleShowAddNode: function() {
+    this.setState({showCatalogAddNode: true})
+  },
+  handleHideAddNode: function() {
+    this.setState({showCatalogAddNode: false})
   },
   handleShowDisabledChange: function (event) {
     this.setState({showDisabled: event.target.checked})
@@ -253,7 +264,12 @@ var CatalogTree = React.createClass({
     this.updateAllCatalogs(docKey)
   },
   HandleProductListData: function (data) {
-    this.setState({ productData: data, showProductList: true, showFeedBack:false,feedbackMessage:"" })
+    if (data.length > 0)
+    {
+      this.setState({ productData: data, showProductList: true, showFeedBack:false,feedbackMessage:"" })
+    } else {
+      this.setState({ showProductList: false, showFeedBack:false,feedbackMessage:"" })
+    }
     console.log("testing");
   },
   HandleComponentData: function (data, componentName) {

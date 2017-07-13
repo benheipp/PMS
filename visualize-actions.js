@@ -754,3 +754,14 @@ function GetMissingCatalogTypes (callback) {
      }
    })
 }
+
+function AddNewDocKey (docKey, parent_doc_key, nodeValue, nodeKey, storeId, callback) {
+  $.getJSON(url + '/api/Pms/AddNewDocKey', {docKey:docKey,parent_doc_key:parent_doc_key,nodeValue:nodeValue,nodeKey:nodeKey,storeId:storeId,username:localStorage.username, token: localStorage.token })
+      .done(function (data) { callback(data) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}
