@@ -50,7 +50,7 @@ var CatalogTree = React.createClass({
     }
   },
   componentDidMount: function () {
-    getNodes(1, null, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData)
+    getNodes(1, null, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, undefined, this.handleNewData)
   },
   createCatalogTypeItems: function () {
     let items = []
@@ -99,7 +99,7 @@ var CatalogTree = React.createClass({
     }
 
     var rows = this.state.node.map(function (node) {
-      return <CatalogTreeRow catalogTypes={this.props.catalogTypes} storeLookup={this.props.storeLookup} node={node} key={node.key} nodeLevel={this.state.nodeLevel} onNodeClick={this.onNodeClick} showFeedBack={this.showFeedBack} reloadData={this.reloadData} storeUpdate={this.storeUpdate} updateAllCatalogs={this.updateAllCatalogs} store={this.props.selectedStore.value} quickMove={this.quickMove} resetQuickMove={this.resetQuickMove} copyActive={this.state.copyActive} copyDocKeys={this.state.copyDocKeys} />
+      return <CatalogTreeRow catalogTypes={this.props.catalogTypes} storeLookup={this.props.storeLookup} node={node} key={node.key} nodeLevel={this.state.nodeLevel} onNodeClick={this.onNodeClick} showFeedBack={this.showFeedBack} reloadData={this.reloadData} storeUpdate={this.storeUpdate} updateAllCatalogs={this.updateAllCatalogs} store={this.props.selectedStore.value} quickMove={this.quickMove} resetQuickMove={this.resetQuickMove} copyActive={this.state.copyActive} copyDocKeys={this.state.copyDocKeys} parentDocKey={this.state.docKey} />
     }, this)
     return (
       <div style={stylemargin}>
@@ -193,12 +193,12 @@ var CatalogTree = React.createClass({
   },
   handleShowDisabledChange: function (event) {
     this.setState({showDisabled: event.target.checked})
-    getNodes(this.state.nodeLevel, this.state.docKey, this.state.nodeName, this.props.selectedStore.value, this.props.disabled, event.target.checked, this.handleNewData)
+    getNodes(this.state.nodeLevel, this.state.docKey, this.state.nodeName, this.props.selectedStore.value, this.props.disabled, event.target.checked, undefined,  this.handleNewData)
     this.updateAllCatalogs(this.state.docKey)
   },
-  reloadData: function (docKey, nodeName, nodeLevel) {
+  reloadData: function (docKey, nodeName, nodeLevel, persistResults) {
     var nDocKey = docKey.substring(0, docKey.lastIndexOf('/'))
-    getNodes(nodeLevel, nDocKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData)
+    getNodes(nodeLevel, nDocKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, persistResults, this.handleNewData)
     GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback)
     this.setState({ docKey: nDocKey, nodeName: nodeName })
     this.updateAllCatalogs(docKey)
@@ -213,15 +213,15 @@ var CatalogTree = React.createClass({
   resetQuickMove: function () {
     this.setState({copyActive: false, copyDocKeys: []})
   },
-  reloadDataFromComponent: function (docKey, nodeName, nodeLevel) {
-    getNodes(nodeLevel, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData)
+  reloadDataFromComponent: function (docKey, nodeName, nodeLevel, persistResults) {
+    getNodes(nodeLevel, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, persistResults, this.handleNewData)
     GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback)
     this.setState({ docKey: docKey, nodeName: nodeName })
     this.updateAllCatalogs(docKey)
   },
   onNodeClick: function (docKey, nodeName, nodeLevel) {
     this.setState({ docKey: docKey, nodeNameCrumb: this.state.nodeNameCrumb + '[|]' + nodeName, nodeLevel: nodeLevel + 1, showFeedback: true,feedbackMessage:"Loading...", selectedCatalogType: '' })
-    getNodes(nodeLevel + 1, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData)
+    getNodes(nodeLevel + 1, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, undefined, this.handleNewData)
     GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback)
     this.updateAllCatalogs(docKey)
   },
@@ -231,22 +231,25 @@ var CatalogTree = React.createClass({
   handleExportCallBack: function(){
     console.log("Export callback hit")
   },
-  handleNewData: function (data, docKey, nodeName) {
+  handleNewData: function (data, docKey, nodeName, persistResults) {
     this.setState({ node: data, nodeName: nodeName })
+
+    if (persistResults === undefined) {
+      this.setState({ showFeedback: false, feedbackMessage:""})
+    }
+
     if (data.length == 0 && this.state.nodeLevel == 1) {
-      this.setState({noResultsMessage: true, showFeedback: false, feedbackMessage:""})
+      this.setState({noResultsMessage: true})
     }
     if (data.length == 0 && docKey != null) {
       if (docKey.includes('catalog/aftermarket')) {
         GetProductList(docKey, this.props.selectedStore.value, this.HandleProductListData)
-        this.setState({showFeedback: false, feedbackMessage:"" })
       } else {
         getComponentProducts(docKey, nodeName, this.props.selectedStore.value, this.HandleComponentData)
-        this.setState({showFeedback: false, feedbackMessage:"" })
       }
     } else {
       this.setState({ componentData: [] })
-      this.setState({ showComponent: false, showProductList: false, showFeedback: false, feedbackMessage:"" })
+      this.setState({ showComponent: false, showProductList: false})
     }
   },
   BreadCrumbClick: function (nodeLevel, docKey, nodeNameCrumb) {
@@ -259,7 +262,7 @@ var CatalogTree = React.createClass({
     }
     newCrumb = newCrumb.substring(0, newCrumb.length - 3)
     this.setState({ docKey: docKey, nodeLevel: nodeLevel, showFeedback: true, feedbackMessage:"Loading...", nodeNameCrumb: newCrumb, selectedCatalogType: '' })
-    getNodes(nodeLevel, docKey, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, this.handleNewData)
+    getNodes(nodeLevel, docKey, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, undefined, this.handleNewData)
     GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback)
     this.updateAllCatalogs(docKey)
   },
@@ -285,7 +288,7 @@ var CatalogTree = React.createClass({
         imgPrefix = '//cdn.boats.net/diagram/'
         break
     }
-    this.setState({ componentData: data, componentName: componentName, componentImage: imgPrefix + data[0].ImageUrl + '.png', showComponent: true, showFeedBack:false,feedbackMessage:"" })
+    this.setState({ componentData: data, componentName: componentName, componentImage: imgPrefix + data[0].ImageUrl, showComponent: true, showFeedBack:false,feedbackMessage:"" })
   },
   showFeedBack: function (data) {
     this.setState({ showFeedback: true, feedbackResult: data.Result, feedbackMessage: data.Message})

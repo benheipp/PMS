@@ -4,9 +4,9 @@ var url = 'http://localhost:65515'
 // Production
 // var url = 'http://192.168.2.16:84'
 
-function getNodes (nodeLevel, docKey, nodeName, storeId, disabled, showDisabled, callback) {
+function getNodes (nodeLevel, docKey, nodeName, storeId, disabled, showDisabled, persistResults, callback) {
   $.getJSON(url + '/api/Pms/Get', { nodeLevel: nodeLevel, storeId: storeId, disabled: disabled, showDisabled: showDisabled, docKey: docKey, token: localStorage.token })
-      .done(function (data) { callback(data, docKey, nodeName) })
+      .done(function (data) { callback(data, docKey, nodeName, persistResults) })
    .fail(function (data) {
      if (data.status == '401') {
        localStorage.clear()
@@ -48,8 +48,8 @@ function getComponentProducts (docKey, componentName, storeId, callback) {
    })
 }
 
-function saveNode (node, nodeLevel, newNode, newNodeKey, oldCatalogType, selectedCatalogType, storeId, callback) {
-  return $.getJSON(url + '/api/Pms/SaveNode', { docKey: node.doc_key, oldNode: node.name, newNode: newNode, oldNodeKey: node.name_key, newNodeKey: newNodeKey, oldCatalogType: oldCatalogType, selectedCatalogType: selectedCatalogType, username: localStorage.username, storeId: storeId, token: localStorage.token })
+function saveNode (node, nodeLevel, newNode, newNodeKey, oldCatalogType, selectedCatalogType, storeId, newDocKey, callback) {
+  return $.getJSON(url + '/api/Pms/SaveNode', { docKey: node.doc_key, oldNode: node.name, newNode: newNode, oldNodeKey: node.name_key, newNodeKey: newNodeKey, oldCatalogType: oldCatalogType, selectedCatalogType: selectedCatalogType, username: localStorage.username, storeId: storeId, newDocKey:newDocKey, token: localStorage.token })
       .done(function (data) { callback(data, node, nodeLevel) })
    .fail(function (data) {
      if (data.status == '401') {

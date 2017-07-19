@@ -10,6 +10,7 @@ var CatalogTreeRow = React.createClass({
       isEditMode: false,
       nodeValue: this.props.node.name,
       nodeKey: this.props.node.name_key,
+      newDocKey: this.props.parentDocKey + '/' + formatNameKey(this.props.node.name),
       showHistoryModal: false,
       showCopyModal: false,
       nodeHistoryData: [],
@@ -56,7 +57,7 @@ var CatalogTreeRow = React.createClass({
             <input disabled type='text' className='form-control' id='txtNodeKey' value={this.state.nodeKey} onChange={this.handleNodeKeyChange} />
           </td>
           <td>
-            <button onClick={this.handleSaveClick.bind(this, this.props.node, this.props.nodeLevel, this.state.nodeValue, this.state.nodeKey, this.props.node.type_id, this.state.selectedCatalogType)} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-floppy-disk' /></button>
+            <button onClick={this.handleSaveClick.bind(this, this.props.node, this.props.nodeLevel, this.state.nodeValue, this.state.nodeKey, this.props.node.type_id, this.state.selectedCatalogType, this.state.newDocKey)} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-floppy-disk' /></button>
             <button style={{marginLeft: '20px'}} onClick={this.handleCancelClick.bind(this, this.props.node, this.props.nodeLevel)} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-remove' /></button>
           </td>
           {disableVis ? <td>
@@ -185,9 +186,9 @@ var CatalogTreeRow = React.createClass({
   handleHideModal: function () {
     this.setState({ showHistoryModal: false })
   },
-  handleSaveClick: function (node, nodeLevel, newNode, newNodeKey, oldCatalogType, selectedCatalogType) {
+  handleSaveClick: function (node, nodeLevel, newNode, newNodeKey, oldCatalogType, selectedCatalogType, newDocKey) {
     // Save Logic Here
-    saveNode(node, nodeLevel, newNode, newNodeKey, oldCatalogType, selectedCatalogType, this.props.store, this.saveCallBack)
+    saveNode(node, nodeLevel, newNode, newNodeKey, oldCatalogType, selectedCatalogType, this.props.store, newDocKey, this.saveCallBack)
     this.setState({ isEditMode: false })
   },
   handleCancelClick: function (node, nodeLevel) {
@@ -196,11 +197,12 @@ var CatalogTreeRow = React.createClass({
   },
   saveCallBack: function (data, node, nodeLevel) {
     this.props.showFeedBack(data)
-    this.props.reloadData(node.doc_key, node.name, nodeLevel)
+    this.props.reloadData(node.doc_key, node.name, nodeLevel, true)
   },
   handleInputChange: function (event) {
     this.setState({ nodeValue: event.target.value })
     this.setState({ nodeKey: formatNameKey(event.target.value) })
+    this.setState({ newDocKey: this.props.parentDocKey + '/' + formatNameKey(event.target.value) })
   },
   handleNodeKeyChange: function (event) {
     this.setState({ nodeKey: event.target.value })
