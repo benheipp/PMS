@@ -23,6 +23,8 @@ var CatalogTreeRow = React.createClass({
     if (!this.props.node.edit_mode || this.props.node.username == localStorage.username) {
       disableVar = false
       if (localStorage.CatalogEditing != 'true') { disableVar = true }
+      var indxStore = this.props.storeLookup.findIndex(i => i.id === this.props.store);
+      if (this.props.storeLookup[indxStore].store_lock == true) { disableVar = true }
     } else {
       disableVar = true
     }
@@ -82,9 +84,9 @@ var CatalogTreeRow = React.createClass({
           <td style={{verticalAlign:'middle'}}><a href='#' onClick={this.handleClick.bind(this, this.props.node.doc_key, this.props.node.name, this.props.nodeLevel)}>{this.props.node.name}</a></td>
           <td style={{verticalAlign:'middle'}}>{this.props.node.type_name}</td>
           <td><button disabled={disableVar} onClick={this.handleEditClick.bind(this, this.props.node)} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-pencil' /> Edit</button></td>
-          <td>{QuickMoveVis ? <button onClick={this.quickMove} className={`btn btn-sm btn-default${this.props.copyDocKeys.indexOf(this.props.node.doc_key) > -1 ? ' active' : ''}`}><i className='glyphicon glyphicon-copy' /> Quick Move</button> : null }</td>
+          <td>{QuickMoveVis ? <button disabled={disableVar} onClick={this.quickMove} className={`btn btn-sm btn-default${this.props.copyDocKeys.indexOf(this.props.node.doc_key) > -1 ? ' active' : ''}`}><i className='glyphicon glyphicon-copy' /> Quick Move</button> : null }</td>
           <td>{this.props.copyActive && this.props.copyDocKeys.length > 0 && QuickMoveVis ? <a href="#top"><button onClick={this.showPasteModal} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-paste' /> Paste</button></a> : null }</td>
-          <td><button onClick={this.showCopyModal} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Custom Copy</button>
+          <td><button style={{display:'none'}} onClick={this.showCopyModal} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-copy' /> Custom Copy</button>
           {this.state.showCopyModal ? <CopyModal handleHideModal={this.handleHideCopyModal} store={this.props.store} DocKey={this.props.node.doc_key} /> : null }
           {this.state.showPasteModal ? <PasteModal handleHideModal={this.handleHidePasteModal} copyDocKeys={this.props.copyDocKeys} targetDocKey={this.props.node.doc_key} store={this.props.store} /> : null }
           </td>
@@ -92,14 +94,16 @@ var CatalogTreeRow = React.createClass({
             <input
               name='disabled'
               type='checkbox'
+              disabled={disableVar}
               defaultChecked={this.props.node.disabled}
               onChange={this.handleDisabledChange} />
             {/* <StoreLookup storeLookup={this.props.storeLookup} docKey={this.props.node.doc_key} storeValues={this.props.node.store} storeUpdate={this.storeUpdate} type={'node'} docId={0} /> */}
           </td> : null }
           {lockVis ? <td style={{verticalAlign:'middle'}}>
             <input
-              name='disabled'
+              name='lock'
               type='checkbox'
+              disabled={disableVar}
               defaultChecked={this.props.node.locked}
               onChange={this.handleLockedChange} />
           </td> : null }

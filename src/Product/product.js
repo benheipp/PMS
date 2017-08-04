@@ -12,6 +12,7 @@ var ProductMain = React.createClass({
   },
   componentDidMount: function () {
     GetVendorList(this.vendorListCallback)
+    GetStoreLookups(this.callbackStoreLookups)
   },
   getInitialState: function () {
     return {
@@ -21,7 +22,8 @@ var ProductMain = React.createClass({
       	searchVendors: [],
       	showFeedback: false,
       	feedbackResult: 0,
-      	feedbackMessage: ''
+      	feedbackMessage: '',
+        storeLookup: []
     	}
   },
   render: function () {
@@ -39,7 +41,7 @@ var ProductMain = React.createClass({
             </div>
           </div>
         </div>
-        { this.state.showProductDisplay ? <ProductDisplay data={this.state.prod} handleSaveProdClick={this.handleSaveProdClick} showFeedBack={this.showFeedBack} rollbackComplete={this.saveProdCallback} /> : null }
+        { this.state.showProductDisplay ? <ProductDisplay data={this.state.prod} handleSaveProdClick={this.handleSaveProdClick} showFeedBack={this.showFeedBack} rollbackComplete={this.saveProdCallback} store={this.state.prod.store_id} storeLookup={this.state.storeLookup}  /> : null }
       </div>)
   },
   displayRecord: function (item) {
@@ -71,6 +73,9 @@ var ProductMain = React.createClass({
   },
   showFeedBack: function (data) {
     	this.setState({ showFeedback: true, feedbackResult: data.Result, feedbackMessage: data.Message})
+  },
+  callbackStoreLookups: function (data) {
+    this.setState({ storeLookup: data })
   }
 })
 

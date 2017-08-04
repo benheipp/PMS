@@ -1,5 +1,6 @@
 import React from 'react'
 import VendorImport from './vendor-import'
+import VendorMock from './vendor_mock'
 var ImportNew = React.createClass({
   componentWillMount: function () {
     if (localStorage.ImportVisibility != 'true') {
@@ -9,7 +10,7 @@ var ImportNew = React.createClass({
   },
   render: function () {
     	return (<div className='container'>
-          <VendorImport />
+          <VendorMock />
     			</div>
     			)
   }

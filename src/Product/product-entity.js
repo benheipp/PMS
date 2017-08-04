@@ -3,7 +3,7 @@ import ProductEntityRow from './product-entity-row'
 var ProductEntity = React.createClass({
 	    render: function () {
 	    var rows = this.props.entities.map(function (entity) {
-      return <ProductEntityRow entity={entity} key={entity.key} SaveEnityData={this.SaveEnityData} />
+      return <ProductEntityRow entity={entity} key={entity.key} SaveEnityData={this.SaveEnityData} editDisabled={this.props.editDisabled} />
     }, this)
 	    	return (
   <div className='row'>

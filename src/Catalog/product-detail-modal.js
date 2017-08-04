@@ -13,7 +13,7 @@ var ProductListDetailModal = React.createClass({
         <div className='modal-dialog modal-lg' style={{width:'1200px'}}>
           <div className='modal-content'>
             <div className='modal-body'>
-              <ProductWrapper product_id={this.props.product_id} store_id={this.props.store_id} />
+              <ProductWrapper product_id={this.props.product_id} store_id={this.props.store_id} storeLookup={this.props.storeLookup} />
             </div>
           </div>
         </div>

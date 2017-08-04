@@ -28,7 +28,7 @@ var ProductWrapper = React.createClass({
     return (
       <div className='container'>
         <FeedBack Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
-        <ProductDisplay data={this.state.product} handleSaveProdClick={this.handleSaveProdClick} showFeedBack={this.showFeedBack} rollbackComplete={this.saveProdCallback} />
+        <ProductDisplay data={this.state.product} handleSaveProdClick={this.handleSaveProdClick} showFeedBack={this.showFeedBack} rollbackComplete={this.saveProdCallback} store={this.props.store_id} storeLookup={this.props.storeLookup} />
       </div>)
   },
   handleSaveProdClick: function (newProdName, prodData) {

@@ -14,6 +14,11 @@ var ProductDisplay = React.createClass({
     if (!this.props.data.edit_mode || this.props.data.username == localStorage.username) {
       disableVar = false
       if (localStorage.ProductEditing != 'true') { disableVar = true }
+      var indxStore = this.props.storeLookup.findIndex(i => i.id === this.props.store);
+      if (indxStore != -1)
+      {
+          if (this.props.storeLookup[indxStore].store_lock == true) { disableVar = true }
+      }
     } else {
       disableVar = true
     }
@@ -42,7 +47,7 @@ var ProductDisplay = React.createClass({
               <div className='col-xs-10'>{this.props.data.webSentDatetime}</div>
             </div>
             <div style={{marginTop: '20px'}}>
-              <ProductEntity entities={this.props.data.Entities} SaveEnityData={this.SaveEnityData} />
+              <ProductEntity entities={this.props.data.Entities} SaveEnityData={this.SaveEnityData} editDisabled={disableVar} />
             </div>
           </div>
           <div className='panel-footer'>
@@ -74,7 +79,7 @@ var ProductDisplay = React.createClass({
                 <div className='col-xs-10'>{this.props.data.webSentDatetime}</div>
               </div>
               <div style={{marginTop: '20px'}}>
-                <ProductEntity entities={this.props.data.Entities} SaveEnityData={this.SaveEnityData} />
+                <ProductEntity entities={this.props.data.Entities} SaveEnityData={this.SaveEnityData} editDisabled={disableVar} />
               </div>
             </div>
             <div className='panel-footer'>

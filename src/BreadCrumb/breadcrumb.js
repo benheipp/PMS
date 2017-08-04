@@ -2,7 +2,13 @@ import React from 'react'
 import BreadCrumbComp from './breadcrumb-comp'
 var BreadCrumb = React.createClass({
   render: function () {
-    var editButton = <button onClick={this.handleEditClick} className='btn btn-default'><i className='glyphicon glyphicon-pencil' /></button>
+
+      var disable = false
+      var indxStore = this.props.storeLookup.findIndex(i => i.id === this.props.selectedStore.value);
+      if (this.props.storeLookup[indxStore].store_lock == true) { disable = true }
+
+
+    var editButton = <button disabled={disable} onClick={this.handleEditClick} className='btn btn-default'><i className='glyphicon glyphicon-pencil' /></button>
     var splitStr = this.props.docKey.split('/')
     var nodeNameCrumb = this.props.nodeNameCrumb.split('[|]')
     return (

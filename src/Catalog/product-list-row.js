@@ -16,7 +16,7 @@ var ProductListRow = React.createClass({
         </td>
         <td>{this.props.product.doc_key}</td>
         <td>{this.props.product.name}</td>
-        {this.state.showProductDetailModal ? <ProductListDetailModal product_id={this.props.product.doc_key} store_id={this.props.product.store_id} handleHideModal={this.handleHideProductDetailListModal} /> : null}
+        {this.state.showProductDetailModal ? <ProductListDetailModal product_id={this.props.product.doc_key} storeLookup={this.props.storeLookup} store_id={this.props.product.store_id} handleHideModal={this.handleHideProductDetailListModal} /> : null}
       </tr>
     )
   },

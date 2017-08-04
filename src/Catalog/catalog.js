@@ -80,6 +80,10 @@ var CatalogTree = React.createClass({
       marginTop: '60px'
     }
 
+    var disableTypeChange = false
+      var indxStore = this.props.storeLookup.findIndex(i => i.id === this.props.selectedStore.value);
+      if (this.props.storeLookup[indxStore].store_lock == true) { disableTypeChange = true }
+
     var disableVis = false
     if (localStorage.Disable == 'true') {
       disableVis = true
@@ -105,11 +109,11 @@ var CatalogTree = React.createClass({
       <div style={stylemargin}>
         <a name="top"></a>
         {this.props.disabled == '1' ? <h1>Disabled Items</h1> : null }
-        <BreadCrumb nodeNameCrumb={this.state.nodeNameCrumb} docKey={this.state.docKey} callbackBreadCrumbClick={this.BreadCrumbClick} handleEditBreadCrumbText={this.handleEditBreadCrumbText} selectedStore={this.props.selectedStore} handleClearSelectedStore={this.props.handleClearSelectedStore} />
+        <BreadCrumb nodeNameCrumb={this.state.nodeNameCrumb} docKey={this.state.docKey} callbackBreadCrumbClick={this.BreadCrumbClick} handleEditBreadCrumbText={this.handleEditBreadCrumbText} selectedStore={this.props.selectedStore} storeLookup={this.props.storeLookup}  handleClearSelectedStore={this.props.handleClearSelectedStore} />
         {this.state.showBreadCrumbModal ? <BreadCrumbModal docKey={this.state.docKey} breadCrumbText={this.state.breadCrumbText} handleHideModal={this.handleHideModal} handleSaveBreadCrumbClick={this.handleSaveBreadCrumbClick} /> : null}
         <FeedBack noTimer="true" Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
         { this.state.showComponent ? <ComponentLevel component={this.state.componentData} componentName={this.state.componentName} diagramUrl={this.state.componentImage} docKey={this.state.docKey} showFeedBack={this.showFeedBack} nodeName={this.state.nodeName} nodeLevel={this.state.nodeLevel} reloadDataFromComponent={this.reloadDataFromComponent} storeLookup={this.props.storeLookup} store={this.props.selectedStore.value} /> : null }
-        { this.state.showProductList ? <ProductList products={this.state.productData} /> : null}
+        { this.state.showProductList ? <ProductList products={this.state.productData} storeLookup={this.props.storeLookup} /> : null}
         { this.state.showCatalogTypeChangeModal &&
           <CatalogTypeChangeModal
             docKey={this.state.docKey}
@@ -139,18 +143,18 @@ var CatalogTree = React.createClass({
           <tbody>
             <tr>
               <th style={{width:'65%'}}><b>Node</b></th>
-              <th style={{width:'5%'}}>
+           {!disableTypeChange ?   <th style={{width:'5%'}}>
                 <b>Type</b>
                 <select className='form-control input-sm' style={{ width: '120px' }} value={this.state.selectedCatalogType}  onChange={this.handleCatalogTypeChange}>
                   {this.createCatalogTypeItems()}
                 </select>
-              </th>
+              </th>: <th style={{width:'5%'}}></th> }
               <th style={{width:'5%'}} />
               <th style={{width:'5%'}}>
                 { this.state.nodeLevel !== 1 &&
                   <div>
                   <br />
-                    <button style={{ width:'100%' }} type="button" onClick={this.handleQuickMoveAll} className="btn btn-sm btn-default">
+                    <button disabled={disableTypeChange} style={{ width:'100%' }} type="button" onClick={this.handleQuickMoveAll} className="btn btn-sm btn-default">
                       <span className="glyphicon glyphicon-copy" />Move All
                     </button>
                   </div>
@@ -163,7 +167,7 @@ var CatalogTree = React.createClass({
             </tr>
             {rows}
             <tr>
-              <td><button onClick={this.handleShowAddNode} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-plus' /> Add Node</button>
+              <td><button disabled={disableTypeChange}  onClick={this.handleShowAddNode} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-plus' /> Add Node</button>
                { this.state.showCatalogAddNode ? <CatalogAddNode handleHideModal={this.handleHideAddNode} doc_key={this.state.docKey} reloadData={this.reloadDataFromComponent} showFeedBack={this.showFeedBack} store_id={this.props.selectedStore.value} nodeLevel={this.state.nodeLevel} nodeName={this.state.nodeName} /> : null}
               </td>
               <td>Row Count: {this.state.node.length}</td>
@@ -288,7 +292,7 @@ var CatalogTree = React.createClass({
         imgPrefix = '//cdn.boats.net/diagram/'
         break
     }
-    this.setState({ componentData: data, componentName: componentName, componentImage: imgPrefix + data[0].ImageUrl, showComponent: true, showFeedBack:false,feedbackMessage:"" })
+    this.setState({ componentData: data, componentName: componentName, componentImage: imgPrefix + data[0].ImageUrl + '.png', showComponent: true, showFeedBack:false,feedbackMessage:"" })
   },
   showFeedBack: function (data) {
     this.setState({ showFeedback: true, feedbackResult: data.Result, feedbackMessage: data.Message})

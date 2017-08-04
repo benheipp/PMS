@@ -765,3 +765,14 @@ function AddNewDocKey (docKey, parent_doc_key, nodeValue, nodeKey, storeId, call
      }
    })
 }
+
+function UpdateStoreLock (lockFlag, storeId, callback) {
+  $.getJSON(url + '/api/Pms/UpdateStoreLock', {lockFlag:lockFlag,storeId:storeId, token: localStorage.token })
+      .done(function (data) { callback(data) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}

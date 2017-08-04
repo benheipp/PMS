@@ -32,7 +32,7 @@ var ProductEntityRow = React.createClass({
       {this.state.entityVal}
     </div>
     <div className='col-sm-1'>
-      <button onClick={this.handleEditClick} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-pencil' /> Edit</button>
+      <button disabled={this.props.editDisabled} onClick={this.handleEditClick} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-pencil' /> Edit</button>
     </div>
   </div>)
   }

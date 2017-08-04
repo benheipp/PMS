@@ -21,7 +21,7 @@ var ProductModal = React.createClass({
   },
   render: function () {
     var saveDisable
-    if (localStorage.CatalogEditing == 'true') { saveDisable = false } else { saveDisable = true }
+    if (localStorage.CatalogEditing == 'true' && this.props.editDisable == false) { saveDisable = false } else { saveDisable = true }
 
     return (
       <div id='ProductDetailModal' className='modal fade'>
@@ -49,7 +49,7 @@ var ProductModal = React.createClass({
                               Name:
                           </div>
                 <div className='col-sm-10'>
-                  <input type='text' maxLength='255' className='form-control' value={this.state.name} onChange={this.handleChange.bind(this, 'name')} />
+                  <input disabled={saveDisable} type='text' maxLength='255' className='form-control' value={this.state.name} onChange={this.handleChange.bind(this, 'name')} />
                 </div>
               </div>
               <div className='row' style={{ marginTop: '5px' }}>
@@ -57,12 +57,12 @@ var ProductModal = React.createClass({
                               Description:
                           </div>
                 <div className='col-sm-10'>
-                  <input type='text' maxLength='255' className='form-control' value={this.state.description} onChange={this.handleChange.bind(this, 'description')} />
+                  <input disabled={saveDisable} type='text' maxLength='255' className='form-control' value={this.state.description} onChange={this.handleChange.bind(this, 'description')} />
                 </div>
               </div>
               <div className='row' style={{ marginTop: '5px' }}>
                 <div className='col-sm-10'>
-                  <button onClick={this.showProdHistory} className='btn btn-default'><i className='glyphicon glyphicon-book' /></button> <strong>Show History</strong>
+                  <button style={{display:'none'}} onClick={this.showProdHistory} className='btn btn-default'><i className='glyphicon glyphicon-book' /></button> <strong>Show History</strong>
                 </div>
               </div>
               <div className='row' style={{ marginTop: '5px' }}>
