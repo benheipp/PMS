@@ -19,7 +19,8 @@
     "react-autocomplete": "^1.5.9",
     "react-dom": "15.2.0",
     "react-router": "2.5.2",
-    "react-timer-mixin": "^0.13.3"
+    "react-timer-mixin": "^0.13.3",
+    "treeview-react-bootstrap": "^0.4.6"
   },
   "devDependencies": {
     "babel-core": "6.5.1",

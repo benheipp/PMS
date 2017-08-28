@@ -7,6 +7,7 @@ var VendorMock = React.createClass({
   getInitialState: function () {
     return {
       counter: 0,
+      interval: 1000,
       webSendInProgress: false,
       intervalId: 0,
       totalRecordsSendClick: 0,
@@ -25,18 +26,6 @@ var VendorMock = React.createClass({
   },
   componentDidMount: function () {
     GetVendorList(this.vendorListCallback)
-    var intId = this.setInterval(() => {
-      if (this.state.counter >= 30) {
-        this.setState({
-          counter: 0
-        })
-      } else {
-        this.setState({
-          counter: this.state.counter + 1
-        })
-      }
-    }, 1000)
-    this.setState({intervalId: intId})
   },
   vendorListCallback: function (data) {
     this.setState({vendorList: data})
@@ -86,10 +75,10 @@ var VendorMock = React.createClass({
     return items
   },
   handleViewChanges: function (){
-    this.setState({showModal:true})
+    this.setState({showModal:true,interval:1000000})
   },
   handleHideModal: function(){
-    this.setState({showModal:false})
+    this.setState({showModal:false,interval:1000})
   },
   render: function () {
     var styleMargin25 = {

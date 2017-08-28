@@ -395,10 +395,41 @@ function MoveMultiple (originDocKeys, destinationDocKey, store_id, callback, err
   })
 }
 
+function MoveProducts (productSkus, originDocKey, destinationDocKey, store_id, callback, errorCallback) {
+  return $.ajax({
+    type: 'POST',
+    dataType: 'json',
+    url: `${url}/api/Pms/MoveProducts?originDocKey=${originDocKey}&destinationDocKey=${destinationDocKey}&store_id=${store_id}&username=${localStorage.username}&token=${localStorage.token}`,
+    data: JSON.stringify(productSkus),
+    contentType: 'application/json',
+  })
+  .done(function (data) { callback(data) })
+  .fail(function (data) {
+    if (data.status == '401') {
+      localStorage.clear()
+      window.location.href = '/'
+    } else {
+      const error = JSON.parse(data.responseText);
+      errorCallback(`${error.Message} ${error.ExceptionMessage}`);
+    }
+  })
+}
+
 
 function ValidateDocKey (sourceDocKey, targetDocKey, storeId, callback) {
   return $.getJSON(`${url}/api/Pms/DocKeyExists?docKey=${targetDocKey}&storeId=${storeId}&token=${localStorage.token}`)
   .done((data) => { callback(sourceDocKey, data) })
+   .fail(function (data) {
+    if (data.status == '401') {
+      localStorage.clear()
+      window.location.href = '/'
+    }
+  })
+}
+
+function ValidateProduct (sku, sourceDocKey, targetDocKey, storeId, callback) {
+  return $.getJSON(`${url}/api/Pms/ProductExists?docKey=${targetDocKey}&sku=${sku}&storeId=${storeId}&token=${localStorage.token}`)
+  .done((data) => { callback(sku,targetDocKey, data) })
    .fail(function (data) {
     if (data.status == '401') {
       localStorage.clear()

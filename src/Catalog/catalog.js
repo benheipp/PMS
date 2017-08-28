@@ -18,7 +18,7 @@ var CatalogTree = React.createClass({
       nodeNameCrumb: 'catalog',
       docKey: 'catalog',
       showComponent: false,
-      showProductList: false,
+      showProductList: true,
       componentData: [],
       productData: [],
       componentName: '',
@@ -33,9 +33,12 @@ var CatalogTree = React.createClass({
       showDisabled: false,
       copyActive: false,
       copyDocKeys: [],
+      copyProductDocKeys:[],
+      copyProductActive: false,
       selectedCatalogType: '',
       showCatalogTypeChangeModal: false,
-      showCatalogAddNode: false
+      showCatalogAddNode: false,
+      catVis: {display:'block'}
     }
   },
   componentWillMount: function () {
@@ -94,13 +97,13 @@ var CatalogTree = React.createClass({
       lockVis = true
     }
 
-    var catVis;
-    if (this.state.showComponent || this.state.showProductList)
-    {
-      catVis = {display:'none'}
-    } else {
-      catVis = {display:'block'}
-    }
+   // var catVis;
+   // if (this.state.showComponent || this.state.showProductList)
+  //  {
+    //  catVis = {display:'none'}
+  //  } else {
+ //     catVis = {display:'block'}
+   // }
 
     var rows = this.state.node.map(function (node) {
       return <CatalogTreeRow catalogTypes={this.props.catalogTypes} storeLookup={this.props.storeLookup} node={node} key={node.key} nodeLevel={this.state.nodeLevel} onNodeClick={this.onNodeClick} showFeedBack={this.showFeedBack} reloadData={this.reloadData} storeUpdate={this.storeUpdate} updateAllCatalogs={this.updateAllCatalogs} store={this.props.selectedStore.value} quickMove={this.quickMove} resetQuickMove={this.resetQuickMove} copyActive={this.state.copyActive} copyDocKeys={this.state.copyDocKeys} parentDocKey={this.state.docKey} />
@@ -113,7 +116,7 @@ var CatalogTree = React.createClass({
         {this.state.showBreadCrumbModal ? <BreadCrumbModal docKey={this.state.docKey} breadCrumbText={this.state.breadCrumbText} handleHideModal={this.handleHideModal} handleSaveBreadCrumbClick={this.handleSaveBreadCrumbClick} /> : null}
         <FeedBack noTimer="true" Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
         { this.state.showComponent ? <ComponentLevel component={this.state.componentData} componentName={this.state.componentName} diagramUrl={this.state.componentImage} docKey={this.state.docKey} showFeedBack={this.showFeedBack} nodeName={this.state.nodeName} nodeLevel={this.state.nodeLevel} reloadDataFromComponent={this.reloadDataFromComponent} storeLookup={this.props.storeLookup} store={this.props.selectedStore.value} /> : null }
-        { this.state.showProductList ? <ProductList products={this.state.productData} storeLookup={this.props.storeLookup} /> : null}
+        { this.state.showProductList ? <ProductList reloadData={this.reloadData} nodeName={this.state.nodeName} nodeLevel={this.state.nodeLevel} products={this.state.productData} storeLookup={this.props.storeLookup} store={this.props.selectedStore} quickMoveProduct={this.quickMoveProduct} copyDocKeys={this.state.copyProductDocKeys} copyProductActive={this.state.copyProductActive} docKey={this.state.docKey} /> : null}
         { this.state.showCatalogTypeChangeModal &&
           <CatalogTypeChangeModal
             docKey={this.state.docKey}
@@ -126,7 +129,7 @@ var CatalogTree = React.createClass({
             reloadData={() => { this.reloadDataFromComponent(this.state.docKey, this.state.nodeName, this.state.nodeLevel); }}
           /> 
         }
-      <div style={catVis}>
+      <div style={this.state.catVis}>
         {disableVis
             ? <div><b>Show Disabled </b> <input
               name='disabled'
@@ -214,6 +217,17 @@ var CatalogTree = React.createClass({
 
     this.setState({copyActive: copyDocKeys.length > 0, copyDocKeys})
   },
+  quickMoveProduct: function (sku,doc_key) {
+    let copyProductDocKeys = this.state.copyProductDocKeys;
+    const index = copyProductDocKeys.findIndex(i => i.doc_key === doc_key && i.sku === sku);
+    var obj = {
+        doc_key: doc_key,
+        sku: sku
+      }
+    index === -1 ? copyProductDocKeys.push(obj) : copyProductDocKeys.splice(index, 1);
+
+    this.setState({copyProductActive: copyProductDocKeys.length > 0, copyProductDocKeys: copyProductDocKeys})
+  },
   resetQuickMove: function () {
     this.setState({copyActive: false, copyDocKeys: []})
   },
@@ -237,6 +251,14 @@ var CatalogTree = React.createClass({
   },
   handleNewData: function (data, docKey, nodeName, persistResults) {
     this.setState({ node: data, nodeName: nodeName })
+    if (data.length == 0)
+    {
+       this.setState({ catVis: {display:'none'}})
+    }
+    else{
+       this.setState({ catVis: {display:'block'}})
+    }
+    GetProductList(docKey, this.props.selectedStore.value, this.HandleProductListData)
 
     if (persistResults === undefined) {
       this.setState({ showFeedback: false, feedbackMessage:""})
@@ -247,13 +269,13 @@ var CatalogTree = React.createClass({
     }
     if (data.length == 0 && docKey != null) {
       if (docKey.includes('catalog/aftermarket')) {
-        GetProductList(docKey, this.props.selectedStore.value, this.HandleProductListData)
+
       } else {
         getComponentProducts(docKey, nodeName, this.props.selectedStore.value, this.HandleComponentData)
       }
     } else {
       this.setState({ componentData: [] })
-      this.setState({ showComponent: false, showProductList: false})
+      this.setState({ showComponent: false, showProductList: true})
     }
   },
   BreadCrumbClick: function (nodeLevel, docKey, nodeNameCrumb) {
@@ -292,7 +314,7 @@ var CatalogTree = React.createClass({
         imgPrefix = '//cdn.boats.net/diagram/'
         break
     }
-    this.setState({ componentData: data, componentName: componentName, componentImage: imgPrefix + data[0].ImageUrl + '.png', showComponent: true, showFeedBack:false,feedbackMessage:"" })
+    this.setState({ componentData: data, componentName: componentName, componentImage: imgPrefix + data[0].ImageUrl + '.png', showComponent: true, showProductList:false, showFeedBack:false,feedbackMessage:"" })
   },
   showFeedBack: function (data) {
     this.setState({ showFeedback: true, feedbackResult: data.Result, feedbackMessage: data.Message})
