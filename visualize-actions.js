@@ -807,3 +807,36 @@ function UpdateStoreLock (lockFlag, storeId, callback) {
      }
    })
 }
+
+function SearchCatalog (storeId, docKey, searchValue, callback) {
+  $.getJSON(url + '/api/Pms/Search', {storeId:storeId,docKey:docKey,searchValue:searchValue, token: localStorage.token })
+      .done(function (data) { callback(data) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}
+
+function GetDiagramNodes ( callback) {
+  $.getJSON(url + '/api/Pms/GetDiagramNodes', {token: localStorage.token })
+      .done(function (data) { callback(data) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}
+
+function GetDiagrams ( doc_key, callback) {
+  $.getJSON(url + '/api/Pms/GetDiagrams', {doc_key: doc_key, token: localStorage.token })
+      .done(function (data) { callback(data) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}

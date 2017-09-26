@@ -31,6 +31,7 @@ var ProductList = React.createClass({
         <thead>
           <tr>
             <th></th>
+            <th></th>
             <th>Sku</th>
             <th>Doc Key</th>
             <th>Name</th>

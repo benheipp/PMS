@@ -36,7 +36,7 @@ var ProductPasteModal = React.createClass({
   },
   handleRemove (sku,docKeyToRemove) {
     const copyDocKeys = this.state.copyDocKeys;
-    const index = copyProductDocKeys.findIndex(i => i.doc_key === docKeyToRemove && i.sku === sku);
+    const index = copyDocKeys.findIndex(i => i.doc_key === docKeyToRemove && i.sku === sku);
     copyDocKeys.splice(index, 1);
     this.setState({ copyDocKeys });
   },

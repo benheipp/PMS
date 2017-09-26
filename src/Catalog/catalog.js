@@ -8,6 +8,8 @@ import LoadingControl from '../Controls/loading'
 import ProductList from './product-list'
 import CatalogTypeChangeModal from './catalog-type-change-modal'
 import CatalogAddNode from './catalog-add-node'
+import Loadable from 'react-loading-overlay'
+import SearchModal from './search-modal'
 
 var CatalogTree = React.createClass({
   getInitialState: function () {
@@ -38,7 +40,9 @@ var CatalogTree = React.createClass({
       selectedCatalogType: '',
       showCatalogTypeChangeModal: false,
       showCatalogAddNode: false,
-      catVis: {display:'block'}
+      catVis: {display:'block'},
+      isActive: false,
+      showSearchModal: false
     }
   },
   componentWillMount: function () {
@@ -110,6 +114,12 @@ var CatalogTree = React.createClass({
     }, this)
     return (
       <div style={stylemargin}>
+<Loadable
+  active={this.state.isActive}
+  spinner
+  text='Loading your content...'
+  >
+
         <a name="top"></a>
         {this.props.disabled == '1' ? <h1>Disabled Items</h1> : null }
         <BreadCrumb nodeNameCrumb={this.state.nodeNameCrumb} docKey={this.state.docKey} callbackBreadCrumbClick={this.BreadCrumbClick} handleEditBreadCrumbText={this.handleEditBreadCrumbText} selectedStore={this.props.selectedStore} storeLookup={this.props.storeLookup}  handleClearSelectedStore={this.props.handleClearSelectedStore} />
@@ -129,6 +139,12 @@ var CatalogTree = React.createClass({
             reloadData={() => { this.reloadDataFromComponent(this.state.docKey, this.state.nodeName, this.state.nodeLevel); }}
           /> 
         }
+      <div className='row'>
+        <div className='col-sm-2'>
+          <button type='button' class='btn btn-secondary' onClick={this.showSearchModal}><span className='glyphicon glyphicon-search'></span> Search</button>
+          { this.state.showSearchModal ? <SearchModal handleHideModal={this.handleHideSearchModal} docKey={this.state.docKey} storeId={this.props.selectedStore.value} copyDocKeys={this.state.copyDocKeys} quickMove={this.quickMove} /> : null }
+        </div>
+      </div>
       <div style={this.state.catVis}>
         {disableVis
             ? <div><b>Show Disabled </b> <input
@@ -189,8 +205,15 @@ var CatalogTree = React.createClass({
           null
         }
         </div>
+        </Loadable>
       </div>
     )
+  },
+  showSearchModal: function(){
+    this.setState({showSearchModal: true})
+  },
+  handleHideSearchModal: function(){
+    this.setState({showSearchModal: false})
   },
   handleShowAddNode: function() {
     this.setState({showCatalogAddNode: true})
@@ -238,7 +261,7 @@ var CatalogTree = React.createClass({
     this.updateAllCatalogs(docKey)
   },
   onNodeClick: function (docKey, nodeName, nodeLevel) {
-    this.setState({ docKey: docKey, nodeNameCrumb: this.state.nodeNameCrumb + '[|]' + nodeName, nodeLevel: nodeLevel + 1, showFeedback: true,feedbackMessage:"Loading...", selectedCatalogType: '' })
+    this.setState({ docKey: docKey, nodeNameCrumb: this.state.nodeNameCrumb + '[|]' + nodeName, nodeLevel: nodeLevel + 1, showFeedback: false,feedbackMessage:"Loading...", selectedCatalogType: '',isActive:true })
     getNodes(nodeLevel + 1, docKey, nodeName, this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, undefined, this.handleNewData)
     GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback)
     this.updateAllCatalogs(docKey)
@@ -250,7 +273,7 @@ var CatalogTree = React.createClass({
     console.log("Export callback hit")
   },
   handleNewData: function (data, docKey, nodeName, persistResults) {
-    this.setState({ node: data, nodeName: nodeName })
+    this.setState({ node: data, nodeName: nodeName,isActive:false })
     if (data.length == 0)
     {
        this.setState({ catVis: {display:'none'}})
@@ -279,7 +302,6 @@ var CatalogTree = React.createClass({
     }
   },
   BreadCrumbClick: function (nodeLevel, docKey, nodeNameCrumb) {
-    console.log(nodeNameCrumb, nodeLevel)
     var splitCrumb = nodeNameCrumb.split('[|]')
     var newCrumb = ''
     var i
@@ -287,17 +309,22 @@ var CatalogTree = React.createClass({
       newCrumb = newCrumb + splitCrumb[i] + '[|]'
     }
     newCrumb = newCrumb.substring(0, newCrumb.length - 3)
-    this.setState({ docKey: docKey, nodeLevel: nodeLevel, showFeedback: true, feedbackMessage:"Loading...", nodeNameCrumb: newCrumb, selectedCatalogType: '' })
+    this.setState({ docKey: docKey, nodeLevel: nodeLevel, showFeedback: false, feedbackMessage:"Loading...", nodeNameCrumb: newCrumb, selectedCatalogType: '',isActive:true })
     getNodes(nodeLevel, docKey, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, undefined, this.handleNewData)
     GetBreadCrumbText(docKey, this.props.selectedStore.value, this.editBreadCrumbCallback)
     this.updateAllCatalogs(docKey)
   },
   HandleProductListData: function (data) {
-    if (data.length > 0)
+    if (data.prodData.length > 0)
     {
-      this.setState({ productData: data, showProductList: true, showFeedBack:false,feedbackMessage:"" })
+      this.setState({ productData: data.prodData, showProductList: true, showFeedBack:false,feedbackMessage:"" })
     } else {
-      this.setState({ showProductList: false, showFeedBack:false,feedbackMessage:"" })
+      if (data.finalDocKey)
+      {
+      this.setState({ showProductList: true, productData: data.prodData, showFeedBack:false,feedbackMessage:"" })
+      } else {
+      this.setState({ showProductList: false, productData: data.prodData, showFeedBack:false,feedbackMessage:"" })
+      }
     }
     console.log("testing");
   },

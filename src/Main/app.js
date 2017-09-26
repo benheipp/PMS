@@ -10,6 +10,7 @@ import ProductMain from '../Product/product'
 import UserAdminMain from '../UserAdmin/useradminmain'
 import ProductStandAlone from '../Product/product-stand-alone'
 import RulesMain from '../Rules/rulesmain'
+import DiagramMain from '../DiagramTool/main'
 
 const App = React.createClass({
   getInitialState () {
@@ -46,6 +47,7 @@ const App = React.createClass({
               {renderCatalog ? <li><Link to='catalog'>Catalog</Link></li> : null}
               {renderProduct ? <li><Link to='product'>Products</Link></li> : null}
               {renderRules && <li><Link to='rules'>Rules</Link></li>}
+              <li><Link to='diagramtool'>Diagram Tool</Link></li>
             </ul>
             <ul className='nav navbar-nav navbar-right'>
               {auth.loggedIn() ? <li><Link to='user'><span className='glyphicon glyphicon-user' /> {localStorage.username}</Link></li> : null}
@@ -99,6 +101,7 @@ render(
       <Route path='/user' component={UserAdminMain} onEnter={requireAuth} />
       <Route path='/product-detail' component={ProductStandAlone} onEnter={requireAuth} />
       <Route path='/rules' component={RulesMain} onEnter={requireAuth} />
+      <Route path='/diagramtool' component={DiagramMain} onEnter={requireAuth} />
     </Route>
   </Router>
 , document.getElementById('root'))

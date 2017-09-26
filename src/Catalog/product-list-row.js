@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router'
 import ProductListDetailModal from './product-detail-modal'
+import ReactHover from 'react-hover'
 
 var ProductListRow = React.createClass({
    getInitialState: function () {
@@ -14,9 +15,47 @@ var ProductListRow = React.createClass({
   var indxStore = this.props.storeLookup.findIndex(i => i.id === this.props.store);
   if (this.props.storeLookup[indxStore].store_lock == true) { disableVar = true }
 
+const optionsCursorTrueWithMargin = {
+  followCursor: true,
+  shiftX: 20,
+  shiftY: 0
+}
+
+    if (this.props.product.disabled)
+    {
+      disableVar = true
+    }
+
+  var thumbImage
+  var bigImage
+      switch (this.props.store) {
+        case 12:
+          bigImage = '//cdn.firedog.com/product/xp/' + this.props.product.image
+          thumbImage = '//cdn.firedog.com/thumb/product/xp/' + this.props.product.image
+          break
+        case 11:
+          bigImage = '//cdn.partzilla.com/product/xp/' + this.props.product.image
+          thumbImage = '//cdn.partzilla.com/thumb/product/xp/' + this.props.product.image
+          break
+        case 10:
+          bigImage = '//cdn.boats.net/product/xp/' + this.props.product.image
+          thumbImage = '//cdn.boats.net/thumb/product/xp/' + this.props.product.image
+          break
+      }
     return (
       <tr>
                 <td><button disabled={disableVar} onClick={this.quickMove} className={`btn btn-sm btn-default${this.props.copyDocKeys.findIndex(i => i.doc_key === this.props.doc_key && i.sku === this.props.product.sku) > -1 ? ' active' : ''}`}><i className='glyphicon glyphicon-copy' /> Move</button></td>
+       <td>
+      <ReactHover
+          options={optionsCursorTrueWithMargin}>
+          <ReactHover.Trigger>
+            <div><img src={thumbImage} /></div>
+          </ReactHover.Trigger>
+          <ReactHover.Hover>
+            <div><img src={bigImage} /></div>
+          </ReactHover.Hover>
+        </ReactHover>
+       </td>
         <td>
         <a href='#' onClick={this.handleShowProductDetailListModal}>{this.props.product.sku}</a>
         </td>
