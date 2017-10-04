@@ -830,8 +830,30 @@ function GetDiagramNodes ( callback) {
    })
 }
 
-function GetDiagrams ( doc_key, callback) {
-  $.getJSON(url + '/api/Pms/GetDiagrams', {doc_key: doc_key, token: localStorage.token })
+function GetDiagrams ( doc_key, showUnsaved, callback) {
+  $.getJSON(url + '/api/Pms/GetDiagrams', {doc_key: doc_key, showUnsaved: showUnsaved, token: localStorage.token })
+      .done(function (data) { callback(data,showUnsaved) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}
+
+function SaveDiagramValidation ( doc_key, value, callback) {
+  $.getJSON(url + '/api/Pms/SaveDiagramValidation', {doc_key: doc_key, value: value, token: localStorage.token })
+      .done(function (data) { callback(data) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}
+
+function IsInvalidDiagram ( doc_key, callback) {
+  $.getJSON(url + '/api/Pms/IsInvalidDiagram', {doc_key: doc_key, token: localStorage.token })
       .done(function (data) { callback(data) })
    .fail(function (data) {
      if (data.status == '401') {
