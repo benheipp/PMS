@@ -3,6 +3,7 @@ import ProductAutoComplete from './product-autocomplete'
 import ProductDisplay from './product-display'
 import VendorList from './product-vendorlist'
 import FeedBack from '../Controls/feedback'
+import ProductDocKeys from './product-doc-key'
 var ProductMain = React.createClass({
   componentWillMount: function () {
     if (localStorage.ProductVisibility != 'true') {
@@ -23,7 +24,8 @@ var ProductMain = React.createClass({
       	showFeedback: false,
       	feedbackResult: 0,
       	feedbackMessage: '',
-        storeLookup: []
+        storeLookup: [],
+        prodCatDocKeyList:[]
     	}
   },
   render: function () {
@@ -42,13 +44,20 @@ var ProductMain = React.createClass({
           </div>
         </div>
         { this.state.showProductDisplay ? <ProductDisplay data={this.state.prod} handleSaveProdClick={this.handleSaveProdClick} showFeedBack={this.showFeedBack} rollbackComplete={this.saveProdCallback} store={this.state.prod.store_id} storeLookup={this.state.storeLookup}  /> : null }
+        { this.state.showProductDisplay ? <ProductDocKeys data={this.state.prodCatDocKeyList} /> : null}
       </div>)
   },
   displayRecord: function (item) {
+    console.log(item)
+    GetProductCatalogDocKeys(item.vendor_id,item.sku,item.store_id,this.getProductCatalogDocKeysCallBack)
     	this.setState({showProductDisplay: true, prod: item})
   },
   vendorListCallback: function (data) {
     	this.setState({vendorList: data})
+  },
+  getProductCatalogDocKeysCallBack: function(data)
+  {
+    this.setState({prodCatDocKeyList:data})
   },
   handleVendorCheckChange: function (chkValue, vendor) {
     	var itmArray = this.state.searchVendors

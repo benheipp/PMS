@@ -79445,11 +79445,13 @@
 	      feedbackResult: 0,
 	      feedbackMessage: '',
 	      currentDocKey: '',
-	      toggleSelection: true
+	      toggleSelection: true,
+	      invalidCount: 0
 	    };
 	  },
 	  componentDidMount: function componentDidMount() {
 	    GetDiagramNodes(this.getDiagramNodesCallback);
+	    GetTotalInvalidCount(this.GetTotalInvalidCountCallback);
 	  },
 	  render: function render() {
 	
@@ -79482,6 +79484,16 @@
 	            _react2.default.createElement(
 	              'div',
 	              null,
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'row' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'col-md-12' },
+	                  'Invalid Count: ',
+	                  this.state.invalidCount
+	                )
+	              ),
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'row' },
@@ -79577,7 +79589,11 @@
 	      this.setState({ isActive: true, showUnsaved: false });
 	      showUnsaved = false;
 	    }
-	    GetDiagrams(this.state.currentDocKey, showUnsaved, this.getDiagramsCallback);
+	    if (this.state.currentDocKey != '') {
+	      GetDiagrams(this.state.currentDocKey, showUnsaved, this.getDiagramsCallback);
+	    } else {
+	      this.setState({ isActive: false });
+	    }
 	  },
 	  handleRadioChange: function handleRadioChange(event) {
 	    if (this.state.toggleSelection == true) {
@@ -79592,7 +79608,11 @@
 	    SaveDiagramValidation(this.state.images[this.state.index].doc_key, this.state.selectedRadio, this.saveCallback);
 	  },
 	  saveCallback: function saveCallback(data) {
+	    GetTotalInvalidCount(this.GetTotalInvalidCountCallback);
 	    this.setState({ showFeedback: true, feedbackResult: data.Result, feedbackMessage: data.Message });
+	  },
+	  GetTotalInvalidCountCallback: function GetTotalInvalidCountCallback(data) {
+	    this.setState({ invalidCount: data });
 	  },
 	  occurrences: function occurrences(string, subString, allowOverlapping) {
 	    string += "";

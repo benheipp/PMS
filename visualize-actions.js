@@ -862,3 +862,25 @@ function IsInvalidDiagram ( doc_key, callback) {
      }
    })
 }
+
+function GetTotalInvalidCount (callback) {
+  $.getJSON(url + '/api/Pms/GetTotalInvalidCount', { token: localStorage.token })
+      .done(function (data) { callback(data) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}
+
+function GetProductCatalogDocKeys (vendorId, sku, storeId, callback) {
+  $.getJSON(url + '/api/Pms/GetProductCatalogDocKeys', {vendorId:vendorId,sku:sku,storeId,token: localStorage.token })
+      .done(function (data) { callback(data) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}

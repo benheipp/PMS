@@ -18,11 +18,13 @@ var DiagramMain = React.createClass({
       feedbackResult: 0,
       feedbackMessage: '',
       currentDocKey:'',
-      toggleSelection:true
+      toggleSelection:true,
+      invalidCount: 0
       }
     },
   componentDidMount: function () {
    GetDiagramNodes(this.getDiagramNodesCallback)
+   GetTotalInvalidCount(this.GetTotalInvalidCountCallback)
   },
   render: function () {
 
@@ -44,6 +46,11 @@ var DiagramMain = React.createClass({
           <FeedBack noTimer="true" Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
           <div>
               <div className="row">
+               <div className="col-md-12">
+          Invalid Count: {this.state.invalidCount}
+          </div>
+          </div>
+                        <div className="row">
                <div className="col-md-12">
            Show only invalid <input
             name="showUnsaved"
@@ -124,7 +131,13 @@ var DiagramMain = React.createClass({
       this.setState({isActive:true,showUnsaved:false})
       showUnsaved = false
     }
-    GetDiagrams(this.state.currentDocKey,showUnsaved,this.getDiagramsCallback)
+    if(this.state.currentDocKey != '')
+    {
+      GetDiagrams(this.state.currentDocKey,showUnsaved,this.getDiagramsCallback)
+    }
+    else {
+       this.setState({isActive:false})
+    }
   },
   handleRadioChange: function(event){
     if(this.state.toggleSelection == true)
@@ -140,7 +153,11 @@ var DiagramMain = React.createClass({
     SaveDiagramValidation(this.state.images[this.state.index].doc_key,this.state.selectedRadio,this.saveCallback)
   },
   saveCallback: function(data){
+    GetTotalInvalidCount(this.GetTotalInvalidCountCallback)
     this.setState({ showFeedback: true, feedbackResult: data.Result, feedbackMessage: data.Message})
+  },
+  GetTotalInvalidCountCallback: function(data){
+    this.setState({invalidCount:data})
   },
   occurrences:function(string,subString,allowOverlapping){
     string += "";
