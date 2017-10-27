@@ -2,6 +2,7 @@ import React from 'react'
 import ProductAutoComplete from './product-autocomplete'
 import ProductDisplay from './product-display'
 import VendorList from './product-vendorlist'
+import VendorListProdType from './product-vendorlist-prodtype'
 import FeedBack from '../Controls/feedback'
 import ProductDocKeys from './product-doc-key'
 var ProductMain = React.createClass({
@@ -33,6 +34,12 @@ var ProductMain = React.createClass({
       <div className='container marginTop100' style={{width: '50%' }}>
         <FeedBack Result={this.state.feedbackResult} Message={this.state.feedbackMessage} visible={this.state.showFeedback} delay={2000} resetFeedbackState={this.resetFeedbackState} />
         <div className='panel panel-default'>
+          <div className='panel-heading'>Product Type</div>
+          <div className='panel-body'>
+            <VendorListProdType VendorList={this.state.vendorList} showFeedBack={this.showFeedBack} />
+          </div>
+        </div>
+        <div className='panel panel-default'>
           <div className='panel-heading'>Product Search</div>
           <div className='panel-body'>
             <ProductAutoComplete displayRecord={this.displayRecord} searchVendors={this.state.searchVendors} />
@@ -48,7 +55,6 @@ var ProductMain = React.createClass({
       </div>)
   },
   displayRecord: function (item) {
-    console.log(item)
     GetProductCatalogDocKeys(item.vendor_id,item.sku,item.store_id,this.getProductCatalogDocKeysCallBack)
     	this.setState({showProductDisplay: true, prod: item})
   },

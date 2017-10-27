@@ -884,3 +884,14 @@ function GetProductCatalogDocKeys (vendorId, sku, storeId, callback) {
      }
    })
 }
+
+function CreateProductTypeRule (doc_key, store_id, product_type, callback) {
+  $.getJSON(url + '/api/Pms/CreateProductTypeRule', {doc_key:doc_key,store_id:store_id,product_type:product_type,username:localStorage.username,token: localStorage.token })
+      .done(function (data) { callback(data) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}
