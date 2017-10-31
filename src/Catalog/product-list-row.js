@@ -30,16 +30,16 @@ const optionsCursorTrueWithMargin = {
   var bigImage
       switch (this.props.store) {
         case 12:
-          bigImage = '//cdn.firedog.com/product/xp/' + this.props.product.image
-          thumbImage = '//cdn.firedog.com/thumb/product/xp/' + this.props.product.image
+          bigImage = '//cdn.firedog.com' + this.props.product.image
+          thumbImage = '//cdn.firedog.com/thumb' + this.props.product.image
           break
         case 11:
-          bigImage = '//cdn.partzilla.com/product/xp/' + this.props.product.image
-          thumbImage = '//cdn.partzilla.com/thumb/product/xp/' + this.props.product.image
+          bigImage = '//cdn.partzilla.com' + this.props.product.image
+          thumbImage = '//cdn.partzilla.com/thumb' + this.props.product.image
           break
         case 10:
-          bigImage = '//cdn.boats.net/product/xp/' + this.props.product.image
-          thumbImage = '//cdn.boats.net/thumb/product/xp/' + this.props.product.image
+          bigImage = '//cdn.boats.net' + this.props.product.image
+          thumbImage = '//cdn.boats.net/thumb' + this.props.product.image
           break
       }
     return (
