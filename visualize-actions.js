@@ -1,8 +1,8 @@
 // Testing
-var url = 'http://localhost:65515'
+const url = 'http://localhost:65515'
 
 // Production
-// var url = 'http://192.168.2.16:84'
+// export const url = 'http://192.168.2.16:84'
 
 function getNodes (nodeLevel, docKey, nodeName, storeId, disabled, showDisabled, persistResults, callback) {
   $.getJSON(url + '/api/Pms/Get', { nodeLevel: nodeLevel, storeId: storeId, disabled: disabled, showDisabled: showDisabled, docKey: docKey, token: localStorage.token })
