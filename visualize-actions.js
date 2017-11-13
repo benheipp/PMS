@@ -309,7 +309,6 @@ function UpdateWebSent (webSentFlag, storeId, callback) {
 }
 
 function UpdateImportFlag (vendor, import_flag, status_message, callback) {
-  console.log(vendor)
   return $.getJSON(url + '/api/Pms/UpdateImportFlag', {vendor: vendor, import_flag: import_flag, status_message: status_message, username: localStorage.username, token: localStorage.token })
   .done(function (data) { callback(data) })
    .fail(function (data) {
@@ -887,6 +886,39 @@ function GetProductCatalogDocKeys (vendorId, sku, storeId, callback) {
 
 function CreateProductTypeRule (doc_key, store_id, product_type, callback) {
   $.getJSON(url + '/api/Pms/CreateProductTypeRule', {doc_key:doc_key,store_id:store_id,product_type:product_type,username:localStorage.username,token: localStorage.token })
+      .done(function (data) { callback(data) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}
+
+function GetVendorImportTree (vendor, callback) {
+  $.getJSON(url + '/api/Pms/GetVendorImportTree', {vendor:vendor,token: localStorage.token })
+      .done(function (data) { callback(data) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}
+
+function GetProductionImportTree (vendor, callback) {
+  $.getJSON(url + '/api/Pms/GetProductionImportTree', {vendor:vendor,token: localStorage.token })
+      .done(function (data) { callback(data) })
+   .fail(function (data) {
+     if (data.status == '401') {
+       localStorage.clear()
+       window.location.href = '/'
+     }
+   })
+}
+
+function GetVendors (callback) {
+  $.getJSON(url + '/api/Pms/GetVendors', {token: localStorage.token })
       .done(function (data) { callback(data) })
    .fail(function (data) {
      if (data.status == '401') {
