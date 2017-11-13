@@ -13,3 +13,7 @@ export function StartDataCheck() {
   })
   .done(function (data) { return data; })
 }
+
+export function GetDataCheckData(dataCheckId, storeId, vendorId) {
+  return $.getJSON(`${host}/api/DataCheck/GetData`, {dataCheckId, storeId, vendorId, token: localStorage.token});
+}

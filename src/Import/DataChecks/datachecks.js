@@ -1,5 +1,5 @@
 import React from 'react';
-import TreeView from 'treeview-react-bootstrap'
+import DataCheckModal from './datacheckmodal'
 import { GetDataChecksData, StartDataCheck } from './actions';
 
 var DataChecks = React.createClass({
@@ -12,8 +12,9 @@ var DataChecks = React.createClass({
       totalChecks: 0,
       completedChecks: 0,
       dataChecks: [],
-      selectedStoreId: '',
-      selectedVendorId: '',
+      selectedStoreId: 0,
+      selectedVendorId: 0,
+      showDataModal: false,
     }
   },
   componentDidMount: function () {
@@ -28,10 +29,19 @@ var DataChecks = React.createClass({
         </div>
         { this.getHeader() }
         { this.state.isComplete &&
-          this.getBody()
+          <div id="tree" />
+        }
+        { this.state.showDataModal &&
+          <DataCheckModal data={this.state.selectedDataCheck} handleHideModal={this.handleHideModal} />
         }
       </div>
     )
+  },
+  handleHideModal: function () {
+    this.setState({ showDataModal: false });
+    $('#tree').treeview('getSelected').forEach(n => {
+      $('#tree').treeview('unselectNode', n);
+    });    
   },
   getHeader: function () {
     return (
@@ -81,8 +91,19 @@ var DataChecks = React.createClass({
       return rv;
     }, {});
   },
-  getBody: function () {
-    const stores = this.groupBy(this.state.dataChecks, 'StoreName');
+  getCheckColor: function (dataCheck) {
+    return dataCheck.AllowUploadOnFailure ? '#33AC00' : '#ff3600';
+  },
+  getTreeData: function () {
+    const selectedStoreId = Number(this.state.selectedStoreId);
+    const selectedVendorId = Number(this.state.selectedVendorId);
+    const filteredDataChecks = this.state.dataChecks
+      .filter(d => (
+        (selectedStoreId > 0 ? d.StoreId === selectedStoreId : true)
+        && (selectedVendorId > 0 ? d.VendorId === selectedVendorId : true)
+      ));
+
+    const stores = this.groupBy(filteredDataChecks, 'StoreName');
     const tree = [];
     for(const store in stores) {
       const vendors = this.groupBy(stores[store], 'VendorName');
@@ -91,17 +112,23 @@ var DataChecks = React.createClass({
         const checkNodes = [];
         for (const c in vendors[vendor]) {
           const check = vendors[vendor][c];
-          const checkNode = { text: `${check.DataCheck.Name} (${check.Count})` };
+          const color = this.getCheckColor(check);
+          const checkNode = {
+            text: `${check.DataCheck.Name} (${check.Count})`,
+            tags:[`${check.Count}`],
+            color: color,
+            dataCheck: check,
+          };
           checkNodes.push(checkNode);
         }
-        const vendorNode = { text: vendor || 'No vendor', nodes: checkNodes };
+        const vendorNode = { text: vendor !== 'null' ? vendor : 'No vendor', nodes: checkNodes, selectable: false };
         vendorNodes.push(vendorNode);
       }
-      const storeNode = { text: store || 'No store', nodes: vendorNodes };
+      const storeNode = { text: store !== 'null' ? store : 'No store', nodes: vendorNodes, selectable: false };
       tree.push(storeNode);
     }
 
-    return (<TreeView data={tree} />);
+    return tree;
   },
   getFailedChecks: function () {
     return (
@@ -128,7 +155,7 @@ var DataChecks = React.createClass({
     GetDataChecksData().then((data) => { this.loadDataChecksData(data) });
   },
   startUpdateLoop: function() {
-    const intervalId = window.setInterval(() => { this.updateData(); }, 1000);
+    const intervalId = window.setInterval(() => { this.updateData(); }, 1500);
     this.setState({ intervalId });
   },
   endUpdateLoop: function() {
@@ -160,6 +187,9 @@ var DataChecks = React.createClass({
       </select>
     );
   },
+  selectNode(data) {
+    this.setState({ showDataModal: true, selectedDataCheck: data });
+  },
   loadDataChecksData: function (data) {
     if (data != null)
     {
@@ -173,6 +203,17 @@ var DataChecks = React.createClass({
         totalChecks: data.TotalChecks,
       });
     }
+
+    const _this = this;
+    $('#tree').treeview(
+      {
+        data: this.getTreeData(),
+        levels: 3,
+        onNodeSelected: function(event, data) {
+          _this.selectNode(data)
+        }
+      }
+    );
 
     this.setState({ inProgress: false });
   }
