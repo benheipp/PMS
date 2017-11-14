@@ -58,49 +58,51 @@ class PaginatedTable extends React.Component {
     const delta = Math.floor(this.props.maxPagesToDisplay / 2);
     const begin = Math.max(0, this.state.page - delta);
     const end = Math.min(this.props.rows.length, 
-      Math.max(this.state.page + delta, this.props.maxPagesToDisplay));
+      Math.max(this.state.page + delta + 1, this.props.maxPagesToDisplay));
     const pages = [...Array(totalPages).keys()].slice(begin, end);
     return (
-      <ul className="pagination">
-        <li className={this.state.page === 0 ? 'disabled' : ''}>
-          <a href="#" onClick={() => { this.setPage(Math.max(0, this.state.page - 1)); }}>&laquo;</a>
-        </li>
-        { begin > 0 &&
-          <li>
-            <a
-              href="#"
-              onClick={() => {
-                this.setPage(Math.min(0, this.state.page - this.props.maxPagesToDisplay)); 
-              }}
-            >
-              &hellip;
-            </a>
+      <div style={{ textAlign: 'center'}}>
+        <ul className="pagination pagination-sm">
+          <li className={this.state.page === 0 ? 'disabled' : ''}>
+            <a href="#" onClick={() => { this.setPage(Math.max(0, this.state.page - 1)); }}>&laquo;</a>
           </li>
-        }
-        { pages.map(page => 
-            (
-              <li key={uuid.v4()} className={ this.state.page === page ? 'active' : '' }>
-                <a href="#" onClick={() => { this.setPage(page); }}>{page + 1}</a>
-              </li>
+          { begin > 0 &&
+            <li>
+              <a
+                href="#"
+                onClick={() => {
+                  this.setPage(Math.max(0, this.state.page - this.props.maxPagesToDisplay)); 
+                }}
+              >
+                &hellip;
+              </a>
+            </li>
+          }
+          { pages.map(page => 
+              (
+                <li key={uuid.v4()} className={ this.state.page === page ? 'active' : '' }>
+                  <a href="#" onClick={() => { this.setPage(page); }}>{page + 1}</a>
+                </li>
+              )
             )
-          )
-        }
-        { end < totalPages &&
-          <li>
-            <a
-              href="#"
-              onClick={() => {
-                this.setPage(Math.min(this.state.page + this.props.maxPagesToDisplay, totalPages));
-              }}
-            >
-              &hellip;
-            </a>
+          }
+          { end < totalPages &&
+            <li>
+              <a
+                href="#"
+                onClick={() => {
+                  this.setPage(Math.min(this.state.page + this.props.maxPagesToDisplay, totalPages - 1));
+                }}
+              >
+                &hellip;
+              </a>
+            </li>
+          }
+          <li className={this.state.page === (totalPages - 1) ? 'disabled' : ''}>
+            <a href="#" onClick={() => { this.setPage(Math.min(totalPages - 1, this.state.page + 1)); }}>&raquo;</a>
           </li>
-        }
-        <li className={this.state.page === totalPages ? 'disabled' : ''}>
-          <a href="#" onClick={() => { this.setPage(Math.min(totalPages, this.state.page + 1)); }}>&raquo;</a>
-        </li>
-      </ul>
+        </ul>
+      </div>
     );
   }
 
