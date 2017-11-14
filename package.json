@@ -24,7 +24,8 @@
     "react-router": "2.5.2",
     "react-timer-mixin": "^0.13.3",
     "react-toggle-button": "^2.1.0",
-    "treeview-react-bootstrap": "^0.4.6"
+    "treeview-react-bootstrap": "^0.4.6",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "babel-core": "6.5.1",

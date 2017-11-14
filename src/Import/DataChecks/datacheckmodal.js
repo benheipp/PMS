@@ -1,9 +1,10 @@
 import React from 'react';
 import { GetDataCheckData } from './actions';
+import PaginatedTable from '../../Component/PaginatedTable/paginated-table';
 
 const DataCheckModal = React.createClass({
   getInitialState: function() {
-    return { hasData: false, page: 0, rowsPerPage: 15, maxPagesToDisplay: 16 };
+    return { hasData: false };
   },
   componentDidMount: function () {
     $('#DataCheckModal').modal('show');
@@ -17,73 +18,6 @@ const DataCheckModal = React.createClass({
       this.setState({ hasData: true, data });
     });
   },
-  getTableHeader: function() {
-    const cells = this.state.data.Headers.map(h => (<th>{h}</th>));
-    return (<tr>{cells}</tr>);
-  },
-  getTableBody: function() {
-    const beginIndex = this.state.page * this.state.rowsPerPage;
-    const endIndex = beginIndex + this.state.rowsPerPage;
-    const visibleRows = this.state.data.Rows.slice(beginIndex, endIndex);
-    return visibleRows.map(r => {
-      const cells = r.map(c => (
-        <td>{c}</td>
-      ));
-      return (<tr>{cells}</tr>);
-    });
-  },
-  setPage: function(page) {
-    this.setState({ page });
-  },
-  getPagination() {
-    const totalPages = Math.ceil(this.state.data.Rows.length / this.state.rowsPerPage);
-    const delta = Math.floor(this.state.maxPagesToDisplay / 2);
-    const beginIndex = Math.max(0, this.state.page - delta);
-    const endIndex = Math.min(this.state.data.Rows.length, Math.max(this.state.page + delta, this.state.maxPagesToDisplay));
-    const pages = [...Array(totalPages).keys()].slice(beginIndex, endIndex);
-    return (
-      <ul className="pagination">
-        <li className={this.state.page === 0 ? 'disabled' : ''}>
-          <a href="#" onClick={() => { this.setPage(this.state.page - 1); }}>&laquo;</a>
-        </li>
-        { this.state.page > beginIndex &&
-          <li>
-            <a href="#" onClick={() => { this.setPage(Math.max(0, this.state.page - this.state.maxPagesToDisplay)); }}>...</a>
-          </li>
-        }
-        { pages.map(p => 
-            (
-              <li className={ this.state.page === (p) ? 'active' :'' }>
-                <a href="#" onClick={() => { this.setPage(p); }}>{p + 1}</a>
-              </li>
-            )
-          )
-        }
-        { endIndex < totalPages &&
-          <li>
-            <a href="#" onClick={() => { this.setPage(Math.min(this.state.page + this.state.maxPagesToDisplay, totalPages)); }}>...</a>
-          </li>
-        }
-        <li className={this.state.page === totalPages ? 'disabled' : ''}>
-          <a href="#" onClick={() => { this.setPage(this.state.page + 1); }}>&raquo;</a>
-        </li>
-      </ul>
-    );
-  },
-  getTable: function() {
-    return (
-      <div>
-        <table className="table">
-          <thead>
-            {this.getTableHeader()}
-          </thead>
-          <tbody>
-            {this.getTableBody()}
-          </tbody>
-        </table>
-      </div>
-    );
-  },
   render: function () {
     return (
       <div id='DataCheckModal' className='modal fade' data-keyboard='false' data-backdrop='static'>
@@ -95,13 +29,11 @@ const DataCheckModal = React.createClass({
               </h4>
             </div>
             <div className='modal-body'>
-              { this.state.hasData && this.getTable() }
               { this.state.hasData &&
-                this.state.data.Rows.length > this.state.rowsPerPage &&
-                this.getPagination()
+                <PaginatedTable headers={this.state.data.Headers} rows={this.state.data.Rows} />
               }
-              { !this.state.hasData && 
-                <div>Fetching data...</div> 
+              { !this.state.hasData &&
+                <p>Fetching data...</p>
               }
             </div>
             <div className='modal-footer'>
