@@ -215,8 +215,8 @@ select,
 .panel .panel-blue > .panel-heading .btn{ color:#fff; }
 .panel .panel-blue { border-color:#0089ff; }
 
-label { color:#70c469; }
-.checkbox label { color:inherit; }
+/*label { color:#70c469; }
+.checkbox label { color:inherit; }*/
 
 .modal-body .text-success,
 .modal-body .text-danger { font-weight:bold; font-size:1.1em; }
