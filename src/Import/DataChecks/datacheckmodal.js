@@ -7,6 +7,7 @@ const DataCheckModal = React.createClass({
     return { hasData: false };
   },
   componentDidMount: function () {
+    console.log(this.props.data);
     $('#DataCheckModal').modal('show');
     $('#DataCheckModal').on('hidden.bs.modal', this.props.handleHideModal);
     this.fetchData();
@@ -23,9 +24,9 @@ const DataCheckModal = React.createClass({
       <div id='DataCheckModal' className='modal fade' data-keyboard='false' data-backdrop='static'>
         <div className='modal-dialog modal-lg'>
           <div className='modal-content'>
-            <div className='modal-header'>
+            <div className='modal-header' style={{ backgroundColor: this.props.data.color, color: '#FFF' }}>
               <h4 className='modal-title'>
-                { this.props.data.text }
+              { `${this.props.data.text} for ${this.props.data.dataCheck.VendorName || 'no vendor'} on ${this.props.data.dataCheck.StoreName}` }
               </h4>
             </div>
             <div className='modal-body'>

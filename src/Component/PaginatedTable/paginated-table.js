@@ -18,7 +18,7 @@ class PaginatedTable extends React.Component {
   buildTable() {
     return (
       <div>
-        <table className="table">
+        <table className="table table-condensed table-hover">
           <thead>
             {this.buildTableHeader()}
           </thead>

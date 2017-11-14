@@ -112,7 +112,7 @@ var DataChecks = React.createClass({
         const checkNodes = [];
         for (const c in vendors[vendor]) {
           const check = vendors[vendor][c];
-          const color = this.getCheckColor(check);
+          const color = this.getCheckColor(check.DataCheck);
           const checkNode = {
             text: `${check.DataCheck.Name} (${check.Count})`,
             tags:[`${check.Count}`],
