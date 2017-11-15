@@ -13,6 +13,8 @@
     "window": true,
     "fetch": true,
     "Request": true,
-    "document": true
+    "document": true,
+    "API_HOST": true,
+    "localStorage": true
   }
 }
