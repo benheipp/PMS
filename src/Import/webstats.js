@@ -2,6 +2,8 @@ import React from 'react'
 import ProgressBar from './progressbar'
 import TimerMixin from 'react-timer-mixin'
 import PendingItemsModal from './pending-modal'
+import { VerifyDataCheck } from './DataChecks/actions';
+
 var WebSendComponent = React.createClass({
   mixins: [TimerMixin],
   getInitialState: function () {
@@ -51,18 +53,36 @@ var WebSendComponent = React.createClass({
       this.clearInterval(this.state.intervalId)
     },
   	handleSendToWebClick: function () {
-  		var statusData = this.state.StatusData
-  		var totalRecords = this.state.StatusData.catalog_records_remaining + this.state.StatusData.product_records_remaining
-  		if (this.state.selectedStore == '0') {
+      var _this = this;
+  		var statusData = _this.state.StatusData
+  		if (_this.state.selectedStore == '0') {
   			statusData.status_message = 'Select a store.'
-  			this.setState({StatusData: statusData })
+  			_this.setState({StatusData: statusData })
   			return
-  		}
-  		statusData.status_message = 'Queueing data...'
+      }
+
+      _this.setState({ dataCheckMessage: 'Running data check... '});
+      VerifyDataCheck(_this.state.selectedStore).then(
+        (results) => {
+          if (results.Result.Result === 'Success') {
+            _this.setState({ dataCheckMessage: undefined, dataCheckError: false });
+            _this.startSendToWeb();
+          } else {
+            _this.setState({ dataCheckMessage: results.Message, dataCheckError: true });
+          }
+        }
+      )
+    },
+    startSendToWeb: function () {
+      return;
+      var statusData = this.state.StatusData
+      var totalRecords = statusData.catalog_records_remaining + statusData.product_records_remaining
+  		
+      statusData.status_message = 'Queueing data...'
   		statusData.send_flag = true
   		this.setState({totalRecordsSendClick: totalRecords, StatusData: statusData })
-    UpdateWebSent(0, this.state.selectedStore, this.updateWebSentFlagCallback)
-  	},
+      UpdateWebSent(0, this.state.selectedStore, this.updateWebSentFlagCallback)
+    },
   	handleCancelClick: function () {
   		var statusData = this.state.StatusData
   		if (statusData.send_flag == false) {
@@ -79,7 +99,7 @@ var WebSendComponent = React.createClass({
   	},
   	updateSendToWebFlagCallback: function (data) {
   		if (data.Result.Result == 'Error') {
-    UpdateWebSent(1, this.state.selectedStore, this.updateWebSentFlagCallback)
+      UpdateWebSent(1, this.state.selectedStore, this.updateWebSentFlagCallback)
   }
   	},
   updateWebSentFlagCallback: function (data, webSentFlag) {
@@ -165,33 +185,28 @@ var WebSendComponent = React.createClass({
           </div>
 
         </div>
-        <div className='row'>
-          <div className='col-sm-12'>
-            <ProgressBar data={this.state.StatusData} />
-          </div>
-        </div>
-        <div className='row'>
-          <div className='col-sm-6'>
-            <strong>Time til next update:&nbsp;
-            { this.state.isTimerPaused &&
-              <span>
-                <span className="glyphicon glyphicon-pause" /> Paused
-              </span>
+        { this.state.dataCheckMessage &&
+          <div className={`alert alert-${this.state.dataCheckError ? 'danger' : 'info'}`} style={{ marginTop: '10px' }}>
+            {this.state.dataCheckMessage}
+            { this.state.dataCheckError &&
+              <a href="#dataChecks" className="alert-link" style={{ display: 'block' }}>View data checks</a>
             }
-            { !this.state.isTimerPaused &&
-              <span>
-                {countDown} seconds...
-              </span>
-            }
-            </strong>
           </div>
+        }
+        { !this.state.dataCheckMessage &&
+          <div className='row'>
+            <div className='col-sm-12'>
+              <ProgressBar data={this.state.StatusData} />
+            </div>
+          </div>
+        }
+        <div className='row'>
           <div className='col-sm-6'>
             <strong>Last Updated: {this.state.StatusData.last_checked} </strong>
           </div>
         </div>
       </div>
-
-    			)
+    )
   }
 })
 
