@@ -15,6 +15,8 @@ var DataChecks = React.createClass({
       selectedStoreId: 0,
       selectedVendorId: 0,
       showDataModal: false,
+      hasError: false,
+      intervalId: 0,
     }
   },
   componentDidMount: function () {
@@ -81,6 +83,19 @@ var DataChecks = React.createClass({
               Failed checks: {this.getFailedChecks()}
             </div>
           </div>
+          { this.state.hasError &&
+            <div className="row" style={{ marginBottom: '10px' }}>
+              <div className="alert alert-danger">
+                There was an error checking the data. Please run the check again.
+                <ul>
+                  { this.state.dataChecks.filter(d => d.HasError).map(e =>
+                      (<li key={e.Id}>{e.DataCheck.Name}: {e.ErrorMessage}</li>)
+                    )
+                  }
+                </ul>
+              </div>
+            </div>
+          }
         </div>
       </div>
     );
@@ -145,14 +160,20 @@ var DataChecks = React.createClass({
     this.setState({ inProgress: true });
     StartDataCheck().then(
       (data) => {
-        this.endUpdateLoop();
         this.loadDataChecksData(data);
       }
     );
     this.startUpdateLoop();
   },
   updateData: function () {
-    GetDataChecksData().then((data) => { this.loadDataChecksData(data) });
+    GetDataChecksData().then((data) => {
+      if (data.IsComplete) { this.endUpdateLoop(); }
+      else if (this.state.intervalId === 0) {
+        this.startUpdateLoop();
+      }
+
+      this.loadDataChecksData(data);
+    });
   },
   startUpdateLoop: function() {
     const intervalId = window.setInterval(() => { this.updateData(); }, 1500);
@@ -160,6 +181,7 @@ var DataChecks = React.createClass({
   },
   endUpdateLoop: function() {
     window.clearInterval(this.state.intervalId);
+    this.setState({ intervalId: 0 });
   },
   getStoreDropdown: function () {
     const stores = [...new Set(this.state.dataChecks.filter(c => c.StoreId > 0).map(c => ({id: c.StoreId, name: c.StoreName })))];
@@ -191,9 +213,11 @@ var DataChecks = React.createClass({
     this.setState({ showDataModal: true, selectedDataCheck: data });
   },
   loadDataChecksData: function (data) {
+    const _this = this;
+    
     if (data != null)
     {
-      this.setState({
+      _this.setState({
         inProgress: !data.IsComplete,
         isComplete: data.IsComplete,
         startTime: data.StartTime,
@@ -201,13 +225,13 @@ var DataChecks = React.createClass({
         dataChecks: data.Results,
         completedChecks: data.CompletedChecks,
         totalChecks: data.TotalChecks,
+        hasError: data.HasError,
       });
     }
 
-    const _this = this;
     $('#tree').treeview(
       {
-        data: this.getTreeData(),
+        data: _this.getTreeData(),
         levels: 3,
         onNodeSelected: function(event, data) {
           _this.selectNode(data)
@@ -215,7 +239,7 @@ var DataChecks = React.createClass({
       }
     );
 
-    this.setState({ inProgress: false });
+    _this.setState({ inProgress: false });
   }
 })
 
