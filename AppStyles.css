@@ -8,6 +8,10 @@ tr.tableRowSpace > td
 .marginTop100 {
           margin-top: 100px;
 }
+
+.vendorImportRed {
+  color: red;
+}
 /****** LOGIN MODAL ******/
 .loginmodal-container {
   padding: 30px;

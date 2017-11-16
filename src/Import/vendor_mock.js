@@ -12,6 +12,7 @@ var VendorMock = React.createClass({
       checked: [],
       expanded: [],
       nodes2:[],
+      storeLookup:[],
       checked2: [],
       expanded2: [],
       counter: 0,
@@ -27,6 +28,7 @@ var VendorMock = React.createClass({
       showVendorSelection:false,
       showLoader: false,
       loadingVendorTree:false,
+      selectedStore:'',
       status: {
         status_message: 'System Ready',
         percent_complete: 0,
@@ -36,8 +38,8 @@ var VendorMock = React.createClass({
     }
   },
   componentDidMount: function () {
-    GetVendors(this.vendorListCallback)
-   GetCurrentVendorImportStatus(this.getStatusCallback)
+  GetCurrentVendorImportStatus(this.getStatusCallback)
+  GetStoreLookups(this.callbackStoreLookups)
 
      var intId = this.setInterval(() => {
       if (this.state.counter >= 30) {
@@ -61,6 +63,9 @@ var VendorMock = React.createClass({
     statusData.importing = true
     this.setState({status: statusData,showLoader:true,nodes:[],nodes2:[] })
     UpdateImportFlag('canam', true, 'Starting Import...', this.importCallback)
+  },
+  callbackStoreLookups: function (data) {
+    this.setState({ storeLookup: data })
   },
   handleCancelClick: function () {
     var statusData = this.state.status
@@ -89,12 +94,23 @@ var VendorMock = React.createClass({
     {
       this.setState({showVendorSelection:true, showLoader:false})
     }
-    this.setState({status: statusData, selectedVendor: data.vendor})
+    this.setState({status: statusData})
   },
   handleVendorChange: function (event) {
-  GetVendorImportTree(event.target.value,this.callBackGetVendorImportTree)
-  GetProductionImportTree(event.target.value,this.callBackProductionImportTree)
-    this.setState({selectedVendor: event.target.value,loadingVendorTree:true})
+    if (this.state.selectedStore == '')
+    {
+      alert('please select a store first')
+      return
+    }
+    else {
+        this.setState({selectedVendor: event.target.value,loadingVendorTree:true})
+        GetVendorImportTree(event.target.value, this.state.selectedStore, this.callBackGetVendorImportTree)
+        GetProductionImportTree(event.target.value, this.state.selectedStore, this.callBackProductionImportTree)
+    }
+  },
+  handleStoreChange: function (event) {
+      GetVendors(this.vendorListCallback)
+    this.setState({selectedStore: event.target.value})
   },
   callBackGetVendorImportTree:function(data){
     this.setState({nodes:$.parseJSON(data),loadingVendorTree:false})
@@ -110,6 +126,14 @@ var VendorMock = React.createClass({
     }
     return items
   },
+  createStoreLookup: function () {
+    let items = []
+    items.push(<option value='' />)
+    for (let i = 0; i < this.state.storeLookup.length; i++) {
+      items.push(<option key={this.state.storeLookup[i].id} value={this.state.storeLookup[i].id}>{this.state.storeLookup[i].store_name}</option>)
+    }
+    return items
+  },
   handleViewChanges: function (){
     this.setState({showModal:true,interval:1000000})
   },
@@ -119,7 +143,7 @@ var VendorMock = React.createClass({
   handleClearStartOverClick: function(){
     var statusData = this.state.status
     statusData.importing = false
-    this.setState({status: statusData,nodes:[],nodes2:[]  })
+    this.setState({status: statusData,nodes:[],nodes2:[],checked:[],checked2:[],selectedStore:'', selectedVendor:'' })
     UpdateImportFlag('canam', false, '', this.importCallback)
   },
   render: function () {
@@ -139,22 +163,31 @@ var VendorMock = React.createClass({
     if (this.state.nodes2.length > 0){
       showTree2 = true
     }
+
+    var showImportButton = false
+    if (this.state.checked.length > 0)
+    {
+      showImportButton = true
+      console.log(showImportButton)
+    }
     return (
-      <div className='webSend-container' style={{maxWidth:'2000px'}}>
+      <div className='webSend-container' style={{maxWidth:'2000px',minHeight:'600px'}}>
         <div className='modal-header' style={{ backgroundColor: 'rgb(51, 122, 183)', color: 'white' }}><h4 className='modal-title'>Vendor Source Import</h4></div>
         <div className='row'>
                         &nbsp;
         </div>
         <div className='row'>
-          <div className='col-sm-3'>
+          <div className='col-sm-2'>
           {!this.state.showViewChangesButton ? <button disabled={this.state.status.importing} className='btn btn-success' onClick={this.handleImportClick}><span className='glyphicon glyphicon-arrow-up' aria-hidden='true' /> Identify New Records</button> : null}
           {this.state.showViewChangesButton ? <button className='btn btn-info' onClick={this.handleViewChanges}><span className='glyphicon glyphicon-search' aria-hidden='true' /> View Changes</button> : null}
           {this.state.showModal ? <VendorMockModal handleHideModal={this.handleHideModal} /> : null}
           </div>
-          <div className='col-sm-2'>
+          <div className='col-sm-1'>
             <button disabled={!this.state.status.importing} type='button' className='btn btn-danger' onClick={this.handleCancelClick}><span className='glyphicon glyphicon-remove' aria-hidden='true' /> Cancel</button>
           </div>
-          <div className='col-sm-1'>
+          <div className='col-sm-7'>
+          </div>
+          <div className='col-sm-2'>
             <button type='button' className='btn btn-danger' onClick={this.handleClearStartOverClick}><span className='glyphicon glyphicon-remove' aria-hidden='true' /> Clear/Start Over</button>
           </div>
         </div>
@@ -167,27 +200,50 @@ var VendorMock = React.createClass({
         />
         </div>
       </div>
+    {this.state.showVendorSelection ?
+    <div>
      <div className='row' style={{marginTop:'20px'}}>
-          <div className='col-sm-6'>
-                {this.state.showVendorSelection ?
-                <div>   <strong>Select a Vendor</strong>
-            <select className='form-control' value={this.state.selectedVendor} style={{width: '300px'}} onChange={this.handleVendorChange}>
-              {this.createVendorItems()}
-            </select></div>: null} 
-          </div>
-      </div>
+          <div className='col-sm-3'>
+                <strong>Select a Store</strong>
+            </div>
+          <div className='col-sm-2'>
+            </div>
+            <div className='col-sm-2'>
+              <strong>Select a Vendor</strong>
+            </div>
+          </div> 
          <div className='row'>
-          <div className='col-sm-6'>
-          <BeatLoader
+          <div className='col-sm-4'>
+                <div>   
+                   <select className='form-control' value={this.state.selectedStore} style={{width: '300px'}} onChange={this.handleStoreChange}>
+              {this.createStoreLookup()}
+            </select>
+                </div>
+          </div>
+          <div className='col-sm-1'>
+             <BeatLoader
           color={'#123abc'} 
           loading={this.state.loadingVendorTree} 
         />
+          </div>
+            <div className='col-sm-4'>
+                <div>   
+        
+            <select className='form-control' value={this.state.selectedVendor} style={{width: '300px'}} onChange={this.handleVendorChange}>
+              {this.createVendorItems()}
+            </select>
             </div>
-          </div> 
+          </div>
+                      <div className='col-sm-1'>
+                        </div>
+            <div className='col-sm-1'>
+              {showImportButton ? <button className='btn btn-success'><span className='glyphicon glyphicon-import' aria-hidden='true' /> Import</button> : null}
+            </div>
+      </div></div> : null} 
         <div className='row'>
-          <div className='col-sm-6'>
-         {showTree ? <div> <div><h4>New Records</h4></div>
-         <div style={{border:'1px solid black',borderRadius:'5px'}}>
+          <div id="vendorImportTreeBase" className='col-sm-6'>
+         {showTree ? <div> <div><h4>New Records - {this.state.checked.length} items selected</h4></div>
+         <div id="vendorImportTreeFloat" style={{border:'1px solid black',borderRadius:'5px',minWidth:'500px'}}>
           <CheckboxTree
                 nodes={this.state.nodes}
                 checked={this.state.checked}

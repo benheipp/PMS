@@ -895,8 +895,8 @@ function CreateProductTypeRule (doc_key, store_id, product_type, callback) {
    })
 }
 
-function GetVendorImportTree (vendor, callback) {
-  $.getJSON(url + '/api/Pms/GetVendorImportTree', {vendor:vendor,token: localStorage.token })
+function GetVendorImportTree (vendor, store, callback) {
+  $.getJSON(url + '/api/Pms/GetVendorImportTree', {vendor:vendor,store:store,token: localStorage.token })
       .done(function (data) { callback(data) })
    .fail(function (data) {
      if (data.status == '401') {
@@ -906,8 +906,8 @@ function GetVendorImportTree (vendor, callback) {
    })
 }
 
-function GetProductionImportTree (vendor, callback) {
-  $.getJSON(url + '/api/Pms/GetProductionImportTree', {vendor:vendor,token: localStorage.token })
+function GetProductionImportTree (vendor, store, callback) {
+  $.getJSON(url + '/api/Pms/GetProductionImportTree', {vendor:vendor, store:store, token: localStorage.token })
       .done(function (data) { callback(data) })
    .fail(function (data) {
      if (data.status == '401') {
