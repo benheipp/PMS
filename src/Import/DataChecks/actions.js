@@ -17,3 +17,7 @@ export function StartDataCheck() {
 export function GetDataCheckData(dataCheckId, storeId, vendorId) {
   return $.getJSON(`${host}/api/DataCheck/GetData`, {dataCheckId, storeId, vendorId, token: localStorage.token});
 }
+
+export function VerifyDataCheck(storeId) {
+  return $.getJSON(`${host}/api/DataCheck/Verify`, {storeId, token: localStorage.token});
+}

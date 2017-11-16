@@ -26,12 +26,23 @@ var DataChecks = React.createClass({
   render: function () {
     return (
       <div className='webSend-container'>
+        <a name="dataChecks" />
         <div className='modal-header' style={{ backgroundColor: 'rgb(51, 122, 183)', color: 'white', marginBottom: '20px' }}>
           <h4 className='modal-title'>Data Checks</h4>
         </div>
         { this.getHeader() }
         { this.state.isComplete &&
           <div id="tree" />
+        }
+        { this.state.intervalId === 0 &&
+          <button
+            type="button"
+            className="btn btn-default btn-xs"
+            style={{ float: 'right' }}
+            onClick={() => { this.updateData(); }}
+          >
+          <span className="glyphicon glyphicon-refresh" /> Refresh
+          </button>
         }
         { this.state.showDataModal &&
           <DataCheckModal data={this.state.selectedDataCheck} handleHideModal={this.handleHideModal} />
@@ -56,7 +67,7 @@ var DataChecks = React.createClass({
               disabled={this.state.inProgress}
               onClick={this.handleCheckDataClick}
               style={{ marginTop: '20px' }}
-            >Check Data</button>
+            ><span className="glyphicon glyphicon-check" /> Check Data</button>
           </div>
           { this.state.isComplete &&
             <div>
