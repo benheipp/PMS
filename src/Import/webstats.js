@@ -14,6 +14,8 @@ var WebSendComponent = React.createClass({
       totalRecordsSendClick: 0,
       showPendingItems: false,
       selectedStore: '0',
+      confirmSendToWeb: false,
+      dataCheckMinuteDuration: 15,
       StatusData: {
         status_message: '',
         percent_complete: 0,
@@ -23,12 +25,14 @@ var WebSendComponent = React.createClass({
         status_flag: true,
         send_flag: false,
         storeId: 0,
-        isTimerPaused: true
+        isTimerPaused: true,
       }
     }
   },
   componentDidMount: function () {
-      GetCurrentImportStatus(this.getCurrentImportStatusCallback)
+      GetCurrentImportStatus(this.getCurrentImportStatusCallback).then(() => {
+        this.setState({ selectedStore: this.state.StatusData.storeId });
+      })
       this.initTimer()
   	},
     initTimer: function () {
@@ -61,20 +65,17 @@ var WebSendComponent = React.createClass({
   			return
       }
 
-      _this.setState({ dataCheckMessage: 'Running data check... '});
-      VerifyDataCheck(_this.state.selectedStore).then(
-        (results) => {
-          if (results.Result.Result === 'Success') {
-            _this.setState({ dataCheckMessage: undefined, dataCheckError: false });
-            _this.startSendToWeb();
-          } else {
-            _this.setState({ dataCheckMessage: results.Message, dataCheckError: true });
-          }
-        }
-      )
+      _this.setState({ dataCheckMessage: 'Running data check... ', dataCheckError: false});
+      VerifyDataCheck(_this.state.selectedStore);
+    },
+    confirmSendToWeb: function () {
+      this.setState({ confirmSendToWeb: false, hasConfirmedSendToWeb: true });
+      this.startSendToWeb();
+    },
+    cancelSendToWeb: function () {
+      this.setState({ hasConfirmedSendToWeb: false, confirmSendToWeb: false });
     },
     startSendToWeb: function () {
-      return;
       var statusData = this.state.StatusData
       var totalRecords = statusData.catalog_records_remaining + statusData.product_records_remaining
   		
@@ -121,7 +122,24 @@ var WebSendComponent = React.createClass({
   		statusData.send_flag = data.send_flag
   		statusData.percent_complete = data.percent_complete
       statusData.storeId = data.storeId
-  		this.setState({StatusData: statusData, selectedStore: data.storeId})
+      
+      const dataCheckEndTime = data.data_check_end_time;
+      const now = new Date();
+      const dataCheckMinimumTime = new Date();
+      dataCheckMinimumTime.setMinutes(now.getMinutes() - this.state.dataCheckMinuteDuration);
+      const dataCheckError = data.data_check_has_errors && data.data_check_is_complete;
+      const dataCheckMessage = data.data_check_is_complete ?
+        (data.data_check_has_errors ? 'Some data checks did not pass. Please correct data and try again.' : undefined) :
+        (data.data_check_is_started ? 'Running data check... ' : undefined);
+      const confirmSendToWeb = !dataCheckError && !dataCheckMessage;
+  		this.setState({
+        StatusData: statusData,
+        dataCheckError,
+        dataCheckMessage,
+        confirmSendToWeb,
+        dataCheckEndTime: new Date(dataCheckEndTime),
+        dataCheckMinimumTime
+      });
   	},
   handleViewPendingClick: function () {
     this.setState({showPendingItems: true})
@@ -139,6 +157,10 @@ var WebSendComponent = React.createClass({
       items.push(<option key={i} value={this.props.storeLookup[i].id}>{this.props.storeLookup[i].store_name}</option>)
     }
     return items
+  },
+  getSelectedStoreName: function() {
+    const selectedStore = this.props.storeLookup.filter(s => Number(s.id) === Number(this.state.selectedStore))[0];
+    return selectedStore ? selectedStore.store_name : '';
   },
   render: function () {
     	var styleMargin25 = {
@@ -183,9 +205,9 @@ var WebSendComponent = React.createClass({
           <div className='col-sm-3'>
             <button disabled={!this.state.StatusData.send_flag} type='button' className='btn btn-danger' onClick={this.handleCancelClick}><span className='glyphicon glyphicon-remove' aria-hidden='true' /> Cancel</button>
           </div>
-
         </div>
         { this.state.dataCheckMessage &&
+          this.state.selectedStore > 0 &&
           <div className={`alert alert-${this.state.dataCheckError ? 'danger' : 'info'}`} style={{ marginTop: '10px' }}>
             {this.state.dataCheckMessage}
             { this.state.dataCheckError &&
@@ -193,7 +215,20 @@ var WebSendComponent = React.createClass({
             }
           </div>
         }
+        { this.state.confirmSendToWeb &&
+          this.state.selectedStore > 0 &&
+          Number(this.state.selectedStore) === this.state.StatusData.storeId &&
+          this.state.dataCheckEndTime >= this.state.dataCheckMinimumTime &&
+          <div className="alert alert-success" style={{ marginTop: '10px' }}>
+            Are you sure you want to send data to {this.getSelectedStoreName()}?
+            <div>
+              <button type="button" style={{ marginRight: '10px' }} className="btn btn-success" onClick={() => { this.confirmSendToWeb(); }}>Yes</button>
+              <button type="button" className="btn btn-sm btn-default" onClick={() => { this.cancelSendToWeb(); }}>No</button>
+            </div>
+          </div>
+        }
         { !this.state.dataCheckMessage &&
+          this.state.StatusData.send_flag &&
           <div className='row'>
             <div className='col-sm-12'>
               <ProgressBar data={this.state.StatusData} />
