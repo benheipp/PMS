@@ -12,7 +12,6 @@ var VendorMock = React.createClass({
       checked: [],
       expanded: [],
       nodes2:[],
-      storeLookup:[],
       checked2: [],
       expanded2: [],
       counter: 0,
@@ -39,7 +38,6 @@ var VendorMock = React.createClass({
   },
   componentDidMount: function () {
   GetCurrentVendorImportStatus(this.getStatusCallback)
-  GetStoreLookups(this.callbackStoreLookups)
 
      var intId = this.setInterval(() => {
       if (this.state.counter >= 30) {
@@ -62,10 +60,7 @@ var VendorMock = React.createClass({
     var statusData = this.state.status
     statusData.importing = true
     this.setState({status: statusData,showLoader:true,nodes:[],nodes2:[] })
-    UpdateImportFlag('canam', true, 'Starting Import...', this.importCallback)
-  },
-  callbackStoreLookups: function (data) {
-    this.setState({ storeLookup: data })
+    UpdateImportFlag('canam', true, 'Starting Import...', "1", this.importCallback)
   },
   handleCancelClick: function () {
     var statusData = this.state.status
@@ -77,7 +72,7 @@ var VendorMock = React.createClass({
     statusData.status_message = 'Cancelling send...'
     statusData.importing = false
     this.setState({status: statusData })
-    UpdateImportFlag('canam', false, 'Send Cancelled', this.importCallback)
+    UpdateImportFlag('canam', false, 'Send Cancelled',"1", this.importCallback)
   },
   importCallback: function (data) {
     var statusData = this.state.status
@@ -129,8 +124,8 @@ var VendorMock = React.createClass({
   createStoreLookup: function () {
     let items = []
     items.push(<option value='' />)
-    for (let i = 0; i < this.state.storeLookup.length; i++) {
-      items.push(<option key={this.state.storeLookup[i].id} value={this.state.storeLookup[i].id}>{this.state.storeLookup[i].store_name}</option>)
+    for (let i = 0; i < this.props.storeLookup.length; i++) {
+      items.push(<option key={this.props.storeLookup[i].id} value={this.props.storeLookup[i].id}>{this.props.storeLookup[i].store_name}</option>)
     }
     return items
   },
@@ -144,7 +139,7 @@ var VendorMock = React.createClass({
     var statusData = this.state.status
     statusData.importing = false
     this.setState({status: statusData,nodes:[],nodes2:[],checked:[],checked2:[],selectedStore:'', selectedVendor:'' })
-    UpdateImportFlag('canam', false, '', this.importCallback)
+    UpdateImportFlag('canam', false, '',"1", this.importCallback)
   },
   render: function () {
     var styleMargin25 = {
@@ -171,7 +166,7 @@ var VendorMock = React.createClass({
       console.log(showImportButton)
     }
     return (
-      <div className='webSend-container' style={{maxWidth:'2000px',minHeight:'600px'}}>
+      <div className='webSend-container' style={{maxWidth:'2000px'}}>
         <div className='modal-header' style={{ backgroundColor: 'rgb(51, 122, 183)', color: 'white' }}><h4 className='modal-title'>Vendor Source Import</h4></div>
         <div className='row'>
                         &nbsp;

@@ -10,7 +10,11 @@ tr.tableRowSpace > td
 }
 
 .vendorImportRed {
-  color: red;
+  color: #d9534f;
+}
+
+.vendorImportGreen {
+  color: #5cb85c;
 }
 /****** LOGIN MODAL ******/
 .loginmodal-container {

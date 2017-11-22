@@ -50,7 +50,7 @@ var VendorImport = React.createClass({
     statusData.status_message = 'Starting Import...'
     statusData.importing = true
     this.setState({status: statusData })
-    UpdateImportFlag(this.state.selectedVendor, true, 'Starting Import...', this.importCallback)
+    UpdateImportFlag(this.state.selectedVendor, true, 'Starting Import...',"1", this.importCallback)
   },
   handleCancelClick: function () {
     var statusData = this.state.status
@@ -62,7 +62,7 @@ var VendorImport = React.createClass({
     statusData.status_message = 'Cancelling send...'
     statusData.importing = false
     this.setState({status: statusData })
-    UpdateImportFlag(this.state.selectedVendor, false, 'Send Cancelled', this.importCallback)
+    UpdateImportFlag(this.state.selectedVendor, false, 'Send Cancelled',"1", this.importCallback)
   },
   importCallback: function (data) {
 
