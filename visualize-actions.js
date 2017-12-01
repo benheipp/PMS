@@ -275,8 +275,8 @@ function GetCurrentImportStatus (callback) {
    })
 }
 
-function GetCurrentVendorImportStatus (callback) {
-  return $.getJSON(url + '/api/Pms/GetCurrentVendorImportStatus', {token: localStorage.token })
+function GetCurrentVendorImportStatus (type,callback) {
+  return $.getJSON(url + '/api/Pms/GetCurrentVendorImportStatus', {type:type,token: localStorage.token })
   .done(function (data) { callback(data) })
    .fail(function (data) {
      if (data.status == '401') {

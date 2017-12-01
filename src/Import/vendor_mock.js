@@ -37,11 +37,11 @@ var VendorMock = React.createClass({
     }
   },
   componentDidMount: function () {
-  GetCurrentVendorImportStatus(this.getStatusCallback)
+  GetCurrentVendorImportStatus("1",this.getStatusCallback)
 
      var intId = this.setInterval(() => {
       if (this.state.counter >= 30) {
-        GetCurrentVendorImportStatus(this.getStatusCallback)
+        GetCurrentVendorImportStatus("1",this.getStatusCallback)
         this.setState({
           counter: 0
         })
@@ -104,8 +104,8 @@ var VendorMock = React.createClass({
     }
   },
   handleStoreChange: function (event) {
+      this.setState({selectedStore: event.target.value,selectedVendor:'',nodes:[],nodes2:[]})
       GetVendors(this.vendorListCallback)
-    this.setState({selectedStore: event.target.value})
   },
   callBackGetVendorImportTree:function(data){
     this.setState({nodes:$.parseJSON(data),loadingVendorTree:false})
@@ -237,7 +237,7 @@ var VendorMock = React.createClass({
       </div></div> : null} 
         <div className='row'>
           <div id="vendorImportTreeBase" className='col-sm-6'>
-         {showTree ? <div> <div><h4>New Records - {this.state.checked.length} items selected</h4></div>
+         {showTree ? <div style={{maxHeight:'500px',overflowY:'scroll'}}> <div><h4>New Records - {this.state.checked.length} items selected</h4></div>
          <div id="vendorImportTreeFloat" style={{border:'1px solid black',borderRadius:'5px',minWidth:'500px'}}>
           <CheckboxTree
                 nodes={this.state.nodes}
@@ -248,7 +248,7 @@ var VendorMock = React.createClass({
             /> </div></div> : null}   
             </div>
             <div className='col-sm-6'>
-             {showTree2 ?  <div><div><h4>Current</h4></div>
+             {showTree2 ?  <div style={{maxHeight:'500px',overflowY:'scroll'}}><div><h4>Current</h4></div>
              <div style={{border:'1px solid black',borderRadius:'5px'}}>
                <CheckboxTree
                 nodes={this.state.nodes2}

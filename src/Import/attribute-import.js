@@ -38,11 +38,11 @@ var AttributeImport = React.createClass({
     }
   },
   componentDidMount: function () {
-  GetCurrentVendorImportStatus(this.getStatusCallback)
+  GetCurrentVendorImportStatus("2",this.getStatusCallback)
   GetVendorsAttribute("11", this.vendorListCallback)
      var intId = this.setInterval(() => {
       if (this.state.counter >= 30) {
-        GetCurrentVendorImportStatus(this.getStatusCallback)
+        GetCurrentVendorImportStatus("2",this.getStatusCallback)
         this.setState({
           counter: 0
         })
@@ -140,7 +140,7 @@ var AttributeImport = React.createClass({
             </select>
             </div>
           </div>
-                      <div className='col-sm-1'>
+                      <div className='col-sm-5'>
                         </div>
             <div className='col-sm-1'>
               {showImportButton ? <button className='btn btn-success'><span className='glyphicon glyphicon-import' aria-hidden='true' /> Import</button> : null}
@@ -236,7 +236,6 @@ var AttributeImport = React.createClass({
   handleVendorChange: function (event) {
     if (this.state.selectedStore == '')
     {
-      alert('please select a store first')
       return
     }
     else {

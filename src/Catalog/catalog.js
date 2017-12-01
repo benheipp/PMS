@@ -46,6 +46,12 @@ var CatalogTree = React.createClass({
     }
   },
   componentWillMount: function () {
+    if (this.props.queryStrDocKey != null)
+    {
+      var count = (this.props.queryStrDocKey.match(/\//g) || []).length + 1;
+      var crumb = this.props.queryStrDocKey.replace(/\//g, "[|]");
+      this.setState({docKey:this.props.queryStrDocKey,nodeLevel:count,nodeNameCrumb:crumb})
+    }
     if (localStorage.CatalogVisibility != 'true') {
       localStorage.clear()
       window.location.href = '/login'
@@ -57,7 +63,12 @@ var CatalogTree = React.createClass({
     }
   },
   componentDidMount: function () {
-    getNodes(1, null, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, undefined, this.handleNewData)
+    if (this.props.queryStrDocKey != null)
+    {
+      getNodes(this.state.nodeLevel, this.state.docKey, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, undefined, this.handleNewData)
+    } else {
+      getNodes(1, null, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, undefined, this.handleNewData)
+    }
   },
   createCatalogTypeItems: function () {
     let items = []
