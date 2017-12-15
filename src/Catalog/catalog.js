@@ -10,6 +10,7 @@ import CatalogTypeChangeModal from './catalog-type-change-modal'
 import CatalogAddNode from './catalog-add-node'
 import Loadable from 'react-loading-overlay'
 import SearchModal from './search-modal'
+import SortModal from './SortModal/sort-modal'
 
 var CatalogTree = React.createClass({
   getInitialState: function () {
@@ -42,7 +43,8 @@ var CatalogTree = React.createClass({
       showCatalogAddNode: false,
       catVis: {display:'block'},
       isActive: false,
-      showSearchModal: false
+      showSearchModal: false,
+      showSortModal: false
     }
   },
   componentWillMount: function () {
@@ -155,6 +157,18 @@ var CatalogTree = React.createClass({
           <button type='button' class='btn btn-secondary' onClick={this.showSearchModal}><span className='glyphicon glyphicon-search'></span> Search</button>
           { this.state.showSearchModal ? <SearchModal handleHideModal={this.handleHideSearchModal} docKey={this.state.docKey} storeId={this.props.selectedStore.value} copyDocKeys={this.state.copyDocKeys} quickMove={this.quickMove} /> : null }
         </div>
+        <div className="col-sm-1 col-sm-offset-9">
+          <button type="button" className="btn btn-sm btn-default" onClick={this.showSortModal}>
+            <span className="glyphicon glyphicon-sort" /> Sort
+          </button>
+          { this.state.showSortModal &&
+            <SortModal
+              handleHideModal={this.handleHideSortModal}
+              node={this.state.node}
+              storeId={this.props.selectedStore.value}
+            />
+          }
+        </div>
       </div>
       <div style={this.state.catVis}>
         {disableVis
@@ -225,6 +239,13 @@ var CatalogTree = React.createClass({
   },
   handleHideSearchModal: function(){
     this.setState({showSearchModal: false})
+  },
+  showSortModal: function() {
+    this.setState({showSortModal: true });
+  },
+  handleHideSortModal: function() {
+    this.setState({showSortModal: false });
+    this.reloadDataFromComponent(this.state.docKey, this.state.nodeName, this.state.nodeLevel);
   },
   handleShowAddNode: function() {
     this.setState({showCatalogAddNode: true})
