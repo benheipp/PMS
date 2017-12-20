@@ -3,6 +3,7 @@ import StoreLookup from '../Controls/store-lookup'
 import NodeHistoryModal from './catalog-node-history'
 import CopyModal from './copy-modal'
 import PasteModal from './paste-modal'
+import { SaveGroup } from './Groups/actions'
 
 var CatalogTreeRow = React.createClass({
   getInitialState: function () {
@@ -15,7 +16,27 @@ var CatalogTreeRow = React.createClass({
       showCopyModal: false,
       nodeHistoryData: [],
       selectedCatalogType: this.props.node.type_id,
+      groupId: this.props.node.group_id || '',
     }
+  },
+  setGroup: function (groupId) {
+    this.setState({groupId});
+  },
+  getGroupDropdown: function () {
+    const groupOptions = this.props.groups.map(g => (
+      <option key={g.id} value={g.id}>{g.name}</option>
+    ));
+
+    return (
+      <select
+        onChange={(e) => { this.setGroup(e.target.value); }}
+        className="form-control"
+        value={this.state.groupId}
+      >
+        <option value="" />
+        {groupOptions}
+      </select>
+    )
   },
   render: function () {
     var disableVar
@@ -44,12 +65,15 @@ var CatalogTreeRow = React.createClass({
       QuickMoveVis = false
     }
 
+    const groupDropdown = this.getGroupDropdown();
+
     if (this.state.isEditMode) {
       return (
         <tr>
           <td>
             <input type='text' className='form-control' id='txtNodeInput' value={this.state.nodeValue} onChange={this.handleInputChange} />
           </td>
+          <td>{groupDropdown}</td>
           <td>
             <select className='form-control' value={this.state.selectedCatalogType} style={{width: '150px'}} onChange={this.handleCatalogTypeChange}>
               {this.createCatalogTypeItems()}
@@ -60,7 +84,7 @@ var CatalogTreeRow = React.createClass({
           </td>
           <td>
             <button onClick={this.handleSaveClick.bind(this, this.props.node, this.props.nodeLevel, this.state.nodeValue, this.state.nodeKey, this.props.node.type_id, this.state.selectedCatalogType, this.state.newDocKey)} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-floppy-disk' /></button>
-            <button style={{marginLeft: '20px'}} onClick={this.handleCancelClick.bind(this, this.props.node, this.props.nodeLevel)} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-remove' /></button>
+            <button style={{marginTop: '5px', display: 'block' }} onClick={this.handleCancelClick.bind(this, this.props.node, this.props.nodeLevel)} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-remove' /></button>
           </td>
           {disableVis ? <td>
             <input
@@ -82,6 +106,7 @@ var CatalogTreeRow = React.createClass({
       return (
         <tr>
           <td style={{verticalAlign:'middle'}}><a href='#' onClick={this.handleClick.bind(this, this.props.node.doc_key, this.props.node.name, this.props.nodeLevel)}>{this.props.node.name}</a></td>
+          <td style={{verticalAlign:'middle'}}>{this.props.node.group_name}</td>
           <td style={{verticalAlign:'middle'}}>{this.props.node.type_name}</td>
           <td><button disabled={disableVar} onClick={this.handleEditClick.bind(this, this.props.node)} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-pencil' /> Edit</button></td>
           <td>{QuickMoveVis ? <button disabled={disableVar} onClick={this.quickMove} className={`btn btn-sm btn-default${this.props.copyDocKeys.indexOf(this.props.node.doc_key) > -1 ? ' active' : ''}`}><i className='glyphicon glyphicon-copy' /> Quick Move</button> : null }</td>
@@ -192,6 +217,10 @@ var CatalogTreeRow = React.createClass({
   },
   handleSaveClick: function (node, nodeLevel, newNode, newNodeKey, oldCatalogType, selectedCatalogType, newDocKey) {
     // Save Logic Here
+    if ((this.props.node.group_id || '').toString() !== this.state.groupId) {
+      SaveGroup(this.props.node.doc_key, this.state.groupId);
+    }
+
     saveNode(node, nodeLevel, newNode, newNodeKey, oldCatalogType, selectedCatalogType, this.props.store, newDocKey, this.saveCallBack)
     this.setState({ isEditMode: false })
   },

@@ -11,6 +11,8 @@ import CatalogAddNode from './catalog-add-node'
 import Loadable from 'react-loading-overlay'
 import SearchModal from './search-modal'
 import SortModal from './SortModal/sort-modal'
+import GroupModal from './Groups/group-modal'
+import { GetGroups } from './Groups/actions';
 
 var CatalogTree = React.createClass({
   getInitialState: function () {
@@ -44,7 +46,9 @@ var CatalogTree = React.createClass({
       catVis: {display:'block'},
       isActive: false,
       showSearchModal: false,
-      showSortModal: false
+      showSortModal: false,
+      showGroupModal: false,
+      groups: [],
     }
   },
   componentWillMount: function () {
@@ -61,7 +65,7 @@ var CatalogTree = React.createClass({
   },
   componentWillReceiveProps: function (nextProps) {
     if (nextProps.docKey != this.props.docKey) {
-      getNodeList(1, nextProps.docKey, [], this.props.selectedStore.value, this.state.showDisabled, this.handleNewData)
+      getNodeList(1, nextProps.docKey, [], this.props.selectedStore.value, this.state.showDisabled, this.handleNewData);
     }
   },
   componentDidMount: function () {
@@ -123,7 +127,26 @@ var CatalogTree = React.createClass({
    // }
 
     var rows = this.state.node.map(function (node) {
-      return <CatalogTreeRow catalogTypes={this.props.catalogTypes} storeLookup={this.props.storeLookup} node={node} key={node.key} nodeLevel={this.state.nodeLevel} onNodeClick={this.onNodeClick} showFeedBack={this.showFeedBack} reloadData={this.reloadData} storeUpdate={this.storeUpdate} updateAllCatalogs={this.updateAllCatalogs} store={this.props.selectedStore.value} quickMove={this.quickMove} resetQuickMove={this.resetQuickMove} copyActive={this.state.copyActive} copyDocKeys={this.state.copyDocKeys} parentDocKey={this.state.docKey} />
+      return (
+        <CatalogTreeRow
+          catalogTypes={this.props.catalogTypes}
+          storeLookup={this.props.storeLookup}
+          node={node}
+          key={node.key}
+          nodeLevel={this.state.nodeLevel}
+          onNodeClick={this.onNodeClick}
+          showFeedBack={this.showFeedBack}
+          reloadData={this.reloadData}
+          storeUpdate={this.storeUpdate}
+          updateAllCatalogs={this.updateAllCatalogs}
+          store={this.props.selectedStore.value}
+          quickMove={this.quickMove}
+          resetQuickMove={this.resetQuickMove}
+          copyActive={this.state.copyActive}
+          copyDocKeys={this.state.copyDocKeys}
+          parentDocKey={this.state.docKey}
+          groups={this.state.groups}
+        />);
     }, this)
     return (
       <div style={stylemargin}>
@@ -154,10 +177,24 @@ var CatalogTree = React.createClass({
         }
       <div className='row'>
         <div className='col-sm-2'>
-          <button type='button' class='btn btn-secondary' onClick={this.showSearchModal}><span className='glyphicon glyphicon-search'></span> Search</button>
+          <button type='button' className='btn btn-secondary' onClick={this.showSearchModal}><span className='glyphicon glyphicon-search'></span> Search</button>
           { this.state.showSearchModal ? <SearchModal handleHideModal={this.handleHideSearchModal} docKey={this.state.docKey} storeId={this.props.selectedStore.value} copyDocKeys={this.state.copyDocKeys} quickMove={this.quickMove} /> : null }
         </div>
-        <div className="col-sm-1 col-sm-offset-9">
+        <div className="col-sm-1 col-sm-offset-8">
+          <button type="button" className="btn btn-sm btn-default" onClick={this.showGroupModal}>
+            <span className="glyphicon glyphicon-sort-by-attributes" /> Groups
+          </button>
+          { this.state.showGroupModal &&
+            <GroupModal
+              handleHideModal={this.handleHideGroupModal}
+              storeId={this.props.selectedStore.value}
+              parentDocKey={this.state.docKey}
+              groups={this.state.groups}
+              setGroups={(groups) => { this.setState({ groups }); }}
+            />
+          }
+        </div>
+        <div className="col-sm-1">
           <button type="button" className="btn btn-sm btn-default" onClick={this.showSortModal}>
             <span className="glyphicon glyphicon-sort" /> Sort
           </button>
@@ -186,7 +223,8 @@ var CatalogTree = React.createClass({
         <table className='table table-striped'>
           <tbody>
             <tr>
-              <th style={{width:'65%'}}><b>Node</b></th>
+              <th style={{width:'50%'}}><b>Node</b></th>
+              <th style={{width: '15%'}}><b>Group</b></th>
            {!disableTypeChange ?   <th style={{width:'5%'}}>
                 <b>Type</b>
                 <select className='form-control input-sm' style={{ width: '120px' }} value={this.state.selectedCatalogType}  onChange={this.handleCatalogTypeChange}>
@@ -246,6 +284,19 @@ var CatalogTree = React.createClass({
   handleHideSortModal: function() {
     this.setState({showSortModal: false });
     this.reloadDataFromComponent(this.state.docKey, this.state.nodeName, this.state.nodeLevel);
+  },
+  showGroupModal: function() {
+    this.setState({showGroupModal: true});
+  },
+  handleHideGroupModal: function() {
+    this.setState({ showGroupModal: false });
+    this.getGroups();
+    this.reloadDataFromComponent(this.state.docKey, this.state.nodeName, this.state.nodeLevel);
+  },
+  getGroups: function() {
+    const groups = GetGroups(this.props.selectedStore.value, this.state.docKey, (groups) => { 
+      this.setState({ groups });
+    });
   },
   handleShowAddNode: function() {
     this.setState({showCatalogAddNode: true})
@@ -332,6 +383,7 @@ var CatalogTree = React.createClass({
       this.setState({ componentData: [] })
       this.setState({ showComponent: false, showProductList: true})
     }
+    this.getGroups();
   },
   BreadCrumbClick: function (nodeLevel, docKey, nodeNameCrumb) {
     var splitCrumb = nodeNameCrumb.split('[|]')
