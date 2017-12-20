@@ -11,11 +11,17 @@ const SortOrderRow = React.createClass({
     this.setState({value});
     this.props.setSortOrder(value);
   },
+  getGroupLabel: function() {
+    return (this.props.group_name &&
+      <span className="label label-info" style={{ float: 'right', fontSize: '100%' }}>{this.props.group_name}</span>
+    );
+  },
   render: function() {
     return (
       <tr>
         <td style={{ verticalAlign: 'middle' }}>
           {this.props.name}
+          {this.getGroupLabel()}
         </td>
         <td>
           <input
@@ -34,6 +40,7 @@ const SortOrderRow = React.createClass({
 SortOrderRow.propTypes ={
   name: React.PropTypes.string,
   sortOrder: React.PropTypes.number,
+  
 };
 
 export default SortOrderRow;

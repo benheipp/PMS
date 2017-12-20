@@ -35,8 +35,8 @@ const SortModal = React.createClass({
               <table className="table table-striped table-condensed">
                 <thead>
                   <tr>
-                    <th style={{ width: '75%' }}>Name</th>
-                    <th style={{ width: '25%' }}>Sort Order</th>
+                    <th style={{ width: '80%' }}>Name</th>
+                    <th style={{ width: '20%' }}>Sort Order</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -45,6 +45,7 @@ const SortModal = React.createClass({
                           name={n.name}
                           sortOrder={n.sort_order}
                           key={n.id}
+                          group_name={n.group_name}
                           setSortOrder={(value) => { this.setSortOrder(n.doc_key, value); }}
                         />)
                     )
