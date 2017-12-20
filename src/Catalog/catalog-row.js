@@ -83,7 +83,7 @@ var CatalogTreeRow = React.createClass({
             <input disabled type='text' className='form-control' id='txtNodeKey' value={this.state.nodeKey} onChange={this.handleNodeKeyChange} />
           </td>
           <td>
-            <button onClick={this.handleSaveClick.bind(this, this.props.node, this.props.nodeLevel, this.state.nodeValue, this.state.nodeKey, this.props.node.type_id, this.state.selectedCatalogType, this.state.newDocKey)} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-floppy-disk' /></button>
+            <button onClick={this.handleSaveClick.bind(this, this.props.node, this.props.nodeLevel, this.state.nodeValue, this.state.nodeKey, this.props.node.type_id, this.state.selectedCatalogType, this.state.newDocKey)} className='btn btn-sm btn-success'><i className='glyphicon glyphicon-floppy-disk' /></button>
             <button style={{marginTop: '5px', display: 'block' }} onClick={this.handleCancelClick.bind(this, this.props.node, this.props.nodeLevel)} className='btn btn-sm btn-default'><i className='glyphicon glyphicon-remove' /></button>
           </td>
           {disableVis ? <td>
