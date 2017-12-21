@@ -4,7 +4,7 @@ const GroupRow = React.createClass({
   getInitialState: function() {
     return {
       name: this.props.name,
-      sortOrder: this.props.sortOrder,
+      sortOrder: this.props.sortOrder === null ? '' : this.props.sortOrder,
     };
   },
   handleNameChange: function (event) {

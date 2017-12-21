@@ -3,7 +3,7 @@ import React from 'react'
 const SortOrderRow = React.createClass({
   getInitialState: function() {
     return {
-      value: this.props.sortOrder || ''
+      value: this.props.sortOrder === null ? '' : this.props.sortOrder
     };
   },
   handleChange: function (event) {
