@@ -157,18 +157,6 @@ var CatalogTree = React.createClass({
           <button type='button' class='btn btn-secondary' onClick={this.showSearchModal}><span className='glyphicon glyphicon-search'></span> Search</button>
           { this.state.showSearchModal ? <SearchModal handleHideModal={this.handleHideSearchModal} docKey={this.state.docKey} storeId={this.props.selectedStore.value} copyDocKeys={this.state.copyDocKeys} quickMove={this.quickMove} /> : null }
         </div>
-        <div className="col-sm-1 col-sm-offset-9">
-          <button type="button" className="btn btn-sm btn-default" onClick={this.showSortModal}>
-            <span className="glyphicon glyphicon-sort" /> Sort
-          </button>
-          { this.state.showSortModal &&
-            <SortModal
-              handleHideModal={this.handleHideSortModal}
-              node={this.state.node}
-              storeId={this.props.selectedStore.value}
-            />
-          }
-        </div>
       </div>
       <div style={this.state.catVis}>
         {disableVis
