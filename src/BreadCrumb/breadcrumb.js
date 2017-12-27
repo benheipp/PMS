@@ -8,7 +8,7 @@ var BreadCrumb = React.createClass({
       if (this.props.storeLookup[indxStore].store_lock == true) { disable = true }
 
 
-    var editButton = <button disabled={disable} onClick={this.handleEditClick} className='btn btn-default'><i className='glyphicon glyphicon-pencil' /></button>
+    var editButton = <button disabled={disable} style={{ marginTop: '5px' }} onClick={this.handleEditClick} className='btn btn-default'><i className='glyphicon glyphicon-pencil' /></button>
     var splitStr = this.props.docKey.split('/')
     var nodeNameCrumb = this.props.nodeNameCrumb.split('[|]')
     return (
