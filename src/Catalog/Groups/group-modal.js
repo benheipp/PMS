@@ -23,23 +23,29 @@ const GroupModal = React.createClass({
       $('#GroupModal').modal('hide');
     });
   },
-  setGroup: function(id, name, sort_order) {
+  setGroup: function(id, name, sort_order, is_active) {
     const groupChanges = { ...this.state.groupChanges };
-    groupChanges[id] = { name, sort_order };
+    groupChanges[id] = { name, sort_order, is_active };
     this.setState({ groupChanges });
   },
   handleAddNew: function() {
-    const newGroup = {id: uuid.v4(), name: '', sort_order: '', autoFocus: true};
+    const newGroup = {id: uuid.v4(), name: '', sort_order: '', is_active: true, autoFocus: true};
     const groups = [...this.state.groups, newGroup];
     this.setState({groups});
   },
   render: function() {
     return (
       <div id="GroupModal" className="modal fade" data-keyboard="false" data-backdrop="static">
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-header">
               <h4 className="modal-title">Groups</h4>
+              <div style={{ float: 'right'}}>
+                <button type="button" className="btn btn-success" onClick={this.handleSaveClick}>
+                  <span className="glyphicon glyphicon-floppy-save" /> Save
+                </button>
+                <button type="button" style={{ marginLeft: '5px' }} className="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
             </div>
             <div className="modal-body">
               <button
@@ -55,8 +61,9 @@ const GroupModal = React.createClass({
                 
                 <thead>
                   <tr>
-                    <th style={{ width: '75%' }}>Name</th>
-                    <th style={{ width: '25%' }}>Sort Order</th>
+                    <th style={{ width: '70%' }}>Name</th>
+                    <th style={{ width: '15%' }}>Sort Order</th>
+                    <th style={{ width: '5%' }}>Active?</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -64,6 +71,7 @@ const GroupModal = React.createClass({
                       (<GroupRow
                           name={n.name}
                           sortOrder={n.sort_order}
+                          isActive={n.is_active}
                           key={n.id}
                           id={n.id}
                           setGroup={this.setGroup}
