@@ -40,14 +40,8 @@ const GroupModal = React.createClass({
           <div className="modal-content">
             <div className="modal-header">
               <h4 className="modal-title">Groups</h4>
-              <div style={{ float: 'right'}}>
-                <button type="button" className="btn btn-success" onClick={this.handleSaveClick}>
-                  <span className="glyphicon glyphicon-floppy-save" /> Save
-                </button>
-                <button type="button" style={{ marginLeft: '5px' }} className="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
             </div>
-            <div className="modal-body">
+            <div className="modal-body" style={{ maxHeight: 'calc(100vh - 200px)',  overflowY: 'auto' }}>
               <button
                 type="button"
                 style={{ marginBottom: '5px' }}
