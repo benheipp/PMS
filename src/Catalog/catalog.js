@@ -13,6 +13,7 @@ import SearchModal from './search-modal'
 import SortModal from './SortModal/sort-modal'
 import GroupModal from './Groups/group-modal'
 import { GetGroups } from './Groups/actions';
+import * as actions from './actions';
 
 var CatalogTree = React.createClass({
   getInitialState: function () {
@@ -99,6 +100,16 @@ var CatalogTree = React.createClass({
     });
     this.setState({ copyDocKeys, copyActive: copyDocKeys.length > 0 });
   },
+  reloadNode: function(docKey) {
+    actions.getNode(docKey, this.props.selectedStore.value).then(
+      (newNode) => {
+        const node = [...this.state.node];
+        const index = node.findIndex(n => n.key === newNode.key);
+        node[index] = newNode;
+        this.setState({node});
+      }
+    );
+  },
   render: function () {
     var stylemargin = {
       marginTop: '60px'
@@ -137,6 +148,7 @@ var CatalogTree = React.createClass({
           onNodeClick={this.onNodeClick}
           showFeedBack={this.showFeedBack}
           reloadData={this.reloadData}
+          reloadNode={this.reloadNode}
           storeUpdate={this.storeUpdate}
           updateAllCatalogs={this.updateAllCatalogs}
           store={this.props.selectedStore.value}

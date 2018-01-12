@@ -228,9 +228,10 @@ var CatalogTreeRow = React.createClass({
     UpdateEditingFlag('catalog', false, this.props.node.doc_key, this.props.store)
     this.setState({ isEditMode: false })
   },
-  saveCallBack: function (data, node, nodeLevel) {
+  saveCallBack: function (data, node, nodeLevel, newDocKey) {
     this.props.showFeedBack(data)
-    this.props.reloadData(node.doc_key, node.name, nodeLevel, true)
+    this.props.reloadNode(newDocKey)
+    //this.props.reloadData(node.doc_key, node.name, nodeLevel, true)
   },
   handleInputChange: function (event) {
     this.setState({ nodeValue: event.target.value })
