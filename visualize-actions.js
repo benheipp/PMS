@@ -50,7 +50,7 @@ function getComponentProducts (docKey, componentName, storeId, callback) {
 
 function saveNode (node, nodeLevel, newNode, newNodeKey, oldCatalogType, selectedCatalogType, storeId, newDocKey, callback) {
   return $.getJSON(url + '/api/Pms/SaveNode', { docKey: node.doc_key, oldNode: node.name, newNode: newNode, oldNodeKey: node.name_key, newNodeKey: newNodeKey, oldCatalogType: oldCatalogType, selectedCatalogType: selectedCatalogType, username: localStorage.username, storeId: storeId, newDocKey:newDocKey, token: localStorage.token })
-      .done(function (data) { callback(data, node, nodeLevel) })
+      .done(function (data) { callback(data, node, nodeLevel, newDocKey) })
    .fail(function (data) {
      if (data.status == '401') {
        localStorage.clear()
