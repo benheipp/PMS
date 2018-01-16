@@ -13,6 +13,7 @@ import SearchModal from './search-modal'
 import SortModal from './SortModal/sort-modal'
 import GroupModal from './Groups/group-modal'
 import { GetGroups } from './Groups/actions';
+import TypesModal from './Types/types-modal';
 import * as actions from './actions';
 
 var CatalogTree = React.createClass({
@@ -50,6 +51,7 @@ var CatalogTree = React.createClass({
       showSortModal: false,
       showGroupModal: false,
       groups: [],
+      catalogTypes: [],
     }
   },
   componentWillMount: function () {
@@ -76,13 +78,14 @@ var CatalogTree = React.createClass({
     } else {
       getNodes(1, null, [], this.props.selectedStore.value, this.props.disabled, this.state.showDisabled, undefined, this.handleNewData)
     }
+    this.setState({ catalogTypes: this.props.catalogTypes });
   },
   createCatalogTypeItems: function () {
     let items = []
     items.push(<option value='' />)
-    for (let i = 0; i < this.props.catalogTypes.length; i++) {
-      const id = this.props.catalogTypes[i].id;
-      items.push(<option key={id} value={id}>{this.props.catalogTypes[i].name}</option>)
+    for (let i = 0; i < this.state.catalogTypes.length; i++) {
+      const id = this.state.catalogTypes[i].id;
+      items.push(<option key={id} value={id}>{this.state.catalogTypes[i].name}</option>)
     }
     return items
   },
@@ -140,7 +143,7 @@ var CatalogTree = React.createClass({
     var rows = this.state.node.map(function (node) {
       return (
         <CatalogTreeRow
-          catalogTypes={this.props.catalogTypes}
+          catalogTypes={this.state.catalogTypes}
           storeLookup={this.props.storeLookup}
           node={node}
           key={node.key}
@@ -180,7 +183,7 @@ var CatalogTree = React.createClass({
             docKey={this.state.docKey}
             nodes={this.state.node}
             hideModal={this.handleHideCatalogTypeChangeModal}
-            catalogTypes={this.props.catalogTypes}
+            catalogTypes={this.state.catalogTypes}
             nodeLevel={this.state.nodeLevel}
             storeId={this.props.selectedStore.value}
             targetCatalogTypeId={this.state.selectedCatalogType}
@@ -192,7 +195,19 @@ var CatalogTree = React.createClass({
           <button type='button' className='btn btn-secondary' onClick={this.showSearchModal}><span className='glyphicon glyphicon-search'></span> Search</button>
           { this.state.showSearchModal ? <SearchModal handleHideModal={this.handleHideSearchModal} docKey={this.state.docKey} storeId={this.props.selectedStore.value} copyDocKeys={this.state.copyDocKeys} quickMove={this.quickMove} /> : null }
         </div>
-        <div className="col-sm-1 col-sm-offset-8">
+        <div className="col-sm-1 col-sm-offset-7">
+          <button type="button" className="btn btn-sm btn-default" onClick={this.showTypesModal}>
+            <span className="glyphicon glyphicon-tag" /> Types
+          </button>
+          { this.state.showTypesModal &&
+            <TypesModal
+              handleHideModal={this.handleHideTypesModal}
+              types={this.state.catalogTypes}
+              setTypes={(catalogTypes) => { this.setState({ catalogTypes }); }}
+            />
+          }
+        </div>
+        <div className="col-sm-1">
           <button type="button" className="btn btn-sm btn-default" onClick={this.showGroupModal}>
             <span className="glyphicon glyphicon-sort-by-attributes" /> Groups
           </button>
@@ -283,6 +298,12 @@ var CatalogTree = React.createClass({
         </Loadable>
       </div>
     )
+  },
+  handleHideTypesModal: function() {
+    this.setState({ showTypesModal: false });
+  },
+  showTypesModal: function() {
+    this.setState({ showTypesModal: true });
   },
   showSearchModal: function(){
     this.setState({showSearchModal: true})
