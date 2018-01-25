@@ -234,7 +234,7 @@ var CatalogTree = React.createClass({
           }
         </div>
       </div>
-      <div style={this.state.catVis}>
+      <div style={(this.state.showComponent ? { display: 'none' } : { display: 'inline-block' })}>
         {disableVis
             ? <div><b>Show Disabled </b> <input
               name='disabled'
@@ -390,13 +390,6 @@ var CatalogTree = React.createClass({
   },
   handleNewData: function (data, docKey, nodeName, persistResults) {
     this.setState({ node: data, nodeName: nodeName,isActive:false })
-    if (data.length == 0)
-    {
-       this.setState({ catVis: {display:'none'}})
-    }
-    else{
-       this.setState({ catVis: {display:'block'}})
-    }
     GetProductList(docKey, this.props.selectedStore.value, this.HandleProductListData)
 
     if (persistResults === undefined) {
