@@ -113,6 +113,11 @@ var CatalogTree = React.createClass({
       }
     );
   },
+  getActiveGroups: function() {
+    const activeGroupIds = [...new Set(this.state.node.map(n => n.group_id))];
+    const activeGroups = this.state.groups.filter(g => activeGroupIds.includes(g.id));
+    return activeGroups;
+  },
   render: function () {
     var stylemargin = {
       marginTop: '60px'
@@ -217,6 +222,7 @@ var CatalogTree = React.createClass({
               storeId={this.props.selectedStore.value}
               parentDocKey={this.state.docKey}
               groups={this.state.groups}
+              filteredGroups={this.getActiveGroups()}
               setGroups={(groups) => { this.setState({ groups }); }}
             />
           }

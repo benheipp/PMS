@@ -1,7 +1,7 @@
 import React from 'react'
 import uuid from 'uuid';
 import GroupRow from './group-row'
-import { SaveGroups } from './actions';
+import { SaveGroups, GetGroups } from './actions';
 
 
 const GroupModal = React.createClass({
@@ -9,6 +9,7 @@ const GroupModal = React.createClass({
     return {
       groups: [],
       groupChanges: {},
+      filterGroups: false,
     };
   },
   componentDidMount: function() {
@@ -33,6 +34,10 @@ const GroupModal = React.createClass({
     const groups = [...this.state.groups, newGroup];
     this.setState({groups});
   },
+  filterGroups: function(e) {
+    const groups = e.target.checked ? this.props.filteredGroups : this.props.groups;
+    this.setState({ groups, filterGroups: e.target.checked });
+  },
   render: function() {
     return (
       <div id="GroupModal" className="modal fade" data-keyboard="false" data-backdrop="static">
@@ -51,8 +56,15 @@ const GroupModal = React.createClass({
               >
                 <span className="glyphicon glyphicon-plus" /> Add New
               </button>
+              <span className="pull-right">
+                <input
+                  type="checkbox"
+                  value={this.state.filterGroups}
+                  checked={this.state.filterGroups}
+                  onChange={this.filterGroups}
+                /> Only Show Assigned Groups
+              </span>
               <table className="table table-striped table-condensed">
-                
                 <thead>
                   <tr>
                     <th style={{ width: '70%' }}>Name</th>
