@@ -218,7 +218,7 @@ var CatalogTreeRow = React.createClass({
   handleSaveClick: function (node, nodeLevel, newNode, newNodeKey, oldCatalogType, selectedCatalogType, newDocKey) {
     // Save Logic Here
     if ((this.props.node.group_id || '').toString() !== this.state.groupId) {
-      SaveGroup(this.props.node.doc_key, this.state.groupId);
+      SaveGroup(newDocKey || this.props.node.doc_key, this.state.groupId);
     }
 
     saveNode(node, nodeLevel, newNode, newNodeKey, oldCatalogType, selectedCatalogType, this.props.store, newDocKey, this.saveCallBack)
