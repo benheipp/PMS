@@ -12,6 +12,7 @@ import Loadable from 'react-loading-overlay'
 import SearchModal from './search-modal'
 import SortModal from './SortModal/sort-modal'
 import GroupModal from './Groups/group-modal'
+import DuplicateModal from './DuplicateModal';
 import { GetGroups } from './Groups/actions';
 import TypesModal from './Types/types-modal';
 import * as actions from './actions';
@@ -52,6 +53,7 @@ var CatalogTree = React.createClass({
       showGroupModal: false,
       groups: [],
       catalogTypes: [],
+      showDuplicateModal: false,
     }
   },
   componentWillMount: function () {
@@ -117,6 +119,9 @@ var CatalogTree = React.createClass({
     const activeGroupIds = [...new Set(this.state.node.map(n => n.group_id))];
     const activeGroups = this.state.groups.filter(g => activeGroupIds.includes(g.id));
     return activeGroups;
+  },
+  handleDuplicateModalDisplay: function(value) {
+    this.setState({ showDuplicateModal: value });
   },
   render: function () {
     var stylemargin = {
@@ -249,9 +254,27 @@ var CatalogTree = React.createClass({
               onChange={this.handleShowDisabledChange} />
             </div> : null }
         { this.state.copyDocKeys && this.state.copyDocKeys.length > 0 &&
+          this.state.copyDocKeys.some(c => c.startsWith(this.state.docKey )) &&
           <div>
             {`${this.state.copyDocKeys.length} doc keys selected to copy`}
+            <button
+              className="btn btn-default btn-sm"
+              style={{ marginLeft: '5px', marginBottom: '5px' }}
+              onClick={() => { this.handleDuplicateModalDisplay(true); }}
+            ><i className="glyphicon glyphicon-paste" /> Paste</button>
           </div>  
+        }
+        { this.state.showDuplicateModal &&
+          <DuplicateModal
+            handleHideModal={() => {
+              this.handleDuplicateModalDisplay(false);
+              this.reloadDataFromComponent(this.state.docKey, this.state.nodeName, this.state.nodeLevel);
+            }}
+            node={this.state.node}
+            rootDocKey={this.state.docKey}
+            storeId={this.props.selectedStore.value}
+            copyDocKeys={this.state.copyDocKeys}
+          />
         }
         <table className='table table-striped'>
           <tbody>
@@ -270,7 +293,7 @@ var CatalogTree = React.createClass({
                   <div>
                   <br />
                     <button disabled={disableTypeChange} style={{ width:'100%' }} type="button" onClick={this.handleQuickMoveAll} className="btn btn-sm btn-default">
-                      <span className="glyphicon glyphicon-copy" />Move All
+                      <span className="glyphicon glyphicon-copy" />Copy All
                     </button>
                   </div>
                 }
